@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>img transform</title>
+
+	<style>
+		
+		.img-container{
+			width: 1200px;
+			margin: 30px auto;
+		}
+		.img-container img{
+			width: 100%;
+		}
+
+	</style>
+
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<div class="img-container">
+		<img src="en.png" />
+	</div>
+
+	<script type="text/javascript">
+
+		function ImgTrans(obj, limitx, limity){
+			this.obj = obj;
+			this.limitx = limitx;
+			this.limity = limity;
+
+			this.width = obj.width();
+			this.height = obj.height();
+
+			this.init();
+		}
+
+		ImgTrans.prototype.init = function(){
+			var _this = this
+			this.obj
+				.on('mousemove', function(e){
+					clearTimeout(setTime)
+					var degObj = _this.getDeg(e)
+					var xDeg = degObj.xDeg
+					var yDeg = degObj.yDeg
+					var setTime = setTimeout(function(){
+						_this.obj.find('img').css('transform','rotateX('+xDeg+'deg) rotateY('+yDeg+'deg)')
+					}, 300)
+				})
+		}
+
+		ImgTrans.prototype.getDeg = function(e){
+			console.log(($(window).width()/2 - e.clientX))
+			return {
+				xDeg: (($(window).width()/2 - e.clientX)/this.width) * this.limitx,
+				yDeg: (e.clientY - this.obj.offset().top - this.height/2)/this.height * this.limity
+			}
+		}
+
+		new ImgTrans($('.img-container'), 10, 20)
+
+
+	</script>
+
+</body>
+</html>
