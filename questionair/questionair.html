@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>img transform</title>
+
+	<style>
+		
+		.container{
+			width: 1200px;
+			margin: 30px auto;
+		}
+
+		.container .box{
+
+		}
+
+		.container .box ul{
+			list-style: none;
+		}
+
+	</style>
+
+	<script src="https://cdn.bootcss.com/vue/2.3.4/vue.min.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<h2>{{name}}</h2>
+		<h3>{{introduce}}</h3>
+		<div class="box" v-for="item in questions">
+			<h5 class="q-name">{{item.question}}</h5>
+			<ul>
+				<li v-if="item.type == 'singleSelection'" v-for="i in item.answers">
+					<input name="q1" type="radio" value="" />{{i.answer}}
+				</li>
+
+				<li v-if="item.type == 'MultipleSelection'" v-for="i in item.answers">
+					<input type="checkbox" value="" />{{i.answer}}
+				</li>
+
+				<li v-if="item.type == 'custom'">
+					<div class="box-custom" v-if="!item.hasAnswers">
+						<div class="box2" v-for="i in item.answers">
+							<h5 class='custom-q2'>{{i.question}}</h5>
+							<ul>
+								<li v-if="i.type == 'text'">
+									<textarea></textarea>
+								</li>
+								<li v-if="i.type == 'MultipleSelection'" v-for="j in i.answers">
+									<input type="checkbox" value="" />{{j.answer}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+
+				<li v-if="item.type == 'text'">
+					<textarea></textarea>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		var data = {
+		    name: "这是name",
+		    introduce: "这是描述",
+		    questions: [
+		        {type: 'text', question: " 常用那几种浏览器测试？有哪些内核(Layout Engine)?"}, {
+		            type: 'singleSelection',
+		            question: ' DOM怎样添加节点?',
+		            answers: [{answer: 'appendChild'}, {answer: 'getElementsByTagName'}, {answer: 'createTextNode'}, {answer: 'createDocumentFragment'}]
+		        }, {
+		            type: 'MultipleSelection',
+		            question: '  null和undefined的区别?',
+		            answers: [{answer: '变量被声明了，但没有赋值时，就等于undefined。'}, {answer: '调用函数时，应该提供的参数没有提供，该参数等于undefined。'}, {answer: ' 作为函数的参数，表示该函数的参数不是对象。'}, {answer: '创建一个空对象，并且 this 变量引用该对象，同时还继承了该函数的原型。'}]
+		        }, {
+		            type: 'custom',
+		            question: '  null和undefined的区别?',
+		            hasAnswers: false,
+		            answers: [
+		            	{type: 'text', question: " 常用那几种浏览器测试？有哪些内核(Layout Engine)?"}, 
+		            	{	type: 'MultipleSelection',
+		                	question: '  null和undefined的区别?',
+		                	answers: [{answer: '变量被声明了，但没有赋值时，就等于undefined。'}, {answer: '调用函数时，应该提供的参数没有提供，该参数等于undefined。'}, {answer: ' 作为函数的参数，表示该函数的参数不是对象。'}, {answer: '创建一个空对象，并且 this 变量引用该对象，同时还继承了该函数的原型。'}]
+		            }]
+		        }
+		    ]
+		};
+
+		new Vue({
+			el: '.container',
+			data: data
+		})
+
+
+	</script>
+
+</body>
+</html>
