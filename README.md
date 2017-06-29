@@ -1,5 +1,5 @@
-### imgHover-questionair文件夹里：
-* img-transform 文件夹是图片hove旋转的
-* questionair 文件夹是调查问卷    vue循环的
-
-### toilet文件夹是拷贝的一个全栈项目： 厕所在哪
+### 平时的各个小demo
+* vue demos
+    - 多重循环嵌套渲染
+    - 数据之间的更改，联动
+* 图片hover 变换角度demo
