@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>img transform</title>
+
+	<style>
+		
+		.container{
+			width: 1200px;
+			margin: 30px auto;
+		}
+
+	</style>
+
+	<script src="https://cdn.bootcss.com/vue/2.3.4/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<table>
+			<th>
+				<td>尺码</td>
+				<td>S</td>
+				<td>M</td>
+				<td>L</td>
+			</th>
+			<tr v-for="(v,i) in lists">
+				<td>{{v.color}}</td>
+				<td><input type='text' :value="v.s" v-model='v.s' /></td>
+				<td><input type='text' :value="v.m" v-model='v.m' /></td>
+				<td><input type='text' :value="v.l" v-model='v.l' /></td>
+				<input type="hidden" class="each-name" :data-price='v.price' :class='"num"+i' :value='parseInt(v.s)+parseInt(v.m)+parseInt(v.l) | checkValue' />
+			</tr>
+		</table>
+
+		<div>总数：<span>{{totalNum}}</span></div>
+		<div>总价：<span>{{totalPrice | setPrice}}</span></div>
+	</div>
+
+	<script type="text/javascript">
+
+		var data = {
+		    totalNum: 0,
+		    totalPrice: 0,
+		    lists: [
+		        {color:'灰',s:0,m:0,l:0,price:1},
+		        {color:'黄',s:0,m:0,l:0,price:1},
+		        {color:'红',s:0,m:0,l:0,price:1},
+		        {color:'蓝',s:0,m:0,l:0,price:1}
+		    ]
+		};
+
+		Vue.prototype.getTotal = function () {
+	        var num = Array.prototype.reduce.call($('.each-name'), function(a,b){
+	        	var n = b.value ? b.value : 0;
+	        	console.log(n)
+				return a + parseInt(n)
+			}, 0)
+			var price = Array.prototype.reduce.call($('.each-name'), function(a,b){
+				var n = b.value ? b.value : 0;
+				return a + parseInt(b.getAttribute('data-price'))*parseInt(n)
+			}, 0)
+			// console.log(num, price)
+			return {
+				num: num,
+				price: price
+			}
+	    }
+
+		new Vue({
+			el: '.container',
+			data: data,
+			filters: {
+				setPrice: (d) => {
+					return d + ' 元'
+				},
+				checkValue: function(d){
+					if(isNaN(d)){
+						return 0
+					}
+					return d;
+				}
+			},
+			mounted: function(){
+				this.$nextTick(() => {
+
+					var _this = this
+
+					$('input').keydown((e) => {
+						var e = e || window.event;
+						var code = e.which || e.keyCode || e.charCode;
+						if(code<48 || code>57){
+							if(code != 8){
+								return false
+							}
+						}
+					})
+
+					$('input').keyup((e) => {
+						this.$data.totalNum = this.getTotal().num
+						this.$data.totalPrice = this.getTotal().price
+					})
+
+					$(document).on('keyup',(e) => {
+						var e = e || window.event;
+						var code = e.which || e.keyCode || e.charCode;
+						if(code<48 || code>57){
+							if(code == 8){
+								_this.$data.totalNum = _this.getTotal().num
+								_this.$data.totalPrice = _this.getTotal().price
+							}
+						}
+					})
+
+				})
+			},
+			mothods: {
+				getValue: () => {
+					var num = Array.prototype.reduce.call($('.each-name'), function(a,b){
+						return a + parseInt(b.value)
+					}, 0)
+					this.$data.totalNum = num
+				}
+			}
+		})
+
+
+	</script>
+
+</body>
+</html>
