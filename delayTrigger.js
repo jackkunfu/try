@@ -1,5 +1,3 @@
-
-
 (function($){
 	var EleDelayTrigger = function(options) {
 	    if (!options || $.type(options) !== 'object' || !options.el) {
@@ -45,11 +43,7 @@ delay.cancel();  // 取消延迟限制
 
 
 
-
-
-
-
-$.fn._clickControl = function(options, cb) {
+$.fn.EleDelayTrigger = function(options, cb) {
     console.log(options)
     var options = $.type(options) == 'object' ? options : {}
     console.log(options)
