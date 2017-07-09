@@ -122,7 +122,13 @@
 					var num = Array.prototype.reduce.call($('.each-name'), function(a,b){
 						return a + parseInt(b.value)
 					}, 0)
-					this.$data.totalNum = num
+					var price = Array.prototype.reduce.call($('.each-name'), function(a,b){
+						return a + parseInt(b.getAttribute('data-price'))*parseInt(b.value)
+					}, 0)
+					return {
+						num: num,
+						price: price
+					}
 				}
 			}
 		})
