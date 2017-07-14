@@ -5,3 +5,5 @@
 * 图片hover 变换角度demo
 * delayTrigger.js
 	- 限制多次点击时的多次触发操作
+* ant-design
+	- 目前只是官方脚手架工具生成的demo

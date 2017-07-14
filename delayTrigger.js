@@ -28,6 +28,16 @@
 	}
 	EleDelayTrigger.prototype.set = function(time){
 	    if (time && !isNaN(time) && parseInt(time) > 0) this.t = time;
+	    // 改变时间后
+	    // 1.清除之前的计时器
+	    clearTimeout(this.delay);
+	    // 2.重新计时控制data-running状态，不然不同步，导致BUG
+        var _this = this
+        this.delay = setTimeout(function() {
+            $(_this.el).removeAttr('data-running');
+            _this.cb();
+            clearTimeout(_this.delay);
+        }, _this.t);
 	}
 	EleDelayTrigger.prototype.cancel = function() {
 	    this.t = 0;
