@@ -1,1 +1,5 @@
-module.exports = 2222
+module.exports = {
+	a: function(){
+		
+	}
+}
