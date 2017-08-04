@@ -14,3 +14,7 @@
 	}
 
 })(Vue, $)
+
+$(function(){
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 64 + 'px';
+})

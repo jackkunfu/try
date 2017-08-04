@@ -1,0 +1,19 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a, a:hover, a:active, a:link{
+	text-decoration: none;
+	color: inherit;
+}
+
+ul, li{
+	list-style: none;
+}
+
+.ctn{
+	width: 55rem;
+	margin: 5rem auto;
+}
