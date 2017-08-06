@@ -17,3 +17,6 @@ ul, li{
 	width: 55rem;
 	margin: 5rem auto;
 }
+
+.fl{ float: left; display: block; }
+.fr{ float: right; display: block; }
