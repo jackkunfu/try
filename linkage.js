@@ -1,3 +1,4 @@
+// 限下拉框的赌赢联动
 (function($){
     function Linkage(ele, target, type){
         this.ele = $(ele) || $('');
@@ -42,4 +43,27 @@
         })
     }
     window.Linkage = Linkage;
+})(jQuery);
+
+(function($){ // 模拟下拉框
+    var toString = Object.prototype.toString;
+   
+    function divSelect(el, options, cb){
+        this.options = toString.call(options) == '[object Array]' ? options : []
+        this.el = el;
+        this.cb = cb;
+        this.init();
+    }
+
+    divSelect.prototype.init = function(){
+        var i = 0
+        $(this.el).html('')
+        while(i<this.options.length){
+            $(this.el).append("<div>"+options[i]+"</div>")
+        }
+
+        $(document).on('click', this.el.find('>div'), function(){
+            this.cb($(this.index(), $(this).html());
+        })
+    }
 })(jQuery);
