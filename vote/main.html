@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/vue.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body>
+
+    <style>
+        .top {
+            text-align: center;
+            line-height: 10rem;
+            font-size: 4rem;
+            border-bottom: 1px solid #1C26AB;
+        }
+        
+        .poster img {
+            width: 100%;
+            height: 30rem;
+        }
+        
+        .ctn {
+            width: 100%;
+            margin: 2rem 0;
+        }
+        
+        .detail ul.tab {
+            border: 1px solid #666;
+            overflow: hidden;
+        }
+        
+        .detail .tab li {
+            float: left;
+            width: 33.3333%;
+            text-align: center;
+            line-height: 8rem;
+            font-size: 3rem;
+        }
+        
+        .detail .tab li.cur {
+            background: lightskyblue;
+        }
+        
+        .detail ul.main {
+            width: 58rem;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .detail ul.main>li {
+            width: 100%;
+            float: left;
+            font-size: 3rem;
+            line-height: 5rem;
+            color: #666;
+            word-break: break-all;
+            margin-bottom: 10rem;
+        }
+        /*         
+        .detail ul.main li .title {
+            color: #333;
+            margin-top: 2rem;
+        } */
+        
+        .judge {
+            padding: 2rem 0 3rem;
+            border-bottom: 1px solid #eee;
+            overflow: hidden;
+        }
+        
+        .judge img {
+            float: left;
+            display: block;
+            width: 8rem;
+            height: 8rem;
+            background: #eee;
+            border-radius: 50%;
+            margin-right: 2rem;
+        }
+        
+        .judge .right {
+            float: left;
+            display: block;
+            width: 43rem;
+        }
+        
+        .judge .right .name {
+            float: left;
+        }
+        
+        .judge .right .time {
+            float: right;
+        }
+        
+        .judge .right .text {
+            font-size: 3rem;
+            line-height: 5rem;
+            color: #666;
+            word-break: break-all;
+            margin-top: 5rem;
+        }
+        
+        .show {
+            display: block;
+        }
+        
+        .hide {
+            display: none;
+        }
+        /* .fixed-btm {
+            width: 100%;
+            border-top: 1px solid #eee;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .fixed-btm>div,
+        .fixed-btm a {
+            text-align: center;
+            line-height: 8rem;
+            height: 8rem;
+            font-size: 3rem;
+        }
+        
+        .fixed-btm .fl {
+            width: 70%;
+            border-right: 1px solid #eee;
+            background: #1C26AB;
+        }
+        
+        .fixed-btm .fr {
+            width: 30%;
+        } */
+        
+        .upload {
+            width: 20rem;
+            height: 8rem;
+            line-height: 8rem;
+            font-size: 3rem;
+            margin: 2rem auto 12rem;
+            text-align: center;
+            background: #1C26AB;
+            color: #FFF;
+        }
+        
+        ul.li2-list li {
+            width: 28rem;
+            margin-bottom: 2rem;
+            float: left;
+            background: #eee;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        ul.li2-list li img {
+            width: 100%;
+            height: 10rem;
+        }
+        
+        ul.li2-list li:nth-of-type(2n) {
+            margin-left: 1rem;
+        }
+        
+        ul.li2-list li:nth-of-type(2n-1) {
+            margin-right: 1rem;
+        }
+        
+        .li-box {
+            font-size: 3rem;
+        }
+        
+        .li-box.li1 {
+            width: 45rem;
+            margin: 2rem auto;
+        }
+        
+        .li-box .title {
+            font-size: 4rem;
+            font-weight: 600;
+            margin-top: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .li-box.li1 input {
+            width: 100%;
+            background: #eee;
+            padding: 3rem;
+            font-size: 3rem;
+        }
+        
+        .li-box.li1 .img-up-ctn {
+            width: 100%;
+            height: 45rem;
+            text-align: center;
+            line-height: 45rem;
+            font-size: 3rem;
+            background: #eee;
+            position: relative;
+        }
+        
+        .li-box.li1 .img-up-ctn img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 100%;
+            max-width: 100%;
+        }
+        
+        .li-box.li1 .img-up-ctn span {}
+        
+        .enroll {
+            width: 30rem;
+            margin: 4rem auto;
+            font-size: 3rem;
+            text-align: center;
+            line-height: 8rem;
+            background: lightblue;
+            color: #FFF;
+        }
+        
+        .li-box.li2 {
+            margin: 2rem auto;
+        }
+        
+        .li-box.li2 .search {
+            position: relative;
+        }
+        
+        .li-box.li2 .search input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 3rem;
+            background: #eee;
+        }
+        
+        .li-box.li2 .search img {
+            width: 5rem;
+            height: 5rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        .li2 li {}
+        
+        .li2 .vote {
+            width: 9rem;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+            background: skyblue;
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: block;
+        }
+        
+        .li2 .num {
+            font-weight: 600;
+            margin-right: 2rem;
+        }
+        
+        .li3 .text {
+            font-size: 2.5rem;
+            line-height: 1.6;
+            padding-left: 1rem;
+        }
+    </style>
+
+
+    <div class="top">
+        白塔湖训练馆
+    </div>
+
+    <div class="poster"></div>
+    <div id="el">
+
+
+        <div class="ctn">
+
+            <!-- <div class="poster">
+                <ul>
+                    <li v-for="item in posterlists">
+                        <img :src="item.img" alt="" />
+                    </li>
+                </ul>
+            </div> -->
+
+            <div class="detail">
+
+                <ul class="tab">
+                    <li :class="cur == 0 ? 'cur':''" @click="cur=0">我要报名</li>
+                    <li :class="cur == 1 ? 'cur':''" @click="cur=1">投票排行榜</li>
+                    <li :class="cur == 2 ? 'cur':''" @click="cur=2">活动规则</li>
+                </ul>
+
+                <ul class="main">
+                    <li :class="cur == 0 ? 'show' : 'hide'">
+                        <div class="li-box li1">
+                            <div class="title">团队：</div>
+                            <div><input type="text" value="" placeholder="团队名称(不超过8个汉字)" /></div>
+                            <div class="title">上传照片</div>
+                            <div class="img-up-ctn">
+                                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502476873128&di=8fb3319702b939ed2fe1bc96a7b000da&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201607%2F20160712011.jpg" />
+                                <span>上传照片</span>
+                            </div>
+                            <div class="enroll">我要报名</div>
+                        </div>
+
+                    </li>
+                    <li :class="cur == 1 ? 'show' : 'hide'">
+                        <div class="li-box li2">
+                            <div class="search">
+                                <input type="text" placeholder="搜索编号" value="" />
+                                <img src="img/search-icon.png" />
+                            </div>
+                            <ul style="overflow: hidden;margin-top:2rem;" class="li2-list">
+                                <li v-for="item in imglists">
+                                    <span class="num">
+										<!-- {{item.num}}	 -->
+										083
+									</span>
+                                    <span class="name">
+										<!-- {{item.name}}	 -->
+										华东科大
+									</span>
+                                    <img :src="item.img" alt="" />
+                                    <span>
+										<!-- {{item.voteNum}}票 -->
+										600票
+									</span>
+                                    <span class="vote">投票</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
+                    <li :class="cur == 2 ? 'show' : 'hide'">
+                        <div class=" li-box li3">
+                            <div class="title">一、活动规则</div>
+                            <div class="text">
+                                1、每人每天只能为最多三支队伍分别投一票<br/>2、每人每天只能为最多三支队伍分别投一票<br/>3、每人每天只能为最多三支队伍分别投一票
+                            </div>
+                            <div class="title">二、活动时间</div>
+                            <div class="text">1、报名起止时间：2017年8月15日——2017年8月21日</div>
+                            <div class="title">三、评选方式</div>
+                            <div class="text" style="text-indent:6rem;">必须经本单位职工大会或职工代表大会讨论通过，在本单位公示后由所在单位签署意见，并经县（市、区）及市（州）人民政府逐级遴选公示后，报省第七届劳动模范和先进工作者评选领导小组。行业系统职工推荐人选，在省级行业系统遴选公示</div>
+                            <div class="title">四、奖项设置</div>
+                            <div class="text">1、一等奖（1名）：6000元现金<br />2、二等奖（2名）：2000元现金<br />3、三等奖（7名）：1000元现金</div>
+                            <div class="title">五、评选须知</div>
+                            <div class="text" style="text-indent:6rem;">本次评选禁止任何刷票行为！一经发现，取消参评资格！</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="fixed-btm">
+            <a :href="'enroll.html?id='+id" class="fl">立即报名</a>
+            <div class="fr">咨询</div>
+        </div> -->
+
+    </div>
+
+
+    <script>
+        $(function() {
+            new Poster('.poster', [{
+                id: 0,
+                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502476873128&di=8fb3319702b939ed2fe1bc96a7b000da&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201607%2F20160712011.jpg'
+            }, {
+                id: 0,
+                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502476873128&di=8fb3319702b939ed2fe1bc96a7b000da&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201607%2F20160712011.jpg'
+            }, {
+                id: 0,
+                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502476873128&di=8fb3319702b939ed2fe1bc96a7b000da&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2F201607%2F20160712011.jpg'
+            }], 5000, 2)
+        })
+        new Vue({
+            el: '#el',
+            data: {
+                id: 0,
+                cur: 0,
+                judgeLists: [{
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }, {
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }, {
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }, {
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }, {
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }, {
+                    img: 'https://gss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/a9d3fd1f4134970a33d78bfc91cad1c8a6865db8.jpg',
+                    name: 'xxx',
+                    time: '2017-01-01 21:00:00',
+                    text: 'xxx'
+                }],
+                posterlists: [],
+                imglists: [{
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }, {
+                    img: 'http://mpic.tiankong.com/ecc/3e3/ecc3e349338dbe58603cf270d9cd7c9c/640.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/watermark,image_cXVhbmppbmcucG5n,t_90,g_ne,x_5,y_5'
+                }],
+                detail: {
+                    desc: 'bfuhiegnlNEOPVAJOBJNl;nb;WJ;EOBJbn;WBEOnbWBPE',
+                    good: '优势；aoaj[goagkp[kb;,bfjodajoajogja,z/vldj;avm,nvmzbfklhfkjvlfmb]] ',
+                    class: [{
+                        title: '初级',
+                        desc: '这是一个初级课程'
+                    }, {
+                        title: '高级',
+                        desc: '这是一个高级课程'
+                    }]
+                }
+            },
+            mounted: function() {
+                var _this = this;
+                this.$nextTick(function() {
+                    _this.aa = _this._ajaxData()
+                })
+
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
