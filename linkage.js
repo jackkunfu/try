@@ -63,7 +63,7 @@
         }
 
         $(document).on('click', this.el.find('>div'), function(){
-            this.cb($(this.index(), $(this).html());
+            this.cb($(this.index(), $(this).html());  // 是否要bind(this)，用的时候再确定
         })
     }
 })(jQuery);
