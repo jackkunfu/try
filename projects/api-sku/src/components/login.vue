@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 body{
     background: #669999;
     .login{

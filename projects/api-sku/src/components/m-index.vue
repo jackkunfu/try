@@ -1,6 +1,7 @@
 <template lang="pug">
 ul
     li
+        111111111111
 </template>
    
 
@@ -17,6 +18,6 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="sass" scoped>
 </style>
     

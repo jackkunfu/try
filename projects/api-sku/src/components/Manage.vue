@@ -1,6 +1,6 @@
 <template lang="pug">
 .manage-ctn
-    ManageNav
+    ManageNav(cur="cur")
     .main
         router-view
 </template>
@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .manage-ctn{
     width: 100%;
     height: 100%;
