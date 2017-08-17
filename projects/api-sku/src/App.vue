@@ -1,6 +1,6 @@
 <template lang="pug">
     #app
-        img(src="./assets/logo.png")
+        //- img(src="./assets/logo.png")
         router-view
 </template>
 
@@ -11,15 +11,16 @@
 </script>
     
 <style lang="less">
+    @import './assets/reset.less';
     body{
-        background: red;
+        
         #app {
             font-family: 'Avenir', Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-align: center;
             color: #2c3e50;
-            margin-top: 60px;
+            height: 100%;
         }
     }
 </style>
