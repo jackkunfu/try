@@ -3,9 +3,9 @@
         .row
             .title 用户登录
         .row
-            input(type="text", placeholder="手机/用户名" v-model="phone")
+            input(type="text", placeholder="手机/用户名" v-model="phone" name="phone")
         .row
-            input(type="text", placeholder="密码" v-model="password")
+            input(type="text", placeholder="密码" v-model="password" name="password")
         .row
             .login-btn(@click="login") 登录
 </template>
@@ -29,15 +29,30 @@ export default {
     },
     methods: {
         login(){
+
+            // var xhr = new XMLHttpRequest()
+            // xhr.open('get', 'http://172.16.8.86:9999/login')
+            // xhr.onload = function () {
+            //     console.log('load:', xhr.getAllResponseHeaders())
+            //     console.log('=================================')
+            // }
+            // xhr.send({
+            //     phone: 18297389525,
+            //     password: 18297389525
+            // })
+
+
             var _this = this;
             this._fentchData('post', '/login', {
                 phone: this.phone,
                 password: this.password
-            }, function(d){
+            }, function(d, status, xhr){
                 
-                window.localStorage.pdApiUserId = d.id
-                console.log(d)
-                d.success && _this.$router.push('/manage')
+                document.cookie = "acToken=" + d.model.token + ";path=/;domain=127.0.0.1:8080";
+                window.localStorage.pdApiUserId = d.model.id
+                window.localStorage.token = d.model.token
+
+                d.success && _this.$router.push('/')
             })
             
         }

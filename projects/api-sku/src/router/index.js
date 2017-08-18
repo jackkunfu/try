@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Manage from '@/components/Manage'
-import User from '@/components/User'
+
 import Login from '@/components/Login'
 import Index from '@/components/index'
 import Api from '@/components/api'
+
+import Manage from '@/components/Manage'
+import MApp from '@/components/manage/app'
+import MUser from '@/components/manage/user'
+import MIndex from '@/components/manage/index'
+import MDomain from '@/components/manage/domain'
 
 Vue.use(Router)
 
@@ -26,9 +31,21 @@ const router = new Router({
         name: 'manage',
         component: Manage,
         children: [{
-            path: '/user',
-            name: 'user',
-            component: User,
+            path: '/m-index',
+            name: 'MIndex',
+            component: MIndex,
+        }, {
+            path: '/m-user',
+            name: 'MUser',
+            component: MUser,
+        }, {
+            path: '/m-app',
+            name: 'MApp',
+            component: MApp,
+        }, {
+            path: '/m-domain',
+            name: 'MDomain',
+            component: MDomain,
         }]
     }]
 })
