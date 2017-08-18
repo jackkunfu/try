@@ -34,7 +34,7 @@ export default {
             ]
 
             // 请求增加
-            this._fentchData('get', '/user/whitelist', {
+            this._fetchData('get', '/user/whitelist', {
             }, function(res){
                 if(!res.success)return
                 this.lists = res.model.list
@@ -48,7 +48,7 @@ export default {
             if(this.isExist(name)) return;
 
             // 请求增加
-            this._fentchData('put', '/user/whitelist', {
+            this._fetchData('put', '/user/whitelist', {
                 host: name
             }, function(res){
                 if(!res.success){
@@ -63,7 +63,7 @@ export default {
         },
         del(id, i){
             // 请求删除         
-            this._fentchData('delete', '/user/whitelist/'+id, {
+            this._fetchData('delete', '/user/whitelist/'+id, {
             }, function(res){
                 if(!res.success){
                     alert(res.msgInfo)

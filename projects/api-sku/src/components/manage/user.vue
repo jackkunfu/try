@@ -48,7 +48,7 @@ export default {
     },
     mounted(){
         this.$nextTick(() => {
-            this._fentchData('get', '/manage/user/developer', {
+            this._fetchData('get', '/manage/user/developer', {
                 page: this.curPage,
                 rows: this.rows
             }, (res) => {

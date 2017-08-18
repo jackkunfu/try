@@ -6,28 +6,56 @@
                 .name {{item.name}}:
                 ul
                     li(v-for="(con, j) in item.list")
-                        span(class="cur" ref='"span"+i+""+j' @click="changeCondions(con.name, i, j)") {{con.name}}
+                        span(:class=" item.cur == j ? 'cur':'' " @click="item.cur=j;changeConditions(item.name, i, j)") {{con.name}}
+
+    ul.api-list
+        li
+            .each-box
+                .simple-box
+                .hide-box
 </template>
    
 
 <script>
+import Vue from 'vue'
 export default {
     name: 'm-index',
     data () {
         return {
-            conditionArr: [
+            conditionArr: [],
+            chooseCondition: ['', '', ''],
+            apiList: []
+        }
+    },
+    computed: {
+        
+    },
+    mounted(){
+        this.$nextTick(()=>{
+
+            this.conditionArr = [
                 {name: '周期', list: [{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'},{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'},{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'},{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'}]},
                 {name: '周期', list: [{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'}]},
                 {name: '周期', list: [{name: '今天'}, {name: '最近3天'}, {name: '最近7天'}, {name: '最近15天'}, {name: '最近1月'}, {name: '最近3月'}]}
             ]
-        }
+
+            var _this = this;
+            this.conditionArr.forEach((element, i) => {
+                this.$set(element, 'cur', 0);     // 新增临时属性cur 并设置监听该属性的变化
+            })
+
+        })
     },
     methods: {
-        changeCondions(name, i, j){
-            console.log(i)
-            console.log(j)
-            console.log(this._$('ul.conditions >li').eq(i))
-            this._$('ul.conditions >li').eq(i).find('li').eq(j).find('span').toggleClass('cur')
+        changeConditions(value, i, j){
+            this.chooseCondition.splice(i, 1, value);
+        }
+    },
+    watch: {
+        chooseCondition(){
+            this._fetchData('post', '/user/api', {}, (d)=>{
+                
+            })
         }
     }
 }
@@ -73,5 +101,15 @@ export default {
                             &.cur
                                 background-color: #336666;
                                 color: #FFF;
+
+
+    ul.api-list
+        li
+            .each-box
+                .simple-box
+                .hide-box
+                    overflow: hidden;
+                    height: 0;
+                    transition: all 0.3s;
 </style>
     

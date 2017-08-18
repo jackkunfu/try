@@ -12,7 +12,7 @@ Vue.prototype._$ = $;
 var optionsBasic = {
     _sy: "P||1||1366*768||pc||4||localhost:8080"
 }
-Vue.prototype._fentchData = (type, url, options, cb) => {
+Vue.prototype._fetchData = (type, url, options, cb) => {
     $.ajax({
         // headers: {
         //     Cookie: 'acToken=' + (localStorage.token ? localStorage.token : '') + ';'

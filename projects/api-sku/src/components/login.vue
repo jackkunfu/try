@@ -43,7 +43,7 @@ export default {
 
 
             var _this = this;
-            this._fentchData('post', '/login', {
+            this._fetchData('post', '/login', {
                 phone: this.phone,
                 password: this.password
             }, function(d, status, xhr){

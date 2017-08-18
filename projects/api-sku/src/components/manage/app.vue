@@ -41,7 +41,7 @@ export default {
             if(this.isExist(name)) return;
 
             // 请求增加
-            this._fentchData('put', '/addApp', {
+            this._fetchData('put', '/addApp', {
                 name: name
             }, function(res){
                 if(!res.success){
@@ -56,7 +56,7 @@ export default {
         },
         del(id, i){
             // 请求删除         
-            this._fentchData('delete', '/deleteApp', {
+            this._fetchData('delete', '/deleteApp', {
                 id: id
             }, function(res){
                 if(!res.success){
