@@ -39,12 +39,7 @@ export default {
     name: 'm-index',
     data () {
         return {
-            lists: [
-                // {phone: '111', password: '111'},
-                // {phone: '111', password: '111'},
-                // {phone: '111', password: '111'},
-                // {phone: '111', password: '111'}
-            ],
+            lists: [],
             cur: {},
             editting: false,
             curPage: 1,

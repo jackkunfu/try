@@ -68,7 +68,7 @@ export default {
                 transition: all .7s;
                 img
                     transition: all .7s;
-                    width: 40%;
+                    // width: 40%;
                     margin-top: 100px;
 
             .front
