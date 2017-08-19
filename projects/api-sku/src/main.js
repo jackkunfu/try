@@ -35,6 +35,7 @@ Vue.prototype._fetchData = (type, url, options, cb) => {
 
         res.success && cb(res);
     }).fail((e) => {
+        console.error('请求' + url + '失败,信息如下：');
         console.error(e);
     })
 }
