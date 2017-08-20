@@ -1,6 +1,6 @@
-# vue-pug-basic
+## vue-pug-basic
 
-> vue pug sass
+> vue-cli pug sass
 
 ## Build Setup
 

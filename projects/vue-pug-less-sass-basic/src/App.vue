@@ -1,6 +1,5 @@
 <template lang="pug">
     #app
-        img(src="./assets/logo.png")
         router-view
 </template>
 
@@ -10,18 +9,12 @@
     }
 </script>
     
-<style lang="less">
-    body{
-        background: red;
-        #app {
-            font-family: 'Avenir', Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 60px;
-        }
-    }
+<style lang="sass">
+    @import './assets/reset.sass'
+
+    #app
+        margin: 0 auto;
+
 </style>
     
     
