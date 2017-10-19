@@ -1,0 +1,171 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+	<div class="ctn">
+		<div class="top">
+			<img src="img/paopaologo@2x.png" alt="" class="logo"/>
+			<img src="img/healthlogo@2x.png" alt="" class="logo"/>
+			<img src="img/qingchaunglogo@2x.png" alt="" class="logo"/>
+		</div>
+
+		<div class="center">
+			<div class="num">已有{{people}}集齐</div>
+			<h4>跑国庆，集卡片</h4>
+			<h5>赢取国庆伴手礼或马拉松报名补贴</h5>
+			<img :src="showImg" alt="" class="show-img">
+			<!-- <img src="img/yifu@2x.png" alt="" class="icon icon1"/>
+			<img src="img/majiang@2x.png" alt="" class="icon"/> -->
+		</div>
+
+		<div class="btm">
+			<div>
+				<div class="">
+					<img src="img/1.png" alt="" v-if="choose1" @click="showImg='img/1.png'"/>
+					<img src="img/10.png" alt="" v-else="choose1" @click="showImg='img/10.png'"/>
+					<div class="red" v-if="num1>0">{{num1}}</div>
+				</div>
+				<div class="">
+					<img src="img/2.png" alt="" v-if="choose2" @click="showImg='img/2.png'"/>
+					<img src="img/20.png" alt="" v-else="choose2" @click="showImg='img/20.png'"/>
+					<div class="red" v-if="num2>0">{{num2}}</div>
+				</div>
+				<div class="">
+					<img src="img/3.png" alt="" v-if="choose3" @click="showImg='img/3.png'"/>
+					<img src="img/30.png" alt="" v-else="choose3" @click="showImg='img/30.png'"/>
+					<div class="red" v-if="num3>0">{{num3}}</div>
+				</div>
+				<div class="">
+					<img src="img/4.png" alt="" v-if="choose4" @click="showImg='img/4.png'"/>
+					<img src="img/40.png" alt="" v-else="choose4" @click="showImg='img/40.png'"/>
+					<div class="red" v-if="num4>0">{{num4}}</div>
+				</div>
+				<div class="">
+					<img src="img/5.png" alt="" v-if="choose4" @click="showImg='img/5.png'"/>
+					<img src="img/50.png" alt="" v-else="choose4" @click="showImg='img/50.png'"/>
+					<div class="red" v-if="num5>0">{{num5}}</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+
+	<style>
+		body{
+			margin: 0;
+			padding: 0;
+			background: #eee;
+			overflow: hidden;
+		}
+		.logo{
+			display: inline-block;
+			height: 1rem;
+			margin-top: 1rem;
+		}
+		.center{
+			text-align: center;
+			position: relative;
+		}
+		.center .num{
+            position: absolute;
+            top: -2rem;
+            right: -1rem;
+            text-align: center;
+            line-height: 1.5rem;
+            padding: 0 1.2rem 0 0.5rem;
+            font-size: 0.7rem;
+            background: red;
+            color: #fff;
+            border-radius: 1rem;
+        }
+		.center .show-img{
+			width: 50%;
+			margin-top: 1rem;
+		}
+		.center .icon{
+			width: 10%;
+			bottom: 0;
+			position: absolute;
+			left: 2%;
+		}
+		.center .icon1{
+			width: 20%;
+			bottom: 5rem;
+		}
+		h4{
+			margin: 1rem;
+		}
+		h5{
+			margin: 0.5rem;
+		}
+		.btm{
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			background: #fff;
+			overflow: hidden;
+			padding: 2% 0;
+		}
+		.btm{
+			overflow: auto;
+		}
+		.btm >div{
+			width: 125%;
+			padding: 0 2%;
+			overflow: hidden;
+		}
+		.btm >div >div{
+			width: 19%;
+			margin: 0.5rem 0.5%;
+			float: left;
+			left: 0;
+			position: relative;
+		}
+		.btm img{
+			width: 100%;
+		}
+		.btm >div .red{
+			position: absolute;
+			width: 1rem;
+			height: 1rem;
+			line-height: 1rem;
+			text-align: center;
+			background: red;
+			color: #FFF;
+			top: -0.5rem;
+			right: -0.1rem;
+			border-radius: 0.5rem;
+			font-size: 0.8rem;
+		}
+		::-webkit-scrollbar{
+			display: none;
+		}
+	</style>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '.ctn',
+			data: {
+				showImg: 'img/1.png',
+				choose1: false,
+				choose2: false,
+				choose3: false,
+				choose4: false,
+				num1: 0,
+				num2: 0,
+				num3: 0,
+				num4: 0,
+				num5: 0,
+				people: 12345
+			}
+		})
+
+	</script>
+
+
+</body>
+</html>

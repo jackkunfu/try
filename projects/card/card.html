@@ -12,6 +12,7 @@
 		</div>
 
 		<div class="center">
+            <div class="num">已有{{people}}集齐</div>
 			<h4>跑国庆，集四川</h4>
 			<h5>集齐四种"川"字赢取专业跑T</h5>
 			<img :src="showImg" alt="" class="show-img">
@@ -20,7 +21,12 @@
 		</div>
 
 		<div class="btm">
-			<div class="">
+            <div v-for="(item, i) in arr">
+                <img :src="item.image" alt="" v-if="item.cardNum>0" @click="showImg=item.image"/>
+                <img :src="item.grayImage" alt="" v-else="item.cardNum>0" @click="showImg=item.grayImage"/>
+                <div class="red" v-if="item.cardNum>0">{{item.cardNum}}</div>
+            </div>
+			<!-- <div class="">
 				<img src="img/6.png" alt="" v-if="choose1" @click="showImg='img/6.png'"/>
 				<img src="img/60.png" alt="" v-else="choose1" @click="showImg='img/60.png'"/>
 				<div class="red" v-if="num1>0">{{num1}}</div>
@@ -39,24 +45,45 @@
 				<img src="img/9.png" alt="" v-if="choose4" @click="showImg='img/9.png'"/>
 				<img src="img/90.png" alt="" v-else="choose4" @click="showImg='img/90.png'"/>
 				<div class="red" v-if="num4>0">{{num4}}</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
 
 	<style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #eee;
+            overflow: hidden;
+
+        }
 		.logo{
 			display: inline-block;
-			height: 1.5rem;
+			height: 1rem;
 			margin-top: 1rem;
 		}
 		.center{
 			text-align: center;
 			position: relative;
 		}
+        .center .num{
+            position: absolute;
+            top: -2rem;
+            right: -1rem;
+            text-align: center;
+            line-height: 1.5rem;
+            padding: 0 1.2rem 0 0.5rem;
+            font-size: 0.7rem;
+            background: red;
+            color: #fff;
+            border-radius: 1rem;
+        }
 		.center .show-img{
-			width: 50%;
+			max-width: 50%;
 			margin-top: 1rem;
+            height: 16rem;
+            border: none;
 		}
 		.center .icon{
 			width: 10%;
@@ -68,9 +95,12 @@
 			width: 20%;
 			bottom: 5rem;
 		}
-		h4, h5{
-			margin: 0.5rem;
-		}
+		h4{
+            margin: 1rem;
+        }
+        h5{
+            margin: 0.5rem;
+        }
 		.btm{
 			position: fixed;
 			bottom: 0;
@@ -109,16 +139,73 @@
 		new Vue({
 			el: '.ctn',
 			data: {
-				showImg: 'img/6.png',
-				choose1: false,
-				choose2: false,
-				choose3: false,
-				choose4: false,
-				num1: 1,
-				num2: 0,
-				num3: 0,
-				num4: 0
-			}
+                arr: [],
+				showImg: '',
+				// choose1: false,
+				// choose2: false,
+				// choose3: false,
+				// choose4: false,
+				// num1: 0,
+				// num2: 0,
+				// num3: 0,
+				// num4: 0,
+                people: 12345
+			},
+            mounted(){
+                var _this = this;
+
+                _this.arr = [{
+                    "id": "1",
+                    "createDate": "2017-09-19 17:24:07",
+                    "name": "川1",
+                    "image": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807689588.png",
+                    "grayImage": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807661837.png",
+                    "url": "111",
+                    "awardId": 1,
+                    "num": 100,
+                    "cardNum": 2
+                },
+                {
+                    "id": "2",
+                    "createDate": "2017-09-19 17:24:22",
+                    "name": "川2",
+                    "image": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807661837.png",
+                    "grayImage": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807800224.png",
+                    "url": "22",
+                    "awardId": 1,
+                    "num": 200,
+                    "cardNum": 4
+                },
+                {
+                    "id": "3",
+                    "createDate": "2017-09-19 17:24:33",
+                    "name": "川3",
+                    "image": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906299.png",
+                    "grayImage": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906335.png",
+                    "url": "3",
+                    "awardId": 1,
+                    "num": 300,
+                    "cardNum": 4
+                },
+                {
+                    "id": "4",
+                    "createDate": "2017-09-19 17:24:44",
+                    "name": "川4",
+                    "image": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906321.png",
+                    "grayImage": "http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906908.png",
+                    "url": "33",
+                    "awardId": 1,
+                    "num": 400,
+                    "cardNum": 7
+                }]
+
+
+
+
+                _this.showImg = _this.arr[0].cardNum > 0 ? _this.arr[0].image : _this.arr[0].grayImage;
+
+                
+            }
 		})
 
 	</script>

@@ -1,0 +1,268 @@
+
+
+
+
+
+
+
+
+
+<script src="https://lkme.cc/js/linkedme.min.js" ></script>
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link id="skin" rel="stylesheet" href="http://www.hpaopao.com/static/jBox/jBox.css"/>
+    <!-- <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>   -->
+    <script src="https://cdn.bootcss.com/avalon.js/2.0s/avalon.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="/static/jquery/jquery-1.9.1.min.js"></script> -->
+    <script type="text/javascript" src="http://www.hpaopao.com/static/jBox/jBox.min.js"></script>
+    <title>基本卡片收集页</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #eee;
+            overflow: hidden;
+            z-index: -1;
+            position:absolute;
+            width:100%;
+            height:100%;
+        }
+        
+        .shade{
+            width:100%; height:100%; background:rgba(0,0,0,0.6); border:0; z-index:100; position:static; display:none;
+         }
+         .shade img{width:260px; height:376px;}
+        .ctn{min-width:290px !important; max-width:660px !important; height:auto;  margin:auto; z-index:-1; position:absolute;}
+        .logo{
+            display: inline-block;
+            height: 1rem;
+            margin-top: 1rem;
+            margin-left:0.86rem;
+        }
+        .center{
+            text-align: center;
+            position: relative;
+        }
+        .center .num{
+            position: absolute;
+            top: -2rem;
+            right: -0.28rem;
+            text-align: center;
+            line-height: 1.5rem;
+            padding: 0 1.2rem 0 0.5rem;
+            font-size: 0.7rem;
+            background: red;
+            color: #fff;
+            border-radius: 1rem  0  0 1rem;
+        }
+        .activity-deatil{
+            width:40%; height:0.86rem; margin:auto; border:0;
+        }
+        .activity-deatil label{
+            width:49%; height:0.86rem; line-height:0.86rem; display:inline-block;  color:#2dc9d7; font-size:0.66rem;
+        }
+        .activity-deatil label a{ text-decoration:none; color:#2dc9d7;  }
+        .label-left{float:left; border-right:1px solid #2dc9d7;}
+        .label-right{float:right;}
+        .center .show-img{
+            width: 41%;
+            margin-top: 0.66rem;
+        }
+        .center .icon{
+            width: 12.6%;
+            bottom: 0;
+            position: absolute;
+            left: 2.6%;
+        }
+        .center .icon1{
+            width: 20%;
+            bottom: 5rem;
+        }
+        .center .icon10{
+            width: 20.6%;
+            bottom: 8.26rem;
+            left: 2.86%;
+            border:0;
+        }
+        h4{
+            margin: 0.86rem;
+            font-size:1.26rem; 
+        }
+        h5{
+            margin: 0.5rem;
+            font-size:0.96rem;
+        }
+        .btm{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            max-width:66rem;            
+            background: #fff;
+            overflow: hidden;
+            padding: 2%;    
+            margin:auto;         
+        }
+        .btm >div{
+            width: 22%;
+            margin: 0.5rem 1%;
+            float: left;
+            left: 0;
+            position: relative;
+        }
+        .btm img{
+            width: 100%;
+        }
+        .btm >div .red{
+            position: absolute;
+            min-width:1rem;
+            min-height:1rem;
+            width: auto;
+            height: auto;
+            line-height: 1rem;
+            text-align: center;
+            background: red;
+            color: #FFF;
+            top: -0.5rem;
+            right: -0.1rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            border:2px solid #ffffff;;
+        }
+        .display-show{ display:block;}
+        .display-none{ display: none;}
+    </style>
+</head>
+<body>
+    <div class="ctn" id="content-id">
+        <div class="top">
+            <img src="/static/activity/images/paopaologo@2x.png" alt="" class="logo"/>
+            <img src="/static/activity/images/healthlogo@2x.png" alt="" class="logo"/>
+            <img src="/static/activity/images/qingchaunglogo@2x.png" alt="" class="logo"/>
+        </div>
+
+        <div class="center">
+            <div class="num">已有{{people}}人集齐</div>
+            <h4>跑国庆，集四川</h4>
+            <h5>集齐四种"川"字赢取专业跑T</h5>
+            <div class="activity-deatil"> 
+               <label class="label-left"><a href="/activity/enroll-info/120128079552061440/116541420868730880">查看记录</a></label> <label class="label-right"><a href="/activity/activity-detail/116541420868730880">活动规则</a></label>
+            </div>
+            <!-- <img :src="showImg" alt="" class="show-img"> -->
+            
+               
+                  <img src="/static/activity/images/lingqu.png" alt="" class="icon icon10" />   
+                  <img src="/static/activity/images/clothing0.png" alt="" class="icon icon1" id="mergeCard"/>
+               
+               
+                                
+            <img src="/static/activity/images/majiang@2x.png" alt="" class="icon" id="activity-award"/>
+        </div>
+
+        <!-- <div class="btm" id="bottom-id">
+            <div v-for="(item, i) in arr">
+                <img :src="item.image" alt="" v-if="item.cardNum>0" ms-click="showImg(image)"/>
+                <img :src="item.grayImage" alt="" v-else="item.cardNum>0" ms-click="showImg(grayImage)"/>
+                <div class="red" v-if="item.cardNum>0">{{item.cardNum}}</div>
+            </div>          
+        </div> -->
+    </div>  
+    <div class="shade display-none" id="shadediv">
+        <img src="/static/activity/images/merge-card.png" id="shade-iamge"/>
+    </div>  
+    <script type="text/javascript">
+        // var _this;
+        var vm = avalon.define({
+            $id: "content-id",
+            arr: [{"id":"1","createDate":"2017-09-19 17:24:07","name":"川1","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807689588.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807661837.png","url":"111","awardId":1,"num":3500,"repeat":true,"type":1,"cardNum":0},{"id":"2","createDate":"2017-09-19 17:24:22","name":"川2","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807799848.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807800224.png","url":"22","awardId":1,"num":2000,"repeat":true,"type":1,"cardNum":0},{"id":"3","createDate":"2017-09-19 17:24:33","name":"川3","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906299.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906335.png","url":"3","awardId":1,"num":3000,"repeat":true,"type":1,"cardNum":0},{"id":"4","createDate":"2017-09-19 17:24:44","name":"川4","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906321.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906908.png","url":"33","awardId":1,"num":50,"repeat":true,"type":1,"cardNum":0}],
+            showImg: '',
+            people: 0,
+            showImg: function(img){
+                vm.showImg = img;
+            }
+        })
+        // new Vue({
+        //     el: '.ctn',
+        //     data: {
+        //         arr: [],
+        //         showImg: '',
+        //         people: 0
+        //     },
+        //     mounted(){
+        //         _this = this;                
+        //         _this.arr=[{"id":"1","createDate":"2017-09-19 17:24:07","name":"川1","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807689588.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807661837.png","url":"111","awardId":1,"num":3500,"repeat":true,"type":1,"cardNum":0},{"id":"2","createDate":"2017-09-19 17:24:22","name":"川2","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807799848.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807800224.png","url":"22","awardId":1,"num":2000,"repeat":true,"type":1,"cardNum":0},{"id":"3","createDate":"2017-09-19 17:24:33","name":"川3","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906299.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906335.png","url":"3","awardId":1,"num":3000,"repeat":true,"type":1,"cardNum":0},{"id":"4","createDate":"2017-09-19 17:24:44","name":"川4","image":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906321.png","grayImage":"http://paopao-image.oss-cn-beijing.aliyuncs.com/image/marathonEvent/2017/09/1504807906908.png","url":"33","awardId":1,"num":50,"repeat":true,"type":1,"cardNum":0}];          
+
+        //         _this.showImg = _this.arr[0].cardNum > 0 ? _this.arr[0].image : _this.arr[0].grayImage;
+                
+        //     }
+        // })
+
+        $(function(){
+            
+            var screen_width=$(document).width(); 
+            var screen_height=$(document).height();
+            var content_width=$('#content-id').innerWidth();
+            var bottom_width=$('#bottom-id').innerWidth();
+            var iamge_width=$('#shade-iamge').innerWidth();
+            var iamge_Height=$('#shade-iamge').innerHeight();
+            document.getElementById("content-id").style.marginLeft=((screen_width-content_width)/2)+"px";
+            document.getElementById("shade-iamge").style.marginLeft=((screen_width-iamge_width)/2)+"px";
+            document.getElementById("shade-iamge").style.marginTop=((screen_height-iamge_Height)/3.6)+"px"; 
+            
+            $('#activity-award').click(function(){
+                location.href="/activity/card-award/116541420868730880/120128079552061440/1/2";
+            });
+            
+            $('#mergeCard').click(function(){
+                var flag=true;
+                for(var ke in _this.arr){
+                    if(!(_this.arr[ke].cardNum>0)){
+                        flag=false;
+                        break;
+                    }
+                }
+                if(flag){
+                    $.ajax({
+                        type:'GET',
+                        url:'/activity/merge-card/120128079552061440',
+                        success:function(data){
+                            console.log(data);
+                            if(data.code == 1){
+                                $('#shadediv').show();
+                            }
+                        }
+                    });
+                }else{                  
+                    tipmsg("还未集齐所有卡片,继续加油！");
+                }
+            });
+            
+            $('#shade-iamge').click(function(){
+                $('#shadediv').hide();
+                location.reload();
+            });
+        });
+        
+         function tipmsg(info){
+                var myModal = new jBox('Modal', {
+                    title:'<div style="width:100%;height:66%;font-size:1.06rem;border:0; text-align: center;">提示信息</div>',
+                    content: '<div style="width:100%;height:100%;font-size:1rem;border:0;text-align:center;">'+info+'</div>',
+                    width: 250,
+                    height: 80
+                });          
+                myModal.open();
+                setTimeout(function(){myModal.close();},2060);
+            }
+    </script>
+
+
+</body>
+</html>
