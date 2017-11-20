@@ -1,0 +1,216 @@
+@import './styleCom.sass'
+
+*
+    box-sizing: border-box;
+
+body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure, figcaption
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-style: normal;
+    text-decoration: none;
+    border: none;
+    font-family: "Microsoft Yahei",sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    &:focus
+        outline: none;
+
+html, body
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+
+a
+    text-decoration: none;
+    color: $color_6;
+    cursor: pointer;
+
+.clear:after
+    content: '';
+    display: block;
+    clear: both;
+
+.clear
+    zoom: 1;
+
+.back_img
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+.margin
+    margin: 0 auto;
+
+.left
+    float: left;
+
+.right
+    float: right;
+
+.hide
+    display: none;
+
+.show
+    display: block;
+
+.ellipsis
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+.el-menu--horizontal .el-submenu .el-submenu__title,
+.el-menu--horizontal .el-menu-item
+    height: 48px!important;
+    line-height: 48px!important;
+
+.table-main
+    padding-right: 30px;
+    margin-left: 150px;
+    overflow: auto;
+    height: 100%;
+    &.no-nav
+        margin-left: 30px;
+
+.page-title
+    font-size: $font_3;
+    font-weight: bold;
+    line-height: 1;
+    color: $color_5;
+    padding: 24px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e0e6ed;
+
+.edit-ctn
+    .form-ctn
+        width: 440px;
+        &.long
+            width: 100%;
+        .transfer-item
+            width: 540px;
+        .el-input__inner, .el-textarea
+            width: 360px;
+        .el-date-editor
+            .el-input__inner
+                width: auto;
+                padding-right: 0;
+        .line
+            text-align: center;
+        .el-form-item__label
+            color: $color_3;
+            padding-right: 20px;
+        .el-upload-dragger
+            margin-bottom: 30px;
+        .el-button
+            width: 180px;
+        .el-transfer__buttons
+            button
+                width: auto;
+        .edit-address
+            input
+                width: 116px;
+                margin-right: 4px;
+        .edit-map
+            .el-input
+                width: 228px;
+                margin-right: 12px;
+
+                input
+                    width: 228px;
+            .el-button
+                width: 120px;
+        .business-time
+            .el-date-editor.el-input
+                width: 360px;
+                input
+                    width: 360px;
+        .address-input
+            .el-button
+                width: 60px;
+            .el-input
+                width: 280px;
+                margin-right: 20px;
+                input
+                    width: 280px;
+
+
+
+
+        // 带有append的输入框的el-input加的样式
+        .input-append
+            input
+                width: 310px;
+    .sure
+        width: 180px;
+        height: 36px;
+        border-radius: 4px;
+        background-color: #20a0ff;
+        color: #fff;
+        text-align: center;
+        line-height: 36px;
+        margin-top: 20px;
+        margin-left: 80px;
+        cursor: pointer;
+
+.table-ctn
+    .search-ctn
+        margin-bottom: 30px;
+        .el-form-item
+            margin-right: 30px;
+            &:last-child
+                margin-right: 0;
+            .el-input__inner
+                width: 210px;
+        .reset-form
+            margin: 0 25px;
+        .el-button
+            width: 120px;
+        .el-date-editor
+            .el-input__inner
+                width: auto;
+                padding-right: 0;
+        .search-time
+            .el-form-item__content
+                width: 370px;
+                .el-col-11
+                    margin-right: 10px;
+
+.border-line
+    width: 100%;
+    height: 1px;
+    background: #eff2f7;
+    margin-bottom: 24px;
+
+.edit-address
+    .address
+        select
+            width: 115px;
+            height: 36px;
+            border-radius: 4px;
+            border: 1px solid #bfcbd9;
+            margin-right: 2px;
+
+.el-button+.el-button
+    margin-left: 0;
+.el-button
+    margin-right: 10px;
+.right-btn
+    margin-right: 0px;
+.goBack
+    display: inline-block;
+    color: #20a0ff;
+    padding: 15px;
+    cursor: pointer;
+    position: relative;
+    left: 20px;
+    top: -5px;
+
+.radio-input
+    input
+        width: 200px!important;
+.el-transfer-panel__item .el-checkbox__input
+    z-index: 0;
+.el-checkbox+.el-checkbox,.el-checkbox,.el-transfer-panel
+    z-index: 0;
+
+.el-transfer-panel__list
+    padding: 0 0 36px!important;
