@@ -1,10 +1,18 @@
-// import Router from "react-router/Route";
+// import App from './App';
+// import Index from './page/index';
+//
+// export default {
+//     path: '/',
+//     component: App,
+//     childRoutes: [
+//         {path: 'a', component: Index}
+//     ]
+// }
 
-import { Router, Route, hashHistory } from 'react-router';
-import index from './page/index.js'
+import App from './App'
+import index from './page/index'
 
-export default (<Router history={hashHistory}>
-    <Route path="/" component={index}/>
-    {/* <Route path="/repos" component={Repos}/>
-    <Route path="/about" component={About}/> */}
-  </Router>)
+export {
+    App,
+    index
+}
