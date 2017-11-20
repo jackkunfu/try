@@ -24,8 +24,11 @@
         }
 
         document.getElementById('file').addEventListener('change',function(){
+            alert(1)
             var file = document.getElementById('file').files[0];
             baseToBlob(file, function(data){
+                alert(JSON.stringify(data))
+                console.log(data);
                 var formData = new FormData();
                 formData.append("upfile", data);
                 $.ajax({
@@ -39,7 +42,6 @@
                         alert(JSON.stringify(data));
                     },
                     error: function(data) {
-                        aliPayNative.loading(true);
                         // alert("图片过大，上传出错"+JSON.stringify(data));
                         alert('图片过大，上传失败，1M以内');
                     }
@@ -49,18 +51,25 @@
 
 
         function baseToBlob(file, cb) {
+            alert(2)
             var reader = new FileReader();
             reader.onload = function() {
+                alert(4)
                 var img = new Image();
+                alert(this.result)
                 img.src = this.result;
                 if (img.complete) {
+                    alert(5)
                     callback();
                 } else {
+                    alert(6)
                     img.onload = callback;
                 }
 
                 function callback() {
+                    alert(3)
                     var baseData = compress(img, 0.1);
+
                     alert('开始转blob')
                     cb(dataURLtoBlob(baseData));
                 }
