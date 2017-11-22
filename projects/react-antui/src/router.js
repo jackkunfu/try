@@ -29,7 +29,7 @@ import Login from './page/login'
 class Ru extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <Router>
               <div>
                   <App>
                     <Route exact path="/" component={index} />
@@ -40,7 +40,7 @@ class Ru extends Component {
                   </Login>
               </div>
 
-            </BrowserRouter>
+            </Router>
         )
     }
 }
