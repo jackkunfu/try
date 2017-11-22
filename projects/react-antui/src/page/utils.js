@@ -6,6 +6,11 @@ export default class Utils extends Component{
     // }
 
     selfReq(type, url, options){
+        // fetch api 暂时无法处理传参
+        // return fetch(config.baseUrl + url, {
+        //     method: type,
+        //     body: options
+        // })
         return new Promise(function(r, j){
             var xhr = new XMLHttpRequest();
             
