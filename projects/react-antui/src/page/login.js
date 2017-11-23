@@ -20,10 +20,13 @@ export default class Login extends Utils {
     }
 
     async handleSubmit(){
+        alert(1)
         var req = await this.ajax('get', '/login', {
             mobile: this.refs.mobile.refs.input.value,
             password: this.refs.password.refs.input.value
         })
+        console.log(req)
+        alert(2)
         if(req){
             if(req.success){
                 window.location = '/';
@@ -35,7 +38,6 @@ export default class Login extends Utils {
         return(
             <div>
                 <h1>Login</h1>
-                <button onClick={this.handleSubmit.bind(this)}>ghjk</button>
                 <Form layout="inline">
                     <FormItem>
                         <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="text" placeholder="用户名" ref="mobile"/>

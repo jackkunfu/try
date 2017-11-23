@@ -14,11 +14,12 @@ export default class NavLeft extends Component {
 
     makeNav(){
         return this.props.navs.map((v, i)=>{
+            // console.log(v);
             var sub = v.lists.map((r, j)=>{
-                return(<Menu.Item key="{i+'-'+j}">{r.name}</Menu.Item>)
+                return(<Menu.Item key="{i+'-'+j}">{r.permissionName}</Menu.Item>)
             })
             return(
-                <SubMenu key="sub1" title={<span><Icon type="mail" /><span>{v.name}</span></span>}>
+                <SubMenu key="sub1" title={<span><Icon type="mail" /><span>{v.permissionName}</span></span>}>
                     {sub}
                 </SubMenu>
             )
@@ -26,7 +27,6 @@ export default class NavLeft extends Component {
     }
 
     render(){
-        console.log(this)
         return (
             <Menu
                 onClick={this.handleClick}

@@ -1,23 +1,22 @@
 import config from '../config'
-import { Component } from 'react';
+import { Component } from 'react'
+
+import { message } from 'antd'
+
 export default class Utils extends Component{
     // constructor(){
     //     super()
     // }
 
-    selfReq(type, url, options){
-        // fetch api 暂时无法处理传参
-        // return fetch(config.baseUrl + url, {
-        //     method: type,
-        //     body: options
-        // })
+    async selfReq(type, url, options){
+        var _this = this;
         return new Promise(function(r, j){
             var xhr = new XMLHttpRequest();
-            
+
             xhr.withCredentials = true; //支持跨域发送cookies
-            
+
             if(type.toLowerCase() == 'get'){
-                console.log(options)
+                // console.log(options)
                 var reqUrl = config.baseUrl + url;
 
                 if(options){
@@ -33,18 +32,30 @@ export default class Utils extends Component{
                 xhr.open(type, reqUrl, true);
                 xhr.send(null);
             }else{
+                console.log(options)
                 xhr.open(type, config.baseUrl + url, true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(options || null);
+                var s = '', l = 0 ;
+                if(options){
+                    for(var i in options){
+                        if(options.hasOwnProperty(i)){
+                            s += i+'='+options[i]+'&'
+                        }
+                    }
+                    l = s.length;
+                }
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send(s.substr(0, l-1));
             }
 
             xhr.onreadystatechange = function(){
                 if(xhr.readyState === 4){
                     if(xhr.status === 200){
                         var data = JSON.parse(xhr.responseText)
-                        console.log(data)
+                        // console.log(data)
                         if(data.msgCode == '-2'){
-                            // window.location.href = "/login"
+                            alert(data.msgCode)
+                            message.error(data.msgCode);
+                            _this.props.history.push('login');
                         }
                         r(data);
                     }else{
@@ -60,7 +71,7 @@ export default class Utils extends Component{
         try{
             data = await this.selfReq(type, url, options)
         }catch(e){
-            throw new Error(e);
+            console.log(e)
         }
         return data;
     }

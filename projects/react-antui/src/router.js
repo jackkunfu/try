@@ -32,14 +32,10 @@ class Ru extends Component {
             <Router>
               <div>
                   <App>
-                    <Route exact path="/" component={index} />
-                    <Route path="index" component={index} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/" component={index}/>
                   </App>
-                  <Login>
-                    <Route exact path="/" component={Login} />
-                  </Login>
               </div>
-
             </Router>
         )
     }
