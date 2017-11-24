@@ -32,7 +32,6 @@ class Index extends Utils {
         }else{
             return []
         }
-
     }
 
     onJump(v){
@@ -50,6 +49,7 @@ class Index extends Utils {
             <div>
                 {/* <h1>Index</h1> */}
                 <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)}></NavLeft>
+                {this.props.children}
             </div>
         )
     }

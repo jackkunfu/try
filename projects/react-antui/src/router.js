@@ -19,22 +19,17 @@ import {
 import App from './App'
 import index from './page/index'
 import Login from './page/login'
-
-// export {
-//     App,
-//     index
-// }
-
+// const saLog = r => require.ensure([], () => r(require('./page/saas/log.js')), 'saas');
+import saLog from './page/saas/log'
 class Ru extends Component {
     render() {
         return (
             <Router>
-              <div>
-                  <App>
+                <App>
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/" component={index}/>
-                  </App>
-              </div>
+                    <Route exact path="/sa-log" component={saLog}/>
+                </App>
             </Router>
         )
     }
