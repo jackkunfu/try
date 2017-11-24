@@ -1,6 +1,6 @@
 
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React from 'react';
+// import { Link } from 'react-router-dom'
 import NavLeft from './part/navLeft'
 
 import Utils from './utils'
@@ -15,15 +15,12 @@ class Index extends Utils {
 
     async getNavs(){
         var req = await this.ajax('get', '/permission/homeList')
-        // console.log(req);
-        // return req ? req.model.leftList : [];
         if(req){
             var level1 = req.model.topList
             var data = await Promise.all(
                 level1.map(async (v) => {
                     if(v.linkUrl){
                         v.lists = [];
-                        console.log(v.linkUrl)
                         return v;
                     }
                     var l2 = await this.ajax('post', '/permission/itemList', {parentId: v.id})
@@ -31,8 +28,6 @@ class Index extends Utils {
                     return v
                 })
             )
-            console.log('alldata')
-            console.log(data)
             return data
         }else{
             return []
@@ -40,18 +35,21 @@ class Index extends Utils {
 
     }
 
+    onJump(v){
+        this.props.history.push('/'+v)
+    }
+
     async componentDidMount(){
         this.setState({
             navs: await this.getNavs()
         })
-        // this.state.navs = await this.getNavs();
     }
 
     render(){
         return (
             <div>
-                <h1>Index</h1>
-                <NavLeft navs={this.state.navs}></NavLeft>
+                {/* <h1>Index</h1> */}
+                <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)}></NavLeft>
             </div>
         )
     }

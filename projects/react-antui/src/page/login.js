@@ -20,16 +20,13 @@ export default class Login extends Utils {
     }
 
     async handleSubmit(){
-        alert(1)
         var req = await this.ajax('get', '/login', {
             mobile: this.refs.mobile.refs.input.value,
             password: this.refs.password.refs.input.value
         })
-        console.log(req)
-        alert(2)
         if(req){
             if(req.success){
-                window.location = '/';
+                this.props.history.push('/')
             }
         }
     }
