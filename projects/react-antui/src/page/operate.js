@@ -37,8 +37,8 @@ export default class Base extends Utils {
         this.opStaticData.searchMsg.page = page;
         var res = await this.ajax(this.state.api.list.type, this.state.api.list.url, this.opStaticData.searchMsg)
         console.log(res);
-        this.setState({
-            tableData: res && res.model ? res.model : []
+        res && res.model && res.model.length>0 && this.setState({
+            tableData: res.model
         })
         return res && res.model ? res.model : []
         // var res = await this.request('list', this.searchMsg, true);

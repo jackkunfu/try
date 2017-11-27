@@ -1,13 +1,11 @@
-
 import React from 'react';
-// import { Link } from 'react-router-dom'
-import NavLeft from './part/navLeft'
-
 import Utils from './utils'
 
-class Index extends Utils {
-    constructor(){
-        super();
+import NavLeft from './part/navLeft'
+
+class Saas extends Utils {
+    constructor(props){
+        super(props);
         this.state = {
             navs: []
         }
@@ -35,24 +33,31 @@ class Index extends Utils {
     }
 
     onJump(v){
-        this.props.history.push('/'+v)
+        this.props.hy.push('/'+v)
     }
 
     async componentDidMount(){
-        this.setState({
-            navs: await this.getNavs()
-        })
+        var navs = await this.getNavs();
+        if(navs && navs.length>0){
+            this.setState({
+                navs: await this.getNavs()
+            })
+        }
     }
 
     render(){
         return (
-            <div>
-                {/* <h1>Index</h1> */}
-                <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)}></NavLeft>
-                {this.props.children}
+            <div className="main" style={{position:'relative'}}>
+                <div className="ml" style={{position:'absolute'}}>
+                    <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)}></NavLeft>
+                </div>
+                
+                <div className="mr" style={{margin:'0 10px 0 250px'}}>
+                    {this.props.children}
+                </div>
             </div>
         )
     }
 }
 
-export default Index
+export default Saas

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
+// import './sass/base.sass'
 
 export default class App extends Component {
-// export default class App extends Utils {
+  // constructor(props){
+  //   super(props)
+  // }
 
   render() {
     return (
       <div>
-        {/* <h1>App</h1> */}
         {this.props.children}
       </div>
     );

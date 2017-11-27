@@ -34,7 +34,6 @@ export default class Login extends Utils {
     render(){
         return(
             <div>
-                <h1>Login</h1>
                 <Form layout="inline">
                     <FormItem>
                         <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="text" placeholder="用户名" ref="mobile"/>

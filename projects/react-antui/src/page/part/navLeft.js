@@ -5,8 +5,8 @@ const SubMenu = Menu.SubMenu;
 // const MenuItemGroup = Menu.ItemGroup
 
 export default class NavLeft extends Component {
-    // constructor(){
-    //     super()
+    // constructor(props){
+    //     super(props)
     // }
 
     handleClick(e){

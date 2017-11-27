@@ -1,14 +1,3 @@
-// import App from './App';
-// import Index from './page/index';
-//
-// export default {
-//     path: '/',
-//     component: App,
-//     childRoutes: [
-//         {path: 'a', component: Index}
-//     ]
-// }
-
 import React, { Component } from 'react';
 
 import {
@@ -17,9 +6,9 @@ import {
 } from 'react-router-dom'
 
 import App from './App'
-import index from './page/index'
+import Saas from './page/saas'
 import Login from './page/login'
-// const saLog = r => require.ensure([], () => r(require('./page/saas/log.js')), 'saas');
+
 import saLog from './page/saas/log'
 class Ru extends Component {
     render() {
@@ -27,8 +16,21 @@ class Ru extends Component {
             <Router>
                 <App>
                     <Route exact path="/login" component={Login} />
-                    <Route exact path="/" component={index}/>
-                    <Route exact path="/sa-log" component={saLog}/>
+                    {/* <Route exact path="/" component={Index}/> */}
+                    {/* <Route exact path="/sa-log" component={saLog}/> */}
+                    <Route path="/" children={
+                        ({ match, history }) => {
+                            console.log(match)
+                            console.log(history)
+                            return (
+                                <Saas hy={history}>
+                                    {/* <Route exact path={`${match.url}`} component={Saas}/> */}
+                                    <Route exact path="/" component={Saas}/>
+                                    <Route path={`${match.url}sa-log`} component={saLog}/>
+                                </Saas>
+                            )
+                        }
+                    }/>
                 </App>
             </Router>
         )
@@ -72,6 +74,4 @@ class Ru extends Component {
 //         )
 //     }
 // }
-
-
 export default Ru
