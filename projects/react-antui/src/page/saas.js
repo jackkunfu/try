@@ -42,6 +42,9 @@ class Saas extends Utils {
             this.setState({
                 navs: await this.getNavs()
             })
+            this.refs.op.setState({
+                navs: await this.getNavs()
+            })
         }
     }
 
@@ -49,7 +52,7 @@ class Saas extends Utils {
         return (
             <div className="main" style={{position:'relative'}}>
                 <div className="ml" style={{position:'absolute'}}>
-                    <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)}></NavLeft>
+                    <NavLeft navs={this.state.navs} onJump={this.onJump.bind(this)} ref="op"></NavLeft>
                 </div>
                 
                 <div className="mr" style={{margin:'0 10px 0 250px'}}>

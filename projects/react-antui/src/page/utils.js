@@ -101,7 +101,7 @@ export default class Utils extends Component{
         try{
             data = await this.selfReq(type, url, options)
         }catch(e){
-            console.log(e)
+            console.error(e)
         }
         return data;
     }

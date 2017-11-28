@@ -1,6 +1,10 @@
 import React from 'react';
 import Operate from '../operate'
+import { opComponent } from '../operate'
 import SelfTable from '../part/table'
+
+console.log('Operate');
+console.log(opComponent);
 
 export default class SaLog extends Operate {
     constructor(){
@@ -30,3 +34,6 @@ export default class SaLog extends Operate {
         )
     }
 }
+
+// 导出高阶组件生成的组件
+export const OpLog = opComponent(SaLog)

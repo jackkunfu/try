@@ -1,5 +1,51 @@
-// import React, { Component } from 'react';
+import React from 'react';
 import Utils from './utils'
+// 尝试高阶组件处理共同逻辑，传参comp是新组件, baseConfig是新组件初始配置
+export const opComponent = (comp, baseConfig) => {
+    return class opComponent extends Utils{
+
+        constructor(props) {
+            super(props)
+            this.state = {
+                curEditing: {},
+                editItem: {},
+                tableData: [],
+                totalPage: null,
+                curPage: 1,
+                isInput: false,
+                curOperate: '新增',
+                searchMsg: {},
+                permissionOpt: ['search', 'add', 'save', 'edit', 'del', 'freeze', 'unbund', 'shelf', 'shop', 'import', 'export'],
+                tabOp: []
+            }
+        }
+        async componentDidMount() {
+            // 初始化列表展示数据
+            var td = await this.tableList(1)
+            td && td.model && td.model.length>0 && this.setState({
+                tableData: td.model
+            })
+        }
+
+        async tableList(page) {
+            // 请求数据
+            this.setState({page: page})
+            var res = await this.ajax(baseConfig.api.list.type, baseConfig.api.list.url, baseConfig.searchMsg || {})
+            console.log(res);
+            res && res.model && res.model.length>0 && this.setState({
+                tableData: res.model
+            })
+            return res && res.model ? res.model : []
+        }
+
+
+        render(){
+            return (
+                <comp {...this.props} oriData={this.state}></comp>
+            )
+        }
+    }
+}
 export default class Base extends Utils {
     constructor(){
         super()
