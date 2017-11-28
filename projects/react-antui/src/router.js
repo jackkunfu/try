@@ -20,8 +20,8 @@ class Ru extends Component {
                     {/* <Route exact path="/sa-log" component={saLog}/> */}
                     <Route path="/" children={
                         ({ match, history }) => {
-                            console.log(match)
-                            console.log(history)
+                            // console.log(match)
+                            // console.log(history)
                             return (
                                 <Saas hy={history}>
                                     {/* <Route exact path={`${match.url}`} component={Saas}/> */}

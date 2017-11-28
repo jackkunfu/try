@@ -4,21 +4,14 @@ import Utils from './utils'
 const FormItem = Form.Item;
 
 export default class Login extends Utils {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             mobile: '',
             password: ''
         }
     }
-
-    getInitialState(){
-        return {
-            mobile: '',
-            password: ''
-        }
-    }
-
+    
     async handleSubmit(){
         var req = await this.ajax('get', '/login', {
             mobile: this.refs.mobile.refs.input.value,
