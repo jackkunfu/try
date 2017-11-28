@@ -36,7 +36,8 @@ require.relative = function (parent) {
 console.log(11)
 
 require.register('2.js', function(modules, exports, require){
-	
+    console.log(require)
+	exports.b = 1;
 })
 var a = require('2.js')
 console.log(a)
