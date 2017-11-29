@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import {
-  BrowserRouter as Router,
-  Route
+  BrowserRouter,
+  Route,
+  Switch
 } from 'react-router-dom'
 
 import App from './App'
@@ -10,29 +11,29 @@ import Saas from './page/saas'
 import Login from './page/login'
 
 import saLog from './page/saas/log'
+import { OpLog } from './page/saas/log'
 class Ru extends Component {
     render() {
         return (
-            <Router>
+            <BrowserRouter>
                 <App>
-                    <Route exact path="/login" component={Login} />
-                    {/* <Route exact path="/" component={Index}/> */}
-                    {/* <Route exact path="/sa-log" component={saLog}/> */}
-                    <Route path="/" children={
-                        ({ match, history }) => {
-                            // console.log(match)
-                            // console.log(history)
-                            return (
-                                <Saas hy={history}>
-                                    {/* <Route exact path={`${match.url}`} component={Saas}/> */}
-                                    <Route exact path="/" component={Saas}/>
-                                    <Route path={`${match.url}sa-log`} component={saLog}/>
-                                </Saas>
-                            )
-                        }
-                    }/>
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route path="/" children={
+                            ({ match, history }) => {
+                                // console.log(match)
+                                // console.log(history)
+                                return (
+                                    <Saas hy={history}>
+                                        <Route exact path={`${match.url}sa-log1`} component={saLog}/>
+                                        <Route exact path={`${match.url}sa-log`} component={OpLog}/>
+                                    </Saas>
+                                )
+                            }
+                        } />
+                    </Switch>
                 </App>
-            </Router>
+            </BrowserRouter>
         )
     }
 }

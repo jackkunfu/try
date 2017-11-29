@@ -1,9 +1,8 @@
 import React from 'react';
 import Utils from './utils'
-// 尝试高阶组件处理共同逻辑，传参comp是新组件, baseConfig是新组件初始配置
-export const opComponent = (comp, baseConfig) => {
-    return class opComponent extends Utils{
-
+// 尝试高阶组件处理共同逻辑，传参Comp是新组件（首字母需要大写，代表组件class）, baseConfig是新组件初始配置
+export const opComponent = (Comp, baseConfig) => {
+    return class extends Utils {
         constructor(props) {
             super(props)
             this.state = {
@@ -28,6 +27,7 @@ export const opComponent = (comp, baseConfig) => {
         }
 
         async tableList(page) {
+            if(!baseConfig.api || !baseConfig.api.list) return [];
             // 请求数据
             this.setState({page: page})
             var res = await this.ajax(baseConfig.api.list.type, baseConfig.api.list.url, baseConfig.searchMsg || {})
@@ -40,9 +40,8 @@ export const opComponent = (comp, baseConfig) => {
 
 
         render(){
-            return (
-                <comp {...this.props} oriData={this.state}></comp>
-            )
+            // 高阶组件直接返回组件标签以及共有数据
+            return <Comp {...this.props} oriData={this.state} />
         }
     }
 }

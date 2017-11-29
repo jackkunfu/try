@@ -5,6 +5,7 @@ import Utils from '../utils'
 export default class SelfTable extends Utils {
     constructor(props){
         super(props);
+        console.log('this.props')
         console.log(this.props)
         this.state = {
             columns: [
@@ -28,11 +29,17 @@ export default class SelfTable extends Utils {
                     dataIndex: 'storeName'
                 }
             ],
-            data: this.props.tableData   //  异步来的数据暂时触发不了这层更新
+            data: this.props.tableData  //  异步来的数据暂时触发不了这层更新
         }
     }
 
     render(){
-        return(<Table columns={this.state.columns} dataSource={this.state.data}></Table>)
+        return <Table columns={this.state.columns} dataSource={this.state.data} />
+    }
+}
+
+export const opTable = class {
+    render(){
+        return <Table columns={this.state.columns} dataSource={this.state.data} />
     }
 }
