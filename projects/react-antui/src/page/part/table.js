@@ -29,12 +29,20 @@ export default class SelfTable extends Utils {
                     dataIndex: 'storeName'
                 }
             ],
-            data: this.props.tableData  //  异步来的数据暂时触发不了这层更新
+            data: this.props.tableData,  //  props异步来的数据触发不了这层更新
+            total: 0
         }
     }
 
     render(){
-        return <Table columns={this.state.columns} dataSource={this.state.data} />
+        // props传递过来的数据，貌似只有render方法里才能重新获取更新后的数据
+
+        // 如果不需要重新处理数据，直接赋值this.props的数据就可以触发异步数据更新
+        // return <Table columns={this.state.columns} dataSource={this.props.tableData} pagination={{total: this.props.total}} />   
+        // 需要处理下数据，可以获取下处理再赋值
+        var data = this.props.tableData;
+        var total = this.props.total;
+        return <Table columns={this.state.columns} dataSource={data} pagination={{total: total}} />
     }
 }
 

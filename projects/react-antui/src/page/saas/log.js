@@ -50,8 +50,8 @@ export default class SaLog extends Operate {
         return (
             <div>
                 <h1>操作日志</h1>
-                <SelfTable tableData={this.props.oriData.tableData} />
-                <Table columns={tableTh} dataSource={this.props.oriData.tableData} />
+                <SelfTable tableData={this.props.oriData.tableData} total={this.props.oriData.count}/>
+                <Table columns={tableTh} dataSource={this.props.oriData.tableData} pagination={{total: this.props.oriData.count}}/>
             </div>
         )
     }

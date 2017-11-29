@@ -9,7 +9,7 @@ export const opComponent = (Comp, baseConfig) => {
                 curEditing: {},
                 editItem: {},
                 tableData: [],
-                totalPage: null,
+                count: null,
                 curPage: 1,
                 isInput: false,
                 curOperate: '新增',
@@ -33,7 +33,8 @@ export const opComponent = (Comp, baseConfig) => {
             var res = await this.ajax(baseConfig.api.list.type, baseConfig.api.list.url, baseConfig.searchMsg || {})
             console.log(res);
             res && res.model && res.model.length>0 && this.setState({
-                tableData: res.model
+                tableData: res.model,
+                count: res.count
             })
             return res && res.model ? res.model : []
         }
