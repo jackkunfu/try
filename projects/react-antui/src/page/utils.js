@@ -31,7 +31,8 @@ export default class Utils extends Component{
         // console.log(res)
         if(res && res.data.msgCode === '-2'){
             message.error(res.data.msgInfo);
-            this.props.history.push('login');
+            this.props.hy && this.props.hy.push('login');
+            this.props.history && this.props.history.push('login');
         }else{
             return res.data;
         }

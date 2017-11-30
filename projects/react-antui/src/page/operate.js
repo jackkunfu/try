@@ -26,23 +26,36 @@ export const opComponent = (Comp, baseConfig) => {
             })
         }
 
+        async pageChange(p){
+            var td = await this.tableList(p.current)
+            td && td.model && td.model.length>0 && this.setState({
+                tableData: td.model
+            })
+        }
+
         async tableList(page) {
             if(!baseConfig.api || !baseConfig.api.list) return [];
             // 请求数据
             this.setState({page: page})
             var res = await this.ajax(baseConfig.api.list.type, baseConfig.api.list.url, baseConfig.searchMsg || {})
-            console.log(res);
+            if(!res) return [];
+            if(baseConfig.api.list.listKey){
+                var keys = baseConfig.api.list.listKey.split('.')
+                keys.forEach(element => {
+                    res = res[element];
+                });
+            }
             res && res.model && res.model.length>0 && this.setState({
                 tableData: res.model,
-                count: res.count
+                count: res.count,
+                th: baseConfig.th
             })
             return res && res.model ? res.model : []
         }
 
-
         render(){
             // 高阶组件直接返回组件标签以及共有数据
-            return <Comp {...this.props} oriData={this.state} />
+            return <Comp {...this.props} oriData={this.state} onchange={this.pageChange.bind(this)} />
         }
     }
 }
