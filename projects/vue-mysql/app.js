@@ -12,16 +12,14 @@ const users = require('./routes/users')
 const config = require('./config.js')
 
 // api代理
-// const proxy = require('http-proxy')
-const {httpProxy} = require('koa-http-proxy-middleware')
+const proxy = require('koa-proxies')
 const httpsProxyAgent = require('https-proxy-agent')
-app.use(httpProxy('/api', {
+app.use(proxy('/api', {
   target: 'http://172.16.8.197:8081',
   changeOrigin: true,
   logs: true,
   agent: new httpsProxyAgent('http://1.2.3.4:88'),
-  rewrite: path => path.replace(/^\/api(\/|\/\w+)?$/, '/api'),
-  jar: true     // send with cookie
+  rewrite: path => path.replace(/^\/api(\/|\/\w+)?$/, '/api11')
 }))
 
 // 链接数据库
@@ -39,7 +37,6 @@ connection.connect(function(err) {
     console.error('error connecting: ' + err.stack);
     return;
   }
-
   console.log('connected as id ' + connection.threadId);
 });
 global.connection = connection;
