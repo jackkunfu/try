@@ -15,13 +15,12 @@ gulp.task('nodemon', function(cb) {
   });
 });
 
-gulp.task('serve', ['nodemon'], function(){
-    browserSync.init({
+gulp.task('default', ['nodemon'], function(){
+  browserSync.init({
     proxy: 'http://localhost:3000',
     browser: 'chrome',
     port: 7000
   });
 
-    gulp.watch('public/**/*.+(scss|jade|ls)', ['inject'])
-    .on('change', browserSync.reload);
+  // gulp.watch('public/**/*.+(scss|jade|ls)', ['inject']).on('change', browserSync.reload);
 });

@@ -11,6 +11,20 @@ const users = require('./routes/users')
 
 const config = require('./config.js')
 
+// api代理
+// const proxy = require('http-proxy')
+const {httpProxy} = require('koa-http-proxy-middleware')
+const httpsProxyAgent = require('https-proxy-agent')
+app.use(httpProxy('/api', {
+  target: 'http://172.16.8.197:8081',
+  changeOrigin: true,
+  logs: true,
+  agent: new httpsProxyAgent('http://1.2.3.4:88'),
+  rewrite: path => path.replace(/^\/api(\/|\/\w+)?$/, '/api'),
+  jar: true     // send with cookie
+}))
+
+// 链接数据库
 const db = require('mysql');
 // var connection = db.createConnection({
 //     host: '172.16.8.191:3306',
@@ -41,13 +55,19 @@ app.use(bodyparser({
 app.use(json())
 app.use(logger())
 
-app.use(require('koa-static')(__dirname + '/public'))
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
+// 使用端路由渲染页面
+// app.use(require('koa-static')(__dirname + '/public'))
+// app.use(views(__dirname + '/views', {
+//   extension: 'pug'
+// }))
 
+// 使用前端路由分离渲染页面
 // app.use(require('koa-static')(__dirname + '/dist'))
 // app.use(views(__dirname + '/dist'))
+
+// 使用前端路由，前后端，node端做后端，代理访问其他数据员后台api
+app.use(require('koa-static')(__dirname + '/dist-proxy'))
+app.use(views(__dirname + '/dist-proxy'))
 
 // logger
 app.use(async (ctx, next) => {
