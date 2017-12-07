@@ -18,8 +18,10 @@ app.use(proxy('/api', {
   target: 'http://172.16.8.197:8081',
   changeOrigin: true,
   logs: true,
-  agent: new httpsProxyAgent('http://1.2.3.4:88'),
-  rewrite: path => path.replace(/^\/api(\/|\/\w+)?$/, '/api11')
+  rewrite: path => path.replace(/^\/api/g, '')
+  // agent: new httpsProxyAgent('http://172.16.8.197:8081'),
+  // rewrite: path => path.replace(/^\/api(\/|\/\w+)?$/, '')
+  
 }))
 
 // 链接数据库
