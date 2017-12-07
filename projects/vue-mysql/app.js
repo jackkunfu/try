@@ -65,8 +65,8 @@ app.use(logger())
 // app.use(views(__dirname + '/dist'))
 
 // 使用前端路由，前后端，node端做后端，代理访问其他数据员后台api
-app.use(require('koa-static')(__dirname + '/dist-proxy'))
-app.use(views(__dirname + '/dist-proxy'))
+app.use(require('koa-static')(__dirname + '/fronts'))
+app.use(views(__dirname + '/fronts'))
 
 // logger
 app.use(async (ctx, next) => {
