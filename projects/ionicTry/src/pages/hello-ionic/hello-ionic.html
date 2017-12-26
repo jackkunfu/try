@@ -22,4 +22,15 @@
     <button ion-button color="primary" menuToggle>Toggle Menu</button>
   </p>
 
+  <ion-grid *ngFor="let item of list">
+    <ion-row>
+      <ion-col col-12>{{item.setTitle}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <img src="{{item.middleURL}}" alt="">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
