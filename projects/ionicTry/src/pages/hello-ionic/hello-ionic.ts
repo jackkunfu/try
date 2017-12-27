@@ -22,7 +22,17 @@ export class HelloIonicPage {
     xhr.onreadystatechange = ()=>{
       if(xhr.status == 200 && xhr.readyState == 4){
         var data = JSON.parse(xhr.responseText)
-        if(data.success) this.list = data.data;
+        if(data.success){
+          this.list = data.data;
+          var arr = data.data;
+          this.list = arr.map(element => {
+            if(element.middleURL){
+              var ar = element.middleURL.split('/')
+              element.img = 'http://localhost:3000/'+ar[ar.length-1]
+            }
+            return element
+          });
+        }
       }
     }
     xhr.send(null)
