@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建活动</title>
+    <link href="https://cdn.bootcss.com/datepicker/0.6.4/datepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/datepicker/0.6.4/datepicker.min.js"></script>
+    <script src="function.js"></script>
+
+    <style>
+        .ctn{
+            width: 1200px;
+            margin: 0 auto;
+            padding: 30px 0;
+            box-sizing: border-box;
+        }
+        .row{
+            line-height: 30px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .row.margin0{
+            margin-bottom: 0;
+        }
+        label{
+            margin-right: 10px;
+        }
+        .row span{
+            margin: 0 5px;
+        }
+        input{
+            width: 260px;
+            height: 30px;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+        input.time{
+            width: 120px;
+        }
+        input.file{
+            width: 60px;
+        }
+        .table{
+            border-top: 1px dashed #666;
+            padding-top: 20px;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+        table{
+            border: 1px solid #ccc;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        td{
+            padding: 5px 10px;
+            text-align: center;
+        }
+        th, tr{
+            border-bottom: 1px solid #ccc;
+        }
+        .opt{
+            width: 220px;
+        }
+        .table img{
+            max-height: 40px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ctn">
+        <div class="add-edit">
+            <div class="row">
+                <label>活动名称</label>
+                <input type="text" v-model="act.name"/>
+            </div>
+    
+            <div class="row">
+                <label>活动时间</label>
+                <input type="text" v-model="act.startTime" class="time"/>
+                <span>--</span>
+                <input type="text" v-model="act.endTime" class="time"/>
+            </div>
+    
+            <div class="row margin0">
+                <label>活动封面</label>
+                <input type="file" @change="upFile" class="file" id="file" accept="image/*"/>
+            </div>
+            <div class="row">
+                <label v-if="act.image == ''">暂无图片</label>
+                <img :src="act.image" alt="" style="max-width:120px;" v-if="act.image"/>
+            </div>
+    
+            <div class="row margin0">
+                <label>活动优惠券列表</label>
+                <button>添加活动优惠券</button>
+            </div>
+            <div class="row">
+                <label v-if="couponList.length==0">暂无关联优惠券</label>
+                <table v-if="couponList.length>0">
+                    <th>名称</th>
+                    <th>操作</th>
+                    <tr v-for="item in couponList">
+                        <td>{{item.name}}</td>
+                        <td>
+                            <button @click="delActiveCoupon(item)">删除</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="table">
+            <div v-if="activeList.length==0">暂无活动</div>
+            <table v-if="activeList.length>0">
+                <th>名称</th>
+                <th>封面</th>
+                <th>时间</th>
+                <th>状态</th>
+                <th>操作</th>
+                <tr v-for="item in activeList">
+                    <td>{{item.name}}</td>
+                    <td>
+                        <img :src="item.image" alt="">
+                    </td>
+                    <td>
+                        {{item.startTime}} -- {{item.endTime}}
+                    </td>
+                    <td>{{item.status==1?'进行中':'已结束'}}</td>
+                    <td class="opt">
+                        <button @click="edit(item)">编辑</button>
+                        <button @click="del(item)">删除</button>
+                        <button @click="use(item)">启用</button>
+                        <button @click="use(item)">失效</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '.ctn',
+            data: {
+                act: {
+                    name: '',
+                    image: '',
+                    startTime: '',
+                    endTime: ''
+                },
+                couponList: [
+                //{name: '111', startTime: '2011-1-1 01:00:00', endTime: '2011-1-1 01:00:00', status: 0, img: ''}
+                ],
+                activeList: [
+                    //{name: '111', startTime: '2011-1-1 01:00:00', endTime: '2011-1-1 01:00:00', status: 0, img: ''}
+                ],
+                activePage: 1,
+                couponPage: 1
+            },
+            mounted: function(){
+                this.activeList();
+                this.couponList();
+            },
+            methods: {
+                upFile: function(){
+                    var _this = this;
+                    var fm = new FormData()
+                    fm.append('upfile', document.getElementById('file').files[0])
+                    ajax('post', '', fm, function(data){
+                        if(data.success) _this.act.image = data.model
+                    })
+                },
+                submit: function(){
+                    var _this = this;
+                    ajax('post', '', {}, function(data){
+
+                    })
+                },
+                edit: function(item){
+                    var _this = this;
+                    ajax('post', '', {}, function(data){
+
+                    })
+                },
+                del: function(item){
+                    var _this = this;
+                    ajax('post', '', { id: item.id }, function(data){
+
+                    })
+                },
+                delActiveCoupon: function(item){
+                    var _this = this;
+                    ajax('post', '', { id: item.id }, function(data){
+                        if(data && data.success)  _this.couponList = data.model
+                    })
+                },
+                activeList: function(){
+                    var _this = this;
+                    ajax('post', '', {
+                        id: item.id,
+                        page: this.activePage,
+                        rows: 20
+                    }, function(data){
+                        if(data && data.success)  _this.couponList = data.model
+                    })
+                },
+                couponList: function(){
+                    var _this = this;
+                    ajax('post', '', {
+                        id: item.id,
+                        page: this.couponPage,
+                        rows: 20
+                    }, function(data){
+                        if(data && data.success)  _this.couponList = data.model
+                    })
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>
