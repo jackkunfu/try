@@ -115,6 +115,9 @@
                     </tr>
                 </table>
             </div>
+            <div class="row">
+                <button @click="submit">{{curOperate}}</button>
+            </div>
         </div>
 
         <div class="table">
@@ -148,9 +151,10 @@
         new Vue({
             el: '.ctn',
             data: {
+                curOperate: '新增',
                 act: {
                     name: '',
-                    image: '',
+                    image: 'ccc',
                     startTime: '',
                     endTime: ''
                 },
@@ -168,8 +172,23 @@
                 this.getActiveList();
                 this.getCouponList();
 
+                var _this = this;
                 this.$nextTick(function(){
-                    $('.time').datepicker();
+                    $('.time').datepicker({
+                        format: 'yyyy-mm-dd'
+                    });
+                    $('.time').eq(0).on('pick.datepicker', function (e) {
+                        setTimeout(function(){
+                            // 从e中也可以, 不过需要转化，不用setTimeout会获取的不及时
+                            _this.act.startTime = $('.time').eq(0).datepicker('getDate', true)
+                        }, 0)
+                    });
+                    $('.time').eq(1).on('pick.datepicker', function (e) {
+                        setTimeout(function(){
+                            // 从e中也可以, 不过需要转化，不用setTimeout会获取的不及时
+                            _this.act.endTime = $('.time').eq(1).datepicker('getDate', true)
+                        }, 0)
+                    });
                 })
             },
             methods: {
@@ -177,7 +196,7 @@
                     var _this = this;
                     var fm = new FormData()
                     fm.append('upfile', document.getElementById('file').files[0])
-                    ajax('post', '', fm, function(data){
+                    ajax(fm, function(data){
                         if(data.success) _this.act.image = data.model
                     })
                 },
@@ -198,40 +217,48 @@
                         alert('图片未上传');
                         return false;
                     }
-                    if(this.activeCouponList.length == 0){
-                        alert('未添加活动相关优惠券');
-                        return false;
-                    }
+                    
                     return true
                 },
                 submit: function(){
                     if(!this.test()) return
                     var _this = this;
-                    ajax('post', '', {}, function(data){
+                    var api = this.curOperate == '新增' ? 'pd.saas.activity.recommend.create' : 'pd.saas.activity.recommend.update'
+                    var opts = {
+                        _api: api,
+                        _v: '1.0'
+                    }
+                    $.extend(opts, this.act);
+                    ajax(opts, function(data){
 
                     })
                 },
                 edit: function(item){
                     var _this = this;
-                    ajax('post', '', {}, function(data){
+                    this.curOperate == '修改';
+                    ajax({}, function(data){
 
                     })
                 },
                 del: function(item){
                     var _this = this;
-                    ajax('post', '', { id: item.id }, function(data){
+                    ajax({
+                        id: item.id,
+                        _api: 'pd.saas.activity.recommend.unbind',
+                        _v: '1.0'
+                    }, function(data){
 
                     })
                 },
                 delActiveCoupon: function(item){
                     var _this = this;
-                    ajax('post', '', { id: item.id }, function(data){
+                    ajax({ id: item.id }, function(data){
                         if(data && data.success)  _this.couponList = data.model
                     })
                 },
                 getActiveList: function(){
                     var _this = this;
-                    ajax('post', '', {
+                    ajax({
                         page: this.activePage,
                         rows: 20
                     }, function(data){
@@ -240,7 +267,7 @@
                 },
                 getCouponList: function(){
                     var _this = this;
-                    ajax('post', '', {
+                    ajax({
                         page: this.couponPage,
                         rows: 20
                     }, function(data){
