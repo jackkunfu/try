@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>创建活动</title>
-    <link href="https://cdn.bootcss.com/datepicker/0.6.4/datepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/datepicker/0.6.4/datepicker.min.css" rel="stylesheet" />
 
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
     <script src="https://cdn.bootcss.com/datepicker/0.6.4/datepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
     <script src="function.js"></script>
 
     <style>
@@ -90,7 +91,7 @@
     
             <div class="row margin0">
                 <label>活动封面</label>
-                <input type="file" @change="upFile" class="file" id="file" accept="image/*"/>
+                <input type="file" accept="image/*" id="file" class="file" @change="upFile" />
             </div>
             <div class="row">
                 <label v-if="act.image == ''">暂无图片</label>
@@ -102,11 +103,11 @@
                 <button>添加活动优惠券</button>
             </div>
             <div class="row">
-                <label v-if="couponList.length==0">暂无关联优惠券</label>
-                <table v-if="couponList.length>0">
+                <label v-if="activeCouponList.length==0">暂无关联优惠券</label>
+                <table v-if="activeCouponList.length>0">
                     <th>名称</th>
                     <th>操作</th>
-                    <tr v-for="item in couponList">
+                    <tr v-for="item in activeCouponList">
                         <td>{{item.name}}</td>
                         <td>
                             <button @click="delActiveCoupon(item)">删除</button>
@@ -159,12 +160,17 @@
                 activeList: [
                     //{name: '111', startTime: '2011-1-1 01:00:00', endTime: '2011-1-1 01:00:00', status: 0, img: ''}
                 ],
+                activeCouponList: [],
                 activePage: 1,
                 couponPage: 1
             },
             mounted: function(){
-                this.activeList();
-                this.couponList();
+                this.getActiveList();
+                this.getCouponList();
+
+                this.$nextTick(function(){
+                    $('.time').datepicker();
+                })
             },
             methods: {
                 upFile: function(){
@@ -175,7 +181,31 @@
                         if(data.success) _this.act.image = data.model
                     })
                 },
+                test: function(){
+                    if(!this.act.name || this.act.name.trim() == ''){
+                        alert('名称未填');
+                        return false;
+                    }
+                    if(!this.act.startTime || this.act.startTime.trim() == ''){
+                        alert('开始时间未选');
+                        return false;
+                    }
+                    if(!this.act.endTime || this.act.endTime.trim() == ''){
+                        alert('结束时间未选');
+                        return false;
+                    }
+                    if(!this.act.image || this.act.image.trim() == ''){
+                        alert('图片未上传');
+                        return false;
+                    }
+                    if(this.activeCouponList.length == 0){
+                        alert('未添加活动相关优惠券');
+                        return false;
+                    }
+                    return true
+                },
                 submit: function(){
+                    if(!this.test()) return
                     var _this = this;
                     ajax('post', '', {}, function(data){
 
@@ -199,20 +229,18 @@
                         if(data && data.success)  _this.couponList = data.model
                     })
                 },
-                activeList: function(){
+                getActiveList: function(){
                     var _this = this;
                     ajax('post', '', {
-                        id: item.id,
                         page: this.activePage,
                         rows: 20
                     }, function(data){
                         if(data && data.success)  _this.couponList = data.model
                     })
                 },
-                couponList: function(){
+                getCouponList: function(){
                     var _this = this;
                     ajax('post', '', {
-                        id: item.id,
                         page: this.couponPage,
                         rows: 20
                     }, function(data){
