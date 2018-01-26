@@ -26,7 +26,6 @@ function flatten(arr) {
 }
 
 
-
 // 数组合并
 // 把 array2 中的每一项合并的到 array1
 // 1 利用apply传参数组或类数组的原理
@@ -50,11 +49,12 @@ arr.length = n;
 "<tr><td>{id}</td><td>{id}</td><td>{id}_{$name}</td></tr>".replace(/{\$id}/g, '10').replace(/{\$name}/g, 'Tony');
 
 
-// 实现克隆方法
+// 实现克隆方法  深拷贝
 Object.prototype.clone = function() {
     var o = this.constructor === Array ? [] : {};
     for (var e in this) {
-        o[e] = typeof this[e] === "object" ? this[e].clone() : this[e];
+        o[e] = (this[e] != null && typeof this[e] === "object") ? this[e].clone() : this[e];
     }
+    delete o.clone;   // 生成的新对象会带有clone的直属方法，清除掉~
     return o;
 }
