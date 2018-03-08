@@ -4,8 +4,6 @@ import { opComponent } from '../../operate'
 import SelfTable from '../../part/table'
 
 export default class Account extends Component {
-
-
     render(){
         return (
             <div>

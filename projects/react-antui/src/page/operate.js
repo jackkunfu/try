@@ -25,14 +25,12 @@ export const opComponent = (Comp, baseConfig) => {
                 tableData: td.model
             })
         }
-
         async pageChange(p){
             var td = await this.tableList(p.current)
             td && td.model && td.model.length>0 && this.setState({
                 tableData: td.model
             })
         }
-
         async tableList(page) {
             if(!baseConfig.api || !baseConfig.api.list) return [];
             // 请求数据
@@ -52,7 +50,6 @@ export const opComponent = (Comp, baseConfig) => {
             })
             return res && res.model ? res.model : []
         }
-
         render(){
             // 高阶组件直接返回组件标签以及共有数据
             return <Comp {...this.props} oriData={this.state} onchange={this.pageChange.bind(this)} />
