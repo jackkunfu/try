@@ -1,0 +1,98 @@
+
+// 可用的一些自定义变量
+
+// 字体大小
+
+$font_3: 20px;
+$font_2: 14px;
+$font_1: 13px;
+$font_4: 12px;
+$font_5: 18px;
+
+// 字体颜色
+$color_1: #c0ccda;   // 主nav未选中时
+$color_2: #eff2f7;   // 副nav被选中时
+$color_3: #5e6d82;   // 编辑区的左边title（姓名、手机号、登录密码、角色选择、所属区域....）
+$color_4: #475669;   // 编辑区的table中的thead（角色名称、虚拟店铺、添加时间....）
+$color_5: #1f2d3d;   // 编辑器的table中的tbody（区域经理....）
+$color_6: #20a0ff;   // 蓝色字体（清空筛选条件...）
+$color_7: #99a9bf;   // 蓝色字体（清空筛选条件...）
+
+// 背景颜色
+$lnav_bg: #324057; // left nav背景色
+$nav_bg: #324057; // top nav背景色
+$nav2_bg: #f9fafc; // top nav背景色
+
+$blue: #3190e8;
+$bc: #e4e4e4;
+$fc: #fff;
+
+// 背景图片地址和大小
+@mixin bis($url)
+    background: url($url) no-repeat;
+    background-size: 100% 100%;
+
+//定位全屏
+@mixin allcover
+	position: absolute;
+	top: 0;
+	right: 0;
+
+
+//transform上下左右居中
+@mixin ctt
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+//定位上下左右居中
+@mixin ctp($width, $height)
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -$height/2;
+    margin-left: -$width/2;
+
+//定位上下居中
+@mixin tb
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+//定位左右居中
+@mixin lr
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+//宽高
+@mixin wh($width, $height)
+    width: $width;
+    height: $height;
+
+
+//字体大小、行高、字体
+@mixin ft($size, $line-height)
+    font-size: $size;
+    line-height: $line-height;
+
+//字体大小，颜色
+@mixin sc($size, $color)
+    font-size: $size;
+    color: $color;
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between)
+    display: flex;
+    justify-content: $type;
+
+.nav2-ctn
+    width: 120px;
+    height: 100%;
+    float: left;
+
+
+
+
+
