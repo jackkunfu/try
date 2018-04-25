@@ -1,0 +1,120 @@
+// 基础重置
+*
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+body, html
+    height: 100%;
+
+.fl
+    float: left;
+
+.fr
+    float: right;
+
+.els
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+a
+    text-decoration: none;
+
+// 整体布局
+#app
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+.app-left
+    width: 201px;
+
+.app-top
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    border-bottom: 1px solid #336666;
+    background: #fff;
+
+.app-main
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    .nav
+        height: 100%;
+        position: absolute;
+        padding-top: 60px;
+
+    .main
+        height: 100%;
+        padding: 60px 10px 10px 230px;
+        overflow: auto;
+
+.table-ctn
+    overflow: hidden;
+
+// 翻页
+.el-pagination
+    padding-top: 20px;
+    text-align: center;
+
+// form表单
+.el-form-item__label
+    text-align: left;
+
+// 导航
+.nav-icon
+    margin-right: 8px;
+
+// 悬浮框
+.fix-cover
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    &.tree-ctn
+        z-index: 30;
+        .el-tree
+            width: 300px;
+            margin: 30px auto;
+    &.map
+        z-index: 30;
+    .box
+        background: #fff;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // width: 500px;
+        text-align: center;
+        padding: 20px;
+        max-height: 680px;
+        overflow: auto;
+        border-radius: 10px;
+        &.map-ctn
+            width: 980px;
+        &.center
+            padding: 30px;
+        #map
+            width: 100%;
+            min-height: 500px;
+
+.map-search
+    text-align: left;
+    .search-input
+        width: 300px;
+        margin-bottom: 10px;
+            
+            
