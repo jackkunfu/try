@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 基础管理
-const application = r => require.ensure([], () => r(require('@/components/views/application')), 'application');  // 首页
+const studentList = r => require.ensure([], () => r(require('@/components/studentList')), 'studentList');  // 学员列表
 const user = r => require.ensure([], () => r(require('@/components/views/user')), 'user');  // 用户
 const place = r => require.ensure([], () => r(require('@/components/views/place')), 'place');  // 小区
 
@@ -10,9 +10,9 @@ Vue.use(Router)
 
 const router =  new Router({
   routes: [{
-    path: '/application',
-    name: 'application',
-    component: application
+    path: '/student/list',
+    name: 'studentList',
+    component: studentList
   },{
     path: '/place',
     name: 'place',
