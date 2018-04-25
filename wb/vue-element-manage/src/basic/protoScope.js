@@ -105,8 +105,13 @@ export default function(Vue){
     // 点击修改
     Vue.prototype.tableEdit = function(){
         console.log(arguments[0])
+        var row = arguments[0].row || {};
         if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
-        this.editInfo = Object.assign({}, arguments[0].row || {});
+        this.editKeys.forEach( v => {
+            this.editInfo[v] = row[v] || '';
+        })
+        this.curChooseRow = row
+        // this.editInfo = Object.assign({}, arguments[0].row || {});
         this.showEditCtn = true;
     }
     // 点击删除

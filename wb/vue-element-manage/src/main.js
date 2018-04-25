@@ -14,7 +14,8 @@ Vue.use(filter)
 // 全局声明 SelfTable 组件， tableManage.js挂在window上减少组件内引用
 // webpack2 vue 异步引用组件
 Vue.component('SelfTable', () => import('@/components/part/table.vue'))
-import tableManage from './basic/mixs/tableManage';
+// import tableManage from './basic/mixs/table';
+import tableManage from './basic/mixs/tableScope';
 window.tableManage = tableManage;
 
 Vue.config.productionTip = false

@@ -106,7 +106,10 @@ export default function(Vue){
     Vue.prototype.tableEdit = function(){
         if(this.curChooseRow === null) return this.messageTip('请选择要编辑的项~');
         if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
-        this.editInfo = Object.assign({}, this.curChooseRow);
+        this.editKeys.forEach( v => {
+            this.editInfo[v] = this.curChooseRow[v] || '';
+        })
+        // this.editInfo = Object.assign({}, this.curChooseRow);
         this.showEditCtn = true;
     }
     // 点击删除
@@ -119,14 +122,14 @@ export default function(Vue){
         }).then(async () => {
             var op = this.api.del;
             var neesChangeOptions = this.handleDelRow && typeof this.handleDelRow == 'function'
-            var oriData = Object.assign(this.curChooseRow);
+            var oriData = Object.assign({}, this.curChooseRow);
             var options = neesChangeOptions ? this.handleDelRow(oriData) : { guid: oriData.guid }
             var res = await this.ajax(op.url, options, op.type || 'delete')
             if(res.code == 0){
                 this.messageTip(res.message || '操作成功', 1);
                 this.tableList.call(this);
             }else this.messageTip(res.message || '操作失败')
-        }).catch(() => {});
+        }).catch( e => { console.log(e) } );
     }
     
     // 提交新增或编辑
@@ -149,7 +152,7 @@ export default function(Vue){
 
             // 重置一些数据状态
             this.showEditCtn = false;
-            this.curOperateType == null
+            this.curOperateType == null;
             
             this.tableList.call(this);
         }else{
