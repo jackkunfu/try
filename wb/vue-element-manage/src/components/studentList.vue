@@ -31,8 +31,8 @@ div
 
 <script>
 export default {
-    name: 'application',
-    mixins: [tableManage],
+    name: 'studentList',
+    mixins: [ tableManage ],
     data () {
         return {
             keys: [
@@ -66,16 +66,14 @@ export default {
         }
     },
     methods: {
-        changeSearchValue(info){
-            info.operatorUserId = localStorage.zlOpUid || 43;
+        changeSearchValue(info){     //  处理搜索请求传参
+            return info;
+        },
+        changeEditValue(info){   // 处理新增编辑请求传参
             return info;
         },
         testInput(){
             return true
-        },
-        changeEditValue(info){
-            info.operatorUserId = localStorage.zlOpUid || 43;
-            return info;
         }
     }
 

@@ -3,31 +3,46 @@ import config from './config'
 
 export default function(Vue){
     // ajax
-    Vue.prototype.ajax = function(url, data, type, isFullPath){
+    Vue.prototype._ajax = function(url, data, type){
         var data = data || {};
         var type = type || 'post';
         return new Promise(function(rs, rj){
             $.ajax({
-                type: type,
-                url: isFullPath ? url : config.api + url,
-                headers: {
-                    'appCode': 'TLW',
-                    'verifyCode': '06b97038-e6e0-4bd0-a875-fd0fb25560e8',
-                    'Content-Type': 'application/json'
-                },
+                type,
+                url,
+                // headers: {
+                //     'appCode': 'TLW',
+                //     'verifyCode': '06b97038-e6e0-4bd0-a875-fd0fb25560e8',
+                //     'Content-Type': 'application/json'
+                // },
                 dataType: 'json',
                 // 如果是post请求，需要JSON.stringify处理下参数，因为设置'Content-Type': 'application/json'
-                data: type != 'get' ? JSON.stringify(data) : data, 
+                data, 
+                // data: type != 'get' ? JSON.stringify(data) : data, 
                 // crossDomian: true,
-                // xhrFields: {
-                //     withCredentials: true
-                // }
+                xhrFields: {
+                    withCredentials: true
+                }
             }).done(function(data){
                 rs(data)
             }).fail(function(e){
                 rj(e);
             })
         })
+    }
+
+    Vue.prototype.ajax = async function(){
+        try{
+            var res = await this._ajax(...arguments);
+            if(res && res.code === 0){
+                return res
+            }else{
+                return this.messageTip(res.msg || '请求失败，请稍后重试~')
+            }
+        }catch(e){
+            console.log(arguments[0])
+            console.log(e)
+        }
     }
 
     /* 

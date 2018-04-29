@@ -8,9 +8,6 @@
         .app-main
             left.nav.app-left
 
-            //- 中间导航
-            //- center.main-center
-
             router-view.main
             
     //- 登录页
@@ -23,7 +20,7 @@
             el-form-item(label="密码")
                 el-input(v-model="form.userPwsd")
             el-form-item
-                el-button(type="primary" @click="onSubmit") 登录
+                el-button(type="primary" @click="lgn") 登录
 
 </template>
 
@@ -37,18 +34,25 @@ export default {
         Top, Left
     },
     data(){
-            return {
-                form: {
-                    userCode: '',
-                    userPwsd: ''
-                }
+        var isNeedLogin = !localStorage.zwMageId || localStorage.zwMageId == 'null' || localStorage.zwMageId == 'undefined'
+        return {
+            isNeedLogin,
+            form: {
+                userCode: '',
+                userPwsd: ''
             }
-    },
-    computed: {
-        isNeedLogin(){
-            return localStorage.zlOpUid === null || localStorage.zlOpUid === undefined || localStorage.zlOpUid === 'undefined'
         }
     },
-    mounted(){}
+    mounted(){},
+    methods: {
+        async lgn(){
+            var form = this.form;
+            form.userCode = form.userCode.trim();
+            form.userPwsd = form.userPwsd.trim();
+            if(form.userCode == '') return this.messageTip('用户名不能为空~');
+            if(form.userPwsd == '') return this.messageTip('密码不能为空~');
+            var res = await this.ajax('', this.form)
+        }
+    }
 }
 </script>

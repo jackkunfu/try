@@ -8,21 +8,21 @@ const place = r => require.ensure([], () => r(require('@/components/views/place'
 
 Vue.use(Router)
 
-const router =  new Router({
-  routes: [{
-    path: '/student/list',
-    name: 'studentList',
-    component: studentList
-  },{
-    path: '/place',
-    name: 'place',
-    component: place
-  },{
-    path: '/user',
-    name: 'user',
-    component: user
-  }]
-})
+var routes = [{
+  path: '/student/list',
+  name: 'studentList',
+  component: studentList
+},{
+  path: '/place',
+  name: 'place',
+  component: place
+},{
+  path: '/user',
+  name: 'user',
+  component: user
+}]
+
+const router =  new Router({ routes });
 
 const white = ['/'];
 router.beforeEach((to, from, next) => {
