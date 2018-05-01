@@ -30,9 +30,9 @@
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
 
             //- 操作
-            el-table-column(label="操作" v-if="operates && operates.length>0" ref="operate")
+            el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate")
                 template(slot-scope="scope")
-                    el-button(v-for="(op, i) in operates" type="success" size="small" :key="op.str"
+                    el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
                         @click="operate(op.fun, scope)") {{op.str}}
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="10" 
@@ -43,7 +43,7 @@
 <script>
 export default {
     name: 'tableComponent',
-    props: ['keys', 'operates', 'selfApi', 'tableData', 'total', 'currentPage', 'tabOp', 'canOp'],
+    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'total', 'currentPage', 'tabOp', 'canOp'],
     data(){
         return{
             isCanOp: this.canOp

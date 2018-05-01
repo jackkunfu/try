@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        img(src="http://test.yun-ti.com:9112/ywpt/images/globar/logo.gif")
+        //- img(src="http://test.yun-ti.com:9112/ywpt/images/globar/logo.gif")
 </template>
 
 <script>

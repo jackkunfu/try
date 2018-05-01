@@ -7,7 +7,7 @@ div
         .search-ctn
             el-button(type="success" @click="search") 查询
             el-button(type="success" @click="reset") 重置
-        self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates"
+        self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
     //- .edit-ctn.fix-cover(v-show="showEditCtn")
@@ -59,7 +59,10 @@ export default {
                 add: { url: '/application/addApp' },
                 edit: { url: '/application/saveApp' },
             },
-            operates: [
+            scopeOperates: [    // 每一行种的操作
+                { str: '编辑', fun: 'editScope'}
+            ],
+            operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '修改', fun: 'edit'}
             ]

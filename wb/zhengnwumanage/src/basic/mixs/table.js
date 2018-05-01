@@ -41,12 +41,18 @@ export default {
         del(){ // 删除
             this.tableDel.call(this, arguments[0]);
         },
+        editScope(){   // 编辑
+            this.curOperateType = 2
+            this.tableEditScope.call(this, arguments[0]);
+        },
+        delScope(){ // 删除
+            this.tableDelScope.call(this, arguments[0]);
+        },
         addOrUpdate(){   //  新增 编辑确认提交
             this.tableAddOrUpdate.call(this);
         },
         editCancel(){   // 新增 编辑 取消按钮
             this.curOperateType = null
-            this.curChooseRow = null
             this.showEditCtn = false;
 
             // 处理 this.editInfo 各个值双向绑定

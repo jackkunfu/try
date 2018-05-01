@@ -1,14 +1,16 @@
 <template lang="pug">
 div
     .table-ctn
-        .page-title 应用管理
-        //- .search-ctn
+        .page-title 学员管理
+            span /学员信息
+
+        .search-ctn
             el-button(type="success" @click="search") 查询
             el-button(type="success" @click="reset") 重置
-        self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates"
+        self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
-    .edit-ctn.fix-cover(v-show="showEditCtn")
+    //- .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
             el-form(:model="editInfo" label-width="80px")
                 el-form-item(label="应用编号")
@@ -29,40 +31,52 @@ div
 
 <script>
 export default {
-    name: 'application',
-    mixins: [tableManage],
+    name: 'studentList',
+    mixins: [ tableManage ],
     data () {
         return {
             keys: [
-                { str: '应用编号', key: 'appCode' },
-                { str: '应用名称', key: 'appName' },
-                { str: '对接URL', key: 'appUrl' },
-                { str: '描述', key: 'remark' },
+                { str: '头像', key: 'appCode' },
+                { str: '姓名', key: 'name' },
+                { str: '性别', key: 'sex' },
+                { str: '生日', key: 'birth' },
+                { str: '身高', key: 'height' },
+                { str: '体重', key: 'weight' },
+                { str: '家长姓名', key: 'pname' },
+                { str: '联系电话', key: 'mobile' },
+                { str: '训练营', key: 'trainName' },
+                { str: '卡种', key: 'remark' },
+                { str: '训练频次', key: 'remark' },
+                { str: '开卡时间', key: 'remark' },
+                { str: '到期时间', key: 'remark' },
+                { str: '学员作业', key: 'remark' },
+                { str: '体能测试', key: 'remark' }
             ],
             searchKeys: [],
-            editKeys: ['appCode', 'appName', 'appUrl', 'remark', 'dorder'],
+            editKeys: [],
             api: {
                 list: { url: '/application/queryAppPage' },
                 add: { url: '/application/addApp' },
                 edit: { url: '/application/saveApp' },
             },
-            operates: [
+            scopeOperates: [    // 每一行种的操作
+                { str: '编辑', fun: 'editScope'}
+            ],
+            operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '修改', fun: 'edit'}
             ]
         }
     },
     methods: {
-        changeSearchValue(info){
-            info.operatorUserId = localStorage.zlOpUid || 43;
+        changeSearchValue(info){     //  处理搜索请求传参
+            return info;
+        },
+        changeEditValue(info){   // 处理新增编辑请求传参
             return info;
         },
         testInput(){
             return true
-        },
-        changeEditValue(info){
-            info.operatorUserId = localStorage.zlOpUid || 43;
-            return info;
         }
     }
 

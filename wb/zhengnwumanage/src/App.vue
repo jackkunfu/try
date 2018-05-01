@@ -43,7 +43,10 @@ export default {
             }
         }
     },
-    mounted(){},
+    mounted(){
+        // 登陆成功后默认跳转到学员列表页
+        if(!this.isNeedLogin && this.$route.path == '/') this.goUrl('/studentList');
+    },
     methods: {
         async lgn(){
             var form = this.form;

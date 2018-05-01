@@ -117,7 +117,7 @@ export default function(Vue){
         this.showEditCtn = true;
         if(this.selfAdd && typeof this.selfAdd == 'function') this.selfAdd();
     }
-    // 点击修改
+    // 表格外部顶部点击修改
     Vue.prototype.tableEdit = function(){
         if(this.curChooseRow === null) return this.messageTip('请选择要编辑的项~');
         if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
@@ -127,7 +127,38 @@ export default function(Vue){
         // this.editInfo = Object.assign({}, this.curChooseRow);
         this.showEditCtn = true;
     }
-    // 点击删除
+    // 表格中每一行的修改点击操作
+    Vue.prototype.tableEditScope = function(){
+        console.log(arguments[0])
+        var row = arguments[0].row || {};
+        if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
+        this.editKeys.forEach( v => {
+            this.editInfo[v] = row[v] || '';
+        })
+        this.curChooseRow = row
+        // this.editInfo = Object.assign({}, arguments[0].row || {});
+        this.showEditCtn = true;
+    }
+    // 表格中每一行的删除点击操作
+    Vue.prototype.tableDelScope = function(){
+        console.log(arguments[0])
+        this.$confirm('此操作将删除用户, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }).then(async () => {
+            var op = this.api.del;
+            var neesChangeOptions = this.handleDelRow && typeof this.handleDelRow == 'function'
+            var oriData = Object.assign({}, arguments[0].row || {});
+            var options = neesChangeOptions ? this.handleDelRow(oriData) : { guid: oriData.guid }
+            var res = await this.ajax(op.url, options, op.type || 'delete')
+            if(res.code == 0){
+                this.messageTip(res.message || '操作成功', 1);
+                this.tableList.call(this);
+            }else this.messageTip(res.message || '操作失败')
+        }).catch(() => {});
+    }
+    // 表格外部顶部点击删除
     Vue.prototype.tableDel = function(){
         if(this.curChooseRow === null) return this.messageTip('请选择要编辑的项~');
         this.$confirm('此操作将删除用户, 是否继续?', '提示', {
