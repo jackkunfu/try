@@ -2,7 +2,7 @@
 div
     .table-ctn
         .page-title 学员管理
-            span /学员信息
+            span /学员等级
 
         .search-ctn
             el-button(type="success" @click="search") 查询

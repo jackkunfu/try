@@ -29,7 +29,7 @@ import './assets/base.sass'
 import Top from './components/part/top'
 import Left from './components/part/left'
 export default {
-    name: 'App',
+    name: 'app',
     components: {
         Top, Left
     },
@@ -44,8 +44,12 @@ export default {
         }
     },
     mounted(){
-        // 登陆成功后默认跳转到学员列表页
-        if(!this.isNeedLogin && this.$route.path == '/') this.goUrl('/studentList');
+        if(!this.isNeedLogin){
+            setTimeout(()=>{     //  延迟跳转到默认得studentList页面  不延迟得话  this.$route.path 最初一直是 '/'  再别得页面时也总会跳转到studentList页面
+                console.log(this.$route.path);
+                if(this.$route.path === '/') this.goUrl('/studentList')
+            }, 500)
+        }
     },
     methods: {
         async lgn(){

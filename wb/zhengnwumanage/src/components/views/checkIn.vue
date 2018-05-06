@@ -2,7 +2,7 @@
 div
     .table-ctn
         .page-title 学员管理
-            span /学员信息
+            span /点名签到
 
         .search-ctn
             el-button(type="success" @click="search") 查询
@@ -40,17 +40,13 @@ export default {
                 { str: '姓名', key: 'name' },
                 { str: '性别', key: 'sex' },
                 { str: '生日', key: 'birth' },
-                { str: '身高', key: 'height' },
-                { str: '体重', key: 'weight' },
                 { str: '家长姓名', key: 'pname' },
                 { str: '联系电话', key: 'mobile' },
                 { str: '训练营', key: 'trainName' },
-                { str: '卡种', key: 'remark' },
-                { str: '训练频次', key: 'remark' },
-                { str: '开卡时间', key: 'remark' },
-                { str: '到期时间', key: 'remark' },
-                { str: '学员作业', key: 'remark' },
-                { str: '体能测试', key: 'remark' }
+                { str: '当天出席状况', key: 'remark' },
+                { str: '累计出席', key: 'remark' },
+                { str: '累计请假', key: 'remark' },
+                { str: '累计缺席', key: 'remark' }
             ],
             searchKeys: [],
             editKeys: [],
@@ -59,9 +55,6 @@ export default {
                 add: { url: '/application/addApp' },
                 edit: { url: '/application/saveApp' },
             },
-            scopeOperates: [    // 每一行种的操作
-                { str: '编辑', fun: 'editScope'}
-            ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '修改', fun: 'edit'}

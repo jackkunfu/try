@@ -11,7 +11,7 @@ const cocahJudge = r => require.ensure([], () => r(require('@/components/views/c
 
 Vue.use(Router)
 
-var routes = []
+var routes = [];
 
 var students = [{   // 学员
   path: '/studentList',

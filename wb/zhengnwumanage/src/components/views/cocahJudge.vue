@@ -1,8 +1,8 @@
 <template lang="pug">
 div
     .table-ctn
-        .page-title 学员管理
-            span /学员信息
+        .page-title 教练管理
+            span /教练评价
 
         .search-ctn
             el-button(type="success" @click="search") 查询

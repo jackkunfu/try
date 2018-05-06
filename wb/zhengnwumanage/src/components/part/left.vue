@@ -1,5 +1,5 @@
 <template lang="pug">
-    el-menu(default-active="/studentList" class="el-menu-vertical-demo" background-color="#336666" text-color="#ccc" active-text-color="#ffd04b" router)
+    el-menu(:default-active="defaultActive+''" class="el-menu-vertical-demo" background-color="#336666" text-color="#ccc" active-text-color="#ffd04b" router)
         //- @open="handleOpen" @close="handleClose"
 
         template(v-for="(nav, i) in menus")
@@ -26,6 +26,7 @@ export default {
     name: 'left',
     data () {
         return {
+            defaultActive: '',
             menus: [{
                 name: '学员管理',
                 iconName: 'el-icon-menu',
@@ -72,6 +73,13 @@ export default {
                     { name: '管理员设置', url: 'user' }
                 ]
             }]
+        }
+    },
+    watch: {
+        $route(v){
+            var path = v.path;
+            if(path == '/') this.defaultActive = '/studentList'
+            else this.defaultActive = path;
         }
     }
 }
