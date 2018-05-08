@@ -3,17 +3,20 @@
 	.each(v-for="(item, i) in arr" @click="goUrl('/detail', {id: item.id})")
 		img(:src="item.image.charAt(0) == '|' ? srPath + item.image.slice(1) : srPath + item.image")
 		.name {{item.title}}
-		.content(v-html="item.marathonArticleData.content")
-		//- .content {{item.marathonArticleData.content}}
+		//- .content(v-html="item.marathonArticleData.content")
+		.content {{item.marathonArticleData.content | content}}
 		.time {{item.createDate}}
 
-	.no-more(v-if="!isMore") 没有更多了
+	.no-more(v-if="!isMore") 暂无
 </template>
 
 <script>
 
 export default {
 	name: 'order',
+	filters: {
+		content(v){ return $(v).text().substr(0, 28) + '...' }
+	},
     data () {
 		var module = this.$route.query.module;
         return {
@@ -81,7 +84,7 @@ export default {
 				pageSize: 10
 			});
 			if(artRes && artRes.code == 1){
-				var list = artRes.objectData.list;
+				var list = artRes.objectData.list || [];
 				if(!type) this.arr = list;
 				else this.arr = this.arr.concat(list);
 				if(list.length < 10) this.isMore = false;
@@ -93,41 +96,41 @@ export default {
 </script>
 <style lang="sass" scoped>
 @mixin els
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
 
 .list
-	padding: 0 0.5rem;
+	padding: 0 0.5rem
 .each
-	padding: 0.5rem 0;
-	text-align: left;
-	overflow: hidden;
-	border-bottom: 1px solid #ccc;
+	padding: 0.5rem 0
+	text-align: left
+	overflow: hidden
+	border-bottom: 1px solid #ccc
 	&:last-child
-		border-bottom: none;
+		border-bottom: none
 	img
-		width: 3rem;
-		height: 3rem;
-		float: left;
-		margin-right: 0.3rem;
+		width: 3rem
+		height: 3rem
+		float: left
+		margin-right: 0.3rem
 
 	.name
-		@include els;
-		font-size: 0.5rem;
-		line-height: 2;
+		@include els
+		font-size: 0.5rem
+		line-height: 2
 	
 	.content
-		@include els;
-		color: #999;
-		line-height: 2;
-		font-size: 0.4rem!important;
-		height: 0.45rem;
-		overflow: hidden;
+		@include els
+		color: #999
+		line-height: 2
+		font-size: 0.4rem!important
+		height: 0.8rem
+		overflow: hidden
 
 	.time
-		text-align: right;
-		margin-top: 0.8rem;
+		text-align: right
+		margin-top: 0.8rem
 
 
 </style>

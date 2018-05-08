@@ -2,7 +2,7 @@
 .ctn
     .name 中科
         span 生物
-    .box(v-for="(item, i) in list" :key="i" :style="{ background: colors[i], color: item.color ? '#fff' : '#000' }" @click="goUrl('/list', { module: item.module })")
+    .box(v-for="(item, i) in list" :key="i" :style="{ background: colors[i], color: i%4==3 || i%4 == 0 ? '#fff' : '#000' }" @click="go(item)")
         img(:src="item.image")
         div {{item.name}}
 </template>
@@ -33,37 +33,45 @@
             }
         },
         methods: {
-            
+            go(item){
+                var url = item.appView == 0 ? '/list' : '/detail';
+                this.goUrl(url, {
+                    module: item.module,
+                    id: item.childList[0].id
+                })
+            }
         }
     }
 </script>
 
 <style lang="sass" scoped>
 .ctn
-    height: 100%;
-    background: #AFAFAF;
-    padding: 0.3rem;
-    text-align: left;
+    height: 100%
+    background: #AFAFAF
+    padding: 0.3rem
+    text-align: left
 
 .name
-    font-size: 0.6rem;
-    line-height: 0.8rem;
+    font-size: 0.6rem
+    line-height: 0.8rem
+    font-weight: 600
     span
-        margin-left: 0.1rem;
-        font-size: 0.4rem;
-        color: red;
+        margin-left: 0.1rem
+        font-size: 0.4rem
+        color: red
 
 .box
-    width: 47%;
-    margin: 1.5%;
-    min-height: 4rem;
-    line-height: 0.5rem;
-    display: inline-block;
-    text-align: center;
+    width: 47%
+    margin: 1.5%
+    // min-height: 4rem
+    line-height: 0.5rem
+    display: inline-block
+    text-align: center
+    padding: 0.5rem
     img
-        width: 1rem;
-        height: 1rem;
-        margin: 0.8rem auto;
+        width: 1.5rem
+        height: 1.5rem
+        margin-bottom: 0.4rem
 
 
 </style>

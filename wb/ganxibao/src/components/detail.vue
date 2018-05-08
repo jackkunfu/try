@@ -2,8 +2,8 @@
 div
 	.box
 		.name {{item.title}}
-		.time {{item.createDate}}
-		img(:src="item.image.charAt(0) == '/' ? srPath + item.image.slice(1) : srPath + item.image")
+		.time {{item.createDate | time}}
+		//- img(:src="item.image.charAt(0) == '/' ? srPath + item.image.slice(1) : srPath + item.image")
 		.content(v-html="item.marathonArticleData.content")
 
 </template>
@@ -11,12 +11,15 @@ div
 <script>
 export default {
 	name: 'detail',
+	filters: {
+		time(v){ return v.split(' ')[0] }
+	},
     data() {
         return {
 			srPath: window.srPath,
 			item: {
 				// id: 1,
-				title:'',
+				title: '',
 				createDate: '',
 				content: '',
 				image: ''
