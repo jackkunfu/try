@@ -8,7 +8,7 @@ export default function(Vue){
         return new Promise(function(rs, rj){
             $.ajax({
                 // url: '/api'+url,
-                url: url,
+                url: 'http://47.52.152.120:8080/GXB'+url,
                 type: type || 'post',
                 dataType: 'json',
                 data: data || {},
