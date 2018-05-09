@@ -3,8 +3,10 @@ div
 	.box
 		.name {{item.title}}
 		.time {{item.createDate | time}}
-		//- img(:src="item.image.charAt(0) == '/' ? srPath + item.image.slice(1) : srPath + item.image")
 		.content(v-html="item.marathonArticleData.content")
+
+	.share(v-if="wxReady")
+		.btn 分享到朋友圈
 
 </template>
 
@@ -19,14 +21,20 @@ export default {
 			srPath: window.srPath,
 			item: {
 				// id: 1,
-				title: '',
-				createDate: '',
-				content: '',
-				image: ''
-			}
+				title: '123123',
+				createDate: '123123123',
+				marathonArticleData: {
+					content: '321312321'
+				}
+			},
+			wxReady: false
         }
     },
     async mounted(){
+
+		var sc = document.createElement('script')
+		sc.src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js";
+		document.body.appendChild(sc);
 		var res = await this.ajax('/app/mls/article/get', {
 			id: this.$route.query.id
 		});
@@ -43,9 +51,9 @@ export default {
 .box
 	padding: 0.3rem;
 	border-radius: 3px;
-	backgrond: #ccc;
+	background: #ccc;
 	text-align: left;
-	padding: 0.3rem;
+	margin: 0.3rem;
 	.name
 		font-size: 0.5rem;
 		line-height: 1.2;
