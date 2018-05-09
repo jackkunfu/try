@@ -32,7 +32,7 @@ export default {
     },
     async mounted(){
 
-		this.wxinit();
+		// this.wxinit();
 		var res = await this.ajax('/app/mls/article/get', {
 			id: this.$route.query.id
 		});

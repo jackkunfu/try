@@ -1,4 +1,3 @@
-// export const apiServer = 'http://198.44.243.39:8088';
 export default function(Vue){
     Vue.prototype._ajax = function(url, data, type){
         // $('#messageTip').remove();
@@ -7,8 +6,8 @@ export default function(Vue){
         }
         return new Promise(function(rs, rj){
             $.ajax({
-                url: '/api/GXB'+url,
-                // url: 'http://47.52.152.120:8080/GXB'+url,
+                url: '/api'+url,
+                // url: 'http://gxb.91ilove.com'+url,
                 type: type || 'post',
                 dataType: 'json',
                 data: data || {},

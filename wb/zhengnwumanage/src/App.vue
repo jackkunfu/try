@@ -26,8 +26,8 @@
 
 <script>
 import './assets/base.sass'
-import Top from './components/part/top'
-import Left from './components/part/left'
+import Top from './components/top'
+import Left from './components/left'
 export default {
     name: 'app',
     components: {

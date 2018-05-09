@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 基础管理
-const studentList = r => require.ensure([], () => r(require('@/components/views/studentList')), 'studentList');  // 学员列表
-const checkIn = r => require.ensure([], () => r(require('@/components/views/checkIn')), 'checkIn');  // 点名签到
-const bodyTest = r => require.ensure([], () => r(require('@/components/views/bodyTest')), 'bodyTest');  // 体能测试
-const stuLevel = r => require.ensure([], () => r(require('@/components/views/stuLevel')), 'stuLevel');  // 学员等级
+const studentList = r => require.ensure([], () => r(require('@/views/studentList')), 'studentList');  // 学员列表
+const checkIn = r => require.ensure([], () => r(require('@/views/checkIn')), 'checkIn');  // 点名签到
+const bodyTest = r => require.ensure([], () => r(require('@/views/bodyTest')), 'bodyTest');  // 体能测试
+const stuLevel = r => require.ensure([], () => r(require('@/views/stuLevel')), 'stuLevel');  // 学员等级
 
-const cocahJudge = r => require.ensure([], () => r(require('@/components/views/cocahJudge')), 'cocahJudge');  // 教练评价
+const cocahJudge = r => require.ensure([], () => r(require('@/views/cocahJudge')), 'cocahJudge');  // 教练评价
 
 Vue.use(Router)
 

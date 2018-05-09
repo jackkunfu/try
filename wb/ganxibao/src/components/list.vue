@@ -7,7 +7,7 @@
 		.content {{item.marathonArticleData.content | content}}
 		.time {{item.createDate}}
 
-	.no-more(v-if="!isMore") 暂无
+	.no-more(v-if="!isMore") 没有更多了~
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
 	},
     data () {
 		var module = this.$route.query.module;
-		var categoryId = this.$route.query.id;
+		var categoryId = this.$route.query.childId;
 		var type = this.$route.query.type || false;
         return {
 			type,
@@ -69,13 +69,14 @@ export default {
         }
     },
     mounted(){
-		if(type) this.cateList();
+		if(this.type == 2) this.cateList();
 		else this.list();
 
 		$(window).scroll(()=>{
 			if($(document).height() - $(document).scrollTop() - $(window).height() == 0){
 				this.page++;
-				this.list(1);
+				if(this.type == 2) this.cateList(1);
+				else this.list(1);
 			}
 		})
 	},

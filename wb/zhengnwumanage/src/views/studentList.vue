@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    .table-ctn
+    .table-ctn(v-show="!showEditCtn")
         .page-title 学员管理
             span /学员信息
 
@@ -10,7 +10,9 @@ div
         self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
+        .page-title 学员管理
+            span /学员信息/{{curOperateType | op}}
         .box
             el-form(:model="editInfo" label-width="80px")
                 el-form-item(label="应用编号")
@@ -70,10 +72,10 @@ export default {
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
-            return info;
+            return info
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            return info;
+            return info
         },
         testInput(){
             return true
