@@ -32,9 +32,7 @@ export default {
     },
     async mounted(){
 
-		var sc = document.createElement('script')
-		sc.src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js";
-		document.body.appendChild(sc);
+		this.wxinit();
 		var res = await this.ajax('/app/mls/article/get', {
 			id: this.$route.query.id
 		});
@@ -43,7 +41,15 @@ export default {
 		}
 	},
 	methods: {
-		
+		wxinit(){
+			var sc = document.createElement('script')
+			sc.src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js";
+			document.body.appendChild(sc);
+
+			wx.config({
+				appId: ''
+			})
+		}
 	}
 }
 </script>
