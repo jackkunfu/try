@@ -20,7 +20,7 @@ export default {
     data () {
 		var module = this.$route.query.module;
 		var categoryId = this.$route.query.childId;
-		var type = this.$route.query.type || false;
+		var type = this.$route.query.type;
         return {
 			type,
 			categoryId,
