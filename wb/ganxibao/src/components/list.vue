@@ -19,7 +19,11 @@ export default {
 	},
     data () {
 		var module = this.$route.query.module;
+		var categoryId = this.$route.query.id;
+		var type = this.$route.query.type || false;
         return {
+			type,
+			categoryId,
 			srPath: window.srPath,
 			module,
 			page: 1,
@@ -65,7 +69,9 @@ export default {
         }
     },
     mounted(){
-		this.list();
+		if(type) this.cateList();
+		else this.list();
+
 		$(window).scroll(()=>{
 			if($(document).height() - $(document).scrollTop() - $(window).height() == 0){
 				this.page++;
@@ -74,6 +80,19 @@ export default {
 		})
 	},
 	methods: {
+		async cateList(type){
+			if(!this.isMore) return;
+			if(!this.done) return;
+			this.done = false;
+			var res = await this.ajax('/app/mls/category/'+this.categoryId, {}, 'get');
+			if(res && res.code == 1){
+				var list = res.objectData.list || [];
+				if(!type) this.arr = list;
+				else this.arr = this.arr.concat(list);
+				if(list.length < 10) this.isMore = false;
+			}
+			this.done = true;
+		},
 		async list(type){
 			if(!this.isMore) return;
 			if(!this.done) return;
