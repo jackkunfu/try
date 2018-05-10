@@ -2,13 +2,14 @@
 .list
 	.each(v-for="(item, i) in arr" @click="go(item)")
 		img(:src="item.image.charAt(0) == '|' ? srPath + item.image.slice(1) : srPath + item.image")
-		.name {{item.title}}
+		.title(v-if="type != 2") {{item.title}}
 		//- .content(v-html="item.marathonArticleData.content")
 		.content(v-if="item.marathonArticleData") {{item.marathonArticleData.content | content}}
 		.time(v-if="type != 2") {{item.createDate}}
 		.name(v-if="type == 2") {{item.name}}
+		img.img(v-if="type == 2" src="../assets/more.png")
 
-	.no-more(v-if="!isMore && type != 2") 没有更多了~
+	//- .no-more(v-if="!isMore && type != 2") 没有更多了~
 </template>
 
 <script>
@@ -119,7 +120,7 @@ export default {
 			if(!this.isMore) return;
 			if(!this.done) return;
 			this.done = false;
-			var url = this.type == 2 ? '/app/mls/category/' + this.pId : '/app/mls/articleList';
+			var url = this.type == 2 ? '/app/mls/category/' + this.id : '/app/mls/articleList';
 			var options = {}
 			if(this.type != 2){
 				options.module = this.module,
@@ -128,7 +129,7 @@ export default {
 			}
 			var res = await this.ajax(url, options);
 			if(res && res.code == 1){
-				var list = res.objectData.list || [];
+				var list = this.type == 2 ? res.dataList : res.objectData.list;
 				if(!concat) this.arr = list;
 				else this.arr = this.arr.concat(list);
 				if(list.length < 10) this.isMore = false;
@@ -138,7 +139,7 @@ export default {
 		go(item){
 			this.goUrl('/detail', {
 				id: item.id,
-				type: item.type,
+				type: this.type,
 				module: item.module
 			})
 		}
@@ -166,10 +167,21 @@ export default {
 		float: left
 		margin-right: 0.3rem
 
-	.name
+	.tilte, .name
 		@include els
 		font-size: 0.5rem
 		line-height: 2
+
+	.name
+		margin-top: 1rem
+		width: 5rem
+		float: left
+
+	.img
+		width: 0.8rem
+		height: auto
+		float: right
+		margin-top: 1.1rem
 	
 	.content
 		@include els

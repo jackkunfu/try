@@ -33,7 +33,25 @@ export default {
         }
     },
     async mounted(){
-		this.getOne()
+		var query = this.$route.query;
+		if(query.type == 2){
+			this.getOne()
+		}else{
+			var res = await this.ajax('/app/mls/article/get', {
+				id: this.$route.query.id
+			});
+			if(res && res.code == 1){
+				if(res.objectData){
+					this.item = res.objectData || {}
+					this.$nextTick(()=>{
+						this.img();
+					})
+				}else{
+					this.getOne()
+				}
+			}
+		}
+		
 		// if(this.$route.query.type == 2){
 		// 	this.getOne();
 		// }else{
@@ -64,7 +82,7 @@ export default {
 				module: this.module,
 				pageNo: this.page,
 				pageSize: 10
-			});
+			})
 			if(artRes && artRes.code == 1){
 				var list = artRes.objectData.list || [];
 				this.item = list[0];
@@ -77,7 +95,7 @@ export default {
 			$('.content img').each( (i, el) =>{
 				var src = $(el).attr('src');
 				$(el).attr('src', this.srPath + src)
-				$(el).width('100%!important')
+				$(el).css({'max-width': '100%', display: 'block', 'margin': '5px'})
 			})
 		}
 	}

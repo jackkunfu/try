@@ -3,7 +3,7 @@
     .name 中科
         span 生物
     .box(v-for="(item, i) in list" :key="i" :style="{ background: colors[i], color: i%4==3 || i%4 == 0 ? '#fff' : '#000' }" @click="go(item)")
-        img(:src="srPath + item.image")
+        img(:src="item.isAllImage ? item.image : srPath + item.image")
         div {{item.name}}
 </template>
 
@@ -16,7 +16,7 @@
                 list: [
                     // { image: '', name: '公司简介' },
                     // { image: '', name: '新闻中心' },
-                    // { image: '', name: '市场营销', url: '/mar' },
+                    { image: require('../assets/scyx.png'), name: '市场营销', url: '/marketing', isAllImage: true },
                     // { img: '', name: '治疗实例' },
                     // { img: '', name: '质量保障' },
                     // { img: '', name: '人才引进' },
@@ -30,11 +30,16 @@
         async mounted(){
             var cateRes = await this.ajax('/app/mls/categoryList', {});
             if(cateRes && cateRes.code == 1){
-                this.list = cateRes.dataList;
+                var scyx = { image: require('../assets/scyx.png'), name: '市场营销', url: '/marketing', isAllImage: true }
+                var list = cateRes.dataList
+                list.splice(2, 0, scyx);
+                console.log(list)
+                this.list = list;
             }
         },
         methods: {
             go(item){
+                if(item.url) return this.goUrl(item.url)
                 var url = item.appView == 0 ? '/list' : '/detail';
                 this.goUrl(url, {
                     module: item.module,
@@ -58,6 +63,7 @@
     font-size: 0.6rem
     line-height: 0.8rem
     font-weight: 600
+    color: #fff
     span
         margin-left: 0.1rem
         font-size: 0.4rem

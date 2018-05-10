@@ -1,18 +1,21 @@
 <template lang="pug">
-.login
-    .box
-        .label 手机号
-        input(v-model="login.mobile" placeholder="请输入手机号")
+.bg
+    .login
+        .box
+            .label 手机号
+            input(v-model="login.mobile" placeholder="请输入手机号")
 
-    .box
-        .label 联系姓名
-        input(v-model="login.name" placeholder="请输入联系姓名")
+        .box
+            .label 联系姓名
+            input(v-model="login.name" placeholder="请输入联系姓名")
 
-    .btn(@click="loginFun") 提交咨询
-    .btn
-        a(href="tel:114") 拨打电话
-    .btn
-        a(href="https://static.meiqia.com/dist/standalone.html?_=t&eid=107081") 立即咨询
+        .btn(@click="loginFun") 提交咨询
+
+    .btn-ctn
+        .btn.btn1
+            a(href="tel:114") 拨打电话
+        .btn
+            a(href="https://static.meiqia.com/dist/standalone.html?_=t&eid=107081") 立即咨询
 
 </template>
 
@@ -46,13 +49,20 @@
 </script>
 
 <style lang="sass" scoped>
+.bg
+    background-image: url('../assets/bg.jpg')
+    background-size: 100% 100%
+    width: 100%
+    height: 100%
+    padding: 2rem 0
+
 .login
     width: 80%;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 0.6rem 0.35rem;
     text-align: left;
     font-size: 0.45rem;
-
+    
     .box
         width: 100%;
         display: inline-block;
@@ -68,14 +78,31 @@
             width: 2.5rem;
             line-height: 0.88rem;
             float: left;
+            color: #fff;
 
         input
             height: 0.88rem;
+            background: none
 
 .btn
     a
         color: #fff;
         text-decoration: none;
+
+.btn-ctn
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 100%
+    height: 
+    .btn
+        width: 30%
+        margin: 3% 10%
+        float: left
+        &.btn1
+            background: #fff;
+            a
+                color: #666
             
 </style>
 
