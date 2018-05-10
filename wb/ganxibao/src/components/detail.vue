@@ -14,10 +14,12 @@ div
 export default {
 	name: 'detail',
 	filters: {
-		time(v){ return v.split(' ')[0] }
+		time(v){ return (v+'').split(' ')[0] }
 	},
     data() {
+		var module = this.$route.query.module;
         return {
+			module,
 			srPath: window.srPath,
 			item: {
 				// id: 1,
@@ -31,14 +33,21 @@ export default {
         }
     },
     async mounted(){
-
-		// this.wxinit();
-		var res = await this.ajax('/app/mls/article/get', {
-			id: this.$route.query.id
-		});
-		if(res && res.code == 1){
-			this.item = res.objectData || {}
-		}
+		this.getOne()
+		// if(this.$route.query.type == 2){
+		// 	this.getOne();
+		// }else{
+		// 	// this.wxinit();
+		// 	var res = await this.ajax('/app/mls/article/get', {
+		// 		id: this.$route.query.id
+		// 	});
+		// 	if(res && res.code == 1){
+		// 		this.item = res.objectData || {}
+		// 		this.$nextTick(()=>{
+		// 			this.img();
+		// 		})
+		// 	}
+		// }
 	},
 	methods: {
 		wxinit(){
@@ -48,6 +57,27 @@ export default {
 
 			wx.config({
 				appId: ''
+			})
+		},
+		async getOne(type){
+			var artRes = await this.ajax('/app/mls/articleList', {
+				module: this.module,
+				pageNo: this.page,
+				pageSize: 10
+			});
+			if(artRes && artRes.code == 1){
+				var list = artRes.objectData.list || [];
+				this.item = list[0];
+			}
+			this.$nextTick(()=>{
+				this.img();
+			})
+		},
+		img(){
+			$('.content img').each( (i, el) =>{
+				var src = $(el).attr('src');
+				$(el).attr('src', this.srPath + src)
+				$(el).width('100%!important')
 			})
 		}
 	}

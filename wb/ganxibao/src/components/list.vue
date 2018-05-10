@@ -1,13 +1,14 @@
 <template lang="pug">
 .list
-	.each(v-for="(item, i) in arr" @click="goUrl('/detail', {id: item.id})")
+	.each(v-for="(item, i) in arr" @click="go(item)")
 		img(:src="item.image.charAt(0) == '|' ? srPath + item.image.slice(1) : srPath + item.image")
 		.name {{item.title}}
 		//- .content(v-html="item.marathonArticleData.content")
-		.content {{item.marathonArticleData.content | content}}
-		.time {{item.createDate}}
+		.content(v-if="item.marathonArticleData") {{item.marathonArticleData.content | content}}
+		.time(v-if="type != 2") {{item.createDate}}
+		.name(v-if="type == 2") {{item.name}}
 
-	.no-more(v-if="!isMore") 没有更多了~
+	.no-more(v-if="!isMore && type != 2") 没有更多了~
 </template>
 
 <script>
@@ -19,11 +20,11 @@ export default {
 	},
     data () {
 		var module = this.$route.query.module;
-		var categoryId = this.$route.query.childId;
+		var id = this.$route.query.id;
 		var type = this.$route.query.type;
         return {
 			type,
-			categoryId,
+			id,
 			srPath: window.srPath,
 			module,
 			page: 1,
@@ -85,9 +86,9 @@ export default {
 			if(!this.isMore) return;
 			if(!this.done) return;
 			this.done = false;
-			var res = await this.ajax('/app/mls/category/'+this.categoryId, {}, 'get');
+			var res = await this.ajax('/app/mls/category/'+this.id, {}, 'get');
 			if(res && res.code == 1){
-				var list = res.objectData.list || [];
+				var list = res.dataList || [];
 				if(!type) this.arr = list;
 				else this.arr = this.arr.concat(list);
 				if(list.length < 10) this.isMore = false;
@@ -110,6 +111,13 @@ export default {
 				if(list.length < 10) this.isMore = false;
 			}
 			this.done = true;
+		},
+		go(item){
+			this.goUrl('/detail', {
+				id: item.id,
+				type: item.type,
+				module: item.module
+			})
 		}
 	}
 }

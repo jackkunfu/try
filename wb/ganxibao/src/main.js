@@ -10,7 +10,7 @@ Vue.use(filter);
 
 Vue.config.productionTip = false
 
-window.srPath = 'http://47.52.152.120:8080'
+window.srPath = 'http://gxb.91ilove.com'
 
 window.onhashchange = function(){
   

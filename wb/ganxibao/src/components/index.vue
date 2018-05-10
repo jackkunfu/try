@@ -3,7 +3,7 @@
     .name 中科
         span 生物
     .box(v-for="(item, i) in list" :key="i" :style="{ background: colors[i], color: i%4==3 || i%4 == 0 ? '#fff' : '#000' }" @click="go(item)")
-        img(:src="item.image")
+        img(:src="srPath + item.image")
         div {{item.name}}
 </template>
 
@@ -12,10 +12,11 @@
         name: 'index',
         data () {
             return {
+                srPath: window.srPath,
                 list: [
                     // { image: '', name: '公司简介' },
                     // { image: '', name: '新闻中心' },
-                    // { image: '', name: '市场营销' },
+                    // { image: '', name: '市场营销', url: '/mar' },
                     // { img: '', name: '治疗实例' },
                     // { img: '', name: '质量保障' },
                     // { img: '', name: '人才引进' },
@@ -37,7 +38,8 @@
                 var url = item.appView == 0 ? '/list' : '/detail';
                 this.goUrl(url, {
                     module: item.module,
-                    childId: item.childList[0].id,
+                    // childId: item.childList[0].id,
+                    id: item.id,
                     type: item.type || 1
                 })
             }

@@ -11,6 +11,8 @@
     .btn(@click="loginFun") 提交咨询
     .btn
         a(href="tel:114") 拨打电话
+    .btn
+        a(href="https://static.meiqia.com/dist/standalone.html?_=t&eid=107081") 立即咨询
 
 </template>
 
