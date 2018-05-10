@@ -14,17 +14,17 @@ div
 export default {
 	name: 'detail',
 	filters: {
-		time(v){ return v.split(' ')[0] }
+		time(v){ return (v+'').split(' ')[0] }
 	},
     data() {
         return {
 			srPath: window.srPath,
 			item: {
 				// id: 1,
-				title: '123123',
-				createDate: '123123123',
+				title: '--',
+				createDate: '--',
 				marathonArticleData: {
-					content: '321312321'
+					content: '暂无内容'
 				}
 			},
 			wxReady: false
@@ -48,6 +48,11 @@ export default {
 
 			wx.config({
 				appId: ''
+			})
+		},
+		share(){
+			WeixinJSBridge.invoke('shareTimeline', {
+				imgUrl: ''
 			})
 		}
 	}

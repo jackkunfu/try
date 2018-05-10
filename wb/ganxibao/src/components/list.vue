@@ -19,11 +19,13 @@ export default {
 	},
     data () {
 		var module = this.$route.query.module;
-		var categoryId = this.$route.query.childId;
+		// var childId = this.$route.query.childId;
+		var pId = this.$route.query.id;
 		var type = this.$route.query.type;
         return {
 			type,
-			categoryId,
+			// childId,
+			pId,
 			srPath: window.srPath,
 			module,
 			page: 1,
@@ -69,43 +71,66 @@ export default {
         }
     },
     mounted(){
-		if(this.type == 2) this.cateList();
-		else this.list();
+		this.list();
+		// if(this.type == 2) this.cateList();
+		// else this.list();
+
 
 		$(window).scroll(()=>{
 			if($(document).height() - $(document).scrollTop() - $(window).height() == 0){
 				this.page++;
-				if(this.type == 2) this.cateList(1);
-				else this.list(1);
+				this.list(1);
+				// if(this.type == 2) this.cateList(1);
+				// else this.list(1);
 			}
 		})
 	},
 	methods: {
-		async cateList(type){
+		// async cateList(type){
+		// 	if(!this.isMore) return;
+		// 	if(!this.done) return;
+		// 	this.done = false;
+		// 	var res = await this.ajax('/app/mls/category/'+this.pId, {}, 'get');
+		// 	if(res && res.code == 1){
+		// 		var list = res.objectData.list || [];
+		// 		if(!type) this.arr = list;
+		// 		else this.arr = this.arr.concat(list);
+		// 		if(list.length < 10) this.isMore = false;
+		// 	}
+		// 	this.done = true;
+		// },
+		// async list(type){
+		// 	if(!this.isMore) return;
+		// 	if(!this.done) return;
+		// 	this.done = false;
+		// 	var artRes = await this.ajax('/app/mls/articleList', {
+		// 		module: this.module,
+		// 		pageNo: this.page,
+		// 		pageSize: 10
+		// 	});
+		// 	if(artRes && artRes.code == 1){
+		// 		var list = artRes.objectData.list || [];
+		// 		if(!type) this.arr = list;
+		// 		else this.arr = this.arr.concat(list);
+		// 		if(list.length < 10) this.isMore = false;
+		// 	}
+		// 	this.done = true;
+		// },
+		async list(concat){
 			if(!this.isMore) return;
 			if(!this.done) return;
 			this.done = false;
-			var res = await this.ajax('/app/mls/category/'+this.categoryId, {}, 'get');
+			var url = this.type == 2 ? '/app/mls/category/' + this.pId : '/app/mls/articleList';
+			var options = {}
+			if(this.type != 2){
+				options.module = this.module,
+				options.pageNo = this.page,
+				options.pageSize = 10
+			}
+			var res = await this.ajax(url, options);
 			if(res && res.code == 1){
 				var list = res.objectData.list || [];
-				if(!type) this.arr = list;
-				else this.arr = this.arr.concat(list);
-				if(list.length < 10) this.isMore = false;
-			}
-			this.done = true;
-		},
-		async list(type){
-			if(!this.isMore) return;
-			if(!this.done) return;
-			this.done = false;
-			var artRes = await this.ajax('/app/mls/articleList', {
-				module: this.module,
-				pageNo: this.page,
-				pageSize: 10
-			});
-			if(artRes && artRes.code == 1){
-				var list = artRes.objectData.list || [];
-				if(!type) this.arr = list;
+				if(!concat) this.arr = list;
 				else this.arr = this.arr.concat(list);
 				if(list.length < 10) this.isMore = false;
 			}

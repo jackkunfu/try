@@ -37,7 +37,8 @@
                 var url = item.appView == 0 ? '/list' : '/detail';
                 this.goUrl(url, {
                     module: item.module,
-                    childId: item.childList[0].id,
+                    // childId: item.childList[0].id || '',
+                    id: item.id,
                     type: item.type || 1
                 })
             }
