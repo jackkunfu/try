@@ -23,10 +23,10 @@ export default {
 			srPath: window.srPath,
 			item: {
 				// id: 1,
-				title: '123123',
-				createDate: '123123123',
+				title: '--',
+				createDate: '--',
 				marathonArticleData: {
-					content: '321312321'
+					content: '暂无内容'
 				}
 			},
 			wxReady: false
