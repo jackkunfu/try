@@ -14,4 +14,12 @@ export default function(Vue){
         var part2 = fill(t.getHours(), fillKey) + fill(t.getMinutes, fillKey) + fill(t.getSeconds(), fillKey)
         return isAll ? (part1 + ' ' + part2) : part1
     })
+    
+
+    Vue.filter('opTypeToName', function(v){    // 截取省略
+        if(v == 1) return '新增'
+        else if(v == 2) return '新增'
+        return ''
+    })
+
 }

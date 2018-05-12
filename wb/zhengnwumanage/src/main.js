@@ -3,18 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import ElementUi from 'element-ui'
 
-// import proto from './basic/proto'    //  表格操作每一行需要全局的curChooseRow数据
 import proto from './basic/proto'    //  表格操作每一行需要传递每一行的scope数据
 import filter from './basic/filter'
+import comps from './basic/components'
 
+Vue.use(ElementUi)
 Vue.use(proto)
 Vue.use(filter)
+Vue.use(comps)
 
-// 全局声明 SelfTable 组件， tableManage.js挂在window上减少组件内引用
-// webpack2 vue 异步引用组件
-Vue.component('SelfTable', () => import('@/components/table.vue'))
-// import tableManage from './basic/mixs/table';
+// tableManage.js挂在window上减少组件内引用
 import tableManage from './basic/mixs/table';
 window.tableManage = tableManage;
 

@@ -4,10 +4,9 @@ div
         .page-title 学员管理
             span /点名签到
 
-        .search-ctn
-            el-button(type="success" @click="search") 查询
-            el-button(type="success" @click="reset") 重置
-        self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
+        search(@search="search" @reset="reset")
+            
+        s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
     //- .edit-ctn.fix-cover(v-show="showEditCtn")

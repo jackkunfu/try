@@ -3,10 +3,10 @@
         //- 操作
         el-row.operates(v-if="operates && operates.length>0")
             el-button(v-for="(op, i) in operates" size="small" :key="op.str" type="info" 
-                @click="operate(op.fun)") {{op.str}}
+                @click="$emit(op.fun)") {{op.str}}
 
         //- 表格
-        el-table(:data="tableData" @current-change="chooseRow" highlight-current-row)
+        el-table(:data="tableData" @current-change="(curItem, oldItem)=>{$emit('chooseRow', curItem, oldItem)}" highlight-current-row)
             //- 暂时序号
             //- el-table-column(type="index" width="50")
 
@@ -24,7 +24,7 @@
                 //- 字符太长，部分省略处理
                 el-table-column(:prop="item.key" :label="item.str"  v-else-if="item.type == 'els'")
                     template(slot-scope="scope")
-                        span {{scope.row[item.key] | short}}
+                        span {{scope.row[item.key] | els}}
 
                 //- 无需处理内容展示
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
@@ -33,26 +33,23 @@
             el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate")
                 template(slot-scope="scope")
                     el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
-                        @click="operate(op.fun, scope)") {{op.str}}
+                        @click="$emit(op.fun, scope)") {{op.str}}
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="10" 
-            :current-page="currentPage" @current-change="handleCurrentChange" ref="page")
+            :current-page="currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
 
 </template>
 
 <script>
 export default {
-    name: 'tableComponent',
-    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'total', 'currentPage', 'tabOp', 'canOp'],
+    name: 'sTable',
+    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'total', 'currentPage'],
     data(){
-        return{
-            isCanOp: this.canOp
-        }
+        return{}
     },
     mounted(){},
     methods: {
         operate(fun, scope){    // 操作
-            // this.$emit(...arguments)
             this.$emit.apply(this, arguments)
         },
         handleCurrentChange(v){ // 页码更改
@@ -60,14 +57,6 @@ export default {
         },
         chooseRow(curItem, oldItem){
             this.$emit('chooseRow', curItem, oldItem)
-        }
-    },
-    watch: {
-        tabOp(v){
-        //- console.log(this.$refs.del)
-            //- v.forEach((el)=>{
-            //-     this.$refs[el].$el.style.display = 'none';
-            //- })
         }
     }
 

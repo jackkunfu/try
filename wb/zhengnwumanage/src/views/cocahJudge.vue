@@ -4,9 +4,8 @@ div
         .page-title 教练管理
             span /教练评价
 
-        .search-ctn
-            el-button(type="success" @click="search") 查询
-            el-button(type="success" @click="reset") 重置
+        search(@search="search" @reset="reset")     
+
         self-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 

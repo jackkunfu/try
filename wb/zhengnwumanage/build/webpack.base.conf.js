@@ -8,8 +8,6 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -22,23 +20,12 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
-  externals: {
-    'jquery': 'window.$',
-    'vue': 'window.Vue',
-    'vue-router': 'window.VueRouter',
-    'element-ui': 'window.ELEMENT'
-  },
-  devServer: {
-    proxy: {
-      // 请求到 '/govPlatform' 下 的请求都会被代理到 target： http://10.10.0.244:8088/govPlatform 中
-      '/govPlatform/*': { 
-          target: 'http://10.10.0.244:8088',
-          // target: 'http://172.18.20.238:8089',
-          secure: false, // 接受 运行在 https 上的服务
-          changeOrigin: true
-      }
-    }
-  },
+  // externals: {
+  //   'jquery': 'window.$',
+  //   'vue': 'window.Vue',
+  //   'vue-router': 'window.VueRouter',
+  //   'element-ui': 'window.ELEMENT'
+  // },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
