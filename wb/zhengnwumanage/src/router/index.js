@@ -38,34 +38,51 @@ var coach = [{     // 教练
 }]
 
 var course = [{     // 课程管理
-  path: '/course/list',
-  name: 'studentList',
-  component: studentList
+  path: '/class/desc',
+  name: 'classDesc',
+  component: r => require.ensure([], () => r(require('@/views/classDesc')), 'classDesc')
+},{
+  path: '/trainTeam/set',
+  name: 'trainTeamSet',
+  component: r => require.ensure([], () => r(require('@/views/trainTeamSet')), 'trainTeamSet')
+},{
+  path: '/card/type',
+  name: 'cardType',
+  component: r => require.ensure([], () => r(require('@/views/cardType')), 'cardType')
 }]
+
 var courseManage = [{  // 排课管理
-  path: '/courseManage/list',
-  name: 'studentList',
-  component: studentList
+  path: '/class/set/coach',
+  name: 'classSetCoach',
+  component: r => require.ensure([], () => r(require('@/views/classSetCoach')), 'classSetCoach')
+},{
+  path: '/class/set/master',
+  name: 'classSetMaster',
+  component: r => require.ensure([], () => r(require('@/views/classSetMaster')), 'classSetMaster')
 }]
 
 var enroll = [{   // 报名
-  path: '/enroll/list',
-  name: 'studentList',
-  component: studentList
+  path: '/enroll/normal',
+  name: 'enrollNormal',
+  component: r => require.ensure([], () => r(require('@/views/enrollNormal')), 'enrollNormal')
+},{
+  path: '/enroll/once',
+  name: 'enrollOnce',
+  component: r => require.ensure([], () => r(require('@/views/enrollOnce')), 'enrollOnce')
 }]
 
 var perm = [{    // 权限路由
-  path: '/perm/manage',
-  name: 'permManage',
-  component: r => require.ensure([], () => r(require('@/views/permManage')), 'permManage')
+  path: '/set/manage',
+  name: 'setManage',
+  component: r => require.ensure([], () => r(require('@/views/setManage')), 'setManage')
 },{
-  path: '/perm/coach',
-  name: 'permCoach',
-  component: r => require.ensure([], () => r(require('@/views/permCoach')), 'permCoach')
+  path: '/set/coach',
+  name: 'setCoach',
+  component: r => require.ensure([], () => r(require('@/views/setCoach')), 'setCoach')
 },{
-  path: '/perm/class',
-  name: 'permClass',
-  component: r => require.ensure([], () => r(require('@/views/permClass')), 'permClass')
+  path: '/set/class',
+  name: 'setClass',
+  component: r => require.ensure([], () => r(require('@/views/setClass')), 'setClass')
 }]
 
 routes = routes.concat(students, coach, course, courseManage, enroll, perm)

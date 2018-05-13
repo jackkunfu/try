@@ -46,31 +46,31 @@ export default {
                 name: '课程管理',
                 iconName: 'el-icon-menu',
                 list: [
-                    { name: '课程介绍', url: '/application' },
-                    { name: '训练营设置', url: '' },
-                    { name: '卡种设置', url: 'user' }
+                    { name: '课程介绍', url: '/class/desc' },
+                    { name: '训练营设置', url: '/trainTeam/set' },
+                    { name: '卡种设置', url: '/card/type' }
                 ]
             },{
                 name: '排课管理',
                 iconName: 'el-icon-menu',
                 list: [
-                    { name: '教练排课', url: 'application' },
-                    { name: '班主任排课', url: '' }
+                    { name: '教练排课', url: '/class/set/coach' },
+                    { name: '班主任排课', url: '/class/set/master' }
                 ]
             },{
                 name: '报名管理',
                 iconName: 'el-icon-menu',
                 list: [
-                    { name: '正常报名', url: 'application' },
-                    { name: '体验课报名', url: '' }
+                    { name: '正常报名', url: '/enroll/normal' },
+                    { name: '体验课报名', url: '/enroll/once' }
                 ]
             },{
                 name: '权限管理',
                 iconName: 'el-icon-menu',
                 list: [
-                    { name: '管理员设置', url: 'permManage' },
-                    { name: '教练设置', url: 'permCoach' },
-                    { name: '班主任设置', url: '/perm/class' }
+                    { name: '管理员设置', url: '/set/manage' },
+                    { name: '教练设置', url: '/set/coach' },
+                    { name: '班主任设置', url: '/set/class' }
                 ]
             }]
         }

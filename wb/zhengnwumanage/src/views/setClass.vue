@@ -1,11 +1,11 @@
 <template lang="pug">
 div
     .table-ctn
-        .page-title 教练管理
-            span /教练评价
+        .page-title 设置
+            span /班主任设置
 
-        search(@search="search" @reset="reset")     
-
+        search(@search="search" @reset="reset")
+        
         s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
@@ -30,26 +30,17 @@ div
 
 <script>
 export default {
-    name: 'coachJudge',
+    name: 'setClass',
     mixins: [ tableManage ],
     data () {
         return {
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '生日', key: 'birth' },
-                { str: '身高', key: 'height' },
-                { str: '体重', key: 'weight' },
-                { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'mobile' },
-                { str: '训练营', key: 'trainName' },
-                { str: '卡种', key: 'remark' },
-                { str: '训练频次', key: 'remark' },
-                { str: '开卡时间', key: 'remark' },
-                { str: '到期时间', key: 'remark' },
-                { str: '学员作业', key: 'remark' },
-                { str: '体能测试', key: 'remark' }
+                { str: '权限', key: 'sex' },
+                { str: '账号', key: 'sex' },
+                { str: '手机号', key: 'birth' },
+                { str: '创建时间', key: 'height' }
             ],
             searchKeys: [],
             editKeys: [],
@@ -59,11 +50,12 @@ export default {
                 edit: { url: '/application/saveApp' },
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '编辑', fun: 'editScope'}
+                { str: '编辑', fun: 'editScope'},
+                { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
-                { str: '修改', fun: 'edit'}
+                // { str: '修改', fun: 'edit'}
             ]
         }
     },

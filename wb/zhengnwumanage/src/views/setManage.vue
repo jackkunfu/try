@@ -1,8 +1,8 @@
 <template lang="pug">
 div
     .table-ctn
-        .page-title 学员管理
-            span /学员等级
+        .page-title 设置
+            span /管理员设置
 
         search(@search="search" @reset="reset")
         
@@ -30,7 +30,7 @@ div
 
 <script>
 export default {
-    name: 'studentList',
+    name: 'setManage',
     mixins: [ tableManage ],
     data () {
         return {
@@ -38,6 +38,7 @@ export default {
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
                 { str: '账号', key: 'sex' },
+                { str: '权限', key: 'sex' },
                 { str: '手机号', key: 'birth' },
                 { str: '创建时间', key: 'height' }
             ],

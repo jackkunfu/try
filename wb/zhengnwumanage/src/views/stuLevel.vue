@@ -30,7 +30,7 @@ div
 
 <script>
 export default {
-    name: 'studentList',
+    name: 'studentLevel',
     mixins: [ tableManage ],
     data () {
         return {
