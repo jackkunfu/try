@@ -68,9 +68,9 @@ export default {
                 name: '权限管理',
                 iconName: 'el-icon-menu',
                 list: [
-                    { name: '管理员设置', url: 'application' },
-                    { name: '教练设置', url: '' },
-                    { name: '管理员设置', url: 'user' }
+                    { name: '管理员设置', url: 'permManage' },
+                    { name: '教练设置', url: 'permCoach' },
+                    { name: '班主任设置', url: '/perm/class' }
                 ]
             }]
         }

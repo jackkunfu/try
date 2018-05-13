@@ -55,9 +55,17 @@ var enroll = [{   // 报名
 }]
 
 var perm = [{    // 权限路由
-  path: '/courseManage/list',
-  name: 'studentList',
-  component: studentList
+  path: '/perm/manage',
+  name: 'permManage',
+  component: r => require.ensure([], () => r(require('@/views/permManage')), 'permManage')
+},{
+  path: '/perm/coach',
+  name: 'permCoach',
+  component: r => require.ensure([], () => r(require('@/views/permCoach')), 'permCoach')
+},{
+  path: '/perm/class',
+  name: 'permClass',
+  component: r => require.ensure([], () => r(require('@/views/permClass')), 'permClass')
 }]
 
 routes = routes.concat(students, coach, course, courseManage, enroll, perm)
