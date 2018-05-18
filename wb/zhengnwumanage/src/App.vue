@@ -53,6 +53,8 @@ export default {
     },
     methods: {
         async lgn(){
+            localStorage.zwMageId = 1
+            location.reload()
             var form = this.form;
             form.userCode = form.userCode.trim();
             form.userPwsd = form.userPwsd.trim();
