@@ -5,26 +5,62 @@ div
             span /正常报名
 
         search(@search="search" @reset="reset")
-        
+            el-button(@click="add") 新增报名
+            
         s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
             el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
+                .zone 个人信息
+                el-form-item(label="头像")
                     el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
+                el-form-item(label="姓名")
                     el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
+                el-form-item(label="性别")
+                    el-radio-group(v-model="editInfo.sex")
+                        el-radio(label="1") 男
+                        el-radio(label="0") 女
+                el-form-item(label="身高")
                     el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
+                el-form-item(label="体重")
                     el-input(v-model="editInfo.dorder")
+                el-form-item(label="家长姓名")
+                    el-input(v-model="editInfo.dorder")
+                el-form-item(label="联系电话")
+                    el-input(v-model="editInfo.dorder")
+                
+                .zone 课程信息
+                el-form-item(label="地区")
+                    el-select(v-model="editInfo.area")
+                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择地区" :value="item" :key="i")
+                el-form-item(label="训练营")
+                    el-select(v-model="editInfo.train")
+                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择训练营" :value="item" :key="i")
+                el-form-item(label="卡种")
+                    el-select(v-model="editInfo.cardType")
+                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择卡种" :value="item" :key="i")
+                el-form-item(label="训练频次")
+                    el-select(v-model="editInfo.times")
+                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择训练频次" :value="item" :key="i")
+                el-form-item(label="价格")
+                    el-input(v-model="editInfo.price")
+                el-form-item(label="支付日期")
+                    el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
+                el-form-item(label="上课时间")
+                    el-form-item(label="上课时间")
+                        el-switch(v-model="editInfo.delivery")
+                el-form-item(label="销售渠道")
+                    el-select(v-model="editInfo.times")
+                        el-options(v-for="(item, i) in areaList" :label="item" :value="item" :key="i")
+
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate") 保存
                     el-button(type="primary" @click="editCancel") 取消
+      
+      
+      
     
 </template>
 
@@ -34,6 +70,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            areaList: [],
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },

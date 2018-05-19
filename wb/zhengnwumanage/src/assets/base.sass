@@ -6,6 +6,7 @@
 
 body, html
     height: 100%
+    font-size: 14px
 
 .fl
     float: left
@@ -95,6 +96,21 @@ a
     top: 0
     left: 0
     background: rgba(0,0,0,0.5)
+    &.edit-ctn
+        .box
+            width: 1000px
+            .el-form-item
+                width: 400px
+                .el-select, .el-date-editor
+                    width: 100%
+            .zone
+                font-size: 18px
+                text-align: left
+                line-height: 30px
+                border-bottom: 1px solid #ccc
+                margin-top: 10px
+                margin-bottom: 10px
+
     &.tree-ctn
         z-index: 30
         .el-tree
@@ -136,4 +152,5 @@ a
     color: #336666
     span
         color: #888
+
             
