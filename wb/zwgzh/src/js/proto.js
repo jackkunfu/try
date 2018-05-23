@@ -6,10 +6,13 @@ export default function(Vue){
     Vue.prototype._ajax = function(url, data, type){
         var data = data || {};
         var type = type || 'post';
+        var headers = {}
+        if(localStorage.zwAuthorization) headers.Authorization = localStorage.zwAuthorization
         return new Promise(function(rs, rj){
             $.ajax({
                 type,
                 url,
+                headers,
                 // headers: {
                 //     'appCode': 'TLW',
                 //     'verifyCode': '06b97038-e6e0-4bd0-a875-fd0fb25560e8',

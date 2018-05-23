@@ -7,7 +7,7 @@ const router = new Router({
         {
             path: '/',
             name: 'index',
-            component: r => require.ensure([], () => r(require('@/pages/index')), 'index')
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/index')), 'index')
         }
     ]
 })

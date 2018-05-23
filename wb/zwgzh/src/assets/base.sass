@@ -39,3 +39,11 @@ html, body
 body
     font-size: $ft1
     color: $c2
+
+@mixin els
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+
+.els
+    @include els
