@@ -4,12 +4,15 @@ export default {
             editInfo: {},    //  编辑的数据对象
             searchInfo: {},    // 搜索数据对象
             tableData: [],    // 列表数据数组
-            curPage: 1,    // 当前页
-            total: 0,    // 总条数
             curChooseRow: null,   // 当前选中列表中的项序号
             showEditCtn: false,    // 展示编辑框
             curOperateType: null,      //  1  新增    2  编辑
-            distInfo: null      // 地址树点击选中的项的
+            distInfo: null,      // 地址树点击选中的项的
+            page: {
+                total: 0,
+                curPage: 1,
+                size: 10
+            }
         }
     },
 

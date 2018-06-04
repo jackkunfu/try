@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { 
-        target: 'http://10.10.0.244:8088',
-        pathRewrite: { '^/api': '' },
+        target: 'http://zw.91ilove.com',
+        // pathRewrite: { '^/api': '' },
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true
       }
@@ -21,7 +21,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 7777, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 9000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

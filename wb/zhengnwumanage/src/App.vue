@@ -16,9 +16,9 @@
         //- img(src="../assets/logo.png")
         el-form(:model="form" label-width="80px")
             el-form-item(label="用户名")
-                el-input(v-model="form.userCode")
+                el-input(v-model="form.userName")
             el-form-item(label="密码")
-                el-input(v-model="form.userPwsd")
+                el-input(v-model="form.password")
             el-form-item
                 el-button(type="primary" @click="lgn") 登录
 
@@ -34,12 +34,12 @@ export default {
         Top, Left
     },
     data(){
-        var isNeedLogin = !localStorage.zwMageId || localStorage.zwMageId == 'null' || localStorage.zwMageId == 'undefined'
+        var isNeedLogin = !localStorage.zwManageUserToken || localStorage.zwManageUserToken == 'null' || localStorage.zwManageUserToken == 'undefined'
         return {
             isNeedLogin,
             form: {
-                userCode: '',
-                userPwsd: ''
+                userName: '',
+                password: ''
             }
         }
     },
@@ -53,14 +53,19 @@ export default {
     },
     methods: {
         async lgn(){
-            localStorage.zwMageId = 1
-            location.reload()
+            // localStorage.zwMageId = 1
+            // location.reload()
             var form = this.form;
-            form.userCode = form.userCode.trim();
-            form.userPwsd = form.userPwsd.trim();
-            if(form.userCode == '') return this.messageTip('用户名不能为空~');
-            if(form.userPwsd == '') return this.messageTip('密码不能为空~');
-            var res = await this.ajax('', this.form)
+            form.userName = form.userName.trim();
+            form.password = form.password.trim();
+            if(form.userName == '') return this.messageTip('用户名不能为空~');
+            if(form.password == '') return this.messageTip('密码不能为空~');
+            var res = await this.ajax('/auth', this.form)
+            if(res){
+                localStorage.zwManageUserToken = res.token
+                localStorage.zwManageMd5 = res.randomKey
+                location.reload()
+            }
         }
     }
 }

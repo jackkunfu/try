@@ -35,15 +35,15 @@
                     el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
                         @click="$emit(op.fun, scope)") {{op.str}}
 
-        el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="10" 
-            :current-page="currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
+        el-pagination(layout="total, prev, pager, next, jumper" :total="page.total" :page-size="page.size" 
+            :current-page="page.currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
 
 </template>
 
 <script>
 export default {
     name: 'sTable',
-    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'total', 'currentPage'],
+    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'page'],
     data(){
         return{}
     },

@@ -6,15 +6,13 @@ export default function(Vue){
     Vue.prototype._ajax = function(url, data, type){
         var data = data || {};
         var type = type || 'post';
+        var headers = {}
+        if(localStorage.zwManageUserToken) headers.toekn = localStorage.zwManageUserToken
         return new Promise(function(rs, rj){
             $.ajax({
                 type,
-                url,
-                // headers: {
-                //     'appCode': 'TLW',
-                //     'verifyCode': '06b97038-e6e0-4bd0-a875-fd0fb25560e8',
-                //     'Content-Type': 'application/json'
-                // },
+                url: '/api'+url,
+                headers,
                 dataType: 'json',
                 // 如果是post请求，需要JSON.stringify处理下参数，因为设置'Content-Type': 'application/json'
                 data, 
@@ -34,11 +32,12 @@ export default function(Vue){
     Vue.prototype.ajax = async function(){
         try{
             var res = await this._ajax(...arguments);
-            if(res && res.code === 0){
-                return res
-            }else{
-                return this.messageTip(res.msg || '请求失败，请稍后重试~')
-            }
+
+            if(res && arguments[0] == '/auth') return res
+            else if(res && res.code === 0) return res
+
+            return this.messageTip(res.msg || '请求失败，请稍后重试~')
+            
         }catch(e){
             console.log(arguments[0])
             console.log(e)
@@ -70,32 +69,32 @@ export default function(Vue){
         var copySearchInfo = Object.assign({}, this.searchInfo);
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';
         var options = needChangeSearchInfo ? this.changeSearchValue(copySearchInfo) : copySearchInfo;
-        options.pageNum = this.curPage;
-        options.pageSize = 10
+        options.pageNum = this.page.curPage;
+        options.pageSize = this.page.size
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
         if(res && res.code == 0){
             var result = res.data
             this.tableData = result.list
-            this.total = result.total;
-            this.curPage = result.pageNum;
+            this.page.total = result.total;
+            this.page.curPage = result.pageNum;
 
             this.curChooseRow = null;   // 当前选中列置空
         }
     }
     // 搜索
     Vue.prototype.tableSearch = function(v){
-        this.curPage = 1;
+        this.page.curPage = 1;
         this.tableList.call(this);
     }
     // 搜索重置
     Vue.prototype.tableSearchReset = function(v){
         this.tableManageInit.call(this);
-        this.curPage = 1;
+        this.page.curPage = 1;
         this.tableList.call(this);
     }
     // 页码改变
     Vue.prototype.pageChange = function(v){
-        this.curPage = v;
+        this.page.curPage = v;
         this.tableList.call(this);
     }
     // 提示
