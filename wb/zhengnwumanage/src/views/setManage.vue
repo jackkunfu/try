@@ -5,23 +5,35 @@ div
             span /管理员设置
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo")
+                el-form-item
+                    el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.key")
         
-        s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
+        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
             el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
+                el-form-item(label="头像")
+                    .up-ctn
+                        input#up1(type="file")
+                        span + 上传
+                        img(:src="'http://hjtu.free.ngrok.cc/img/'+editInfo.avatar")
+                el-form-item(label="账号")
+                    el-input(v-model="editInfo.account")
+                el-form-item(label="密码")
+                    el-input(v-model="editInfo.password")
+                el-form-item(label="姓名")
+                    el-input(v-model="editInfo.name")
+                el-form-item(label="手机号")
+                    el-input(v-model="editInfo.phone")
+                el-form-item(label="角色")
+                    el-select(v-model="editInfo.roleid")
+                        el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任']" :key="i" :value="i+1" :label="item")
+                el-form-item(label="学员信息删除权限")
+                    el-switch(v-model="editInfo.delStu")
+
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate") 保存
                     el-button(type="primary" @click="editCancel") 取消
@@ -43,10 +55,10 @@ export default {
                 { str: '创建时间', key: 'height' }
             ],
             searchKeys: [],
-            editKeys: [],
+            editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password'],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
+                list: { url: '/mgr/list' },
+                add: { url: '/mgr/add' },
                 edit: { url: '/application/saveApp' },
             },
             scopeOperates: [    // 每一行种的操作
@@ -59,6 +71,14 @@ export default {
             ]
         }
     },
+    mounted(){
+        $('#up1').change(()=>{
+            this.file('up1', res => {
+                if(res && res.code == 200) this.editInfo.avatar = res.data
+                else this.messageTip(res.message)
+            })
+        })
+    },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
@@ -67,6 +87,10 @@ export default {
             return info;
         },
         testInput(){
+            var data = Object.assign({}, this.editInfo)
+            // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')
+            if(data.account.trim() == '') return this.messageTip('账户名不能为空~')
+            if(data.account.trim().length < 8 || data.account.trim().length > 16) return this.messageTip('账户名不能为空~')
             return true
         }
     }

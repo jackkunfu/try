@@ -60,8 +60,11 @@ export default {
             form.password = form.password.trim();
             if(form.userName == '') return this.messageTip('用户名不能为空~');
             if(form.password == '') return this.messageTip('密码不能为空~');
+            var loading = this.$loading()
             var res = await this.ajax('/auth', this.form)
+            loading.close()
             if(res){
+                if(res.code == 400) return this.messageTip(res.message)
                 localStorage.zwManageUserToken = res.token
                 localStorage.zwManageMd5 = res.randomKey
                 location.reload()

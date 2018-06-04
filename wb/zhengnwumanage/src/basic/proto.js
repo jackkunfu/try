@@ -29,6 +29,44 @@ export default function(Vue){
         })
     }
 
+    Vue.prototype.file = function(id, cb){
+        var headers = {}
+        if(localStorage.zwManageUserToken) headers.toekn = localStorage.zwManageUserToken
+        var data = new FormData()
+        data.append('file', document.getElementById(id).files[0])
+        $.ajax({
+            type: 'POST',
+            url: '/api/mgr/upload',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                cb(data);
+            },
+            error: function(data) {
+                aliPayNative.loading(true);
+                alert("上传出错"+JSON.stringify(data));
+            }
+        });
+        // $.ajax({
+        //     type: 'post',
+        //     url: '/api/mgr/upload',
+        //     headers,
+        //     dataType: 'json',
+        //     // 如果是post请求，需要JSON.stringify处理下参数，因为设置'Content-Type': 'application/json'
+        //     data, 
+        //     // data: type != 'get' ? JSON.stringify(data) : data,
+        //     // crossDomian: true,
+        //     xhrFields: {
+        //         withCredentials: true
+        //     }
+        // }).done(function(data){
+        //     rs(data)
+        // }).fail(function(e){
+        //     rj(e);
+        // })
+    }
+
     Vue.prototype.ajax = async function(){
         try{
             var res = await this._ajax(...arguments);
