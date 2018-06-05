@@ -102,14 +102,14 @@ export default function(Vue){
         var copySearchInfo = Object.assign({}, this.searchInfo);
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';
         var options = needChangeSearchInfo ? this.changeSearchValue(copySearchInfo) : copySearchInfo;
-        options.pageNum = this.page.curPage;
-        options.pageSize = this.page.size
+        options.offset = this.page.offset;
+        options.limit = this.page.limit
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
         if(res && res.code == this.successCode){
             var result = res.data
-            this.tableData = result.list
+            this.tableData = result.rows
             this.page.total = result.total;
-            this.page.curPage = result.pageNum;
+            // this.page.curPage = result.pageNum;
 
             this.curChooseRow = null;   // 当前选中列置空
         }
@@ -127,6 +127,7 @@ export default function(Vue){
     }
     // 页码改变
     Vue.prototype.pageChange = function(v){
+        console.log(v)
         this.page.curPage = v;
         this.tableList.call(this);
     }
@@ -182,8 +183,8 @@ export default function(Vue){
             var op = this.api.del;
             var neesChangeOptions = this.handleDelRow && typeof this.handleDelRow == 'function'
             var oriData = Object.assign({}, arguments[0].row || {});
-            var options = neesChangeOptions ? this.handleDelRow(oriData) : { guid: oriData.guid }
-            var res = await this.ajax(op.url, options, op.type || 'delete')
+            var options = neesChangeOptions ? this.handleDelRow(oriData) : { userId: oriData.id }
+            var res = await this.ajax(op.url, options, op.type || 'post')
             if(res.code == this.successCode){
                 this.messageTip(res.message || '操作成功', 1);
                 this.tableList.call(this);
@@ -222,6 +223,8 @@ export default function(Vue){
         var copyEditInfo = Object.assign({}, this.editInfo);
         var needChangeEditInfo = this.changeEditValue && typeof this.changeEditValue == 'function';
         var options = needChangeEditInfo ? this.changeEditValue(copyEditInfo) : copyEditInfo;
+
+        if(this.curOperateType == 2) options.id = this.curChooseRow.id
         // 请求
         var res = await this.ajax(op.url, options, op.type || 'post');
         console.log(res);

@@ -14,7 +14,7 @@
                 //- 图片处理
                 el-table-column(:prop="item.key" :label="item.str" v-if="item.type == 'img'")
                     template(slot-scope="scope")
-                        img(:src="scope.row[item.key]" alt="" style="max-width:40px;max-height:40px;")
+                        img(:src="config.imgPath + scope.row[item.key]" alt="" style="max-width:40px;max-height:40px;")
 
                 //- 时间戳处理
                 el-table-column(:prop="item.key" :label="item.str"  v-else-if="item.type == 'time'")
@@ -35,17 +35,28 @@
                     el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
                         @click="$emit(op.fun, scope)") {{op.str}}
 
-        el-pagination(layout="total, prev, pager, next, jumper" :total="page.total" :page-size="page.size" 
+        el-pagination(layout="total, sizes, prev, pager, next, jumper" :total="total" :page-size="limit" 
             :current-page="page.currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
 
 </template>
 
 <script>
+import config from '../basic/config'
 export default {
     name: 'sTable',
     props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'page'],
     data(){
-        return{}
+        return{
+            config
+        }
+    },
+    computed: {
+        total(){
+            return this.page.total - 0
+        },
+        limit(){
+            return this.page.limit - 0
+        }
     },
     mounted(){},
     methods: {
@@ -58,6 +69,12 @@ export default {
         chooseRow(curItem, oldItem){
             this.$emit('chooseRow', curItem, oldItem)
         }
+    },
+    watch: {
+        // page(v){
+        //     console.log('页码改变')
+        //     this.page.total = v.total
+        // }
     }
 
 }

@@ -7,14 +7,17 @@ div
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo")
                 el-form-item
-                    el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.key")
+                    el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
+
+        el-button(@click="roleid=1") 超级管理员
+        el-button(@click="roleid=2") 普通管理员
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
+            el-form(:model="editInfo" label-width="160px")
                 el-form-item(label="头像")
                     .up-ctn
                         input#up1(type="file")
@@ -49,19 +52,20 @@ export default {
         return {
             config,
             keys: [
-                { str: '头像', key: 'appCode' },
+                { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
-                { str: '账号', key: 'sex' },
-                { str: '权限', key: 'sex' },
-                { str: '手机号', key: 'birth' },
-                { str: '创建时间', key: 'height' }
+                { str: '账号', key: 'account' },
+                { str: '权限', key: 'roleid' },
+                { str: '手机号', key: 'phone' },
+                { str: '创建时间', key: 'createtime' }
             ],
-            searchKeys: [],
+            searchKeys: ['name'],
             editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password'],
             api: {
                 list: { url: '/mgr/list' },
                 add: { url: '/mgr/add' },
-                edit: { url: '/application/saveApp' },
+                edit: { url: '/mgr/edit' },
+                del: { url: '/mgr/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '编辑', fun: 'editScope'},
@@ -70,7 +74,8 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '修改', fun: 'edit'}
-            ]
+            ],
+            roleid: null
         }
     },
     mounted(){
@@ -97,6 +102,12 @@ export default {
             if(data.password.trim() == '') return this.messageTip('账户名不能为空~')
             if(data.password.trim().length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
             return true
+        }
+    },
+    watch: {
+        roleid(v){
+            if(!v) return
+            this.tableList()
         }
     }
 

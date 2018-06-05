@@ -10,8 +10,8 @@ export default {
             distInfo: null,      // 地址树点击选中的项的
             page: {
                 total: 0,
-                curPage: 1,
-                size: 10
+                offset: 0,
+                limit: 10
             }
         }
     },
