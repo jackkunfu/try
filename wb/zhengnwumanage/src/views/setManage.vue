@@ -19,7 +19,7 @@ div
                     .up-ctn
                         input#up1(type="file")
                         span + 上传
-                        img(:src="'http://hjtu.free.ngrok.cc/img/'+editInfo.avatar")
+                        img(:src="config.imgPath+editInfo.avatar")
                 el-form-item(label="账号")
                     el-input(v-model="editInfo.account")
                 el-form-item(label="密码")
@@ -41,11 +41,13 @@ div
 </template>
 
 <script>
+import config from '../basic/config'
 export default {
     name: 'setManage',
     mixins: [ tableManage ],
     data () {
         return {
+            config,
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
@@ -88,9 +90,12 @@ export default {
         },
         testInput(){
             var data = Object.assign({}, this.editInfo)
-            // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')
+            // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')  // 头像不要求
             if(data.account.trim() == '') return this.messageTip('账户名不能为空~')
-            if(data.account.trim().length < 8 || data.account.trim().length > 16) return this.messageTip('账户名不能为空~')
+            if(data.account.trim().length > 30) return this.messageTip('账户名须30字符以内~')
+
+            if(data.password.trim() == '') return this.messageTip('账户名不能为空~')
+            if(data.password.trim().length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
             return true
         }
     }

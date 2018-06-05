@@ -2,6 +2,7 @@ import $ from 'jquery'
 import config from './config'
 
 export default function(Vue){
+    Vue.prototype.successCode = 200
     // ajax
     Vue.prototype._ajax = function(url, data, type){
         var data = data || {};
@@ -54,8 +55,12 @@ export default function(Vue){
             type: 'POST',
             url: '/api/mgr/upload',
             data: data,
+            headers,
             contentType: false,
             processData: false,
+            xhrFields: {
+                withCredentials: true
+            },
             success: function(data) {
                 cb(data);
             },
@@ -100,7 +105,7 @@ export default function(Vue){
         options.pageNum = this.page.curPage;
         options.pageSize = this.page.size
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
-        if(res && res.code == 0){
+        if(res && res.code == this.successCode){
             var result = res.data
             this.tableData = result.list
             this.page.total = result.total;
@@ -179,7 +184,7 @@ export default function(Vue){
             var oriData = Object.assign({}, arguments[0].row || {});
             var options = neesChangeOptions ? this.handleDelRow(oriData) : { guid: oriData.guid }
             var res = await this.ajax(op.url, options, op.type || 'delete')
-            if(res.code == 0){
+            if(res.code == this.successCode){
                 this.messageTip(res.message || '操作成功', 1);
                 this.tableList.call(this);
             }else this.messageTip(res.message || '操作失败')
@@ -198,7 +203,7 @@ export default function(Vue){
             var oriData = Object.assign({}, this.curChooseRow);
             var options = neesChangeOptions ? this.handleDelRow(oriData) : { guid: oriData.guid }
             var res = await this.ajax(op.url, options, op.type || 'delete')
-            if(res.code == 0){
+            if(res.code == this.successCode){
                 this.messageTip(res.message || '操作成功', 1);
                 this.tableList.call(this);
             }else this.messageTip(res.message || '操作失败')
@@ -220,7 +225,7 @@ export default function(Vue){
         // 请求
         var res = await this.ajax(op.url, options, op.type || 'post');
         console.log(res);
-        if(res.code == 0){
+        if(res.code == this.successCode){
             this.messageTip(res.message, 1);
 
             // 重置一些数据状态
@@ -233,25 +238,4 @@ export default function(Vue){
         }
     }
 
-    // 获取地区树
-    Vue.prototype.getAllDist = async function(){
-        var res = await this.ajax('/dist/queryDistAuthedTree', { operatorUserId: localStorage.zlOpUid || 43, level: 4 }, 'get');
-        if(res.code == 0 && res.data && res.data.length > 0) return res.data;
-        else return [];
-    }
-
-
-    // // 点击地区树节点获取数据(暂无用)
-    // Vue.prototype.treeNodeClickProto = function(data){
-    //     this.distInfo = data;
-    // }
-    // // 点击地区树节点获取数据
-    // Vue.prototype.setChooseDist = function(key){
-    //     Object.assign(this[key], this.distInfo || null);
-    // }
-    // // 地区树点击取消
-    // Vue.prototype.cancelChooseDist = function(key){
-    //     Object.assign(this[key], this.distInfo || null);
-    // }
-    
 }

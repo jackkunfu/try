@@ -6,7 +6,7 @@ div
 
         search(@search="search" @reset="reset")
 
-        s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
+        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")

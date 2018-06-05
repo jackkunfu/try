@@ -7,7 +7,7 @@ div
         search(@search="search" @reset="reset")
             el-button(@click="add") 新增报名
             
-        s-table(:keys="keys" :tableData="tableData" :total="total" :operates="operates" :scopeOperates="scopeOperates"
+        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
