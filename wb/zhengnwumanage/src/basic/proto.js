@@ -7,17 +7,14 @@ export default function(Vue){
         var data = data || {};
         var type = type || 'post';
         var headers = {}
-        if(localStorage.zwManageUserToken) headers.toekn = localStorage.zwManageUserToken
+        if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken
         return new Promise(function(rs, rj){
             $.ajax({
                 type,
                 url: '/api'+url,
                 headers,
                 dataType: 'json',
-                // 如果是post请求，需要JSON.stringify处理下参数，因为设置'Content-Type': 'application/json'
                 data, 
-                // data: type != 'get' ? JSON.stringify(data) : data, 
-                // crossDomian: true,
                 xhrFields: {
                     withCredentials: true
                 }
@@ -29,9 +26,28 @@ export default function(Vue){
         })
     }
 
+    Vue.prototype.ajax = async function(){
+        try{
+            var res = await this._ajax(...arguments);
+            if(res){
+                if(res.code && res.code == 700){
+                    this.goUrl('/')
+                    localStorage.removeItem('zwManageUserToken')
+                    location.reload()
+                    return
+                }
+                return res
+            }else return this.messageTip(res.msg || '请求失败，请稍后重试~')
+            
+        }catch(e){
+            console.log(arguments[0])
+            console.log(e)
+        }
+    }
+
     Vue.prototype.file = function(id, cb){
         var headers = {}
-        if(localStorage.zwManageUserToken) headers.toekn = localStorage.zwManageUserToken
+        if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken
         var data = new FormData()
         data.append('file', document.getElementById(id).files[0])
         $.ajax({
@@ -48,38 +64,6 @@ export default function(Vue){
                 alert("上传出错"+JSON.stringify(data));
             }
         });
-        // $.ajax({
-        //     type: 'post',
-        //     url: '/api/mgr/upload',
-        //     headers,
-        //     dataType: 'json',
-        //     // 如果是post请求，需要JSON.stringify处理下参数，因为设置'Content-Type': 'application/json'
-        //     data, 
-        //     // data: type != 'get' ? JSON.stringify(data) : data,
-        //     // crossDomian: true,
-        //     xhrFields: {
-        //         withCredentials: true
-        //     }
-        // }).done(function(data){
-        //     rs(data)
-        // }).fail(function(e){
-        //     rj(e);
-        // })
-    }
-
-    Vue.prototype.ajax = async function(){
-        try{
-            var res = await this._ajax(...arguments);
-
-            if(res && arguments[0] == '/auth') return res
-            else if(res && res.code === 0) return res
-
-            return this.messageTip(res.msg || '请求失败，请稍后重试~')
-            
-        }catch(e){
-            console.log(arguments[0])
-            console.log(e)
-        }
     }
 
     /* 
@@ -87,20 +71,26 @@ export default function(Vue){
      */
     // 列表请求前的参数初始化
     Vue.prototype.tableManageInit = async function(){
+        this.searchInit()
+        this.editInit()
+        // 如果有特殊初始化操作在组件增加 tableInit 方法处理
+        if(this.tableInit && typeof this.tableInit == 'function') this.tableInit();
+    }
+    Vue.prototype.searchInit = async function(){
         // 处理 this.searchInfo 各个值双向绑定
         if(this.searchKeys && this.searchKeys.length > 0){
             this.searchKeys.forEach( v => {
                 this.$set(this.searchInfo, v, '')
             })
         }
+    }
+    Vue.prototype.editInit = async function(){
         // 处理 this.editInfo 各个值双向绑定
         if(this.editKeys && this.editKeys.length > 0){
             this.editKeys.forEach( v => {
                 this.$set(this.editInfo, v, '')
             })
         }
-        // 如果有特殊初始化操作在组件增加 tableInit 方法处理
-        if(this.tableInit && typeof this.tableInit == 'function') this.tableInit();
     }
     // 列表请求
     Vue.prototype.tableList = async function(){
@@ -146,7 +136,7 @@ export default function(Vue){
     Vue.prototype.goUrl = function(url, data){
         this.$router.push({
             path: url,
-            query: data
+            query: data || {}
         })
     }
     // 点击新增
