@@ -5,26 +5,50 @@ div
             span /班主任排课
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.city" placeholder="训练营")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="班主任")
+                    el-select(v-model="searchInfo.city" placeholder="班主任")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
+            @changePage="changePage" @add="add" @delScope="delScope")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            el-form(:model="editInfo" label-width="160px" size="mini")
+                el-form-item(label="城市")
+                    el-select(v-model="editInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="editInfo.city" placeholder="训练营")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="editInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="班主任")
+                    el-select(v-model="editInfo.city" placeholder="班主任")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 
@@ -47,6 +71,7 @@ export default {
                 list: { url: '/application/queryAppPage' },
                 add: { url: '/application/addApp' },
                 edit: { url: '/application/saveApp' },
+                del: { url: '/application/saveApp' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}

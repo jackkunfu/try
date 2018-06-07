@@ -22,7 +22,7 @@ div
                     .up-ctn
                         input#up1(type="file")
                         span + 上传
-                        img(:src="config.imgPath+editInfo.avatar")
+                        img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
                 el-form-item(label="姓名")
                     el-input(v-model="editInfo.name")
 

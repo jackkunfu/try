@@ -5,17 +5,50 @@ div
             span /正常报名
 
         search(@search="search" @reset="reset")
-            el-button(@click="add") 新增报名
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="关键字")
+                    el-input(placeholder="姓名/手机号" v-model="searchInfo.name")
+                
+                el-form-item(label="时间范围")
+                    el-col(:span="11")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
+                    el-col(:span="2" style="text-align: center") -
+                    el-col(:span="11")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
+
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.city" placeholder="训练营")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="出生日期")
+                    el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
+
+                el-form-item(label="销售渠道")
+                    el-select(v-model="searchInfo.city" placeholder="销售渠道")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
+            @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
-                .zone 个人信息
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            el-form(:model="editInfo" label-width="80px" size="mini")
+                .item 个人信息
                 el-form-item(label="头像")
-                    el-input(v-model="editInfo.appCode")
+                    .up-ctn
+                        input#up1(type="file")
+                        span + 上传
+                        img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
                 el-form-item(label="姓名")
                     el-input(v-model="editInfo.appName")
                 el-form-item(label="性别")
@@ -31,7 +64,7 @@ div
                 el-form-item(label="联系电话")
                     el-input(v-model="editInfo.dorder")
                 
-                .zone 课程信息
+                .item 课程信息
                 el-form-item(label="地区")
                     el-select(v-model="editInfo.area")
                         el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择地区" :value="item" :key="i")
@@ -49,8 +82,9 @@ div
                 el-form-item(label="支付日期")
                     el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
                 el-form-item(label="上课时间")
-                    el-form-item(label="上课时间")
-                        el-switch(v-model="editInfo.delivery")
+                    div(v-for="(item, i) in classTimes" :key="i")
+                        span {{item.time}}
+                        el-switch(v-model="item.delivery")
                 el-form-item(label="销售渠道")
                     el-select(v-model="editInfo.times")
                         el-options(v-for="(item, i) in areaList" :label="item" :value="item" :key="i")
@@ -59,9 +93,6 @@ div
                     el-button(type="primary" @click="addOrUpdate") 保存
                     el-button(type="primary" @click="editCancel") 取消
       
-      
-      
-    
 </template>
 
 <script>
@@ -100,7 +131,9 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '导出excel', fun: 'export'}
-            ]
+            ],
+            citys: [],
+            classTimes: []
         }
     },
     methods: {

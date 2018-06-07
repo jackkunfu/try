@@ -5,26 +5,50 @@ div
             span /教练排课
 
         search(@search="search" @reset="reset")
-        
-        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.city" placeholder="训练营")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="教练")
+                    el-select(v-model="searchInfo.city" placeholder="教练")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+        
+        el-table(:data="tableData")
+
+            el-table-column(prop="name" label="校区")
+                
+            template(v-for="(item, i) in ['一', '二', '三', '四', '五', '六', '日']")
+                el-table-column(:label="'周'+item")
+                    template(slot-scope="scope")
+                        div(v-if="scope.row.date == i")
+                            span {{scope.row.time}}
+                            el-button(type="primary" @click="handleCoach(i, scope.row, 0)" size="small" v-if="!scope.row.has") 添加教练
+                            div(v-else)
+                                .name {{scope.row.name}}
+                                el-button(type="primary" @click="handleCoach(i, scope.row, 1)" size="small") 替换
+                                el-button(type="warning" @click="delCoach(i, scope.row)" size="small") 删除
+
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            el-form(:model="editInfo" label-width="160px" size="mini")
+                el-form-item(label="教练")
+                    el-select(v-model="editInfo.city" placeholder="教练")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 
@@ -34,6 +58,25 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            tableData: [{
+                name: '洛克校区',
+                has: true,
+                date: 0,
+                time: '9:00 - 11: 00',
+                name: 'coach wang'
+            }, {
+                name: '下沙校区',
+                has: false,
+                date: 3,
+                time: '14:00 - 15: 00',
+                name: 'coach wang'
+            }, {
+                name: '滨江校区',
+                has: true,
+                date: 5,
+                time: '19:00 - 21: 00',
+                name: 'coach wang'
+            }],
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
@@ -54,16 +97,15 @@ export default {
                 list: { url: '/application/queryAppPage' },
                 add: { url: '/application/addApp' },
                 edit: { url: '/application/saveApp' },
+                del: { url: '/application/saveApp' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '开卡', fun: 'openCard'},
-                { str: '编辑', fun: 'editScope'},
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '导出excel', fun: 'export'}
-            ]
+                { str: '新增', fun: 'add'}
+            ],
+            citys: []
         }
     },
     methods: {
@@ -79,7 +121,11 @@ export default {
         openCard(scope){
             var row = scope.row;
             console.log(row)
-        }
+        },
+        handleCoach(i, item, type){   // type 1 是替换   0 是添加
+            this.showEditCtn = true
+        },
+        delCoach(i, item){}
     }
 
 }

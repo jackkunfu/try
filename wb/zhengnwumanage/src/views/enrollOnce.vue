@@ -11,10 +11,10 @@ div
                 
                 el-form-item(label="时间范围")
                     el-col(:span="11")
-                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
                     el-col(:span="2" style="text-align: center") -
                     el-col(:span="11")
-                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
 
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
