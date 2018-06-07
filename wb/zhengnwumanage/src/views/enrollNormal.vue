@@ -90,8 +90,8 @@ div
                         el-options(v-for="(item, i) in areaList" :label="item" :value="item" :key="i")
 
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
       
 </template>
 
