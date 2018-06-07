@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { 
-        // target: 'http://zw.91ilove.com',
-        target: 'http://hjtu.free.ngrok.cc',
+        target: 'http://zw.91ilove.com',
+        // target: 'http://hjtu.free.ngrok.cc',
         // pathRewrite: { '^/api': '' },
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true

@@ -5,32 +5,41 @@ div
             span /管理员设置
 
         search(@search="search" @reset="reset")
-            el-form(:inline="true" :model="searchInfo")
+            el-form(:inline="true" :model="searchInfo" size="mini")
                 el-form-item
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
 
-        el-button(@click="roleid=1") 超级管理员
-        el-button(@click="roleid=2") 普通管理员
+        el-button(@click="roleid=1" size="small") 超级管理员
+        el-button(@click="roleid=2" size="small") 普通管理员
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @editScope="editScope" @delScope="delScope")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @editScope="editScope" @delScope="delScope" ref="table")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="160px")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            el-form(:model="editInfo" label-width="160px" size="mini")
+                .item 管理员信息
                 el-form-item(label="头像")
                     .up-ctn
                         input#up1(type="file")
                         span + 上传
                         img(:src="config.imgPath+editInfo.avatar")
+                el-form-item(label="姓名")
+                    el-input(v-model="editInfo.name")
+
+                .item 账号密码
                 el-form-item(label="账号")
                     el-input(v-model="editInfo.account")
                 el-form-item(label="密码")
                     el-input(v-model="editInfo.password")
-                el-form-item(label="姓名")
-                    el-input(v-model="editInfo.name")
+
+                .item 联系方式
                 el-form-item(label="手机号")
                     el-input(v-model="editInfo.phone")
+
+                .item 角色权限
                 el-form-item(label="角色")
                     el-select(v-model="editInfo.roleid")
                         el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任']" :key="i" :value="i+1" :label="item")
@@ -38,8 +47,8 @@ div
                     el-switch(v-model="editInfo.delStu")
 
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 
@@ -59,7 +68,7 @@ export default {
                 { str: '手机号', key: 'phone' },
                 { str: '创建时间', key: 'createtime' }
             ],
-            searchKeys: ['name'],
+            searchKeys: ['name', 'roleid'],
             editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password'],
             api: {
                 list: { url: '/mgr/list' },
@@ -107,6 +116,7 @@ export default {
     watch: {
         roleid(v){
             if(!v) return
+            this.searchInfo.roleid = v
             this.tableList()
         }
     }

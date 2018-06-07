@@ -71,6 +71,21 @@ export default function(Vue){
         });
     }
 
+    // 提示
+    Vue.prototype.messageTip = function(str, type){
+        this.$message({
+            type: type ? 'success' : 'error',
+            message: str
+        })
+    }
+    // 跳转
+    Vue.prototype.goUrl = function(url, data){
+        this.$router.push({
+            path: url,
+            query: data || {}
+        })
+    }
+
     /* 
      tableMange 公共方法处理
      */
@@ -110,7 +125,6 @@ export default function(Vue){
             this.tableData = result.rows
             this.page.total = result.total;
             // this.page.curPage = result.pageNum;
-
             this.curChooseRow = null;   // 当前选中列置空
         }
     }
@@ -120,8 +134,8 @@ export default function(Vue){
         this.tableList.call(this);
     }
     // 搜索重置
-    Vue.prototype.tableSearchReset = function(v){
-        this.tableManageInit.call(this);
+    Vue.prototype.tableReset = function(v){
+        this.searchInit.call(this);
         this.page.curPage = 1;
         this.tableList.call(this);
     }
@@ -131,20 +145,7 @@ export default function(Vue){
         this.page.curPage = v;
         this.tableList.call(this);
     }
-    // 提示
-    Vue.prototype.messageTip = function(str, type){
-        this.$message({
-            type: type ? 'success' : 'error',
-            message: str
-        })
-    }
-    // 跳转
-    Vue.prototype.goUrl = function(url, data){
-        this.$router.push({
-            path: url,
-            query: data || {}
-        })
-    }
+    
     // 点击新增
     Vue.prototype.tableAdd = function(){
         this.showEditCtn = true;
@@ -239,6 +240,14 @@ export default function(Vue){
         }else{
             this.messageTip(res.message);
         }
+    }
+
+    // 关闭新增编辑框
+    Vue.prototype.closeEditCtn = function(){
+        this.editInit()
+        if(this.curOperateType = 2) this.curChooseRow = null
+        this.curOperateType = 0
+        this.showEditCtn = false
     }
 
 }

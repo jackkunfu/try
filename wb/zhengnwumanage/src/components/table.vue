@@ -35,7 +35,7 @@
                     el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
                         @click="$emit(op.fun, scope)") {{op.str}}
 
-        el-pagination(layout="total, sizes, prev, pager, next, jumper" :total="total" :page-size="limit" 
+        el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="limit" 
             :current-page="page.currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
 
 </template>
@@ -44,7 +44,7 @@
 import config from '../basic/config'
 export default {
     name: 'sTable',
-    props: ['keys', 'operates', 'scopeOperates', 'selfApi', 'tableData', 'page'],
+    props: ['keys', 'operates', 'scopeOperates', 'tableData', 'page'],
     data(){
         return{
             config

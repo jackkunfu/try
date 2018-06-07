@@ -31,7 +31,7 @@ export default {
             this.tableSearch.call(this);
         },
         reset(){   // 重置
-            this.tableSearchReset.call(this);
+            this.tableReset.call(this);
         },
         add(){   // 新增
             this.curOperateType = 1
@@ -53,6 +53,9 @@ export default {
         },
         addOrUpdate(){   //  新增 编辑确认提交
             this.tableAddOrUpdate.call(this);
+        },
+        closeEditBox(){
+            this.closeEditCtn.call(this)
         },
         editCancel(){   // 新增 编辑 取消按钮
             this.curOperateType = null
