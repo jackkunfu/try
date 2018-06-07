@@ -138,6 +138,7 @@ export default function(Vue){
         this.searchInit.call(this);
         this.page.curPage = 1;
         this.tableList.call(this);
+        if(this.selfSearchReset && typeof this.selfSearchReset == 'function') this.selfSearchReset()
     }
     // 页码改变
     Vue.prototype.pageChange = function(v){

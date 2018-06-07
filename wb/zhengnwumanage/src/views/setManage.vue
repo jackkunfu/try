@@ -9,8 +9,9 @@ div
                 el-form-item
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
 
-        el-button(@click="roleid=1" size="small") 超级管理员
-        el-button(@click="roleid=2" size="small") 普通管理员
+        .btn-search
+            el-button(v-for="(item, i) in [{str:'超级管理员'}, {str:'普通管理员'}]" size="small"
+                @click="roleid=i+1;curBtnSearch=i" :class="curBtnSearch==i ? 'cur' : ''") {{item.str}}
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @editScope="editScope" @delScope="delScope" ref="table")
@@ -76,7 +77,7 @@ export default {
                 edit: { url: '/mgr/edit' },
                 del: { url: '/mgr/delete' }
             },
-            scopeOperates: [    // 每一行种的操作
+            scopeOperates: [    // 每一行中的操作
                 { str: '编辑', fun: 'editScope'},
                 { str: '删除', fun: 'delScope'}
             ],
@@ -84,7 +85,8 @@ export default {
                 { str: '新增', fun: 'add'},
                 { str: '修改', fun: 'edit'}
             ],
-            roleid: null
+            roleid: null,
+            curBtnSearch: -1
         }
     },
     mounted(){
@@ -96,6 +98,9 @@ export default {
         })
     },
     methods: {
+        selfSearchReset(){
+            this.curBtnSearch = -1
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
