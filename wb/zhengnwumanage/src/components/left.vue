@@ -1,5 +1,5 @@
 <template lang="pug">
-    el-menu(:default-active="defaultActive+''" class="el-menu-vertical-demo" background-color="#336666" text-color="#ccc" active-text-color="#ffd04b" router)
+    el-menu(:default-active="defaultActive+''" class="el-menu-vertical-demo" background-color="#336666" text-color="#ccc" active-text-color="#ffd04b" router unique-opened)
         //- @open="handleOpen" @close="handleClose"
 
         template(v-for="(nav, i) in menus")

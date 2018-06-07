@@ -10,11 +10,11 @@ div
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
 
         .btn-search
-            el-button(v-for="(item, i) in [{str:'超级管理员'}, {str:'普通管理员'}]" size="small"
+            el-button(v-for="(item, i) in [{str:'超级管理员'}, {str:'普通管理员'}]" size="small" :key="i"
                 @click="roleid=i+1;curBtnSearch=i" :class="curBtnSearch==i ? 'cur' : ''") {{item.str}}
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @editScope="editScope" @delScope="delScope" ref="table")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" ref="table")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
@@ -82,8 +82,7 @@ export default {
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '修改', fun: 'edit'}
+                { str: '新增', fun: 'add'}
             ],
             roleid: null,
             curBtnSearch: -1
@@ -110,11 +109,12 @@ export default {
         testInput(){
             var data = Object.assign({}, this.editInfo)
             // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')  // 头像不要求
+            if(data.name.trim() == '') return this.messageTip('姓名不能为空~')
             if(data.account.trim() == '') return this.messageTip('账户名不能为空~')
             if(data.account.trim().length > 30) return this.messageTip('账户名须30字符以内~')
 
-            if(data.password.trim() == '') return this.messageTip('账户名不能为空~')
-            if(data.password.trim().length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
+            if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
+            if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
             return true
         }
     },

@@ -5,26 +5,40 @@ div
             span /班主任设置
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo" size="mini")
+                el-form-item
+                    el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            el-form(:model="editInfo" label-width="160px" size="mini")
+                .item 班主任信息
+                el-form-item(label="头像")
+                    .up-ctn
+                        input#up1(type="file")
+                        span + 上传
+                        img(:src="config.imgPath+editInfo.avatar")
+                el-form-item(label="姓名")
+                    el-input(v-model="editInfo.name")
+
+                .item 账号密码
+                el-form-item(label="账号")
+                    el-input(v-model="editInfo.account")
+                el-form-item(label="密码")
+                    el-input(v-model="editInfo.password")
+
+                .item 联系方式
+                el-form-item(label="手机号")
+                    el-input(v-model="editInfo.phone")
+
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 
@@ -42,8 +56,8 @@ export default {
                 { str: '手机号', key: 'birth' },
                 { str: '创建时间', key: 'height' }
             ],
-            searchKeys: [],
-            editKeys: [],
+            searchKeys: ['name'],
+            editKeys: ['avatar', 'name', 'account', 'password', 'phone'],
             api: {
                 list: { url: '/application/queryAppPage' },
                 add: { url: '/application/addApp' },
@@ -54,8 +68,7 @@ export default {
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                // { str: '修改', fun: 'edit'}
+                { str: '新增', fun: 'add'}
             ]
         }
     },
@@ -67,6 +80,14 @@ export default {
             return info;
         },
         testInput(){
+            var data = Object.assign({}, this.editInfo)
+            // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')  // 头像不要求
+            if(data.name.trim() == '') return this.messageTip('姓名不能为空~')
+            if(data.account.trim() == '') return this.messageTip('账户名不能为空~')
+            if(data.account.trim().length > 30) return this.messageTip('账户名须30字符以内~')
+
+            if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
+            if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
             return true
         }
     }
