@@ -5,26 +5,35 @@ div
             span /体验课报名
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="关键字")
+                    el-input(placeholder="姓名/手机号" v-model="searchInfo.name")
+                
+                el-form-item(label="时间范围")
+                    el-col(:span="11")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;")
+                    el-col(:span="2" style="text-align: center") -
+                    el-col(:span="11")
+                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;")
+
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.city" placeholder="训练营")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="班主任")
+                    el-select(v-model="searchInfo.city" placeholder="班主任")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
-
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
-        .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+            @changePage="changePage" @dao="dao")
     
 </template>
 
@@ -43,33 +52,24 @@ export default {
                 { str: '报名日期', key: 'birth' },
                 { str: '班主任', key: 'height' }
             ],
-            searchKeys: [],
-            editKeys: [],
+            searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime'],
             api: {
                 list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '导出excel', fun: 'export'}
-                // { str: '修改', fun: 'edit'}
-            ]
+                { str: '导出excel', fun: 'dao'}
+            ],
+            citys: [],
         }
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
-        changeEditValue(info){   // 处理新增编辑请求传参
-            return info;
-        },
-        testInput(){
-            return true
-        }
+        dao(){}
     }
 
 }

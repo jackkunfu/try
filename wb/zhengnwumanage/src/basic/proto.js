@@ -2,6 +2,8 @@ import $ from 'jquery'
 import config from './config'
 
 export default function(Vue){
+    Vue.prototype.config = config
+    
     Vue.prototype.successCode = 200
     // ajax
     Vue.prototype._ajax = function(url, data, type){

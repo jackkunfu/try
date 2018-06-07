@@ -5,8 +5,8 @@ div
             span /管理员设置
 
         search(@search="search" @reset="reset")
-            el-form(:inline="true" :model="searchInfo" size="mini")
-                el-form-item
+            el-form(:inline="true" :model="searchInfo" size="mini" label-position="right")
+                el-form-item(label="关键字")
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
 
         .btn-search
@@ -20,13 +20,13 @@ div
         .box
             .x(@click="closeEditBox")
                 i.el-icon-close
-            el-form(:model="editInfo" label-width="160px" size="mini")
+            el-form(:model="editInfo" label-width="140px" size="mini")
                 .item 管理员信息
                 el-form-item(label="头像")
                     .up-ctn
                         input#up1(type="file")
                         span + 上传
-                        img(:src="config.imgPath+editInfo.avatar")
+                        img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
                 el-form-item(label="姓名")
                     el-input(v-model="editInfo.name")
 
@@ -54,13 +54,11 @@ div
 </template>
 
 <script>
-import config from '../basic/config'
 export default {
     name: 'setManage',
     mixins: [ tableManage ],
     data () {
         return {
-            config,
             keys: [
                 { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },

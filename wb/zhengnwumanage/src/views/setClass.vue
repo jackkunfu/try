@@ -6,7 +6,7 @@ div
 
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini")
-                el-form-item
+                el-form-item(label="关键字")
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
