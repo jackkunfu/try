@@ -110,6 +110,7 @@ export default function(Vue){
     }
     // 跳转
     Vue.prototype.goUrl = function(url, data){
+        if(!url) return location.reload()
         this.$router.push({
             path: url,
             query: data

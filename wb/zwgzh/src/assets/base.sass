@@ -45,5 +45,30 @@ body
     overflow: hidden
     white-space: nowrap
 
+@mixin center-center
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
 .els
     @include els
+
+
+// 列表
+.item
+    overflow: hidden
+    border-radius: 0.4rem
+    .img-ctn
+        width: 35%
+        height: 100%
+        text-align: center
+        overflow: hidden
+        position: relative
+        img
+            min-height: 100%
+            min-width: 100%
+            @include center-center
+        .title
+        .sub-title
+            color: #888

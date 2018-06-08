@@ -6,8 +6,8 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            name: 'index',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/index')), 'index')
+            name: 'class',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/class')), 'class')
         }
     ]
 })
