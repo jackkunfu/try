@@ -13,6 +13,16 @@ const router = new Router({
             path: '/detail',
             name: 'detail',
             component: r => require.ensure([], () => r(require('@/pages/zwgzh/detail')), 'detail')
+        },
+        {
+            path: '/banzhuren',
+            name: 'banzhuren',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/banzhuren')), 'banzhuren')
+        },
+        {
+            path: '/dianming',
+            name: 'dianming',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/dianming')), 'dianming')
         }
     ]
 })

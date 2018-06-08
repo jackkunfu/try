@@ -5,7 +5,7 @@ div
     .sort-item 班主任中心
 
     .list
-        .item(v-for="(item, i) in list" :key="i" @click="goUrl('/detail', item)")
+        .item(v-for="(item, i) in list" :key="i" @click="goUrl('/dianming', item)")
             .img-ctn
                 img(:src="item.img")
             .title.els {{item.name}}
