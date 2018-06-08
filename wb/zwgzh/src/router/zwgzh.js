@@ -5,9 +5,14 @@ Vue.use(Router)
 const router = new Router({
     routes: [
         {
-            path: '/',
-            name: 'class',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/class')), 'class')
+            path: '/course',
+            name: 'course',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/course')), 'course')
+        },
+        {
+            path: '/detail',
+            name: 'detail',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/detail')), 'detail')
         }
     ]
 })

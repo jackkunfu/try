@@ -5,18 +5,19 @@ div
     .sort-item 介绍
 
     .list
-        .item(v-for="(item, i) in list" :key="i")
+        .item(v-for="(item, i) in list" :key="i" @click="goUrl('/detail', item)")
             .img-ctn
                 img(:src="item.img")
-            .title.els
-            .sub-title.els
+            .title.els {{item.name}}
+            .sub-title.els {{item.desc}}
+            // img(src="../../assets/icon-right.png")
             
 </template>
 
 <script>
 import Swiper from '../part/swiper'
 export default {
-    name: 'index',
+    name: 'course',
     components: {
        Swiper
     },
