@@ -9,6 +9,8 @@ import proto from './js/proto'    //  表格操作每一行需要传递每一行
 import filter from './js/filter'
 import comps from './js/components'
 
+import './js/datePicker.js'
+
 Vue.use(proto)
 Vue.use(filter)
 Vue.use(comps)

@@ -7,7 +7,7 @@
             .title
                 span {{my.name}}
 
-            .sub-title 完善个人信息
+            .sub-title(@click="goUrl('/myset')") 完善个人信息
                 span 》
 
     .tab-ctn
