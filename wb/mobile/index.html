@@ -10,8 +10,8 @@
   <body>
     <div id="app"></div>
     <script>
-      var w = document.documentElement.clientWidth / 37.5;
-      document.documentElement.style.fontSize = w + 'px';
+      var w = document.documentElement.clientWidth / 18.75
+      document.documentElement.style.fontSize = w + 'px'    // 保证 w 大于12 不然谷歌浏览器强制最小是12px，   w 为 10 的话无效会强制转换成12  看不出真实效果  最好 20
     </script>
   </body>
 </html>

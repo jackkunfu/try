@@ -1,16 +1,16 @@
 <template lang="pug">
-div
-    swiper(:list="[1,2,3,4]")
+.h100
+    // swiper(:list="[1,2,3,4]")
 
     .sort-item 介绍
 
     .list
         .item(v-for="(item, i) in list" :key="i" @click="goUrl('/detail', item)")
-            .img-ctn
+            .img-ctn.fl
                 img(:src="item.img")
             .title.els {{item.name}}
             .sub-title.els {{item.desc}}
-            // img(src="../../assets/icon-right.png")
+            img.icon.fr(src="../../assets/course_icon@2x.png")
             
 </template>
 
@@ -23,12 +23,28 @@ export default {
     },
     data () {
         return {
-            list: []
+            list: [{
+                img: require('../../assets/logo.png'),
+                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
+                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
+            },{
+                img: require('../../assets/logo.png'),
+                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
+                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
+            },{
+                img: require('../../assets/logo.png'),
+                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
+                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
+            }]
         }
     }
 }
 </script>
 
 <style scoped lang="sass">
+.h100
+    background: #f3f4f3
 
+.item
+    height: 6rem
 </style>

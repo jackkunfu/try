@@ -1,6 +1,9 @@
 <template lang="pug">
+div(style="height:100%;")
+    .bg
+        img(src="../../assets/login_bg@2x.png")
 
-    .enroll
+    // .enroll
         .login(v-show="!isFogt && !isZhuce")
             .box
                 .label 手机号
@@ -190,6 +193,16 @@
 </script>
 
 <style lang="sass" scoped>
+.bg
+    width: 100%
+    height: 100%
+    position: absolute
+    left: 0
+    top: 0
+    z-index: -1
+    img
+        width: 100%
+        height: auto
 .enroll
     padding: 0.6rem 0.35rem;
     text-align: left;
