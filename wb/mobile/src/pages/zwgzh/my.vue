@@ -27,8 +27,31 @@
             span 教练评价
 
     .main
-        div(v-if="curTab == 0")
-        div(v-if="curTab == 1")
+        div.cc(v-if="curTab == 0")
+            img(:src="cardImg" @click="showTnTable=false")
+            div
+                .other 其他详细信息
+                div 上课时间：{{course.times}}
+                    img(src="../../assets/user_icon_time@2x.png")
+                div 训练频次：{{course.times}}
+                    img(src="../../assets/user_icon_pinlv@2x.png")
+                div
+                    img(src="../../assets/user_icon_information@2x.png")
+                    span 开卡时间：{{course.times}}
+                    span.span 到期时间：{{course.times}}
+
+
+        div.tn(v-if="curTab == 1")
+            img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png")
+            div(v-else)
+                div(v-if="!showTnTable")
+                    .each(v-for="(item, i) in tnList" @click="showTnTable=true")
+                        img.img-bg(src="../../assets/user_list_bg@2x.png")
+                        div
+                            .time {{item.time || 'xxxx-xx-xx'}}
+                            span {{item.time || 'xxxx-xx-xx'}}
+                div(v-else)
+                    img.tnDetailImg(:src="tnDetailImg" @click="showTnTable=false")
 
         div.pj(v-if="curTab == 2")
             .item-ctn
@@ -58,7 +81,7 @@
 
 <script>
 export default {
-    name: 'detail',
+    name: 'my',
     data () {
         return {
             my: {
@@ -70,12 +93,29 @@ export default {
                 name: '王小二',
                 time: '2018-01-01 11:00:00 - 13:00:00'
             },
+            course: {
+                time: '2018-01-01 11:00:00 - 13:00:00',
+                times: '一周两次',
+                startDate: '2018-01-01 11:00:00 - 13:00:00'
+            },
+            tnList: [
+                {}, {}
+            ],
             curTab: 0,
             x1: 0,
             x2: 0,
             x3: 0,
             activeStarImg: require('../../assets/user_icon_star_s@2x.png'),
-            starImg: require('../../assets/user_icon_star_n@2x.png')
+            starImg: require('../../assets/user_icon_star_n@2x.png'),
+            showTnTable: false,
+            tnDetailImg: '',
+            cardLevel: null
+        }
+    },
+    computed: {
+        cardImg(){
+            if(this.cardLevel === null) return ''
+            return require('../../assets/card'+this.cardLevel+'.png')
         }
     },
     watch: {
@@ -83,6 +123,8 @@ export default {
             this.x1 = 0
             this.x2 = 0
             this.x3 = 0
+            this.showTnTable = false
+            this.cardLevel = null
         }
     }
 }
@@ -91,6 +133,47 @@ export default {
 <style scoped lang="sass">
 .main
     padding: 0.6rem
+
+    .cc
+        > img
+            width: 100%
+        > div
+            padding: 0.6rem
+            .other
+                font-size: 0.8rem
+                font-weight: bold
+            div
+                line-height: 0.8rem
+                margin: 0.5rem 0
+                img
+                    // vertical-align: middle
+                    margin-right: 0.3rem
+                    width: 0.9rem
+                    float: left
+                span
+                    color: #9b9b9b
+                    &.span
+                        display: block
+                        margin-left: 1.2rem
+                        margin-top: 0.3rem
+
+    .tn
+        .tnDetailImg
+            width: 100%
+            min-height: 1rem
+            background: #f9f9f9
+
+        .each
+            position: relative
+            height: 4rem
+            >div
+                padding-top: 0.7rem
+                margin-left: 4.2rem
+                .time
+                    font-size: 0.8rem
+                    margin-bottom: 0.2rem
+                span
+                    color: #9b9b9b
     
     .pj
         background: #f6f6f6
@@ -100,8 +183,7 @@ export default {
             > img
                 width: 2.5rem
                 height: 2.5rem
-            >div
-                margin-left: 3rem
+                margin-right: 0.5rem
             .title
                 margin-bottom: 0.2rem
 
