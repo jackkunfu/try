@@ -1,7 +1,7 @@
 <template lang="pug">
 .h100
 
-    class-times.cover(v-if="chooseTimes" @next="next")
+    class-times(v-if="chooseTimes" @next="next" @close="chooseTimes=false")
 
     .block
         .each
@@ -45,7 +45,7 @@
         .each
             .fl 生日
             .fr
-                span#birth {{my.birth || '出生日期'}}
+                span#birth {{my.birth || '请选择出生日期'}}
                 // input(v-model="my.name" placeholder="请输入学员姓名")
 
     .block
@@ -108,8 +108,7 @@ export default {
     },
     methods: {
         next(data){
-            let choose = data.filter(element => element.check)
-            if(choose.length == 0) return this.messageTip('请选择上课时间~')
+            
             this.chooseTimes = false
         }
     }
@@ -119,13 +118,6 @@ export default {
 <style scoped lang="sass">
 .h100
     background: #eee
-    position: relative
-    .cover
-        position: absolute
-        width: 100%
-        height: 100%
-        left: 0
-        top: 0
 
 .lbtn
     margin: 0 0.5rem

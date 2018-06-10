@@ -74,7 +74,7 @@
 
             textarea(placeholder="对教练的意见或建议")
 
-            .lbtn(v-if="true") 提交评价
+            .lbtn(v-if="!isPJ" @click="isPJ=true") 提交评价
             .lbtn.disable(v-else) 已评价
 
 </template>
@@ -109,7 +109,8 @@ export default {
             starImg: require('../../assets/user_icon_star_n@2x.png'),
             showTnTable: false,
             tnDetailImg: '',
-            cardLevel: null
+            cardLevel: null,
+            isPJ: false     // 是否已经评价
         }
     },
     computed: {

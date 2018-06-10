@@ -55,9 +55,13 @@ export default {
         closeText(){
             this.showText = false
             this.text = ''
-            this.goUrl('/dianmingOk')
         },
         async submitText(){
+            this.showText = false
+            this.text = ''
+            this.goUrl('/dianmingOk')
+
+
             if(this.text.trim() == '') return this.messageTip('请假原因不能为空~')
             var res = await this.ajax('/aa', {
                 text: this.text.trim()

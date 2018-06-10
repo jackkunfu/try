@@ -1,52 +1,27 @@
 <template lang="pug">
 .h100
     .bg
-        img(src="../../assets/login_bg@2x.png")
+        img(src="../../assets/apply_bg@2x.png")
 
-    .top
+    // .top
         img(src="../../assets/activity_logo@2x.png")
 
     .enroll
-        .banzhuren-login(v-if="isBz")
-            .each
-                img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入手机号")
-            .each
-                img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" type="password" placeholder="请输入密码")
-            
-            
-            .btn(@click="banzhurenLogin") 班主任登陆
-
-        .login(v-if="isLogin")
-            .each
-                img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入账号")
-            .each.with-code
-                img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" placeholder="请输入验证码")
-                .code 获取验证码
-            .login-tip 若账号未激活，请联系机构
-                img(src="../../assets/login_icon_tishi@2x.png")
-            
-            .btn(@click="goMy") 登陆
-
-        .baoming(v-if="isBm")
-            .each
-                img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入账号")
-            .each.with-code
-                img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" placeholder="请输入验证码")
-                .code 获取验证码
-            
-            .btn(@click="baoming") 报名
+        // .banzhuren-login
+        .each
+            img(src="../../assets/login_icon_zhanghao@2x.png")
+            input(v-model="login.phone" placeholder="请输入手机号")
+        .each
+            img(src="../../assets/login_icon_mima@2x.png")
+            input(v-model="login.password" type="password" placeholder="请输入密码")
+        
+        .btn(@click="baoming") 支付报名
 
 </template>
 
 <script>
     export default {
-        name: 'Login',
+        name: 'Baoming',
         data () {
             var query = this.$route.query;
             var isZhuce = false, isFogt = false, fogtUid = '';
@@ -56,23 +31,13 @@
                 fogtUid = query.userId;
             }
             return {
-                isBz: this.$route.query.type == 0,
-                isBm: this.$route.query.type == 1,
-                isLogin: this.$route.query.type == 2,
                 getEmail: true,
                 isZhuce,
                 isFogt,
                 fogtUid,
                 login: {
                     phone: '', pwd: ''
-                },
-                zhuce: {
-                    phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
-                },
-                fogt: {
-                    phone: '', code: '', password: '', password1: '',userId: ''
-                },
-                codeImage: '/api/defaultKaptcha?t=' + new Date().getTime()
+                }
             }
         },
         mounted(){
@@ -99,7 +64,7 @@
                 this.goUrl('/my')
             },
             baoming(){
-                this.goUrl('/baoming')
+                this.goUrl('/banzhuren')
             },
             async loginFun(){
                 var login = this.login;
@@ -174,13 +139,16 @@
 </script>
 
 <style lang="sass" scoped>
+.h100
+    background: #f3f3f3
+
 .bg
     width: 100%
     height: 100%
     position: absolute
     left: 0
     top: 0
-    z-index: -1
+    z-index: 0
     img
         width: 100%
         height: auto
@@ -192,16 +160,16 @@
         margin: 2rem auto
 
 .enroll
-    margin: 4rem auto 0
-    width: 15rem
+    margin: 12.5rem auto 0
+    width: 16rem
 
 .each
-    border-bottom: 1px solid #e3e3e3
+    // border-bottom: 1px solid #e3e3e3
     padding: 0.4rem 0
-    // width: 15rem
-    // margin: 1.5rem auto
     margin-bottom: 1.5rem
     position: relative
+    background: #fff
+
     &.with-code
         width: 10rem
     img
@@ -247,7 +215,7 @@
     text-align: center
     color: #fff
     font-size: 0.8rem
-    border-radius: 2.1rem
+    border-radius: 0.4rem
 
 // .enroll
 //     padding: 0.6rem 0.35rem;

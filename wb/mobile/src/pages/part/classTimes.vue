@@ -8,7 +8,8 @@
             img.fr(src="../../assets/choose_btn_s@2x.png" v-if="item.check")
             img.fr(src="../../assets/choose_btn_n@2x.png" v-else)
 
-        .next(@click="$emit('next', list)") 下一步
+        .next(@click="ok") 确定
+        .next(@click="close") 取消
 
 </template>
 
@@ -31,9 +32,23 @@ export default {
         }
     },
     mounted(){
-        this.list.forEach(v=>{
-            this.$set(v, 'check', false)
-        })
+        this.initListStatus()
+    },
+    methods: {
+        initListStatus(){
+            this.list.forEach(v=>{
+                this.$set(v, 'check', false)
+            })
+        },
+        ok(){
+            let choose = this.list.filter(element => element.check)
+            if(choose.length == 0) return this.messageTip('请选择上课时间~')
+            this.$emit('next', this.list)
+        },
+        close(){
+            this.initListStatus()
+            this.$emit('close')
+        }
     }
 }
 </script>
@@ -44,6 +59,10 @@ export default {
     background-size: 100% 100%
     position: absolute
     z-index: 20
+    width: 100%
+    height: 100%
+    left: 0
+    top: 0
 
 .item-ctn
     margin: 1rem
