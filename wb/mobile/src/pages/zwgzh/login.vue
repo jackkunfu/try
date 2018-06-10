@@ -1,10 +1,48 @@
 <template lang="pug">
-div(style="height:100%;")
+.h100
     .bg
         img(src="../../assets/login_bg@2x.png")
 
-    // .enroll
-        .login(v-show="!isFogt && !isZhuce")
+    .top
+        img(src="../../assets/activity_logo@2x.png")
+
+    .enroll
+        .banzhuren-login(v-if="isBz")
+            .each
+                img(src="../../assets/login_icon_zhanghao@2x.png")
+                input(v-model="login.phone" placeholder="请输入手机号")
+            .each
+                img(src="../../assets/login_icon_mima@2x.png")
+                input(v-model="login.password" type="password" placeholder="请输入密码")
+            .login-tip 若账号未激活，请联系机构
+                img(src="../../assets/login_icon_tishi@2x.png")
+            
+            .btn(@click="banzhurenLogin") 班主任登陆
+
+        .login(v-if="isLogin")
+            .each
+                img(src="../../assets/login_icon_zhanghao@2x.png")
+                input(v-model="login.phone" placeholder="请输入账号")
+            .each.with-code
+                img(src="../../assets/login_icon_mima@2x.png")
+                input(v-model="login.password" placeholder="请输入验证码")
+                .code 获取验证码
+            
+            .btn(@click="login") 登陆
+
+        .baoming(v-if="isBm")
+            .each
+                img(src="../../assets/login_icon_zhanghao@2x.png")
+                input(v-model="login.phone" placeholder="请输入账号")
+            .each.with-code
+                img(src="../../assets/login_icon_mima@2x.png")
+                input(v-model="login.password" placeholder="请输入验证码")
+                .code 获取验证码
+            
+            .btn(@click="baoming") 报名
+
+        // .login(v-show="!isFogt && !isZhuce")
+        // .login
             .box
                 .label 手机号
                 input(v-model="login.phone" placeholder="请输入手机号")
@@ -18,7 +56,7 @@ div(style="height:100%;")
             .left(@click="isFogt=true;isZhuce=false;") 找回密码
             .right.theme-color(@click="isZhuce=true;isFogt=false;") 免费注册
 
-        .sign-in(v-show="isZhuce")
+        // .sign-in(v-show="isZhuce")
             .box
                 .label 手机号
                 input(v-model="zhuce.phone" placeholder="请输入手机号")
@@ -47,7 +85,7 @@ div(style="height:100%;")
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
 
 
-        .foft(v-show="isFogt")
+        // .foft(v-show="isFogt")
             div(v-if="getEmail")
                 .box
                     .label 手机号
@@ -87,6 +125,9 @@ div(style="height:100%;")
                 fogtUid = query.userId;
             }
             return {
+                isBz: false,
+                isBm: false,
+                isLogin: true,
                 getEmail: true,
                 isZhuce,
                 isFogt,
@@ -203,54 +244,119 @@ div(style="height:100%;")
     img
         width: 100%
         height: auto
+
+.top
+    text-align: center
+    img
+        width: 70%
+        margin: 2rem auto
+
 .enroll
-    padding: 0.6rem 0.35rem;
-    text-align: left;
-    font-size: 0.45rem;
+    margin: 4rem auto 0
+    width: 15rem
 
-    .box
-        width: 100%;
-        display: inline-block;
-        height: 1.28rem;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        padding: 0.2rem;
-        color: #888;
-        margin-bottom: 0.4rem;
-        font-size: 0.4rem;
+.each
+    border-bottom: 1px solid #e3e3e3
+    padding: 0.4rem 0
+    // width: 15rem
+    // margin: 1.5rem auto
+    margin-bottom: 1.5rem
+    position: relative
+    &.with-code
+        width: 10rem
+    img
+        width: 0.9rem
+        margin-right: 0.9rem
+        float: left
+    input
+        border: none
+        color: #9b9b9b
+        line-height: 1rem
+        width: 6rem
+
+    .code
+        position: absolute
+        right: -5rem
+        top: 0.2rem
+        width: 4.4rem
+        height: 1.5rem
+        line-height: 1.4rem
+        text-align: center
+        font-size: 0.6rem
+        color: #48C4F5
+        float: right
+        border: 1px solid #48C4F5
+        border-radius: 1.5rem
+
+
+.login-tip
+    width: 15rem
+    margin: 0 auto
+    color: #48C4F5
+    img
+        width: 0.88rem
+        float: left
+        margin-right: 0.3rem
+
+.btn
+    width: 15rem
+    margin: 2rem auto
+    background-image: linear-gradient(-45deg, #76D5FA 0%, #0BACEE 100%)
+    box-shadow: 0 2px 6px 0 rgba(64,190,246,0.50)
+    line-height: 2.1rem
+    text-align: center
+    color: #fff
+    font-size: 0.8rem
+    border-radius: 2.1rem
+
+// .enroll
+//     padding: 0.6rem 0.35rem;
+//     text-align: left;
+//     font-size: 0.45rem;
+
+//     .box
+//         width: 100%;
+//         display: inline-block;
+//         height: 1.28rem;
+//         border-radius: 4px;
+//         border: 1px solid #ccc;
+//         padding: 0.2rem;
+//         color: #888;
+//         margin-bottom: 0.4rem;
+//         font-size: 0.4rem;
  
-        &.short
-            width: 6rem;
-            input
-                width: 3rem;
+//         &.short
+//             width: 6rem;
+//             input
+//                 width: 3rem;
         
-        &.code-box
-            position: relative;
-            width: 3rem;
-            float: right;
-            padding: 0;
-            margin-right: 1rem;
-            img
-                display: inline-block;
-                width: 100%;
-                height: 100%;
-                border-radius: 4px;
-            .get-code
-                width: 0.6rem;
-                position: relative;
-                height: 0.5rem;
-                left: 3.3rem;
-                top: -0.9rem;
-        .label
-            width: 2.5rem;
-            line-height: 0.88rem;
-            float: left;
+//         &.code-box
+//             position: relative;
+//             width: 3rem;
+//             float: right;
+//             padding: 0;
+//             margin-right: 1rem;
+//             img
+//                 display: inline-block;
+//                 width: 100%;
+//                 height: 100%;
+//                 border-radius: 4px;
+//             .get-code
+//                 width: 0.6rem;
+//                 position: relative;
+//                 height: 0.5rem;
+//                 left: 3.3rem;
+//                 top: -0.9rem;
+//         .label
+//             width: 2.5rem;
+//             line-height: 0.88rem;
+//             float: left;
 
-        input
-            height: 0.88rem;
+//         input
+//             height: 0.88rem;
             
 
-    .sign
+//     .sign
 
     
 </style>
