@@ -7,7 +7,7 @@
         .box 
             span 恭喜您体验课报名成功
             .ensure
-                span(@click="goUrl('/banzhuren')") 确定
+                span(@click="goUrl('/myset')") 确定
 
     .bg
         img(src="../../assets/activity_bg@2x.png")
