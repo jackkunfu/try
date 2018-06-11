@@ -50,18 +50,13 @@
             return {
                 ok: false,
                 chooseTimes: false,
-                getEmail: true,
-                login: {
+                item: {
                     phone: '', pwd: ''
                 }
             }
         },
         mounted(){
-            var query = this.$route.query
-            if(query.type && query.type =='isFogt' && query.userId) {
-                this.getEmail = false;
-                this.fogt.userId = query.userId;
-            }
+            
         },
         methods: {
             baoming(){
@@ -73,11 +68,11 @@
                 this.chooseTimes = false
             },
             async loginFun(){
-                var login = this.login;
+                var item = this.item;
                 login.phone = login.phone.trim();
                 login.pwd = login.pwd.trim();
-                if(login.phone == '') return this.messageTip('手机号不能为空~');
-                if(login.pwd == '') return this.messageTip('密码不能为空~');
+                if(item.city == '') return this.messageTip('训练频次未选~');
+                if(item.city == '') return this.messageTip('课程顾问~');
 
                 var res = await this.ajax('/api/user/login', this.login);
                 if(res && res.status == 200){
