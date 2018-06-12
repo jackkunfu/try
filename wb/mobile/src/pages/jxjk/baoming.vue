@@ -25,7 +25,7 @@
 
     .each
         span 服务时间
-        input(v-model="item.phone" placeholder="请选择服务时间")
+        input#birth(v-model="item.time" placeholder="请选择服务时间" readonly)
     
     .btn(@click="submit") 提交
 
@@ -43,6 +43,21 @@
             }
         },
         mounted(){
+            var that = this
+            new datePicker().init({
+                'trigger': '#birth', /* 按钮选择器，用于触发弹出插件*/
+                'type': 'date',/* 模式：date日期；datetime日期时间；time时间；ym年月；*/
+                'minDate': '1900-1-1',/* 最小日期*/
+                // 'maxDate': new Date().format('yyyy-MM-dd'),/* 最大日期*/
+                'maxDate': '2099-1-1',/* 最大日期*/
+                /* 确认时触发事件*/
+                'onSubmit': function () {
+                    // ios 浏览器解析new Date解析 2010-01 会出现NaN，转换成 2010/01
+                    that.item.time = this.value.replace(/\-/g, "/")
+                },
+                /* 取消时触发事件*/
+                'onClose': function () {}
+            })
         },
         methods: {
             async submit(){
