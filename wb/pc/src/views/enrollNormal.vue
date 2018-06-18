@@ -158,4 +158,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
 
+.up-ctn
+    width: 100px
+    height: 100px
+    line-height: 100px
+
 </style>

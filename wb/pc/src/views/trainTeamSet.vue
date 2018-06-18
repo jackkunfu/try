@@ -25,7 +25,7 @@ div
         .box
             .x(@click="closeEditBox")
                 i.el-icon-close
-            el-form(:model="editInfo" label-width="80px" size="mini")
+            el-form(:model="editInfo" label-width="100px" size="mini")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
@@ -70,9 +70,10 @@ export default {
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/training/list', type: 'get' },
+                add: { url: '/training/add' },
+                edit: { url: '/training/edit' },
+                del: { url: '/training/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 import './assets/base.sass'
 import Top from './components/top'
 import Left from './components/left'
@@ -36,7 +37,7 @@ export default {
     data(){
         var isNeedLogin = !localStorage.zwManageUserToken || localStorage.zwManageUserToken == 'null' || localStorage.zwManageUserToken == 'undefined'
         return {
-            isNeedLogin,
+            isNeedLogin: false,
             form: {
                 userName: '',
                 password: ''
@@ -61,7 +62,11 @@ export default {
             if(form.userName == '') return this.messageTip('用户名不能为空~');
             if(form.password == '') return this.messageTip('密码不能为空~');
             var loading = this.$loading()
-            var res = await this.ajax('/auth', this.form)
+            var res = await this.ajax('/auth', {
+                userName: this.form.userName.trim(),
+                // password: md5(this.form.password.trim())
+                password: this.form.password.trim()
+            })
             loading.close()
             if(res){
                 if(res.code == 400) return this.messageTip(res.message)

@@ -2,8 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-// import router from './router/zwgzh'   // 郑武公众号
-import router from './router/jxjk'   // 嘉兴健康
+import router from './router/zwgzh'   // 郑武公众号
+// import router from './router/jxjk'   // 嘉兴健康
 
 import './assets/base.sass'
 import proto from './js/proto'    //  表格操作每一行需要传递每一行的scope数据
