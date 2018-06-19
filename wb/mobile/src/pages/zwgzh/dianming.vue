@@ -20,7 +20,7 @@
                 img.icon(src="../../assets/Sign_icon_w_n@2x.png" v-if="item.type!=2" @click="dianming(2, item)")
                 img.icon(src="../../assets/Sign_icon_w_s@2x.png" v-else @click="dianming(2, item)")
 
-    .submit 提交签到
+    .submit(@click="submit") 提交签到
 
     fixCover(:str="showText" titleName="请假条")
         textarea(v-model="text")
@@ -44,29 +44,44 @@ export default {
         }
     },
     methods: {
+        async submit(){
+            // var res = await this.ajax('/aa', {
+            //     id: item.id,
+            //     type
+            // })
+            // if(res && res.code == this.successCode){
+            //     this.goUrl('/dianmingOk')
+            // }
+            // else this.messageTip(res.msg || '请求失败~')
+            this.goUrl('/dianmingOk')
+        },
         dianming(type, item){
             item.type = type
-            if(type == 1){
+            if(type === 1){
                 this.showText = true
+            }else {
+                this.changeType(item, type);
             }
-            // if(item.type === type) item.type == null
-            // else item.type = type
+        },
+        async changeType(item, type){
+            var res = await this.ajax('/aa', {
+                id: item.id,
+                type
+            })
+            if(res && res.code == this.successCode){}
+            else this.messageTip(res.msg || '请求失败~')
         },
         closeText(){
             this.showText = false
             this.text = ''
         },
         async submitText(){
-            this.showText = false
-            this.text = ''
-            this.goUrl('/dianmingOk')
-
-
             if(this.text.trim() == '') return this.messageTip('请假原因不能为空~')
             var res = await this.ajax('/aa', {
                 text: this.text.trim()
             })
             if(res && res.code == this.successCode){
+                this.text = ''
                 this.showText = false
             }else this.messageTip(res.msg || '请求失败~')
             

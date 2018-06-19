@@ -69,7 +69,7 @@
                 this.goUrl('/my')
             },
             baoming(){
-                this.goUrl('/pay')
+                this.goUrl('/banzhuren')
             },
             async loginFun(){
                 var item = this.item;
