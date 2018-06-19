@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.class-desc
     .table-ctn
         .page-title 课程管理
             span /课程介绍
@@ -19,13 +19,15 @@ div
                         .up-ctn
                             input(type="file" @change="changeLunBo($event, item.id)")
                             span 替换
-                        el-button(type="danger" @click="delLunbotu(item.id)") 删除
+                        el-button(type="danger" @click="delLunbotu(item.id)" size="mini") 删除
+
+            el-pagination(layout="prev, pager, next" :total="lunboTotal")
 
         .box.area
             .title
                 i.el-icon-document
                 | 课程介绍缩略图、地区及图文链接
-                el-button.fr(type="success" @click="showEditCtn=true") 新增地区
+                el-button.fr(type="success" @click="showEditCtn=true" size="mini") 新增地区
 
             .ctn
                 div(v-for="(item, i) in areaList" :key="i")
@@ -37,8 +39,10 @@ div
 
                     .fr
                         div
-                            el-button.fr(type="success" @click="editArea(item)") 编辑
-                        el-button(type="danger" @click="delLunbotu(item.id)") 删除
+                            el-button.fr(type="success" @click="editArea(item)" size="mini") 编辑
+                        el-button(type="danger" @click="delArea(item.id)" size="mini") 删除
+
+            el-pagination(layout="prev, pager, next" :total="areaTotal")
 
             
     .edit-ctn.fix-cover(v-show="showEditCtn")
@@ -73,12 +77,10 @@ export default {
             },
             showEditCtn: false,
             lunbotuList: [],
-            areaList: [
-                {img: '', name: '杭州', url: 'http://www.baidu.com'},
-                {img: '', name: '杭州', url: 'http://www.baidu.com'},
-                {img: '', name: '杭州', url: 'http://www.baidu.com'}
-            ],
+            areaList: [],
             isEdit: false,
+            areaTotal: 0,
+            lunboTotal: 0,
             curEditId: null
         }
     },
@@ -118,7 +120,7 @@ export default {
             if(req && req.code == this.successCode){
                 this.getAreaList()
                 this.editCancel()
-            }else this.messageTip(req.msg || '操作失败')
+            }else this.messageTip(req.message || '操作失败')
         },
         editCancel(){
             Object.keys(this.editInfo).forEach(key => {
@@ -135,6 +137,7 @@ export default {
             }, 'get')
             if(req && req.code == this.successCode){
                 this.lunbotuList = req.data.rows || []
+                this.lunboTotal = req.data.total - 0
             }
         },
         async getAreaList(){
@@ -144,6 +147,7 @@ export default {
             }, 'get')
             if(req && req.code == this.successCode){
                 this.areaList = req.data.rows || []
+                this.areaTotal = req.data.total - 0
             }
         },
         upAreaImg(e){
@@ -164,9 +168,16 @@ export default {
         async delLunbotu(id){
             var req = await this.ajax('/carousel/delete', { id })
             if(req && req.code == this.successCode){
-                this.messageTip(res.msg || '成功', 1)
+                this.messageTip(req.message || '成功', 1)
                 this.getLunboList()
-            }else this.messageTip(req && req.msg ? req.msg : '失败')
+            }else this.messageTip(req && req.message ? req.message : '失败')
+        },
+        async delArea(id){
+            var req = await this.ajax('/course/delete', { id })
+            if(req && req.code == this.successCode){
+                this.messageTip(req.message || '成功', 1)
+                this.getAreaList()
+            }else this.messageTip(req && req.message ? req.message : '失败')
         }
     }
 
@@ -182,26 +193,34 @@ export default {
         line-height: 100px
 
 .title
-    font-size: 20px
+    font-size: 16px
     line-height: 40px
     overflow: hidden
     i
         margin-right: 5px
     .add
-        width: 150px
+        padding: 0 16px
         float: right
+        line-height: 28px
+        font-size: 12px
+        border-radius: 3px
+
+.class-desc
+    background: #eee
 
 .box
     background: #fff
     border-radius: 5px
     // margin: 10px auto
     margin-bottom: 30px
-    width: 600px
+    padding: 20px
+    width: 700px
     .ctn
         > div
             overflow: hidden
             margin: 10px
-            
+            border-bottom: 1px solid #eee
+            padding: 10px
             .el-button
                 margin-top: 10px
 
