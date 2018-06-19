@@ -51,6 +51,7 @@
         },
         methods: {
             pay(){
+                if(this.payWay == 0) return this.messageTip('请选择支付方式');
                 if(this.payWay == 1){
 
                 }else if(this.payWay == 2){
