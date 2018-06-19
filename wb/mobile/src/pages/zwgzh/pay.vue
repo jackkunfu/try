@@ -57,7 +57,7 @@
 
                 }
                 this.messageTip('支付成功')
-                this.goUrl('/my')
+                setTimeout(()=>{ this.goUrl('/my') }, 1000)
             }
         }
     }
