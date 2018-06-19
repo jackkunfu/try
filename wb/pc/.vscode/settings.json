@@ -1,0 +1,23 @@
+{
+    "deploy": {
+        "targets": [
+            {
+                "type": "sftp",
+                "name": "My SFTP folder",
+                "description": "A SFTP folder",
+                "dir": "/usr/local/nginx/html",
+                "host": "47.94.96.242", "port": 22,
+                "user": "root", "password": "zhenwu=123!!",
+
+                "checkBeforeDeploy": true,
+
+                "mappings": [
+                    {
+                        "source": "dist",
+                        "target": "/"
+                    }
+                ]
+            }
+        ]
+    }
+}
