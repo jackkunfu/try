@@ -1,9 +1,9 @@
 import $ from 'jquery'
-import config from './config'
 
 export default function(Vue){
+    Vue.prototype.successCode = 200
     // ajax
-    Vue.prototype._ajax = function(url, data, type){
+    Vue.prototype._ajax = function(url, data, type, notShowLoding){
         var data = data || {};
         var type = type || 'post';
         var headers = {}
@@ -16,7 +16,7 @@ export default function(Vue){
         return new Promise(function(rs, rj){
             $.ajax({
                 type,
-                url,
+                url: '/api'+url,
                 headers,
                 dataType: 'json',
                 data, 
@@ -36,7 +36,7 @@ export default function(Vue){
     Vue.prototype.ajax = async function(){
         try{
             var res = await this._ajax(...arguments);
-            if(res && res.code === 0){
+            if(res && res.code === this.successCode){
                 return res
             }else{
                 return this.messageTip(res.msg || '请求失败，请稍后重试~')

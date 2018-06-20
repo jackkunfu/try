@@ -9,31 +9,31 @@
     .enroll
         .each
             span 选择地区
-            select(v-model="item.city" :class="item.phone==''?'':'ff'" placeholder="请输入手机号")
+            select(v-model="item.city" :class="item.city==''?'':'ff'")
                 option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练营
-            select(v-model="item.train" :class="item.phone==''?'':'ff'" placeholder="请输入手机号")
+            select(v-model="item.train" :class="item.city==''?'':'ff'")
                 option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择卡种
-            select(v-model="item.cardType" :class="item.phone==''?'':'ff'" placeholder="请输入手机号")
+            select(v-model="item.cardType" :class="item.city==''?'':'ff'")
                 option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练频次
-            select(v-model="item.times" :class="item.phone==''?'':'ff'" placeholder="请输入手机号")
+            select(v-model="item.times" :class="item.city==''?'':'ff'")
                 option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
             img(src="../../assets/xia.png")
         
         .each
             span 接待课程顾问
-            select(v-model="item.people" :class="item.phone==''?'':'ff'" placeholder="请输入手机号")
+            select(v-model="item.people" :class="item.phone==''?'':'ff'")
                 option 1
             img(src="../../assets/xia.png")
 
@@ -59,8 +59,8 @@
                 citys: []
             }
         },
-        mounted(){
-            this.citys = this.getAllArea()
+        async mounted(){
+            this.citys = await this.getAllArea()
         },
         methods: {
             banzhurenLogin(){
