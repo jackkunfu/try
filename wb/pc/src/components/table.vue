@@ -30,25 +30,22 @@
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
 
             //- 操作
-            el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate")
+            el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="150")
                 template(slot-scope="scope")
-                    el-button(v-for="(op, i) in scopeOperates" type="success" size="small" :key="op.str"
-                        @click="$emit(op.fun, scope)") {{op.str}}
+                    el-button(v-for="(op, i) in scopeOperates" :type="op.type || 'success'" size="mini" :key="op.str"
+                        @click="$emit(op.fun, scope)" plain) {{op.str}}
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="limit" 
-            :current-page="page.currentPage" @current-change="(v)=>{$emit('changePage', v)}" ref="page")
+            @current-change="(v)=>{$emit('changePage', v)}" ref="page")
 
 </template>
 
 <script>
-import config from '../basic/config'
 export default {
     name: 'sTable',
     props: ['keys', 'operates', 'scopeOperates', 'tableData', 'page'],
     data(){
-        return{
-            config
-        }
+        return{}
     },
     computed: {
         total(){
@@ -85,6 +82,6 @@ export default {
     text-align: right;
 
 .el-button
-    margin-right: 10px;
+    margin-right: 0;
     margin-bottom: 10px;
 </style>

@@ -77,7 +77,7 @@ export default {
             },
             scopeOperates: [    // 每一行中的操作
                 { str: '编辑', fun: 'editScope'},
-                { str: '删除', fun: 'delScope'}
+                { str: '删除', fun: 'delScope', type: 'danger'}
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
