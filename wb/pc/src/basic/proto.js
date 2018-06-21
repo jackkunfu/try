@@ -120,11 +120,14 @@ export default function(Vue){
     }
     // 列表请求
     Vue.prototype.tableList = async function(){
-        var copySearchInfo = Object.assign({}, this.searchInfo);
+        var copySearchInfo = Object.assign({}, this.trimObj(this.searchInfo));
+
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';
         var options = needChangeSearchInfo ? this.changeSearchValue(copySearchInfo) : copySearchInfo;
+
         options.offset = this.page.offset;
         options.limit = this.page.limit
+
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
         if(res && res.code == this.successCode){
             var result = res.data
@@ -218,42 +221,48 @@ export default function(Vue){
             }else this.messageTip(res.message || '操作失败')
         }).catch( e => { console.log(e) } );
     }
+
+    Vue.prototype.trimObj = function(obj){
+        Object.keys(obj).forEach(key =>{
+            if(typeof obj[key] == 'string') obj[key] = obj[key].trim()
+        })
+        return obj
+    }
     
     // 提交新增或编辑
     Vue.prototype.tableAddOrUpdate = async function(){
         // 各个组件内部处理 testInput 输入判断方法
-        if(!this.testInput()) return
+        if(this.testInput && !this.testInput()) return
         // 处理url
         var op;
         if(this.curOperateType == 1) op = this.api.add
         else if(this.curOperateType == 2) op = this.api.edit
-        // 处理参数
-        var copyEditInfo = Object.assign({}, this.editInfo);
+
+        // 处理参数 trim之后复制
+        var copyEditInfo = Object.assign({}, this.trimObj(this.editInfo));
+        // 编辑的话 增加id参数
+        if(this.curOperateType == 2) copyEditInfo.id = this.curChooseRow.id
+
         var needChangeEditInfo = this.changeEditValue && typeof this.changeEditValue == 'function';
         var options = needChangeEditInfo ? this.changeEditValue(copyEditInfo) : copyEditInfo;
-
-        if(this.curOperateType == 2) options.id = this.curChooseRow.id
+        
         // 请求
         var res = await this.ajax(op.url, options, op.type || 'post');
         console.log(res);
         if(res.code == this.successCode){
             this.messageTip(res.message, 1);
-
             // 重置一些数据状态
             this.showEditCtn = false;
             this.curOperateType == null;
-            
             this.tableList.call(this);
-        }else{
-            this.messageTip(res.message);
-        }
+        }else this.messageTip(res.message);
     }
 
     // 关闭新增编辑框
     Vue.prototype.closeEditCtn = function(){
         this.editInit()
         if(this.curOperateType = 2) this.curChooseRow = null
-        this.curOperateType = 0
+        this.curOperateType = null
         this.showEditCtn = false
     }
 

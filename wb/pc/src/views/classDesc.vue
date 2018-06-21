@@ -57,7 +57,7 @@ div.class-desc
                 el-form-item(label="地区名称")
                     el-input(v-model="editInfo.city")
                 el-form-item(label="图文链接")
-                    el-input(v-model="editInfo.url")
+                    el-input(v-model="editInfo.url" placeholder="http://或https://开头的正常存在网址")
                 
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate") 保存
@@ -113,6 +113,8 @@ export default {
             if(this.editInfo.img == '') return this.messageTip('图片未上传')
             if(this.editInfo.city.trim() == '') return this.messageTip('城市不能为空')
             if(this.editInfo.url.trim() == '') return this.messageTip('图文链接不能为空')
+            var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+            if(!reg.test(this.editInfo.url.trim()))  return this.messageTip('图文链接格式不正确')
             var url = this.isEdit ? '/course/edit' : '/course/add'
             var data = Object.assign({}, this.editInfo)
             if(this.isEdit) data.id = this.curEditId

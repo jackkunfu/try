@@ -6,10 +6,12 @@ import router from './router'
 import ElementUi from 'element-ui'
 
 import proto from './basic/proto'    //  表格操作每一行需要传递每一行的scope数据
+import zwProto from './basic/zwmanage/proto'    //  表格操作每一行需要传递每一行的scope数据
 import filter from './basic/filter'
 import comps from './basic/components'
 
 Vue.use(ElementUi)
+Vue.use(zwProto)
 Vue.use(proto)
 Vue.use(filter)
 Vue.use(comps)
