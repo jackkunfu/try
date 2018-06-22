@@ -26,6 +26,11 @@
                     template(slot-scope="scope")
                         span {{scope.row[item.key] | els}}
 
+                //- 功能
+                el-table-column(:prop="item.key || ''" :label="item.str"  v-else-if="item.type == 'fun'")
+                    template(slot-scope="scope")
+                        span(@click="$emit(item.fun, scope)") {{scope.row[item.key]}}
+
                 //- 无需处理内容展示
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
 

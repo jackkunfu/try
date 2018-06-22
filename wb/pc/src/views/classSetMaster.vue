@@ -8,11 +8,11 @@ div
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
 
                 el-form-item(label="训练营")
-                    el-select(v-model="searchInfo.city" placeholder="训练营")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.train" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="上课时间")
                     el-select(v-model="searchInfo.city" placeholder="上课时间")
@@ -44,7 +44,7 @@ div
 
                 el-form-item(label="班主任")
                     el-select(v-model="editInfo.city" placeholder="班主任")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
 
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存

@@ -15,11 +15,11 @@ div
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="卡种")
-                    el-select(v-model="searchInfo.card" placeholder="训练营")
+                    el-select(v-model="searchInfo.card" placeholder="卡种")
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="训练频次")
-                    el-select(v-model="searchInfo.frequency" placeholder="城市")
+                    el-select(v-model="searchInfo.frequency" placeholder="训练频次")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
@@ -37,14 +37,14 @@ div
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="卡种名称")
-                    el-input(v-model="editInfo.card")
+                    el-input(v-model="editInfo.card" placeholder="卡种名称")
 
                 el-form-item(label="训练频次")
-                    el-select(v-model="editInfo.frequency" placeholder="城市")
+                    el-select(v-model="editInfo.frequency" placeholder="训练频次")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="价格")
-                    el-input(v-model="editInfo.price" type="number")
+                    el-input(v-model="editInfo.price" type="number" placeholder="价格")
                     
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate") 保存

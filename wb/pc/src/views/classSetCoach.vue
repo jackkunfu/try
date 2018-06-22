@@ -77,38 +77,35 @@ export default {
                 time: '19:00 - 21: 00',
                 name: 'coach wang'
             }],
-            keys: [
-                { str: '头像', key: 'appCode' },
-                { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '家长姓名', key: 'sex' },
-                { str: '联系电话', key: 'sex' },
-                { str: '地区', key: 'sex' },
-                { str: '训练营', key: 'sex' },
-                { str: '卡种', key: 'sex' },
-                { str: '训练频次', key: 'sex' },
-                { str: '费用', key: 'birth' },
-                { str: '支付时间', key: 'height' },
-                { str: '销售', key: 'height' }
-            ],
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
-                del: { url: '/application/saveApp' }
+                list: { url: '/teacher_plan/list' },
+                add: { url: '/teacher_plan/add' },
+                edit: { url: '/teacher_plan/edit' },
+                del: { url: '/teacher_plan/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ],
-            citys: []
+            ]
         }
     },
     methods: {
+        async tableList(){
+            var obj = this.trimObj(this.searchInfo)
+            obj.offset = 0
+            obj.limit = 10
+            var req = await this.ajax(this.api.list.url, obj)
+            if(req && req.code == this.successCode){
+                var result = res.data
+                this.tableData = result.rows
+                this.page.total = result.total;
+                this.curChooseRow = null;
+            }
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },

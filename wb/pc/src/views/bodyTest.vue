@@ -5,26 +5,32 @@ div
             span /体能测试
 
         search(@search="search" @reset="reset")
-        
-        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="关键字")
+                    el-input(v-model="searchInfo.name" placeholder="请输入学员姓名/手机号")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.train" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.city" placeholder="上课时间")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+        
+        s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
+            @changePage="changePage" @chooseRow="chooseRow" @see="see" @upImg="upImg")
+
+        input(ref="up" type="file" style="width:0;height:0;")
+
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+            div(v-for="(item, i) in imgList")
+                img(:sc="item.img")
+                i.el-icon-delete
     
 </template>
 
@@ -39,35 +45,55 @@ export default {
                 { str: '姓名', key: 'name' },
                 { str: '性别', key: 'sex' },
                 { str: '生日', key: 'birth' },
-                { str: '身高', key: 'height' },
-                { str: '体重', key: 'weight' },
+                // { str: '身高', key: 'height' },
+                // { str: '体重', key: 'weight' },
                 { str: '家长姓名', key: 'pname' },
                 { str: '联系电话', key: 'mobile' },
                 { str: '训练营', key: 'trainName' },
-                { str: '卡种', key: 'remark' },
-                { str: '训练频次', key: 'remark' },
-                { str: '开卡时间', key: 'remark' },
-                { str: '到期时间', key: 'remark' },
-                { str: '学员作业', key: 'remark' },
-                { str: '体能测试', key: 'remark' }
+                { str: '历史成绩', key: '', fun: 'see' }
+                // { str: '卡种', key: 'remark' },
+                // { str: '训练频次', key: 'remark' },
+                // { str: '开卡时间', key: 'remark' },
+                // { str: '到期时间', key: 'remark' },
+                // { str: '学员作业', key: 'remark' },
+                // { str: '体能测试', key: 'remark' }
             ],
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/power_test/list' },
+                add: { url: '/power_test/add' },
+                edit: { url: '/power_test/edit' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '编辑', fun: 'editScope'}
+                { str: '上传', fun: 'upImg'}
             ],
-            operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '修改', fun: 'edit'}
-            ]
+            imgList: []
         }
     },
+    mounted(){
+        var that = this
+        $(this.$refs.up).change(()=>{
+            that.file('', function(data){
+                console.log(data.data)
+            }, that.$refs.up)
+        })
+
+    },
     methods: {
+        upImg(scope){
+            $(this.$refs.up).click()
+        },
+        see(scope){     // 查看
+            this.showEditCtn = true
+            this.getImgList(scope.row.id)
+        },
+        async getImgList(id){
+            var req = await this.ajax('', { id }, 'get')
+            if(req && req.code == this.successCode){
+                this.imgList = req.data.rows
+            }
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
@@ -76,7 +102,8 @@ export default {
         },
         testInput(){
             return true
-        }
+        },
+        
     }
 
 }
