@@ -26,11 +26,17 @@ div
 
         input(ref="up" type="file" style="width:0;height:0;")
 
-    .edit-ctn.fix-cover(v-show="showEditCtn")
+    // .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover
         .box
-            div(v-for="(item, i) in imgList")
+            search(@search="search" @reset="reset")
+                el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
+                    el-form-item(label="时间")
+                        el-date-picker(v-model="imgInfo.time" placeholder="请选择时间" type="month" value-format="yyyy-MM-dd")
+
+            .img(v-for="(item, i) in imgList")
                 img(:sc="item.img")
-                i.el-icon-delete
+                i.el-icon-delete(@click="delImg(item.id)")
     
 </template>
 
@@ -68,7 +74,10 @@ export default {
             scopeOperates: [    // 每一行种的操作
                 { str: '上传', fun: 'upImg'}
             ],
-            imgList: []
+            imgInfo: {
+                time: ''
+            },
+            imgList: [{img: '',id:1},{img: '',id:1},{img: '',id:1}]
         }
     },
     mounted(){
@@ -84,12 +93,13 @@ export default {
         upImg(scope){
             $(this.$refs.up).click()
         },
+        delImg(id){},
         see(scope){     // 查看
             this.showEditCtn = true
             this.getImgList(scope.row.id)
         },
         async getImgList(id){
-            var req = await this.ajax('', { id }, 'get')
+            var req = await this.ajax('', { id, time: this.imgInfo.time }, 'get')
             if(req && req.code == this.successCode){
                 this.imgList = req.data.rows
             }
@@ -111,5 +121,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-
+.img
+    width: 500px
+    margin: 0 auto
+    position: relative
+    margin-bottom: 10px
+    background: #eee
+    img
+        width: 100%
+    i
+        position: absolute
+        top: 0
+        right: 0
+        cursor: pointer
 </style>
