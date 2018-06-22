@@ -22,7 +22,7 @@ div
 
                 el-form-item(label="训练营")
                     el-select(v-model="searchInfo.city" placeholder="训练营")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="上课时间")
                     el-select(v-model="searchInfo.city" placeholder="上课时间")
@@ -119,9 +119,10 @@ export default {
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/order/list' },
+                add: { url: '/order/add' },
+                edit: { url: '/order/edit' },
+                del: { url: '/order/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '开卡', fun: 'openCard'},
@@ -132,7 +133,6 @@ export default {
                 { str: '新增', fun: 'add'},
                 { str: '导出excel', fun: 'export'}
             ],
-            citys: [],
             classTimes: []
         }
     },

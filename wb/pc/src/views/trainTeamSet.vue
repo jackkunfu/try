@@ -71,7 +71,7 @@ export default {
             searchKeys: [],
             editKeys: ['address', 'city', 'name'],
             api: {
-                list: { url: '/training/list', type: 'get' },
+                list: { url: '/training/list' },
                 add: { url: '/training/add' },
                 edit: { url: '/training/edit' },
                 del: { url: '/training/delete' }
@@ -82,7 +82,6 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
             ],
-            citys: [],
             curDate: '',
             curTimeStart: '',
             curTimeEnd: '',
@@ -90,7 +89,6 @@ export default {
         }
     },
     async mounted(){
-        this.citys = await this.getAllCity()
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
@@ -119,6 +117,8 @@ export default {
                 begin: this.curTimeStart,
                 end: this.curTimeEnd
             }
+            var strTimeList = this.addTimeList.map(v=>JSON.stringify(v))
+            if(strTimeList.indexOf(JSON.stringify(obj)) > -1) return this.messageTip('已存在该时间~')
             this.addTimeList.push(obj)
         }
     }

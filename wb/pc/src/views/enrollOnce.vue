@@ -18,7 +18,7 @@ div
 
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
 
                 el-form-item(label="训练营")
                     el-select(v-model="searchInfo.city" placeholder="训练营")
@@ -33,7 +33,7 @@ div
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @dao="dao")
+            @changePage="changePage" @dao="dao" @delScope="delScope")
     
 </template>
 
@@ -54,7 +54,10 @@ export default {
             ],
             searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime'],
             api: {
-                list: { url: '/application/queryAppPage' },
+                list: { url: '/experience/list' },
+                add: { url: '/experience/add' },
+                edit: { url: '/experience/edit' },
+                del: { url: '/experience/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
@@ -64,6 +67,9 @@ export default {
             ],
             citys: [],
         }
+    },
+    async mounted(){
+        this.citys = await this.getAllCity()
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参

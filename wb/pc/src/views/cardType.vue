@@ -5,23 +5,47 @@ div
             span /卡种设置
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.trainid" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
+
+                el-form-item(label="卡种")
+                    el-select(v-model="searchInfo.card" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
+
+                el-form-item(label="训练频次")
+                    el-select(v-model="searchInfo.frequency" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @openCard="openCard")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @delScope="delScope")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
             el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
+                el-form-item(label="城市")
+                    el-select(v-model="editInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="editInfo.trainid" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
+
+                el-form-item(label="卡种名称")
+                    el-input(v-model="editInfo.card")
+
+                el-form-item(label="训练频次")
+                    el-select(v-model="editInfo.frequency" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+
+                el-form-item(label="价格")
+                    el-input(v-model="editInfo.price" type="number")
+                    
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate") 保存
                     el-button(type="primary" @click="editCancel") 取消
@@ -30,7 +54,7 @@ div
 
 <script>
 export default {
-    name: 'enrollNormal',
+    name: 'cardType',
     mixins: [ tableManage ],
     data () {
         return {
@@ -41,12 +65,12 @@ export default {
                 { str: '训练频次', key: 'sex' },
                 { str: '价格', key: 'sex' }
             ],
-            searchKeys: [],
-            editKeys: [],
+            searchKeys: ['tranid', 'city', 'card', 'frequency'],
+            editKeys: ['tranid', 'city', 'card', 'frequency', 'price'],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/card/list' },
+                add: { url: '/card/add' },
+                del: { url: '/card/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
@@ -64,11 +88,13 @@ export default {
             return info;
         },
         testInput(){
+            var obj = this.trimObj(this.editInfo)
+            if(obj.city == '') return this.messageTip('请选择城市')
+            if(obj.tranid == '') return this.messageTip('请选择训练营')
+            if(obj.card == '') return this.messageTip('请输入卡种名称')
+            if(obj.frequency == '') return this.messageTip('请输入卡种名称')
+            if(obj.price == '') return this.messageTip('请输入价格')
             return true
-        },
-        openCard(scope){
-            var row = scope.row;
-            console.log(row)
         }
     }
 

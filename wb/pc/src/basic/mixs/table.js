@@ -12,15 +12,20 @@ export default {
                 total: 0,
                 offset: 0,
                 limit: 10
-            }
+            },
+            citys: [],
+            trains: []
         }
     },
 
-    mounted(){
+    async mounted(){
         // 初始化参数
         this.tableManageInit.call(this);
         // 请求列表
         this.tableList.call(this);
+
+        this.citys = await this.getAllCity()
+        this.trains = await this.getAllTrain()
     },
 
     methods: {
