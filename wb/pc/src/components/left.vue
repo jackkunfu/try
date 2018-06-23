@@ -70,7 +70,8 @@ export default {
                 list: [
                     { name: '管理员设置', url: '/set/manage' },
                     { name: '教练设置', url: '/set/coach' },
-                    { name: '班主任设置', url: '/set/class' }
+                    { name: '班主任设置', url: '/set/class' },
+                    { name: '销售顾问', url: '/set/sell' }
                 ]
             }]
         }

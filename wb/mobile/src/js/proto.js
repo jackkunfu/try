@@ -81,7 +81,7 @@ export default function(Vue){
     }
 
     // 查询所有的已存在的城市列表
-    Vue.prototype.getAllExistCity = async function(city){
+    Vue.prototype.getAllExistCity = async function(){
         var req = await this.ajax('/training/listCity', {}, 'get')
         if(req && req.code == this.successCode){
             let data = req.data || []
@@ -110,9 +110,19 @@ export default function(Vue){
         else return []
     }
 
+    // 查询上课时间列表  具体每个训练营卡种的话 传入 训练营id
+    Vue.prototype.getAllTrainTimes = async function(id){
+        var req = await this.ajax('/training/listTrainingTime', { trainId: id || '' }, 'get')
+        if(req && req.code == this.successCode){
+            let data = req.data || []
+            return data
+        }
+        else return []
+    }
+
     // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
     Vue.prototype.getAllSeller = async function(id){
-        var req = await this.ajax('/mgr/list', { roleid: 4, limit: 100, offset: 0 }, 'get')
+        var req = await this.ajax('/sales/list', { limit: 100, offset: 0 }, 'get')
         if(req && req.code == this.successCode){
             let data = req.data.rows || []
             return data

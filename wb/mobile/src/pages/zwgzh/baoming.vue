@@ -15,32 +15,32 @@
 
         .each
             span 选择训练营
-            select(v-model="item.train" :class="item.city==''?'':'ff'")
+            select(v-model="item.trainId" :class="item.trainId==''?'':'ff'")
                 option(v-for="(it, i) in cityTrains" :value="it.id" :label="it.name" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择卡种
-            select(v-model="item.cardType" :class="item.city==''?'':'ff'")
+            select(v-model="item.cardId" :class="item.cardId==''?'':'ff'")
                 option(v-for="(it, i) in trainCards" :value="it.id" :label="it.card" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练频次
-            select(v-model="item.times" :class="item.city==''?'':'ff'")
+            select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
                 option(v-for="(it, i) in weekTimes" :value="it" :label="it" :key="i")
             img(src="../../assets/xia.png")
         
         .each
             span 接待课程顾问
-            select(v-model="item.people" :class="item.phone==''?'':'ff'")
+            select(v-model="item.sale" :class="item.sale==''?'':'ff'")
                 option(v-for="(it, i) in sells" :value="it.id" :label="it.name" :key="i")
             img(src="../../assets/xia.png")
 
         .tip 注意：付款完成后请根据您的卡种选择上课时间并完善学员信息
 
         .money 费用合计：
-            span 2000
+            span {{item.fee || 0}}
             | 元
         
         .btn(@click="baoming") 支付报名
@@ -54,12 +54,13 @@
             var query = this.$route.query;
             return {
                 item: {
-                    city: '', train: '', cardType: '', times: '', people: ''
+                    city: '', trainId: '', cardId: '', frequency: '', sale: '', fee: ''
                 },
                 citys: [],
                 cityTrains: [],
                 trainCards: [],
-                sells: []
+                sells: [],
+                userId: query.userId
             }
         },
         watch: {
@@ -68,10 +69,14 @@
                 if(!v) return
                 this.cityTrains = await this.getAllTrain(v)
             },
-            async 'item.train'(v){
+            async 'item.trainId'(v){
                 this.trainCards = []
                 if(!v) return
                 this.trainCards = await this.getAllCard(v)
+            },
+            async 'item.cardId'(v){
+                var i = this.trainCards.map(v=>v.id).indexOf(v)
+                this.item.fee = this.trainCards[i].price
             }
         },
         async mounted(){
@@ -79,14 +84,12 @@
             this.sells = await this.getAllSeller()
         },
         methods: {
-            banzhurenLogin(){
-                this.goUrl('/banzhuren')
-            },
-            goMy(){
-                this.goUrl('/my')
-            },
-            baoming(){
-                this.goUrl('/pay')
+            async baoming(){
+                this.item.userId = this.userId
+                var res = await this.ajax('/order/add', this.item)
+                if(res && res.code == this.successCode){
+                    this.goUrl('/pay')
+                }
             },
             async loginFun(){
                 var item = this.item;

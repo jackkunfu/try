@@ -24,23 +24,23 @@
                 input(v-model="login.phone" placeholder="请输入账号")
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" placeholder="请输入验证码")
+                input(v-model="login.code" placeholder="请输入验证码")
                 .code 获取验证码
             .login-tip 若账号未激活，请联系机构
                 img(src="../../assets/login_icon_tishi@2x.png")
             
-            .btn(@click="goMy") 登陆
+            .btn(@click="goMy") 个人中心登陆
 
         .baoming(v-if="isBm")
             .each
                 img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入账号")
+                input(v-model="login.phone" placeholder="请输入手机号")
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" placeholder="请输入验证码")
+                input(v-model="login.code" placeholder="请输入验证码")
                 .code 获取验证码
             
-            .btn(@click="baoming") 报名
+            .btn(@click="baoming") 报名登陆
 
 </template>
 
@@ -64,7 +64,7 @@
                 isFogt,
                 fogtUid,
                 login: {
-                    phone: '', pwd: ''
+                    phone: '', code: ''
                 },
                 zhuce: {
                     phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
@@ -98,8 +98,18 @@
             goMy(){
                 this.goUrl('/my')
             },
-            baoming(){
-                this.goUrl('/baoming')
+            async baoming(){
+                this.login.phone = this.login.phone.trim()
+                this.login.code = this.login.code.trim()
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.login.phone)) ) return this.messageTip('手机号格式有误~');
+                if(this.login.phone == '' ) return this.messageTip('手机号不能为空~');
+                if(this.login.code == '') return this.messageTip('验证码有误~');
+                var res = await this.ajax('/user/login', this.login);
+                if(res && res.code == this.successCode){
+                    var data = res.data;
+                    localStorage.zwgzhUid = data.id;
+                    this.goUrl('/baoming', { userId: data.id });
+                }
             },
             async loginFun(){
                 var login = this.login;

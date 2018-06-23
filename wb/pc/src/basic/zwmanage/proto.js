@@ -40,7 +40,8 @@ export default function(Vue){
         }]
     }
 
-    Vue.prototype.getAllExistCity = async function(city){
+    // 查询所有的已存在的城市列表
+    Vue.prototype.getAllExistCity = async function(){
         var req = await this.ajax('/training/listCity', {}, 'get')
         if(req && req.code == this.successCode){
             let data = req.data || []
@@ -49,6 +50,7 @@ export default function(Vue){
         else return []
     }
 
+    // 查询训练营列表  具体每个城市的话 传入 城市名称字符串
     Vue.prototype.getAllTrain = async function(city){
         var req = await this.ajax('/training/listAll', { city: city || '' }, 'get')
         if(req && req.code == this.successCode){
@@ -58,6 +60,7 @@ export default function(Vue){
         else return []
     }
 
+    // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
     Vue.prototype.getAllCard = async function(id){
         var req = await this.ajax('/card/listAll', { id: id || '' }, 'get')
         if(req && req.code == this.successCode){
@@ -66,6 +69,18 @@ export default function(Vue){
         }
         else return []
     }
+
+    // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
+    Vue.prototype.getAllSeller = async function(id){
+        var req = await this.ajax('/sales/list', { limit: 100, offset: 0 }, 'get')
+        if(req && req.code == this.successCode){
+            let data = req.data.rows || []
+            return data
+        }
+        else return []
+    }
+
+    Vue.prototype.weekTimes = ['一周一次', '一周两次', '一周三次', '一周四次', '一周五次', '一周六次']
 
     Vue.prototype.getAllTimes = async function(city){
         return ['一周一次', '一周两次', '一周三次', '一周四次', '一周五次', '一周六次']

@@ -7,7 +7,7 @@ div
         search(@search="search" @reset="reset")
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .page-title 学员管理
@@ -44,7 +44,7 @@ export default {
                 { str: '身高', key: 'height' },
                 { str: '体重', key: 'weight' },
                 { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'mobile' },
+                { str: '联系电话', key: 'phone' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'remark' },
                 { str: '训练频次', key: 'remark' },
@@ -56,20 +56,24 @@ export default {
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/user/list' },
+                add: { url: '/user/add' },
+                edit: { url: '/user/edit' },
+                del: { url: '/user/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '编辑', fun: 'editScope'}
+                { str: '编辑', fun: 'editScope'},
+                { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '修改', fun: 'edit'}
+                { str: '新增', fun: 'add'}
             ]
         }
     },
     methods: {
+        handleDelRow(data){
+            return { userId: data.id }
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info
         },

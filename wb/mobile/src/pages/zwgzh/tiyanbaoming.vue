@@ -18,17 +18,18 @@
     .enroll
         .each
             span 姓名：
-            input(v-model="login.phone" placeholder="请输入手机号")
+            input(v-model="item.name" placeholder="请输入姓名")
         .each
             span 联系方式：
-            input(v-model="login.phone" placeholder="请输入手机号")
+            input(v-model="item.mobile" placeholder="请输入联系方式")
         .each
             span 城市：
-            input(v-model="login.phone" placeholder="请输入手机号")
+            select(v-model="item.city" placeholder="请输入手机号")
+                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i")
         .each
             span 训练营：
-            select(v-model="login.phone" placeholder="请输入手机号")
-                option 1
+            select(v-model="item.trainId" placeholder="请输入手机号")
+                option(v-for="(it, i) in trains" :value="it.id" :label="it.name" :key="i")
         .each
             span 上课时间：
             .fr(@click="chooseTimes=true") 请选择上课时间
@@ -51,17 +52,47 @@
                 ok: false,
                 chooseTimes: false,
                 item: {
-                    phone: '', pwd: ''
-                }
+                    name: '', mobile: '', city: '', trainId: '', 
+                },
+                citys: [],
+                trains: [],
+                times: []
             }
         },
-        mounted(){
-            
+        watch: {
+            async 'item.city'(v){
+                this.trains = []
+                this.trains = await this.getAllTrain(v)
+            },
+            async 'item.trainId'(id){
+                this.times = []
+                this.times = await this.getAllTrainTimes(id)
+            }
+        },
+        async mounted(){
+            this.citys = await this.getAllExistCity()
+            this.trains = await this.getAllTrain()
         },
         methods: {
-            baoming(){
-                this.ok = true
-                // this.goUrl('/banzhuren')
+            async baoming(){
+                this.item.name = this.item.name.trim()
+                this.item.mobile = this.item.mobile.trim()
+                
+                if(this.item.name == '' ) return this.messageTip('姓名不能为空~');
+                if(this.item.mobile == '') return this.messageTip('手联系方式不能为空~');
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.item.mobile)) ) return this.messageTip('手机号格式有误~');
+
+                if(this.item.mobile == '') return this.messageTip('请选择城市~');
+                if(this.item.mobile == '') return this.messageTip('请选择训练营~');
+
+                this.item.week = 0
+                this.item.begin = '05:00'
+                this.item.end = '07:00'
+
+                var res = await this.ajax('/experience/add', this.item);
+                if(res && res.code == this.successCode){
+                    this.ok = true
+                }else this.messageTip(res.message || '报名失败');
             },
             next(data){
                 console.log(data)

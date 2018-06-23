@@ -46,15 +46,18 @@ div
                 .item 个人信息
                 el-form-item(label="头像")
                     .up-ctn
-                        input#up1(type="file")
+                        input#up1(type="file" ref="up1")
                         span + 上传
                         img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
                 el-form-item(label="姓名")
-                    el-input(v-model="editInfo.appName")
+                    el-input(v-model="editInfo.name")
                 el-form-item(label="性别")
                     el-radio-group(v-model="editInfo.sex")
                         el-radio(label="1") 男
                         el-radio(label="0") 女
+                el-form-item(label="生日")
+                    el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;")   
+                    //- value-format="yyyy-MM-dd"
                 el-form-item(label="身高")
                     el-input(v-model="editInfo.remark")
                 el-form-item(label="体重")
@@ -62,11 +65,11 @@ div
                 el-form-item(label="家长姓名")
                     el-input(v-model="editInfo.dorder")
                 el-form-item(label="联系电话")
-                    el-input(v-model="editInfo.dorder")
+                    el-input(v-model="editInfo.phone")
                 
                 .item 课程信息
                 el-form-item(label="地区")
-                    el-select(v-model="editInfo.area")
+                    el-select(v-model="editInfo.city")
                         el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择地区" :value="item" :key="i")
                 el-form-item(label="训练营")
                     el-select(v-model="editInfo.train")
@@ -117,7 +120,7 @@ export default {
                 { str: '销售', key: 'height' }
             ],
             searchKeys: [],
-            editKeys: [],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'avatar', 'avatar', 'avatar', 'avatar', 'avatar', 'avatar' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/order/add' },
@@ -136,11 +139,22 @@ export default {
             classTimes: []
         }
     },
+    mounted(){
+        $(this.$refs.up1).change(()=>{
+            this.file('up1', async res =>{
+                if(res && res.code == this.successCode){
+                    let img = res.data
+                    this.editInfo.avatar = res.data
+                }
+            })
+        })
+    },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            info.trainId = 1
             return info;
         },
         testInput(){

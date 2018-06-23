@@ -45,12 +45,11 @@ export default {
         return {
             keys: [
                 { str: '姓名', key: 'name' },
-                { str: '联系电话', key: 'sex' },
-                { str: '地区', key: 'sex' },
+                { str: '联系电话', key: 'mobile' },
+                { str: '地区', key: 'city' },
                 { str: '训练营', key: 'sex' },
-                { str: '上课时间', key: 'birth' },
-                { str: '报名日期', key: 'birth' },
-                { str: '班主任', key: 'height' }
+                { str: '上课时间', key: 'time' },
+                { str: '班主任', key: '' }
             ],
             searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime'],
             api: {
@@ -66,12 +65,19 @@ export default {
                 { str: '导出excel', fun: 'dao'}
             ],
             citys: [],
+            week: ['一', '二', '三', '四', '五', '六', '日']
         }
     },
     async mounted(){
         this.citys = await this.getAllCity()
     },
     methods: {
+        changeTableData(data){
+            return data.map(v => {
+                v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                return v
+            })
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
