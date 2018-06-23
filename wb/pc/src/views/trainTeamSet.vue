@@ -8,10 +8,11 @@ div
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
                 el-form-item(label="训练营")
-                    el-select(v-model="searchInfo.city" placeholder="训练营")
+                    el-input(v-model="searchInfo.name" placeholder="名称")
+                    //- el-select(v-model="searchInfo.city" placeholder="训练营")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="上课时间")
@@ -28,7 +29,7 @@ div
             el-form(:model="editInfo" label-width="100px" size="mini")
                 el-form-item(label="城市")
                     el-select(v-model="editInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
                 el-form-item(label="训练营名称")
                     el-input(v-model="editInfo.name")
@@ -46,8 +47,9 @@ div
                     el-button(type="primary" @click="addTime" size="small") 添加
 
                     div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
-                        span {{item.week}}
+                        span {{'周'+week[item.week]}}
                         span(style="margin-left: 10px") {{item.begin + ' ~ ' + item.end}}
+                        i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
   
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存
@@ -63,12 +65,12 @@ export default {
         return {
             week: ['一', '二', '三', '四', '五', '六', '日'],
             keys: [
-                { str: '城市', key: 'appCode' },
-                { str: '训练营', key: 'name' },
-                { str: '地址', key: 'name' },
-                { str: '上课时间', key: 'sex' }
+                { str: '城市', key: 'training.city' },
+                { str: '训练营', key: 'training.name' },
+                { str: '地址', key: 'training.address' },
+                { str: '上课时间', key: 'time' }
             ],
-            searchKeys: [],
+            searchKeys: ['city', 'name', 'week'],
             editKeys: ['address', 'city', 'name'],
             api: {
                 list: { url: '/training/list' },
@@ -90,13 +92,30 @@ export default {
     },
     async mounted(){
     },
+    watch: {
+        showEditCtn(v){
+            if(!v){
+                this.editInit()
+                this.addTimeList = ''
+                this.curDate = ''
+                this.curTimeStart = ''
+                this.curTimeEnd = ''
+            }
+        }
+    },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            info.trainTimes = this.addTimeList
+            info.trainTimes = JSON.stringify(this.addTimeList)
             return info;
+        },
+        changeTableData(data){
+            return data.map(v => {
+                v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                return v
+            })
         },
         testInput(){
             var obj = this.trimObj(this.editInfo)
@@ -112,8 +131,9 @@ export default {
             if(!this.curTimeStart) return this.messageTip('请选择开始时间~')
             if(!this.curTimeEnd) return this.messageTip('请选择结束时间~')
             var obj = {
-                date: this.curDate,
-                week: '周'+this.week[this.curDate],
+                // date: this.curDate,
+                // week: '周'+this.week[this.curDate],
+                week: this.curDate,
                 begin: this.curTimeStart,
                 end: this.curTimeEnd
             }

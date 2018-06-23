@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         async submit(){
-            // var res = await this.ajax('/aa', {
+            // var res = await this.ajax('/sign/add', {
             //     id: item.id,
             //     type
             // })

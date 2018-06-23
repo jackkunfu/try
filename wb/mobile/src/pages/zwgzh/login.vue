@@ -72,7 +72,7 @@
                 fogt: {
                     phone: '', code: '', password: '', password1: '',userId: ''
                 },
-                codeImage: '/api/defaultKaptcha?t=' + new Date().getTime()
+                codeImage: '/api/defaultKaptcha?t=' + new Date().getTime(),
             }
         },
         mounted(){

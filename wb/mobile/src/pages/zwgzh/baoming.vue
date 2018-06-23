@@ -10,31 +10,31 @@
         .each
             span 选择地区
             select(v-model="item.city" :class="item.city==''?'':'ff'")
-                option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
+                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练营
             select(v-model="item.train" :class="item.city==''?'':'ff'")
-                option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
+                option(v-for="(it, i) in cityTrains" :value="it.id" :label="it.name" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择卡种
             select(v-model="item.cardType" :class="item.city==''?'':'ff'")
-                option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
+                option(v-for="(it, i) in trainCards" :value="it.id" :label="it.card" :key="i")
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练频次
             select(v-model="item.times" :class="item.city==''?'':'ff'")
-                option(v-for="(it, i) in citys" :value="it.id" :label="it.city" :key="i")
+                option(v-for="(it, i) in weekTimes" :value="it" :label="it" :key="i")
             img(src="../../assets/xia.png")
         
         .each
             span 接待课程顾问
             select(v-model="item.people" :class="item.phone==''?'':'ff'")
-                option 1
+                option(v-for="(it, i) in sells" :value="it.id" :label="it.name" :key="i")
             img(src="../../assets/xia.png")
 
         .tip 注意：付款完成后请根据您的卡种选择上课时间并完善学员信息
@@ -56,11 +56,27 @@
                 item: {
                     city: '', train: '', cardType: '', times: '', people: ''
                 },
-                citys: []
+                citys: [],
+                cityTrains: [],
+                trainCards: [],
+                sells: []
+            }
+        },
+        watch: {
+            async 'item.city'(v){
+                this.cityTrains = []
+                if(!v) return
+                this.cityTrains = await this.getAllTrain(v)
+            },
+            async 'item.train'(v){
+                this.trainCards = []
+                if(!v) return
+                this.trainCards = await this.getAllCard(v)
             }
         },
         async mounted(){
-            this.citys = await this.getAllArea()
+            this.citys = await this.getAllExistCity()
+            this.sells = await this.getAllSeller()
         },
         methods: {
             banzhurenLogin(){

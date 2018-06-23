@@ -43,7 +43,7 @@ div
                 .item 角色权限
                 el-form-item(label="角色")
                     el-select(v-model="editInfo.roleid")
-                        el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任']" :key="i" :value="i+1" :label="item")
+                        el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任', '销售顾问']" :key="i" :value="i+1" :label="item")
                 el-form-item(label="学员信息删除权限")
                     el-switch(v-model="editInfo.delStu")
 
@@ -99,6 +99,7 @@ export default {
             this.curBtnSearch = -1
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.roleid = 1
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参

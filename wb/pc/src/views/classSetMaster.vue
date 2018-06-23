@@ -32,7 +32,7 @@ div
             el-form(:model="editInfo" label-width="160px" size="mini")
                 el-form-item(label="城市")
                     el-select(v-model="editInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
                 el-form-item(label="训练营")
                     el-select(v-model="editInfo.city" placeholder="训练营")
@@ -59,10 +59,10 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'appCode' },
+                { str: '城市', key: 'city' },
                 { str: '训练营', key: 'name' },
-                { str: '地址', key: 'sex' },
-                { str: '上课时间', key: 'sex' },
+                { str: '地址', key: 'address' },
+                { str: '上课时间', key: 'time' },
                 { str: '班主任', key: 'sex' }
             ],
             searchKeys: [],

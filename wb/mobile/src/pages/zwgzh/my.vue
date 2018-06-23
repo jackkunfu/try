@@ -40,7 +40,6 @@
                     span 开卡时间：{{course.times}}
                     span.span 到期时间：{{course.times}}
 
-
         div.tn(v-if="curTab == 1")
             img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png")
             div(v-else)
@@ -72,9 +71,9 @@
                     span 互动性：
                     img(v-for="(item, i) in [1,1,1,1,1]" @click="x3=i+1" :src="i<x3 ? activeStarImg : starImg")
 
-            textarea(placeholder="对教练的意见或建议")
+            textarea(placeholder="对教练的意见或建议" v-model="pjStr")
 
-            .lbtn(v-if="!isPJ" @click="isPJ=true") 提交评价
+            .lbtn(v-if="!isPJ" @click="pj") 提交评价
             .lbtn.disable(v-else) 已评价
 
 </template>
@@ -110,7 +109,8 @@ export default {
             showTnTable: false,
             tnDetailImg: '',
             cardLevel: null,
-            isPJ: false     // 是否已经评价
+            isPJ: false,     // 是否已经评价
+            pjStr: ''
         }
     },
     computed: {
@@ -126,6 +126,17 @@ export default {
             this.x3 = 0
             this.showTnTable = false
             this.cardLevel = null
+        }
+    },
+    methods: {
+        async pj(){
+            var res = this.ajax('/evaluate/add', {
+                content: this.pjStr.trim()
+            })
+            if(res && res.code == this.successCode){
+                this.isPJ = true
+                this.pjStr = ''
+            }else this.messageTip(res.message || '操作失败,请稍后重试~')
         }
     }
 }

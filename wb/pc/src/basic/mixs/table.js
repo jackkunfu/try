@@ -14,7 +14,9 @@ export default {
                 limit: 10
             },
             citys: [],
-            trains: []
+            trains: [],
+            times: [],
+            week: ['一', '二', '三', '四', '五', '六', '日']
         }
     },
 
@@ -26,6 +28,7 @@ export default {
 
         this.citys = await this.getAllCity()
         this.trains = await this.getAllTrain()
+        this.times = await this.getAllTimes()
     },
 
     methods: {

@@ -119,41 +119,42 @@ export default function(Vue){
         }
     }
     // 列表请求
-    Vue.prototype.tableList = async function(){
+    Vue.prototype.tableList = async function(v){
         var copySearchInfo = Object.assign({}, this.trimObj(this.searchInfo));
 
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';
         var options = needChangeSearchInfo ? this.changeSearchValue(copySearchInfo) : copySearchInfo;
 
-        options.offset = this.page.offset;
-        options.limit = this.page.limit
+        options.offset = v || this.page.offset || 0;
+        options.limit = this.page.limit || 10
 
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
         if(res && res.code == this.successCode){
             var result = res.data
-            this.tableData = result.rows
+
+            var needChangeTableData = this.changeTableData && typeof this.changeTableData == 'function';
+            this.tableData = needChangeTableData ? this.changeTableData(result.rows) : result.rows
+
             this.page.total = result.total;
-            // this.page.curPage = result.pageNum;
             this.curChooseRow = null;   // 当前选中列置空
         }
     }
     // 搜索
     Vue.prototype.tableSearch = function(v){
-        this.page.curPage = 1;
+        this.page.total = 0;
         this.tableList.call(this);
     }
     // 搜索重置
     Vue.prototype.tableReset = function(v){
         this.searchInit.call(this);
-        this.page.curPage = 1;
+        this.page.total = 0;
         this.tableList.call(this);
         if(this.selfSearchReset && typeof this.selfSearchReset == 'function') this.selfSearchReset()
     }
     // 页码改变
     Vue.prototype.pageChange = function(v){
-        console.log(v)
-        this.page.curPage = v;
-        this.tableList.call(this);
+        this.page.offset = v - 1;
+        this.tableList.call(this, v-1);
     }
     
     // 点击新增
@@ -194,7 +195,7 @@ export default function(Vue){
             var op = this.api.del;
             var neesChangeOptions = this.handleDelRow && typeof this.handleDelRow == 'function'
             var oriData = Object.assign({}, arguments[0].row || {});
-            var options = neesChangeOptions ? this.handleDelRow(oriData) : { userId: oriData.id }
+            var options = neesChangeOptions ? this.handleDelRow(oriData) : { id: oriData.id }
             var res = await this.ajax(op.url, options, op.type || 'post')
             if(res.code == this.successCode){
                 this.messageTip(res.message || '操作成功', 1);
