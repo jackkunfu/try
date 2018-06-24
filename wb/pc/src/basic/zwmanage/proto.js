@@ -60,6 +60,16 @@ export default function(Vue){
         else return []
     }
 
+    // 查询上课时间列表  具体每个训练营的话 传入 训练营id
+    Vue.prototype.getAllTrainTimes = async function(id){
+        var req = await this.ajax('/training/listTrainingTime', { trainId: id || '' }, 'get')
+        if(req && req.code == this.successCode){
+            let data = req.data || []
+            return data
+        }
+        else return []
+    }
+
     // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
     Vue.prototype.getAllCard = async function(id){
         var req = await this.ajax('/card/listAll', { id: id || '' }, 'get')
@@ -70,7 +80,17 @@ export default function(Vue){
         else return []
     }
 
-    // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
+    // 查询训练频次以及价格列表  具体每个训练营卡种的话 传入 卡种id
+    Vue.prototype.getAllCardTimes = async function(cardId){
+        var req = await this.ajax('/card/listFrequency', { cardId }, 'get')
+        if(req && req.code == this.successCode){
+            let data = req.data || []
+            return data
+        }
+        else return []
+    }
+
+    // 查询销售顾问列表
     Vue.prototype.getAllSeller = async function(id){
         var req = await this.ajax('/sales/list', { limit: 100, offset: 0 }, 'get')
         if(req && req.code == this.successCode){

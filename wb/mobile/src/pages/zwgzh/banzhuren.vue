@@ -41,13 +41,14 @@ export default {
 
 .banzhuren
     .list
-        padding: 0 0.5rem
+        padding: 0 0.4rem
         .item
             // background-image: url('../../assets/center_list_bg@2x.png')
             // background-size: 100% 100%
-            height: 7rem
+            height: 5.7rem
             padding: 0
             position: relative
+            margin-bottom: 0
             img
                 position: absolute
                 z-index: 0

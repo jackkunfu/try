@@ -120,7 +120,7 @@ export default function(Vue){
         else return []
     }
 
-    // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
+    // 查询销售顾问
     Vue.prototype.getAllSeller = async function(id){
         var req = await this.ajax('/sales/list', { limit: 100, offset: 0 }, 'get')
         if(req && req.code == this.successCode){

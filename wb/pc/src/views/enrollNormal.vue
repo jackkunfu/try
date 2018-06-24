@@ -70,16 +70,16 @@ div
                 .item 课程信息
                 el-form-item(label="地区")
                     el-select(v-model="editInfo.city")
-                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择地区" :value="item" :key="i")
+                        el-option(v-for="(item, i) in areaList" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
                 el-form-item(label="训练营")
-                    el-select(v-model="editInfo.train")
-                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择训练营" :value="item" :key="i")
+                    el-select(v-model="editInfo.trainId")
+                        el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
                 el-form-item(label="卡种")
-                    el-select(v-model="editInfo.cardType")
-                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择卡种" :value="item" :key="i")
+                    el-select(v-model="editInfo.cardId")
+                        el-option(v-for="(item, i) in cards" :label="item.card" placeholder="选择卡种" :value="item.id" :key="i")
                 el-form-item(label="训练频次")
-                    el-select(v-model="editInfo.times")
-                        el-options(v-for="(item, i) in areaList" :label="item" placeholder="选择训练频次" :value="item" :key="i")
+                    el-select(v-model="editInfo.frequency")
+                        el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.id" :key="i")
                 el-form-item(label="价格")
                     el-input(v-model="editInfo.price")
                 el-form-item(label="支付日期")
@@ -88,9 +88,9 @@ div
                     div(v-for="(item, i) in classTimes" :key="i")
                         span {{item.time}}
                         el-switch(v-model="item.delivery")
-                el-form-item(label="销售渠道")
+                el-form-item(label="销售顾问")
                     el-select(v-model="editInfo.times")
-                        el-options(v-for="(item, i) in areaList" :label="item" :value="item" :key="i")
+                        el-option(v-for="(item, i) in areaList" :label="item.name" :value="item.id" :key="i")
 
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存
@@ -105,6 +105,10 @@ export default {
     data () {
         return {
             areaList: [],
+            cityTrains: [],
+            cards: [],
+            frequencys: [],
+            sales: [],
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
@@ -139,7 +143,28 @@ export default {
             classTimes: []
         }
     },
-    mounted(){
+    watch: {
+        async 'editInfo.city'(v){
+            this.cityTrains = []
+            this.cityTrains = await this.getAllTrain(v)
+        },
+        async 'editInfo.trainId'(id){
+            this.cards = []
+            this.cards = await this.getAllCard(id)
+        },
+        async 'editInfo.cardId'(id){
+            this.frequencys = []
+            this.frequencys = await this.getAllCardTimes(id)
+        },
+        async 'editInfo.frequency'(v){
+            var i = this.frequencys.map(v=>v.id).indexOf(v)
+            this.editInfo.price = (this.frequencys[i].price - 0)/100
+        }
+    },
+    async mounted(){
+        this.citys = await this.getAllExistCity()
+        this.areaList = await this.getAllCity()
+
         $(this.$refs.up1).change(()=>{
             this.file('up1', async res =>{
                 if(res && res.code == this.successCode){
@@ -155,9 +180,21 @@ export default {
         },
         changeEditValue(info){   // 处理新增编辑请求传参
             info.trainId = 1
+            info.price = (info.price - 0)*100
             return info;
         },
         testInput(){
+            // var arr = ['account', 'name', 'birthday', 'sex', 'email', 'phone']
+            var obj = this.trimObj(this.editInfo)
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.account == '') return this.messageTip('账号不能为空')
+
             return true
         },
         openCard(scope){

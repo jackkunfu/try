@@ -10,8 +10,6 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .page-title 学员管理
-            span /学员信息/{{curOperateType | opTypeToName}}
         .x(@click="closeEditBox")
             i.el-icon-close
         .box
