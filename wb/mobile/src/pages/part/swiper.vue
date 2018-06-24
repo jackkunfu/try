@@ -1,7 +1,7 @@
 <template lang="pug">
 .swiper-ctn
     .swiper(:style="{width: listWidth}")
-        .each-swiper(v-for="(item, i) in list" :key="i" :style="{width: oneWidth}")
+        .each-swiper(v-for="(item, i) in list" :key="i" :style="{width: oneWidth}" :class="curItem==i?'show':'hide'")
             img(:src="config.imgPath+item.img")
 
     .dots
@@ -15,8 +15,12 @@ export default {
     data () {
         return {
             curItem: null,
-            t: this.time ? this.time*1000 : 1000
+            t: this.time ? this.time*1000 : 2000,
+            timer: null
         }
+    },
+    beforeDestroy(){
+        clearInterval(this.timer)
     },
     computed: {
         listWidth(){ return this.list.length*100+'%' },
@@ -24,28 +28,26 @@ export default {
     },
     watch: {
         list(v){
-            if(v && v.length > 0){
-                this.curItem = 0
-            }
-        },
-        curItem(v){
-            if(v === null) return
-            
+            if(!v) return
+            if(v.length > 0) this.curItem = 0
+            if(v.length > 1) this.swiper()
         }
     },
-    mounted(){
-        if(this.list.length <= 1) return
-        setInterval(()=>{
-            console.log(1)
-            if(this.curItem < this.list.length) this.curItem = this.curItem - 0 + 1
-            else this.curItem = 0
-            
-            $('.swiper').animate({'margin-left':'-100%'}, this.t, ()=>{
-                var first = this.list.splice(0, 1)[0]
-                $('.swiper').css({'margin-left':'0'})
-                this.list.splice(this.list.length, 0, first)
-            })
-        }, this.t)
+    methods: {
+        swiper(){
+            this.timer = setInterval(()=>{
+                if(this.curItem < this.list.length - 1) this.curItem = this.curItem - 0 + 1
+                else this.curItem = 0
+                // $('.swiper').animate({'margin-left':'-100%'}, this.t, ()=>{
+                    
+                //     var first = this.list.splice(0, 1)[0]
+                //     this.list.splice(this.list.length, 0, first)
+                //     // $('.swiper').css({'margin-left':'0'})
+                //     if(this.curItem < this.list.length) this.curItem = this.curItem - 0 + 1
+                //     else this.curItem = 0
+                // })
+            }, this.t-0 + 2000)
+        }
     }
 }
 </script>
@@ -61,6 +63,11 @@ export default {
             float: left
             height: 6rem
             overflow: hidden
+            transition: all 0.5s
+            &.show
+                display: none
+            &.hide
+                display: block
             img
                 width: 100%
 
