@@ -58,6 +58,10 @@ const router = new Router({
             path: '/myset',
             name: 'myset',
             component: r => require.ensure([], () => r(require('@/pages/zwgzh/myset')), 'myset')
+        },{
+            path: '/timesChoose',
+            name: 'timesChoose',
+            component: r => require.ensure([], () => r(require('@/pages/zwgzh/timesChoose')), 'timesChoose')
         }
     ]
 })

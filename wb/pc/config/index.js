@@ -12,9 +12,9 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { 
-        // target: 'http://zw.91ilove.com',
+        target: 'http://zw.91ilove.com',
         // target: 'http://hjtu.free.ngrok.cc',
-        target: 'http://192.168.1.147:8000',
+        // target: 'http://192.168.1.147:8000',
         // pathRewrite: { '^/api': '' },
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true

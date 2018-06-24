@@ -28,6 +28,8 @@ div
 
     // .edit-ctn.fix-cover(v-show="showEditCtn")
     .edit-ctn.fix-cover
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
             search(@search="search" @reset="reset")
                 el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")

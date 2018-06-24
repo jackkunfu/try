@@ -46,6 +46,8 @@ div.class-desc
 
             
     .edit-ctn.fix-cover(v-show="showEditCtn")
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
             el-form(:model="editInfo" label-width="80px")
                 el-form-item(label="缩略图")

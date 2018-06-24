@@ -4,17 +4,15 @@
         div(v-if="list.length > 0")
             .item-ctn(v-for="(item, i) in list" @click="item.check=!item.check")
                 img.fl(src="../../assets/choose_icon_basketball@2x.png")
-                .title {{'周'+week[item.week]}}
-                .sub-title {{item.begin + ' ~ ' + item.end}}
+                .title {{item.name}}
+                .sub-title {{item.time}}
                 img.fr(src="../../assets/choose_btn_s@2x.png" v-if="item.check")
                 img.fr(src="../../assets/choose_btn_n@2x.png" v-else)
 
             .next(@click="ok") 确定
-            
+            .next(@click="close") 取消
         
-        div.none(v-else) 暂无训练营信息，或训练营暂无上课时间可选
-
-        .next(@click="close") 返回
+        div.none(v-else) 暂无上课时间可选
 
 </template>
 
@@ -24,8 +22,7 @@ export default {
     props: ['str', 'titleName', 'times'],
     data () {
         return {
-            week: ['一', '二', '三', '四', '五', '六', '日'],
-            list: this.times
+            list: []
         }
     },
     mounted(){

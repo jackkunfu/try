@@ -39,9 +39,9 @@ div
             @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
             el-form(:model="editInfo" label-width="80px" size="mini")
                 .item 个人信息
                 el-form-item(label="头像")

@@ -13,9 +13,9 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @delScope="delScope" ref="table")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
             el-form(:model="editInfo" label-width="140px" size="mini")
                 
                 el-form-item(label="姓名")

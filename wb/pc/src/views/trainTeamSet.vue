@@ -23,9 +23,9 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
             el-form(:model="editInfo" label-width="100px" size="mini")
                 el-form-item(label="城市")
                     el-select(v-model="editInfo.city" placeholder="城市")

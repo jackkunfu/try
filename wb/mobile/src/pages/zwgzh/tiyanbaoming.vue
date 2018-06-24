@@ -1,13 +1,13 @@
 <template lang="pug">
 .h100
 
-    class-times(v-if="chooseTimes" @next="next" @close="chooseTimes=false")
+    class-times(v-if="chooseTimes" @next="next" @close="closeChooseTime" :times="clsTimes")
 
     .fix(v-if="ok")
         .box 
             span 恭喜您体验课报名成功
             .ensure
-                span(@click="goUrl('/myset')") 确定
+                span(@click="ok=false") 确定
 
     .bg
         img(src="../../assets/activity_bg@2x.png")
@@ -21,18 +21,19 @@
             input(v-model="item.name" placeholder="请输入姓名")
         .each
             span 联系方式：
-            input(v-model="item.mobile" placeholder="请输入联系方式")
+            input(v-model="item.mobile" type="number" placeholder="请输入联系方式")
         .each
             span 城市：
-            select(v-model="item.city" placeholder="请输入手机号")
+            select(v-model="item.city")
                 option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i")
         .each
             span 训练营：
-            select(v-model="item.trainId" placeholder="请输入手机号")
+            select(v-model="item.trainId")
                 option(v-for="(it, i) in trains" :value="it.id" :label="it.name" :key="i")
         .each
             span 上课时间：
-            .fr(@click="chooseTimes=true") 请选择上课时间
+            .fr(@click="chooseTimes=true")
+                span {{curTiyanTimeStr}}
                 img(src="../../assets/xia.png")
         
         .btn(@click="baoming") 提交报名
@@ -49,14 +50,23 @@
         data () {
             var query = this.$route.query
             return {
+                week: ['一', '二', '三', '四', '五', '六', '日'],
                 ok: false,
                 chooseTimes: false,
                 item: {
-                    name: '', mobile: '', city: '', trainId: '', 
+                    name: '', mobile: '', city: '', trainId: '', week: '', begin: '', end: ''
                 },
                 citys: [],
                 trains: [],
-                times: []
+                times: [],
+                clsTimes: [],  // 选择训练营卡种的可选上课时间,
+            }
+        },
+        computed:{
+            curTiyanTimeStr(){
+                if(this.item.begin == '') return '请选择上课时间'
+                let item = this.item
+                return '周'+this.week[item.week]+' '+item.begin+'~'+item.end
             }
         },
         watch: {
@@ -65,15 +75,18 @@
                 this.trains = await this.getAllTrain(v)
             },
             async 'item.trainId'(id){
-                this.times = []
-                this.times = await this.getAllTrainTimes(id)
+                this.clsTimes = []
+                this.clsTimes = await this.getAllTrainTimes(id)
             }
         },
         async mounted(){
             this.citys = await this.getAllExistCity()
-            this.trains = await this.getAllTrain()
         },
         methods: {
+            closeChooseTime(){
+                this.clsTimes = []
+                this.chooseTimes = false
+            },
             async baoming(){
                 this.item.name = this.item.name.trim()
                 this.item.mobile = this.item.mobile.trim()
@@ -82,20 +95,20 @@
                 if(this.item.mobile == '') return this.messageTip('手联系方式不能为空~');
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.item.mobile)) ) return this.messageTip('手机号格式有误~');
 
-                if(this.item.mobile == '') return this.messageTip('请选择城市~');
-                if(this.item.mobile == '') return this.messageTip('请选择训练营~');
+                if(this.item.city == '') return this.messageTip('请选择城市~');
+                if(this.item.trainId == '') return this.messageTip('请选择训练营~');
 
-                this.item.week = 0
-                this.item.begin = '05:00'
-                this.item.end = '07:00'
+                if(this.item.begin == '') return this.messageTip('请选择上课时间~');
 
                 var res = await this.ajax('/experience/add', this.item);
-                if(res && res.code == this.successCode){
-                    this.ok = true
-                }else this.messageTip(res.message || '报名失败');
+                if(res && res.code == this.successCode) this.ok = true
             },
             next(data){
-                console.log(data)
+                if(data.length > 1) return this.messageTip('体验只能选择一个上课时间~');
+                var da = data[0]
+                this.item.week = da.week
+                this.item.begin = da.begin
+                this.item.end = da.end
                 this.chooseTimes = false
             },
             async loginFun(){

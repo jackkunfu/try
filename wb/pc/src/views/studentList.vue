@@ -12,6 +12,8 @@ div
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .page-title 学员管理
             span /学员信息/{{curOperateType | opTypeToName}}
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
             el-form(:model="editInfo" label-width="80px")
                 el-form-item(label="应用编号")

@@ -28,7 +28,7 @@
         .each
             span 选择训练频次
             select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
-                option(v-for="(it, i) in weekTimes" :value="it" :label="it" :key="i")
+                option(v-for="(it, i) in weekTimes" :value="it.id" :label="it.frequency" :key="i")
             img(src="../../assets/xia.png")
         
         .each
@@ -40,7 +40,7 @@
         .tip 注意：付款完成后请根据您的卡种选择上课时间并完善学员信息
 
         .money 费用合计：
-            span {{item.fee || 0}}
+            span {{item.fee | fee}}
             | 元
         
         .btn(@click="baoming") 支付报名
@@ -60,7 +60,14 @@
                 cityTrains: [],
                 trainCards: [],
                 sells: [],
-                userId: query.userId
+                userId: query.userId,
+                weekTimes: []
+            }
+        },
+        filters: {
+            fee(v){
+                if(!v) return 0
+                return v/100
             }
         },
         watch: {
@@ -75,8 +82,12 @@
                 this.trainCards = await this.getAllCard(v)
             },
             async 'item.cardId'(v){
-                var i = this.trainCards.map(v=>v.id).indexOf(v)
-                this.item.fee = this.trainCards[i].price
+                this.weekTimes = []
+                this.weekTimes = await this.getAllCardTimes(v)
+            },
+            async 'item.frequency'(v){
+                var i = this.weekTimes.map(v=>v.id).indexOf(v)
+                this.item.fee = this.weekTimes[i].price
             }
         },
         async mounted(){
@@ -88,7 +99,7 @@
                 this.item.userId = this.userId
                 var res = await this.ajax('/order/add', this.item)
                 if(res && res.code == this.successCode){
-                    this.goUrl('/pay')
+                    this.goUrl('/pay', { userId: this.userId, trainId: this.item.trainId })
                 }
             },
             async loginFun(){

@@ -38,9 +38,9 @@ div
                                 el-button(type="warning" @click="delCoach(i, scope.row)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
+        .x(@click="closeEditBox")
+            i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
             el-form(:model="editInfo" label-width="160px" size="mini")
                 el-form-item(label="教练")
                     el-select(v-model="editInfo.city" placeholder="教练")

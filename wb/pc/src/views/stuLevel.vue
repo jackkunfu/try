@@ -22,6 +22,8 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @changeLevel="changeLevel")
 
         .edit-ctn.fix-cover(v-show="isChooseLevel")
+            .x(@click="curLevel='';closeEditBox")
+                i.el-icon-close
             .box
                 .x(@click="isChooseLevel=false;curLevel=''")
                     i.el-icon-close
