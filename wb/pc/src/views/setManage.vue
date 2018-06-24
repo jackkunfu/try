@@ -103,14 +103,15 @@ export default {
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            info.roleid = 1;
             return info;
         },
         testInput(){
-            var data = Object.assign({}, this.editInfo)
+            var data = this.trimObj(this.editInfo)
             // if(data.avatar.trim() == '') return this.messageTip('请上传图片~')  // 头像不要求
-            if(data.name.trim() == '') return this.messageTip('姓名不能为空~')
-            if(data.account.trim() == '') return this.messageTip('账户名不能为空~')
-            if(data.account.trim().length > 30) return this.messageTip('账户名须30字符以内~')
+            if(data.name == '') return this.messageTip('姓名不能为空~')
+            if(data.account == '') return this.messageTip('账户名不能为空~')
+            if(data.account.length > 30) return this.messageTip('账户名须30字符以内~')
 
             if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
             if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')

@@ -103,6 +103,9 @@ export default {
         })
     },
     methods: {
+        closeEditBox(){
+            this.editCancel()
+        },
         editArea(item){
             this.isEdit = true
             this.showEditCtn = true

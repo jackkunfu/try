@@ -1,7 +1,9 @@
 import $ from 'jquery'
+import config from './config'
 
 export default function(Vue){
     Vue.prototype.successCode = 200
+    Vue.prototype.config = config
     // ajax
     Vue.prototype._ajax = function(url, data, type, notShowLoding){
         var data = data || {};
