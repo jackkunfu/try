@@ -22,10 +22,12 @@ export default {
     props: ['str', 'titleName', 'times'],
     data () {
         return {
+            trainId: this.$route.query.trainId || 7,
             list: []
         }
     },
-    mounted(){
+    async mounted(){
+        this.list = await this.getAllTrainTimes(this.trainId)
         this.initListStatus()
     },
     methods: {
@@ -37,11 +39,11 @@ export default {
         ok(){
             let choose = this.list.filter(element => element.check)
             if(choose.length == 0) return this.messageTip('请选择上课时间~')
-            this.$emit('next', choose)
+            this.goUrl('/my')
         },
         close(){
             this.initListStatus()
-            this.$emit('close')
+            this.goUrl('/my')
         }
     }
 }
