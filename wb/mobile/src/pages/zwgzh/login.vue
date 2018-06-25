@@ -21,10 +21,10 @@
         .login(v-if="isLogin")
             .each
                 img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入账号")
+                input(v-model="denglu.phone" placeholder="请输入账号")
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.code" placeholder="请输入验证码")
+                input(v-model="denglu.code" placeholder="请输入验证码")
                 .code 获取验证码
             .login-tip 若账号未激活，请联系机构
                 img(src="../../assets/login_icon_tishi@2x.png")
@@ -69,8 +69,8 @@
                 bzr: {
                     phone: '',  password: ''
                 },
-                fogt: {
-                    phone: '', code: '', password: '', password1: '',userId: ''
+                denglu: {
+                    phone: '', code: ''
                 },
                 codeImage: '/api/defaultKaptcha?t=' + new Date().getTime(),
             }
@@ -105,8 +105,18 @@
                     this.goUrl('/banzhuren', { userId: data.id });
                 }
             },
-            goMy(){
-                this.goUrl('/my')
+            async goMy(){
+                this.denglu.phone = this.denglu.phone.trim()
+                this.denglu.code = this.denglu.code.trim()
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.login.phone)) ) return this.messageTip('手机号格式有误~');
+                if(this.denglu.phone == '' ) return this.messageTip('手机号不能为空~');
+                if(this.denglu.code == '') return this.messageTip('验证码有误~');
+                var res = await this.ajax('/user/login', this.denglu);
+                if(res && res.code == this.successCode){
+                    var data = res.data;
+                    localStorage.zwgzhUid = data.id;
+                    this.goUrl('/my', { userId: data.id });
+                }
             },
             async baoming(){
                 this.login.phone = this.login.phone.trim()
