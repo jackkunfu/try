@@ -2,7 +2,7 @@
 .h100
     swiper(:list="lunbotuList")
 
-    .sort-item 介绍
+    .sort-item 课程介绍
 
     .list
         .item(v-for="(item, i) in list" :key="i" @click="goUrl(item.url)")

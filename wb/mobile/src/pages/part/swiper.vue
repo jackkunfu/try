@@ -5,7 +5,7 @@
             img(:src="config.imgPath+item.img")
 
     .dots
-        .dot(v-for="(item, i) in list" :class="{'cur': curItem == i}" :key="i" @click="")
+        .dot(v-for="(item, i) in list" :class="{'cur': curItem == i}" :key="i" @click="curItem=i")
 </template>
 
 <script>
@@ -70,6 +70,7 @@ export default {
                 display: block
             img
                 width: 100%
+                height: 6rem
 
     .dots
         position: absolute
