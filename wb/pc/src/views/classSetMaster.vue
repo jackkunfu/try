@@ -38,7 +38,7 @@ div
                         el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
                 el-form-item(label="上课时间")
                     el-select(v-model="editInfo.time" placeholder="上课时间")
-                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.id")
 
                 el-form-item(label="班主任")
                     el-select(v-model="editInfo.city" placeholder="班主任")
