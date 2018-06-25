@@ -25,8 +25,8 @@ div
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="上课时间")
-                    el-select(v-model="searchInfo.city" placeholder="上课时间")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="出生日期")
                     el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
@@ -104,6 +104,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             areaList: [],
             cityTrains: [],
             cards: [],

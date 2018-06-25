@@ -43,7 +43,7 @@ div
                 .item 角色权限
                 el-form-item(label="角色")
                     el-select(v-model="editInfo.roleid")
-                        el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任', '销售顾问']" :key="i" :value="i+1" :label="item")
+                        el-option(v-for="(item,i) in ['管理员', '教练', '班主任', '销售顾问']" :key="i" :value="i+1" :label="item")
                 el-form-item(label="学员信息删除权限")
                     el-switch(v-model="editInfo.delStu")
 
@@ -63,7 +63,7 @@ export default {
                 { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
                 { str: '账号', key: 'account' },
-                { str: '权限', key: 'roleid' },
+                { str: '权限', key: 'roleName' },
                 { str: '手机号', key: 'phone' },
                 { str: '创建时间', key: 'createtime' }
             ],
@@ -102,6 +102,9 @@ export default {
             info.roleid = 1
             return info;
         },
+        handleDelRow(row){
+            return { userId: row.id }
+        },
         changeEditValue(info){   // 处理新增编辑请求传参
             info.roleid = 1;
             return info;
@@ -115,6 +118,7 @@ export default {
 
             if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
             if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
+            
             return true
         }
     },

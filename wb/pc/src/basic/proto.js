@@ -224,7 +224,7 @@ export default function(Vue){
     }
 
     Vue.prototype.trimObj = function(obj){
-        var obj = JSON.parse(JSON.parse.stringify(obj))
+        var obj = JSON.parse(JSON.stringify(obj))
         Object.keys(obj).forEach(key =>{
             if(typeof obj[key] == 'string') obj[key] = obj[key].trim()
         })

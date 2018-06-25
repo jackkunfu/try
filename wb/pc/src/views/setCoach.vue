@@ -8,10 +8,6 @@ div
             el-form(:inline="true" :model="searchInfo" size="mini" label-position="right")
                 el-form-item(label="关键字")
                     el-input(placeholder="姓名/账号/手机号" v-model="searchInfo.name")
-
-        .btn-search
-            el-button(v-for="(item, i) in [{str:'超级管理员'}, {str:'普通管理员'}]" size="small" :key="i"
-                @click="roleid=i+1;curBtnSearch=i" :class="curBtnSearch==i ? 'cur' : ''") {{item.str}}
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" ref="table")
@@ -21,31 +17,18 @@ div
             i.el-icon-close
         .box
             el-form(:model="editInfo" label-width="140px" size="mini")
-                .item 管理员信息
+                .item 教练信息
                 el-form-item(label="头像")
                     .up-ctn
                         input#up1(type="file")
                         span + 上传
                         img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
                 el-form-item(label="姓名")
-                    el-input(v-model="editInfo.name")
-
-                .item 账号密码
-                el-form-item(label="账号")
-                    el-input(v-model="editInfo.account")
-                el-form-item(label="密码")
-                    el-input(v-model="editInfo.password")
+                    el-input(v-model="editInfo.name" placeholder="请输入姓名~")
 
                 .item 联系方式
                 el-form-item(label="手机号")
-                    el-input(v-model="editInfo.phone")
-
-                .item 角色权限
-                el-form-item(label="角色")
-                    el-select(v-model="editInfo.roleid")
-                        el-option(v-for="(item,i) in ['超级管理员', '管理员', '班主任', '销售顾问']" :key="i" :value="i+1" :label="item")
-                el-form-item(label="学员信息删除权限")
-                    el-switch(v-model="editInfo.delStu")
+                    el-input(v-model="editInfo.phone" placeholder="请输入手机号~")
 
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存
@@ -60,17 +43,18 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'appCode' },
+                { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
-                { str: '手机号', key: 'birth' },
-                { str: '创建时间', key: 'height' }
+                { str: '手机号', key: 'phone' },
+                { str: '创建时间', key: 'createtime' }
             ],
             searchKeys: ['name'],
             editKeys: ['avatar', 'name', 'phone'],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/mgr/list' },
+                add: { url: '/mgr/add' },
+                edit: { url: '/mgr/edit' },
+                del: { url: '/mgr/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '编辑', fun: 'editScope'},
@@ -81,17 +65,29 @@ export default {
             ]
         }
     },
+    mounted(){
+        $('#up1').change(()=>{
+            this.file('up1', res => {
+                if(res && res.code == 200) this.editInfo.avatar = res.data
+                else this.messageTip(res.message)
+            })
+        })
+    },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
+            info.roleid = 2
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            info.roleid = 2
             return info;
         },
         testInput(){
             var editInfo = this.editInfo
             editInfo.name = editInfo.name.trim()
-            if(editInfo.name = '') return this.messageTip('姓名不能为空~')
+            editInfo.phone = editInfo.phone.trim()
+            if(editInfo.name == '') return this.messageTip('姓名不能为空~')
+            if(editInfo.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(editInfo.phone)) ) return this.messageTip('手机号格式有误~');
             return true
         }
     }
@@ -101,5 +97,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-
+.up-ctn
+    line-height: 150px
 </style>

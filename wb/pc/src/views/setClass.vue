@@ -51,17 +51,18 @@ export default {
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
-                { str: '权限', key: 'sex' },
-                { str: '账号', key: 'sex' },
-                { str: '手机号', key: 'birth' },
-                { str: '创建时间', key: 'height' }
+                { str: '权限', key: 'roleName' },
+                { str: '账号', key: 'account' },
+                { str: '手机号', key: 'phone' },
+                { str: '创建时间', key: 'createtime' }
             ],
             searchKeys: ['name'],
             editKeys: ['avatar', 'name', 'account', 'password', 'phone'],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/mgr/list' },
+                add: { url: '/mgr/add' },
+                edit: { url: '/mgr/edit' },
+                del: { url: '/mgr/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '编辑', fun: 'editScope'},
@@ -72,12 +73,32 @@ export default {
             ]
         }
     },
+    mounted(){
+        $('#up1').change(()=>{
+            this.file('up1', res => {
+                if(res && res.code == 200) this.editInfo.avatar = res.data
+                else this.messageTip(res.message)
+            })
+        })
+    },
     methods: {
+        changeTableData(data){
+            var arr = ['管理员', '教练', '班主任', '销售顾问']
+            return data.map(v=>{
+                v.roleName = v.roleid ? arr[v.roleid-1] : ''
+                return v
+            })
+        },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.roleid = 3
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            info.roleid = 3
             return info;
+        },
+        handleDelRow(row){
+            return { userId: row.id }
         },
         testInput(){
             var data = Object.assign({}, this.editInfo)
@@ -88,6 +109,9 @@ export default {
 
             if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
             if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
+
+            if(data.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone)) ) return this.messageTip('手机号格式有误~');
+            
             return true
         }
     }
@@ -97,5 +121,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
+.up-ctn
+    line-height: 150px
 
 </style>

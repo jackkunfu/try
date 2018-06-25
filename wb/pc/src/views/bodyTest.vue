@@ -18,16 +18,15 @@ div
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="上课时间")
-                    el-select(v-model="searchInfo.city" placeholder="上课时间")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @see="see" @upImg="upImg")
 
         input(ref="up" type="file" style="width:0;height:0;")
 
-    // .edit-ctn.fix-cover(v-show="showEditCtn")
-    .edit-ctn.fix-cover
+    .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
             i.el-icon-close
         .box
@@ -48,6 +47,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             keys: [
                 { str: '头像', key: 'appCode' },
                 { str: '姓名', key: 'name' },
@@ -79,7 +79,7 @@ export default {
             imgInfo: {
                 time: ''
             },
-            imgList: [{img: '',id:1},{img: '',id:1},{img: '',id:1}]
+            imgList: []
         }
     },
     mounted(){

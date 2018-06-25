@@ -10,10 +10,10 @@
         .banzhuren-login(v-if="isBz")
             .each
                 img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入手机号")
+                input(v-model="bzr.phone" placeholder="请输入账号")
             .each
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.password" type="password" placeholder="请输入密码")
+                input(v-model="bzr.password" type="password" placeholder="请输入密码")
             
             
             .btn(@click="banzhurenLogin") 班主任登陆
@@ -66,8 +66,8 @@
                 login: {
                     phone: '', code: ''
                 },
-                zhuce: {
-                    phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
+                bzr: {
+                    phone: '',  password: ''
                 },
                 fogt: {
                     phone: '', code: '', password: '', password1: '',userId: ''
@@ -92,8 +92,18 @@
             }
         },
         methods: {
-            banzhurenLogin(){
-                this.goUrl('/banzhuren')
+            async banzhurenLogin(){
+                this.bzr.account = this.bzr.phone.trim()
+                this.bzr.password = this.bzr.password.trim()
+                var bzr = this.bzr
+                if(bzr.account == '' ) return this.messageTip('账户名不能为空~');
+                if(bzr.password == '') return this.messageTip('密码不能为空~');
+                var res = await this.ajax('/user/login', bzr);
+                if(res && res.code == this.successCode){
+                    var data = res.data;
+                    localStorage.zwgzhUid = data.id;
+                    this.goUrl('/banzhuren', { userId: data.id });
+                }
             },
             goMy(){
                 this.goUrl('/my')

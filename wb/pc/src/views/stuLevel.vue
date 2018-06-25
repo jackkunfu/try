@@ -44,6 +44,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             levels: ['一', '二', '三', '四', '五'],
             keys: [
                 { str: '头像', key: 'appCode' },

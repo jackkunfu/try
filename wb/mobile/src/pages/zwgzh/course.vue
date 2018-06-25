@@ -28,6 +28,7 @@ export default {
         }
     },
     async mounted(){
+        document.title = '课程信息'
         this.getLunboList()
         this.getAreaList()
     },

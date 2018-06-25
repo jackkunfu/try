@@ -15,8 +15,8 @@ div
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="上课时间")
-                    el-select(v-model="searchInfo.city" placeholder="上课时间")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="教练")
                     el-select(v-model="searchInfo.city" placeholder="教练")
@@ -58,6 +58,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             tableData: [{
                 name: '洛克校区',
                 has: true,

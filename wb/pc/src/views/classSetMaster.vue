@@ -15,8 +15,8 @@ div
                         el-option(v-for="(item, i) in trains" :key="i" :label="item.train" :value="item.id")
 
                 el-form-item(label="上课时间")
-                    el-select(v-model="searchInfo.city" placeholder="上课时间")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="班主任")
                     el-select(v-model="searchInfo.city" placeholder="班主任")
@@ -30,17 +30,15 @@ div
             i.el-icon-close
         .box
             el-form(:model="editInfo" label-width="160px" size="mini")
-                el-form-item(label="城市")
-                    el-select(v-model="editInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
-
+                el-form-item(label="地区")
+                    el-select(v-model="editInfo.city")
+                        el-option(v-for="(item, i) in areaList" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
                 el-form-item(label="训练营")
-                    el-select(v-model="editInfo.city" placeholder="训练营")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
-
+                    el-select(v-model="editInfo.trainId")
+                        el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
                 el-form-item(label="上课时间")
-                    el-select(v-model="editInfo.city" placeholder="上课时间")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="editInfo.time" placeholder="上课时间")
+                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="item.name" :value="item.value")
 
                 el-form-item(label="班主任")
                     el-select(v-model="editInfo.city" placeholder="班主任")
@@ -78,8 +76,34 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ]
+            ],
+            areaList: [],
+            cityTrains: [],
+            trainTimes: [],
+            week: ['一', '二', '三', '四', '五', '六', '日']
         }
+    },
+    watch: {
+        async 'editInfo.city'(v){
+            this.cityTrains = []
+            this.cityTrains = await this.getAllTrain(v)
+        },
+        async 'editInfo.trainId'(id){
+            this.trainTimes = []
+            this.trainTimes = await this.getAllTrainTimes(id)
+        },
+        async 'editInfo.cardId'(id){
+            this.frequencys = []
+            this.frequencys = await this.getAllCardTimes(id)
+        },
+        async 'editInfo.frequency'(v){
+            var i = this.frequencys.map(v=>v.id).indexOf(v)
+            this.editInfo.price = (this.frequencys[i].price - 0)/100
+        }
+    },
+    async mounted(){
+        this.areaList = await this.getAllExistCity()
+        this.citys = await this.getAllCity()
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
