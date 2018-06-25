@@ -2,36 +2,28 @@
 div
     .table-ctn
         .page-title 教练管理
-            span /教练评价
+            span /教练课堂列表
 
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
-                el-form-item(label="名称")
-                    el-input(v-model="searchInfo.name" placeholder="请输入教练名称")
-
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")  
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.trainId" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.id")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
+
+                el-form-item(label="上课日期")
+                    el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @seeDetail="seeDetail")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
-        .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
     
 </template>
 
@@ -41,11 +33,15 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            cocahId: this.$route.query.id,
             keys: [
                 { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
-                { str: '本月评价', key: 'trainName' }
+                { str: '训练营', key: 'trainName' },
+                { str: '上课日期', key: 'date' },
+                { str: '上课时间', key: 'week' },
+                { str: '整体评价', key: 'trainName' }
             ],
             searchKeys: ['name', 'city'],
             editKeys: [],
@@ -65,11 +61,11 @@ export default {
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
+            info.cocahId = this.cocahId
             return info;
         },
         seeDetail(scope){
-            // console.log(scope)
-            this.goUrl('/cocahClass', scope.row)
+            this.goUrl('')
         }
     }
 

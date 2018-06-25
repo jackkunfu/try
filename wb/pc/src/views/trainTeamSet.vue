@@ -63,7 +63,6 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            week: ['一', '二', '三', '四', '五', '六', '日'],
             keys: [
                 { str: '城市', key: 'training.city' },
                 { str: '训练营', key: 'training.name' },

@@ -5,6 +5,24 @@ div
             span /学员信息
 
         search(@search="search" @reset="reset")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="关键字")
+                    el-input(placeholder="姓名/手机号" v-model="searchInfo.name")
+
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.trainId" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.id")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
+
+                el-form-item(label="出生日期")
+                    el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
@@ -53,7 +71,7 @@ export default {
                 { str: '学员作业', key: 'remark' },
                 { str: '体能测试', key: 'remark' }
             ],
-            searchKeys: [],
+            searchKeys: ['trainId'],
             editKeys: [],
             api: {
                 list: { url: '/user/list' },

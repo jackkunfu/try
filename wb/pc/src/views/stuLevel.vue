@@ -11,8 +11,8 @@ div
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
                 el-form-item(label="训练营")
-                    el-select(v-model="searchInfo.city" placeholder="训练营")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.trainId" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item(label="上课时间")
                     el-select(v-model="searchInfo.week" placeholder="上课时间")

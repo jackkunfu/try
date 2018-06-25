@@ -35,6 +35,10 @@ var coach = [{     // 教练
   path: '/cocahJudge',
   name: 'cocahJudge',
   component: cocahJudge
+},{     // 教练课堂
+  path: '/cocahClass',
+  name: 'cocahClass',
+  component: r => require.ensure([], () => r(require('@/views/cocahClass')), 'cocahClass')
 }]
 
 var course = [{     // 课程管理
