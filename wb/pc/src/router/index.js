@@ -95,7 +95,7 @@ var perm = [{    // 权限路由
 
 routes = routes.concat(students, coach, course, courseManage, enroll, perm)
 
-const router =  new Router({ routes });
+const router =  new Router({ mode: 'history', routes });
 
 const white = ['/'];
 router.beforeEach((to, from, next) => {
