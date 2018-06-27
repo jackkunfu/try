@@ -37,7 +37,7 @@ export default {
     data(){
         var isNeedLogin = !localStorage.zwManageUserToken || localStorage.zwManageUserToken == 'null' || localStorage.zwManageUserToken == 'undefined'
         return {
-            isNeedLogin: false,
+            isNeedLogin: isNeedLogin,
             form: {
                 userName: '',
                 password: ''

@@ -98,7 +98,10 @@
                 var bzr = this.bzr
                 if(bzr.account == '' ) return this.messageTip('账户名不能为空~');
                 if(bzr.password == '') return this.messageTip('密码不能为空~');
-                var res = await this.ajax('/user/login', bzr);
+                var res = await this.ajax('/auth', {
+                    userName: bzr.account,
+                    password: bzr.password
+                });
                 if(res && res.code == this.successCode){
                     var data = res.data;
                     localStorage.zwgzhUid = data.id;
