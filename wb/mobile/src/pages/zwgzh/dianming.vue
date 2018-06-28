@@ -42,7 +42,8 @@ export default {
             query,
             showText: false,
             text: '',
-            stuList: [{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2}]
+            stuList: [],
+            curReasonItem: null
         }
     },
     async mounted(){
@@ -54,27 +55,34 @@ export default {
             limit: 10000,
             offset: 0
         }, 'get')
-        if(res && res.code == this.successCode) this.stuList = res.data.row || []
+        if(res && res.code == this.successCode) this.stuList = res.data.rows || []
+        this.stuList.forEach(el => {
+            this.$set(el, 'type', 0)
+        })
     },
     methods: {
         async submit(){
-            // var res = await this.ajax('/sign/add', {
-            //     id: item.id,
-            //     type
-            // })
-            // if(res && res.code == this.successCode){
-            //     this.goUrl('/dianmingOk')
-            // }
-            // else this.messageTip(res.msg || '请求失败~')
-            this.goUrl('/dianmingOk')
+            var res = await this.ajax('/sign/add', {
+                userId: this.query.userId,
+                type: '',
+                sign: JSON.stringify(this.stuList)
+            })
+            if(res && res.code == this.successCode){
+                this.goUrl('/dianmingOk')
+            }else this.messageTip(res.message || '请求失败~')
         },
         dianming(type, item){
             item.type = type
+
             if(type === 1){
+                this.curReasonItem = item
                 this.showText = true
-            }else {
-                this.changeType(item, type);
+                this.text = item.reason || ''
+            }else{
+                delete item.reason
             }
+
+            // this.changeType(item, type);
         },
         async changeType(item, type){
             var res = await this.ajax('/aa', {
@@ -82,7 +90,7 @@ export default {
                 type
             })
             if(res && res.code == this.successCode){}
-            else this.messageTip(res.msg || '请求失败~')
+            else this.messageTip(res.message || '请求失败~')
         },
         closeText(){
             this.showText = false
@@ -90,13 +98,19 @@ export default {
         },
         async submitText(){
             if(this.text.trim() == '') return this.messageTip('请假原因不能为空~')
-            var res = await this.ajax('/aa', {
-                text: this.text.trim()
-            })
-            if(res && res.code == this.successCode){
-                this.text = ''
-                this.showText = false
-            }else this.messageTip(res.msg || '请求失败~')
+
+            this.curReasonItem.reason = this.text.trim()
+
+            this.text = ''
+            this.showText = false
+
+            // var res = await this.ajax('/aa', {
+            //     text: this.text.trim()
+            // })
+            // if(res && res.code == this.successCode){
+            //     this.text = ''
+            //     this.showText = false
+            // }else this.messageTip(res.message || '请求失败~')
             
         },
     }

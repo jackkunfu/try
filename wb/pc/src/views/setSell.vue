@@ -63,10 +63,10 @@ export default {
             return info;
         },
         testInput(){
-            var data = this.trimData(this.editInfo)
+            var data = this.trimObj(this.editInfo)
             if(data.name == '') return this.messageTip('姓名不能为空~')
             // if(data.phone == '') return this.messageTip('手机不能为空~')
-            // if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone)) ) return this.messageTip('手机号格式有误~');
+            if(data.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone.trim())) ) return this.messageTip('手机号格式有误~');
             return true
         }
     }

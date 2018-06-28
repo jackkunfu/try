@@ -44,7 +44,6 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            week: ['一', '二', '三', '四', '五', '六', '日'],
             levels: ['一', '二', '三', '四', '五'],
             keys: [
                 { str: '头像', key: 'appCode' },
@@ -61,9 +60,7 @@ export default {
             tableData: [1],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/user/list' }
             },
             scopeOperates: [    // 每一行种的操作
                 // { str: '编辑', fun: 'editScope'}
@@ -77,18 +74,21 @@ export default {
         changeLevel(scope){
             console.log(11)
             this.isChooseLevel = true
-            // this.curId = scope.row.id
+            this.curId = scope.row.id
+            this.curLevel = item.level - 1
             // var id = scope.row.id
         },
         cancel(){},
         async submit(){
-            if(this.curLevel == '') return this.messageTip('请选择等级')
-            var res = await this.ajax('', { id: this.curId })
+            if(this.curLevel === '') return this.messageTip('请选择等级')
+            var res = await this.ajax('/user/level', { userId: this.curId, level: this.curLevel-0+1  })
             if(res && res.code == this.successCode){
+                this.messageTip(res.message, 1)
                 this.curLevel = ''
                 this.curId = ''
-            }
-            else this.messageTip(res.message)
+                this.isChooseLevel = false
+                this.tableList()
+            }else this.messageTip(res.message)
         },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;

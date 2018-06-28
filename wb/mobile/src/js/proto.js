@@ -35,14 +35,19 @@ export default function(Vue){
         })
     }
 
+    Vue.prototype.trimObj = function(obj){
+        var data = JSON.parse(JSON.stringify(obj))
+        Object.keys(data).forEach(key =>{
+            if(typeof data[key] == 'string') data[key] = data[key].trim()
+        })
+        return data
+    }
+
     Vue.prototype.ajax = async function(){
         try{
             var res = await this._ajax(...arguments);
-            if(res && res.code === this.successCode){
-                return res
-            }else{
-                return this.messageTip(res.message || '请求失败，请稍后重试~')
-            }
+            if(res && res.code === this.successCode) return res
+            return this.messageTip(res.message || '请求失败，请稍后重试~')
         }catch(e){
             console.log(arguments[0])
             console.log(e)

@@ -100,6 +100,7 @@ export default {
     watch: {
         async 'editInfo.city'(v){
             this.cityTrains = []
+            this.editInfo.trainId = ''
             if(!v) return
             this.cityTrains = await this.getAllTrain(v)
         }

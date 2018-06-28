@@ -73,16 +73,21 @@
         watch: {
             async 'item.city'(v){
                 this.cityTrains = []
+                this.item.trainId = ''
                 if(!v) return
                 this.cityTrains = await this.getAllTrain(v)
             },
             async 'item.trainId'(v){
                 this.trainCards = []
+                this.item.cardId = ''
                 if(!v) return
                 this.trainCards = await this.getAllCard(v)
             },
             async 'item.cardId'(v){
                 this.weekTimes = []
+                this.item.frequency = ''
+                this.item.fee = ''
+                if(!v) return
                 this.weekTimes = await this.getAllCardTimes(v)
             },
             async 'item.frequency'(v){

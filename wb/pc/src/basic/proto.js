@@ -257,6 +257,7 @@ export default function(Vue){
             this.showEditCtn = false;
             this.curOperateType == null;
             this.tableList.call(this);
+            this.editInit()
         }else this.messageTip(res.message);
     }
 

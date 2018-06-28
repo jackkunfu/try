@@ -5,27 +5,25 @@ div
             span /点名签到
 
         search(@search="search" @reset="reset")
-            
-        s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit")
+            el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="城市")
+                    el-select(v-model="searchInfo.city" placeholder="城市")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
-    //- .edit-ctn.fix-cover(v-show="showEditCtn")
-        .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="应用编号")
-                    el-input(v-model="editInfo.appCode")
-                el-form-item(label="应用名称")
-                    el-input(v-model="editInfo.appName")
-                el-form-item(label="对接URL")
-                    el-input(v-model="editInfo.appUrl")
-                el-form-item(label="描述")
-                    el-input(v-model="editInfo.remark")
-                el-form-item(label="dorder")
-                    el-input(v-model="editInfo.dorder")
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
-    
+                el-form-item(label="训练营")
+                    el-select(v-model="searchInfo.trainId" placeholder="训练营")
+                        el-option(v-for="(item, i) in trains" :key="i" :label="item.name" :value="item.id")
+
+                el-form-item(label="上课时间")
+                    el-select(v-model="searchInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
+
+                el-form-item(label="上课日期")
+                    el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.date" style="width: 100%;" value-format="yyyy-MM-dd")
+            
+        s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
+            @changePage="changePage"  @delScope="delScope")
+
 </template>
 
 <script>
@@ -47,16 +45,17 @@ export default {
                 { str: '累计请假', key: 'remark' },
                 { str: '累计缺席', key: 'remark' }
             ],
-            searchKeys: [],
+            searchKeys: ['city', 'trainId', 'week', 'date'],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/sign/list' },
+                del: { url: '/sign/delete' }
             },
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
-                { str: '修改', fun: 'edit'}
+                // { str: '新增', fun: 'add'},
+            ],
+            scopeOperates: [    // 每一行种的操作
+                { str: '删除', fun: 'delScope'}
             ]
         }
     },

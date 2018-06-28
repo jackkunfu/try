@@ -72,10 +72,12 @@
         watch: {
             async 'item.city'(v){
                 this.trains = []
+                this.item.trainId = ''
                 this.trains = await this.getAllTrain(v)
             },
             async 'item.trainId'(id){
                 this.clsTimes = []
+                if(id == '') return
                 this.clsTimes = await this.getAllTrainTimes(id)
             }
         },

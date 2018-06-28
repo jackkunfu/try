@@ -19,7 +19,7 @@ div
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="上课日期")
-                    el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
+                    el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.date" style="width: 100%;" value-format="yyyy-MM-dd")
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @seeDetail="seeDetail")
@@ -43,7 +43,7 @@ export default {
                 { str: '上课时间', key: 'week' },
                 { str: '整体评价', key: 'trainName' }
             ],
-            searchKeys: ['name', 'city'],
+            searchKeys: ['trainId', 'city', 'week', 'date'],
             editKeys: [],
             api: {
                 list: { url: '/application/queryAppPage' },

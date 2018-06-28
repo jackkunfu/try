@@ -37,8 +37,8 @@ div
                     el-select(v-model="editInfo.trainId")
                         el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
                 el-form-item(label="上课时间")
-                    el-select(v-model="editInfo.week" placeholder="上课时间")
-                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.week")
+                    el-select(v-model="editInfo.time" placeholder="上课时间")
+                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.id")
 
                 el-form-item(label="班主任")
                     el-select(v-model="editInfo.userId" placeholder="班主任")
@@ -63,8 +63,8 @@ export default {
                 { str: '上课时间', key: 'time' },
                 { str: '班主任', key: 'user.name' }
             ],
-            searchKeys: ['userId', 'week', 'trainId', 'city'],
-            editKeys: ['userId', 'week', 'trainId', 'city'],
+            searchKeys: ['userId', 'time', 'trainId', 'city'],
+            editKeys: ['userId', 'time', 'trainId', 'city'],
             api: {
                 list: { url: '/teacher_plan/list' },
                 add: { url: '/teacher_plan/add' },
@@ -86,20 +86,15 @@ export default {
     watch: {
         async 'editInfo.city'(v){
             this.cityTrains = []
+            this.editInfo.trainId = ''
             this.cityTrains = await this.getAllTrain(v)
         },
         async 'editInfo.trainId'(id){
             this.trainTimes = []
+            this.editInfo.time = ''
+            if(!id) return
             this.trainTimes = await this.getAllTrainTimes(id)
         },
-        async 'editInfo.cardId'(id){
-            this.frequencys = []
-            this.frequencys = await this.getAllCardTimes(id)
-        },
-        async 'editInfo.frequency'(v){
-            var i = this.frequencys.map(v=>v.id).indexOf(v)
-            this.editInfo.price = (this.frequencys[i].price - 0)/100
-        }
     },
     async mounted(){
         this.areaList = await this.getAllExistCity()
@@ -110,6 +105,10 @@ export default {
         }, 'get')).data.rows
     },
     methods: {
+        selfAdd(){
+            this.cityTrains = []
+            this.trainTimes = []
+        },
         changeTableData(data){
             return data.map(v=>{
                 v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
@@ -120,7 +119,8 @@ export default {
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            var idx = this.trainTimes.map(v=>v.week).indexOf(info.week)
+            var idx = this.trainTimes.map(v=>v.id).indexOf(info.time)
+            info.week = this.trainTimes[idx].week
             info.begin = this.trainTimes[idx].begin
             info.end = this.trainTimes[idx].end
             return info;

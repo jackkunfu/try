@@ -135,70 +135,6 @@
                     this.goUrl('/baoming', { userId: data.id, data: this.login });
                 }
             },
-            async loginFun(){
-                var login = this.login;
-                login.phone = login.phone.trim();
-                login.pwd = login.pwd.trim();
-                if(login.phone == '') return this.messageTip('手机号不能为空~');
-                if(login.pwd == '') return this.messageTip('密码不能为空~');
-
-                var res = await this.ajax('/api/user/login', this.login);
-                if(res && res.status == 200){
-                    var data = res.data;
-                    localStorage.tb_tk = data.token;
-                    localStorage.tb_userInfo = JSON.stringify(data.tbUser);
-                    this.goUrl('/vipCenter', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
-                }
-            },
-            async zhuceFun(){
-                var zhuce = this.zhuce;
-                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(zhuce.phone.trim())) ) return this.messageTip('手机号格式有误~');
-                if( zhuce.code.trim() == '' ) return this.messageTip('验证码不能为空~');
-                if( zhuce.password.trim() == '') return this.messageTip('密码不能为空~');
-                if( zhuce.password.trim().length < 6 ) return this.messageTip('密码须6位及以上~');
-                // if(zhuce.password.trim() != zhuce.password1.trim()) return this.messageTip('两次输入密码不一致~');
-                if( /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(zhuce.email) == false ) return this.messageTip('邮箱格式不正确~');
-                var opt = Object.assign({}, this.zhuce)
-                delete opt.password1;
-                // if(opt.refereeId.trim() == '') opt.refereeId = -1;
-                var res = await this.ajax('/api/user/register', opt);
-                if(res && res.status == 200){
-                    this.messageTip('注册成功，请登陆~', 1);
-                    this.isZhuce = false;
-                    this.isFogt = false;
-                }
-            },
-            async fogtFun(){
-                var code = this.fogt.code.trim();
-                var phone = this.fogt.phone.trim();
-                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(phone)) ) return this.messageTip('手机号格式有误~');
-                // if( code == '' ) return this.messageTip('密码不能为空~');
-                // if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
-                var res = await this.ajax('/api/user/findPwd', { code, phone });
-                
-                if(res && res.status == 200){
-                    this.messageTip(res.msg || '请查收邮件~', true);
-                    // this.isFogt = false;
-                }else{
-                    this.messageTip(res.msg || '请求失败，请稍后重试~');
-                }
-
-            },
-            async changePws(){
-                var userId = this.fogt.userId;
-                var pwd = this.fogt.password.trim();
-                var pwd2 = this.fogt.password1.trim();
-                if( pwd == '' ) return this.messageTip('密码不能为空~');
-                if( pwd.length < 6 ) return this.messageTip('密码须6位及以上~');
-                if(pwd!=pwd2) return this.messageTip('两次密码不一致~');
-                var res = await this.ajax('/api/user/changePwd/'+ userId,{userId,pwd,pwd2})
-                if(res&&res.status==200){
-                    this.messageTip(res.msg || '密码修改成功~', true);
-                    this.isFogt = false;
-                }else{
-                    this.messageTip(res.msg || '请求失败，请稍后重试~');
-                }
-            },
             async getCode(key){
                 if(this[key].phone.trim() == '') return this.messageTip('手机号不能为空')
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test( this[key].phone.trim() )) ) return this.messageTip('手机号格式有误~');
@@ -208,6 +144,70 @@
                 if(res && res.code == this.successCode) this.messageTip(res.message, 1)
                 else this.messageTip(res.message)
             }
+            // async loginFun(){
+            //     var login = this.login;
+            //     login.phone = login.phone.trim();
+            //     login.pwd = login.pwd.trim();
+            //     if(login.phone == '') return this.messageTip('手机号不能为空~');
+            //     if(login.pwd == '') return this.messageTip('密码不能为空~');
+
+            //     var res = await this.ajax('/api/user/login', this.login);
+            //     if(res && res.status == 200){
+            //         var data = res.data;
+            //         localStorage.tb_tk = data.token;
+            //         localStorage.tb_userInfo = JSON.stringify(data.tbUser);
+            //         this.goUrl('/vipCenter', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
+            //     }
+            // },
+            // async zhuceFun(){
+            //     var zhuce = this.zhuce;
+            //     if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(zhuce.phone.trim())) ) return this.messageTip('手机号格式有误~');
+            //     if( zhuce.code.trim() == '' ) return this.messageTip('验证码不能为空~');
+            //     if( zhuce.password.trim() == '') return this.messageTip('密码不能为空~');
+            //     if( zhuce.password.trim().length < 6 ) return this.messageTip('密码须6位及以上~');
+            //     // if(zhuce.password.trim() != zhuce.password1.trim()) return this.messageTip('两次输入密码不一致~');
+            //     if( /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(zhuce.email) == false ) return this.messageTip('邮箱格式不正确~');
+            //     var opt = Object.assign({}, this.zhuce)
+            //     delete opt.password1;
+            //     // if(opt.refereeId.trim() == '') opt.refereeId = -1;
+            //     var res = await this.ajax('/api/user/register', opt);
+            //     if(res && res.status == 200){
+            //         this.messageTip('注册成功，请登陆~', 1);
+            //         this.isZhuce = false;
+            //         this.isFogt = false;
+            //     }
+            // },
+            // async fogtFun(){
+            //     var code = this.fogt.code.trim();
+            //     var phone = this.fogt.phone.trim();
+            //     if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(phone)) ) return this.messageTip('手机号格式有误~');
+            //     // if( code == '' ) return this.messageTip('密码不能为空~');
+            //     // if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
+            //     var res = await this.ajax('/api/user/findPwd', { code, phone });
+                
+            //     if(res && res.status == 200){
+            //         this.messageTip(res.msg || '请查收邮件~', true);
+            //         // this.isFogt = false;
+            //     }else{
+            //         this.messageTip(res.msg || '请求失败，请稍后重试~');
+            //     }
+
+            // },
+            // async changePws(){
+            //     var userId = this.fogt.userId;
+            //     var pwd = this.fogt.password.trim();
+            //     var pwd2 = this.fogt.password1.trim();
+            //     if( pwd == '' ) return this.messageTip('密码不能为空~');
+            //     if( pwd.length < 6 ) return this.messageTip('密码须6位及以上~');
+            //     if(pwd!=pwd2) return this.messageTip('两次密码不一致~');
+            //     var res = await this.ajax('/api/user/changePwd/'+ userId,{userId,pwd,pwd2})
+            //     if(res&&res.status==200){
+            //         this.messageTip(res.msg || '密码修改成功~', true);
+            //         this.isFogt = false;
+            //     }else{
+            //         this.messageTip(res.msg || '请求失败，请稍后重试~');
+            //     }
+            // },
         }
     }
 </script>
