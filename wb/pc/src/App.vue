@@ -65,7 +65,8 @@ export default {
             var res = await this.ajax('/auth', {
                 userName: this.form.userName.trim(),
                 // password: md5(this.form.password.trim())
-                password: this.form.password.trim()
+                password: this.form.password.trim(),
+                isAdmin: 1
             })
             loading.close()
             if(res){

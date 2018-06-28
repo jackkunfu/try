@@ -37,12 +37,12 @@ div
                     el-select(v-model="editInfo.trainId")
                         el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
                 el-form-item(label="上课时间")
-                    el-select(v-model="editInfo.time" placeholder="上课时间")
-                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.id")
+                    el-select(v-model="editInfo.week" placeholder="上课时间")
+                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.week")
 
                 el-form-item(label="班主任")
-                    el-select(v-model="editInfo.city" placeholder="班主任")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.id")
+                    el-select(v-model="editInfo.userId" placeholder="班主任")
+                        el-option(v-for="(item, i) in bzrs" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存
@@ -58,18 +58,18 @@ export default {
         return {
             keys: [
                 { str: '城市', key: 'city' },
-                { str: '训练营', key: 'name' },
+                { str: '训练营', key: 'train.name' },
                 { str: '地址', key: 'address' },
                 { str: '上课时间', key: 'time' },
-                { str: '班主任', key: 'sex' }
+                { str: '班主任', key: 'name' }
             ],
             searchKeys: [],
-            editKeys: [],
+            editKeys: ['userId', 'week'],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
-                del: { url: '/application/saveApp' }
+                list: { url: '/teacher_plan/list' },
+                add: { url: '/teacher_plan/add' },
+                edit: { url: '/teacher_plan/edit' },
+                del: { url: '/teacher_plan/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
@@ -80,7 +80,7 @@ export default {
             areaList: [],
             cityTrains: [],
             trainTimes: [],
-            week: ['一', '二', '三', '四', '五', '六', '日']
+            bzrs: []
         }
     },
     watch: {
@@ -103,12 +103,28 @@ export default {
     },
     async mounted(){
         this.areaList = await this.getAllExistCity()
+        this.bzrs = (await this.ajax('/mgr/list', {
+            offset: 0,
+            limit: 100,
+            roleid: 3
+        }, 'get')).data.rows
     },
     methods: {
+        changeTableData(data){
+            console.log(data)
+            return data
+            return data.map(v=>{
+                v.time = '周'+this.weeks[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                return v
+            })
+        },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.city = info.city || 1
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+        info.begin="05:00"
+        info.end="07:00"
             return info;
         },
         testInput(){
