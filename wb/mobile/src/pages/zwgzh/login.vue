@@ -25,7 +25,7 @@
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
                 input(v-model="denglu.code" placeholder="请输入验证码")
-                .code 获取验证码
+                .code(@click="getCode('denglu')") 获取验证码
             .login-tip 若账号未激活，请联系机构
                 img(src="../../assets/login_icon_tishi@2x.png")
             
@@ -38,7 +38,7 @@
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
                 input(v-model="login.code" placeholder="请输入验证码")
-                .code 获取验证码
+                .code(@click="getCode('login')") 获取验证码
             
             .btn(@click="baoming") 报名登陆
 
@@ -100,7 +100,8 @@
                 if(bzr.password == '') return this.messageTip('密码不能为空~');
                 var res = await this.ajax('/mgr/login', {
                     userName: bzr.account,
-                    password: bzr.password
+                    password: bzr.password,
+                    isAdmin: 2
                 });
                 if(res && res.code == this.successCode){
                     var data = res.data;
@@ -131,7 +132,7 @@
                 if(res && res.code == this.successCode){
                     var data = res.data;
                     localStorage.zwgzhUid = data.id;
-                    this.goUrl('/baoming', { userId: data.id });
+                    this.goUrl('/baoming', { userId: data.id, data: this.login });
                 }
             },
             async loginFun(){
@@ -198,9 +199,14 @@
                     this.messageTip(res.msg || '请求失败，请稍后重试~');
                 }
             },
-            async getCode(){
-                var t = new Date().getTime();
-                this.codeImage =  '/api/defaultKaptcha?t='+t;
+            async getCode(key){
+                if(this[key].phone.trim() == '') return this.messageTip('手机号不能为空')
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test( this[key].phone.trim() )) ) return this.messageTip('手机号格式有误~');
+                var res = this.ajax('/index/sms', {
+                    mobile: this[key].phone
+                }, 'get')
+                if(res && res.code == this.successCode) this.messageTip(res.message, 1)
+                else this.messageTip(res.message)
             }
         }
     }

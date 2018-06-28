@@ -58,7 +58,6 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            week: ['一', '二', '三', '四', '五', '六', '日'],
             tableData: [{
                 name: '洛克校区',
                 has: true,
@@ -108,6 +107,7 @@ export default {
             }
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.city = info.city || 1
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参

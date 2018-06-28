@@ -78,21 +78,32 @@ export default {
             imgInfo: {
                 time: ''
             },
-            imgList: []
+            imgList: [],
+            curItem: {}
         }
     },
     mounted(){
         var that = this
         $(this.$refs.up).change(()=>{
-            that.file('', function(data){
+            that.file('', async data => {
                 console.log(data.data)
+                var res = await this.ajax('/power_test/add', {
+                    userId: this.curItem.id,
+                    content: data.data
+                })
+                if(res && res.code == this.successCode){
+                    this.messageTip(res.message || '上传添加成功', 1)
+                    this.tableList()
+                }else this.messageTip(res.message)
+                
+                this.curItem = null
             }, that.$refs.up)
         })
-
     },
     methods: {
         upImg(scope){
             $(this.$refs.up).click()
+            this.curItem = scope.row
         },
         delImg(id){},
         see(scope){     // 查看

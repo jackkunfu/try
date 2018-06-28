@@ -7,8 +7,8 @@
     .list
         .item(v-for="(item, i) in list" :key="i" @click="goUrl('/dianming', item)")
             img(src="../../assets/center_list_bg@2x.png")
-            .title.els {{item.name}}
-            .sub-title.els {{item.desc}}
+            .title.els {{item.train.name}}
+            .sub-title.els {{item.time}}
             
 </template>
 
@@ -17,17 +17,20 @@ export default {
     name: 'course',
     data () {
         return {
-            list: [{
-                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
-                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
-            },{
-                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
-                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
-            },{
-                name: '洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区洛克校区',
-                desc: 'zhouwuzhouwuzhouwuzhouwuzhouwuzhouwuzhouwu'
-            }]
+            list: [],
+            uid: this.$route.query.userId,
+            week: ['一', '二', '三', '四', '五', '六', '日']
         }
+    },
+    async mounted(){
+        this.list = (await this.ajax('/teacher_plan/list', {
+            offset: 0,
+            limit: 100
+        }, 'get')).data.rows
+
+        this.list.forEach(v => {
+            v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
+        })
     }
 }
 </script>

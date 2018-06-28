@@ -19,8 +19,8 @@ div
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="班主任")
-                    el-select(v-model="searchInfo.city" placeholder="班主任")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.userId" placeholder="班主任")
+                        el-option(v-for="(item, i) in bzrs" :key="i" :label="item.name" :value="item.id")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @add="add" @delScope="delScope")
@@ -57,14 +57,14 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'city' },
+                { str: '城市', key: 'train.city' },
                 { str: '训练营', key: 'train.name' },
-                { str: '地址', key: 'address' },
+                { str: '地址', key: 'train.address' },
                 { str: '上课时间', key: 'time' },
-                { str: '班主任', key: 'name' }
+                { str: '班主任', key: 'user.name' }
             ],
-            searchKeys: [],
-            editKeys: ['userId', 'week'],
+            searchKeys: ['userId', 'week', 'trainId', 'city'],
+            editKeys: ['userId', 'week', 'trainId', 'city'],
             api: {
                 list: { url: '/teacher_plan/list' },
                 add: { url: '/teacher_plan/add' },
@@ -111,23 +111,22 @@ export default {
     },
     methods: {
         changeTableData(data){
-            console.log(data)
-            return data
             return data.map(v=>{
-                v.time = '周'+this.weeks[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
                 return v
             })
         },
         changeSearchValue(info){     //  处理搜索请求传参
-            info.city = info.city || 1
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-        info.begin="05:00"
-        info.end="07:00"
+            var idx = this.trainTimes.map(v=>v.week).indexOf(info.week)
+            info.begin = this.trainTimes[idx].begin
+            info.end = this.trainTimes[idx].end
             return info;
         },
         testInput(){
+            if(this.editInfo.city == '') return this.messageTip('qing')
             return true
         },
         openCard(scope){

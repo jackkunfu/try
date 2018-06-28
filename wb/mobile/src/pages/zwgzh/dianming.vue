@@ -7,7 +7,7 @@
     .main
         .item(v-for="(item, i) in stuList" :key="i")
             .w50
-                img.img(:src="item.img")
+                // img.img(:src="item.img")
                 span {{item.name}}
             .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
@@ -37,11 +37,24 @@ export default {
     name: 'course',
     components: { fixCover },
     data () {
+        var query = this.$route.query
         return {
+            query,
             showText: false,
             text: '',
             stuList: [{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 0},{name: '张三', type: 1},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2},{name: '张三', type: 2}]
         }
+    },
+    async mounted(){
+        var res = await this.ajax('/user/list', {
+            trainId: this.query.trainId,
+            week: this.query.week,
+            begin: this.query.begin,
+            end: this.query.end,
+            limit: 10000,
+            offset: 0
+        }, 'get')
+        if(res && res.code == this.successCode) this.stuList = res.data.row || []
     },
     methods: {
         async submit(){

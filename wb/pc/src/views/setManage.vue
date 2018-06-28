@@ -43,7 +43,7 @@ div
                 .item 角色权限
                 el-form-item(label="角色")
                     el-select(v-model="editInfo.roleid")
-                        el-option(v-for="(item,i) in ['管理员', '教练', '班主任', '销售顾问']" :key="i" :value="i+1" :label="item")
+                        el-option(v-for="(item,i) in ['超级管理员', '管理员']" :key="i" :value="i+1" :label="item")
                 el-form-item(label="学员信息删除权限")
                     el-switch(v-model="editInfo.delStu")
 
@@ -118,6 +118,8 @@ export default {
 
             if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
             if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
+
+            if(data.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone)) ) return this.messageTip('手机号格式有误~');
             
             return true
         }

@@ -75,12 +75,17 @@ export default {
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
-            info.roleid = 2
+            info.roleid = 4
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            info.roleid = 2
+            info.roleid = 4
             return info;
+        },
+        handleDelRow(data){
+            return {
+                userId: data.id
+            }
         },
         testInput(){
             var editInfo = this.editInfo
