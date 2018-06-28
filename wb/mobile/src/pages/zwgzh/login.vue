@@ -112,7 +112,7 @@
             async goMy(){
                 this.denglu.phone = this.denglu.phone.trim()
                 this.denglu.code = this.denglu.code.trim()
-                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.login.phone)) ) return this.messageTip('手机号格式有误~');
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.denglu.phone)) ) return this.messageTip('手机号格式有误~');
                 if(this.denglu.phone == '' ) return this.messageTip('手机号不能为空~');
                 if(this.denglu.code == '') return this.messageTip('验证码有误~');
                 var res = await this.ajax('/user/login', this.denglu);
@@ -138,7 +138,7 @@
             async getCode(key){
                 if(this[key].phone.trim() == '') return this.messageTip('手机号不能为空')
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test( this[key].phone.trim() )) ) return this.messageTip('手机号格式有误~');
-                var res = this.ajax('/index/sms', {
+                var res = await this.ajax('/index/sms', {
                     mobile: this[key].phone
                 }, 'get')
                 if(res && res.code == this.successCode) this.messageTip(res.message, 1)

@@ -33,7 +33,7 @@ div
 
                 el-form-item(label="销售渠道")
                     el-select(v-model="searchInfo.city" placeholder="销售渠道")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                        el-option(v-for="(item, i) in sales" :key="i" :label="item.name" :value="item.id")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope")
@@ -93,7 +93,7 @@ div
                         span {{item.time}}
                         el-switch(v-model="item.delivery")
                 el-form-item(label="销售顾问")
-                    el-select(v-model="editInfo.times")
+                    el-select(v-model="editInfo.sale")
                         el-option(v-for="(item, i) in sales" :label="item.name" :value="item.id" :key="i")
 
                 el-form-item
@@ -171,6 +171,7 @@ export default {
             this.frequencys = await this.getAllCardTimes(id)
         },
         async 'editInfo.frequency'(v){
+            if(!v) return
             var i = this.frequencys.map(v=>v.id).indexOf(v)
             this.editInfo.price = (this.frequencys[i].price - 0)/100
         }
@@ -179,7 +180,7 @@ export default {
         this.citys = await this.getAllExistCity()
         this.areaList = await this.getAllCity()
 
-        this.sells = await this.getAllSeller()
+        this.sales = await this.getAllSeller()
 
         $(this.$refs.up1).change(()=>{
             this.file('up1', async res =>{
