@@ -35,7 +35,7 @@ export default {
         Top, Left
     },
     data(){
-        var isNeedLogin = !localStorage.zwManageUserToken || localStorage.zwManageUserToken == 'null' || localStorage.zwManageUserToken == 'undefined'
+        var isNeedLogin = !localStorage.zwManageUid || localStorage.zwManageUid == 'null' || localStorage.zwManageUid == 'undefined'
         return {
             isNeedLogin: isNeedLogin,
             form: {
@@ -62,18 +62,17 @@ export default {
             if(form.userName == '') return this.messageTip('用户名不能为空~');
             if(form.password == '') return this.messageTip('密码不能为空~');
             var loading = this.$loading()
-            var res = await this.ajax('/auth', {
+            var res = await this.ajax('/mgr/login', {
                 userName: this.form.userName.trim(),
                 // password: md5(this.form.password.trim())
                 password: this.form.password.trim()
             })
             loading.close()
-            if(res){
-                if(res.code == 400) return this.messageTip(res.message)
-                localStorage.zwManageUserToken = res.token
-                localStorage.zwManageMd5 = res.randomKey
+            if(res && res.code == this.successCode){
+                localStorage.zwManageUid = res.data.id
                 location.reload()
-            }
+                // localStorage.zwManageMd5 = res.randomKey
+            }else this.messageTip(res.message || '请求失败，请稍后重试')
         }
     }
 }

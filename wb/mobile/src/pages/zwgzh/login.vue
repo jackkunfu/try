@@ -98,7 +98,7 @@
                 var bzr = this.bzr
                 if(bzr.account == '' ) return this.messageTip('账户名不能为空~');
                 if(bzr.password == '') return this.messageTip('密码不能为空~');
-                var res = await this.ajax('/auth', {
+                var res = await this.ajax('/mgr/login', {
                     userName: bzr.account,
                     password: bzr.password
                 });
