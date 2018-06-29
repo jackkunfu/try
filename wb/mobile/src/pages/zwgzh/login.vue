@@ -25,7 +25,7 @@
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
                 input(v-model="denglu.code" placeholder="请输入验证码")
-                .code(@click="getCode('denglu')") 获取验证码
+                .code(@click="(e)=>{getCode('denglu', e)}") 获取验证码
             .login-tip 若账号未激活，请联系机构
                 img(src="../../assets/login_icon_tishi@2x.png")
             
@@ -38,7 +38,7 @@
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
                 input(v-model="login.code" placeholder="请输入验证码")
-                .code(@click="getCode('login')") 获取验证码
+                .code(@click="(e)=>{getCode('login', e)}") 获取验证码
             
             .btn(@click="baoming") 报名登陆
 
@@ -135,14 +135,28 @@
                     this.goUrl('/baoming', { userId: data.id, data: this.login });
                 }
             },
-            async getCode(key){
+            async getCode(key, e){
+                if(e.target.innerHTML.indexOf('s') > -1) return
+
                 if(this[key].phone.trim() == '') return this.messageTip('手机号不能为空')
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test( this[key].phone.trim() )) ) return this.messageTip('手机号格式有误~');
+
                 var res = await this.ajax('/index/sms', {
                     mobile: this[key].phone
                 }, 'get')
-                if(res && res.code == this.successCode) this.messageTip(res.message, 1)
-                else this.messageTip(res.message)
+
+                if(res && res.code == this.successCode){
+                    this.messageTip('短信发送成功', 1)
+                    let t = 60
+                    let a = setInterval(()=>{
+                        t = t-1
+                        e.target.innerHTML = t + ' s'
+                        if(t == 0){
+                            clearInterval(a)
+                            e.target.innerHTML = '获取验证码'
+                        }
+                    }, 1000)
+                }else this.messageTip(res.message)
             }
             // async loginFun(){
             //     var login = this.login;
