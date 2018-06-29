@@ -36,7 +36,7 @@ div
                         el-option(v-for="(item, i) in sales" :key="i" :label="item.name" :value="item.id")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope")
+            @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope" @jihuo="jihuo")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -139,6 +139,9 @@ export default {
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '开卡', fun: 'openCard'},
+                { str: '已开卡', fun: 'openCard'},
+                { str: '激活', fun: 'jihuo', isShow: { key: '', value: '' } },
+                { str: '已激活', fun: 'jihuo'},
                 { str: '编辑', fun: 'editScope'},
                 { str: '删除', fun: 'delScope'}
             ],
@@ -218,9 +221,26 @@ export default {
 
             return true
         },
-        openCard(scope){
+        async openCard(scope){
             var row = scope.row;
-            console.log(row)
+            var res = await this.ajax('/order/open', {
+                id: row.id,
+                openDate: row.openDate || '',
+                endDate: row.endDate
+            })
+            
+            if(res && res.code == this.successCode){
+                this.messageTip(res.message, 1)
+            }else this.messageTip(res.message)
+
+        },
+        async jihuo(scope){
+            var row = scope.row;
+            var res = await this.ajax('/order/activate', { id: row.id })
+            
+            if(res && res.code == this.successCode){
+                this.messageTip(res.message, 1)
+            }else this.messageTip(res.message)
         }
     }
 

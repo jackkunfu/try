@@ -29,7 +29,7 @@
                 //- 功能
                 el-table-column(:prop="item.key || ''" :label="item.str"  v-else-if="item.type == 'fun'")
                     template(slot-scope="scope")
-                        span(@click="$emit(item.fun, scope)" style="cursor:pointer;" :class="item.class ? item.class : ''") {{scope.row[item.key] || item.text}}
+                        span(v-if="item.isShow && item.isShow.key" @click="$emit(item.fun, scope)" style="cursor:pointer;" :class="item.class ? item.class : ''") {{scope.row[item.key] || item.text}}
 
                 //- 无需处理内容展示
                 el-table-column(:prop="item.key" :label="item.str" v-else="")

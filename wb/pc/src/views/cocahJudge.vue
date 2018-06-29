@@ -6,15 +6,16 @@ div
 
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
-                el-form-item(label="名称")
-                    el-input(v-model="searchInfo.name" placeholder="请输入教练名称")
-
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")  
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+
+                el-form-item(label="教练")
+                    el-select(v-model="searchInfo.cocahId" placeholder="教练")
+                        el-option(v-for="(item, i) in cocahs" :key="i" :label="item.name" :value="item.id")  
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @seeDetail="seeDetail")
+            @changePage="changePage" @seeDetail="seeDetail" @delScope="delScope")
 
     //- .edit-ctn.fix-cover(v-show="showEditCtn")
         .box
@@ -41,27 +42,35 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            cocahs: [],
             keys: [
                 { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
                 { str: '本月评价', key: 'trainName' }
             ],
-            searchKeys: ['name', 'city'],
+            searchKeys: ['cocahId', 'city'],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/evaluate/list' },
+                del: { url: '/evaluate/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '查看详情', fun: 'seeDetail'}
+                { str: '查看详情', fun: 'seeDetail'},
+                { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
                 // { str: '新增', fun: 'add'},
                 // { str: '修改', fun: 'edit'}
             ]
         }
+    },
+    mounted(){
+        this.cocahs = ( this.ajax('/mgr/list', {
+            limit: 10000,
+            offset: 0,
+            roleid: 4
+        }, 'get') ).data.rows
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参

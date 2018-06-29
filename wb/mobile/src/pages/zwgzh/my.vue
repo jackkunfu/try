@@ -63,13 +63,13 @@
             .xing
                 .each
                     span 教学态度：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="x1=i+1" :src="i<x1 ? activeStarImg : starImg")
+                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x1', i)" :src="i<x1 ? activeStarImg : starImg")
                 .each
                     span 课堂纪律：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="x2=i+1" :src="i<x2 ? activeStarImg : starImg")
+                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x2', i)" :src="i<x2 ? activeStarImg : starImg")
                 .each
                     span 互动性：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="x3=i+1" :src="i<x3 ? activeStarImg : starImg")
+                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x3', i)" :src="i<x3 ? activeStarImg : starImg")
 
             textarea(placeholder="对教练的意见或建议" v-model="pjStr")
 
@@ -83,6 +83,7 @@ export default {
     name: 'my',
     data () {
         return {
+            userId: this.$route.query.userId,
             my: {
                 img: '',
                 name: '王小二'
@@ -128,15 +129,43 @@ export default {
             this.cardLevel = null
         }
     },
+    async mounted(){
+        var res = await this.ajax('/user/detail', { id: this.userId })
+        if(res && res.code == this.successCode){
+            var data = res.data
+            this.isPJ = data.isPJ
+            if(this.isPJ){
+                var pj = data.pingjia
+                this.x1 = pj.attitude || 0
+                this.x2 = pj.discipline || 0
+                this.x3 = pj.interaction || 0
+                this.pjStr = pj.opinion || ''
+            }
+        }
+    },
     methods: {
+        clickXing(key, idx){
+            if(this.isPJ) return
+            this[key] = idx - 0 + 1
+        },
         async pj(){
-            var res = this.ajax('/evaluate/add', {
-                content: this.pjStr.trim()
+            if(this.x1 == 0) return this.messageTip('教学态度星级未评')
+            if(this.x2 == 0) return this.messageTip('课堂纪律星级未评')
+            if(this.x3 == 0) return this.messageTip('互动性星级未评')
+            if(this.pjStr.trim() == '') return this.messageTip('评价不能为空')
+            var res = await this.ajax('/evaluate/add', {
+                userId: this.userId || 1,
+                cuserId: this.cuserId || 1,
+                attitude: this.x1,
+                discipline: this.x2,
+                interaction: this.x3,
+                opinion: this.pjStr.trim()
             })
+            this.messageTip(res.message)
             if(res && res.code == this.successCode){
                 this.isPJ = true
                 this.pjStr = ''
-            }else this.messageTip(res.message || '操作失败,请稍后重试~')
+            }
         }
     }
 }

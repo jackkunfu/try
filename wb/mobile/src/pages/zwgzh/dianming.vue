@@ -20,15 +20,15 @@
                 img.icon(src="../../assets/Sign_icon_w_n@2x.png" v-if="item.type!=2" @click="dianming(2, item)")
                 img.icon(src="../../assets/Sign_icon_w_s@2x.png" v-else @click="dianming(2, item)")
 
-    .submit(@click="submit") 提交签到
-
+    .submit(v-if="isDone===true") 已签到
+    .submit(@click="submit" v-if="isDone===false") 提交签到
+    
     fixCover(:str="showText" titleName="请假条")
         textarea(v-model="text")
         div
             .btn.no(@click="closeText") 取消
             .btn(@click="submitText") 提交
 
-            
 </template>
 
 <script>
@@ -43,7 +43,8 @@ export default {
             showText: false,
             text: '',
             stuList: [],
-            curReasonItem: null
+            curReasonItem: null,
+            isDone: null     // 是否已经提交签到了
         }
     },
     async mounted(){
