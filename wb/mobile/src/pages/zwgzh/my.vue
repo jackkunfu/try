@@ -3,11 +3,11 @@
     .top
         img(src="../../assets/user_bg@2x.png")
         .item
-            img.fl(:src="my.img")
+            img.fl(:src="config.imgPath+my.avatar")
             .title
                 span {{my.name}}
 
-            .sub-title(@click="goUrl('/myset')") 完善个人信息
+            .sub-title(@click="goUrl('/myset', my)") 完善个人信息
                 span 》
 
     .tab-ctn
@@ -85,7 +85,7 @@ export default {
         return {
             userId: this.$route.query.userId,
             my: {
-                img: '',
+                avatar: '',
                 name: '王小二'
             },
             coach: {
@@ -130,6 +130,7 @@ export default {
         }
     },
     async mounted(){
+        this.my = this.$route.query
         var res = await this.ajax('/user/detail', { id: this.userId })
         if(res && res.code == this.successCode){
             var data = res.data

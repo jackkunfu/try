@@ -32,7 +32,7 @@ div
                     el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
 
                 el-form-item(label="销售渠道")
-                    el-select(v-model="searchInfo.city" placeholder="销售渠道")
+                    el-select(v-model="searchInfo.sale" placeholder="销售渠道")
                         el-option(v-for="(item, i) in sales" :key="i" :label="item.name" :value="item.id")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
@@ -55,17 +55,19 @@ div
                     el-radio-group(v-model="editInfo.sex")
                         el-radio(label="1") 男
                         el-radio(label="0") 女
+                el-form-item(label="登陆手机")
+                    el-input(v-model="editInfo.mobile" type="number")
                 el-form-item(label="生日")
                     el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;")   
                     //- value-format="yyyy-MM-dd"
                 el-form-item(label="身高")
-                    el-input(v-model="editInfo.remark")
+                    el-input(v-model="editInfo.height" type="number")
                 el-form-item(label="体重")
-                    el-input(v-model="editInfo.dorder")
+                    el-input(v-model="editInfo.weight" type="number")
                 el-form-item(label="家长姓名")
-                    el-input(v-model="editInfo.dorder")
+                    el-input(v-model="editInfo.parentName")
                 el-form-item(label="联系电话")
-                    el-input(v-model="editInfo.phone")
+                    el-input(v-model="editInfo.parentPhone")
                 
                 .item 课程信息
                 el-form-item(label="地区")
@@ -118,18 +120,18 @@ export default {
                 { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
                 { str: '性别', key: 'sex' },
-                { str: '家长姓名', key: 'sex' },
-                { str: '联系电话', key: 'sex' },
+                { str: '家长姓名', key: 'parentName' },
+                { str: '联系电话', key: 'parentPhone' },
                 { str: '地区', key: 'city' },
                 { str: '训练营', key: 'train.name' },
-                { str: '卡种', key: 'sex' },
+                { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },
                 { str: '费用', key: 'fee' },
                 // { str: '支付时间', key: 'height' },
                 { str: '创建时间', key: 'createDate' },
-                { str: '销售', key: 'height' }
+                { str: '销售', key: 'sale' }
             ],
-            searchKeys: [],
+            searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
             editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'price', 'time' ],
             api: {
                 list: { url: '/order/list' },
@@ -139,9 +141,9 @@ export default {
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '开卡', fun: 'openCard'},
-                { str: '已开卡', fun: 'openCard'},
-                { str: '激活', fun: 'jihuo', isShow: { key: '', value: '' } },
-                { str: '已激活', fun: 'jihuo'},
+                { str: '已开卡', isShow: { key: '', value: '' }},
+                // { str: '激活', fun: 'jihuo', isShow: { key: '', value: '' } },
+                // { str: '已激活', fun: 'jihuo'},
                 { str: '编辑', fun: 'editScope'},
                 { str: '删除', fun: 'delScope'}
             ],

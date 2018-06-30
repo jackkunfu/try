@@ -35,7 +35,7 @@
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
 
             //- 操作
-            el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="150")
+            el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="180")
                 template(slot-scope="scope")
                     template(v-for="(op, i) in scopeOperates")
                         el-button(v-if="!op.isShow || (op.isShow && op.isShow.key)" :type="op.type || 'success'" size="mini" :key="op.str"

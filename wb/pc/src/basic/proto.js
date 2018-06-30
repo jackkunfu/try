@@ -122,18 +122,26 @@ export default function(Vue){
         }
     }
     // 列表请求
-    Vue.prototype.tableList = async function(v){
+    Vue.prototype.tableList = async function(){
         var copySearchInfo = Object.assign({}, this.trimObj(this.searchInfo));
 
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';
         var options = needChangeSearchInfo ? this.changeSearchValue(copySearchInfo) : copySearchInfo;
 
-        options.offset = v || this.page.offset || 0;
+        options.offset = this.page.offset || 0;
         options.limit = this.page.limit || 10
 
         var res = await this.ajax(this.api.list.url, options, this.api.list.type || 'get');
         if(res && res.code == this.successCode){
             var result = res.data
+            if(result.rows.length == 0){
+                
+                if(options.offset >= 0){
+                    var of = options.offset - 10
+                    this.page.offset = of
+                    this.tableList(of)
+                }
+            }
 
             var needChangeTableData = this.changeTableData && typeof this.changeTableData == 'function';
             this.tableData = needChangeTableData ? this.changeTableData(result.rows) : result.rows
@@ -158,7 +166,7 @@ export default function(Vue){
     Vue.prototype.pageChange = function(v){
         var offset = (v - 1)*10
         this.page.offset = offset;
-        this.tableList.call(this, offset);
+        this.tableList.call(this);
     }
     
     // 点击新增

@@ -24,8 +24,8 @@
         .each
             .fl 性别
             .fr
-                span.sex(@click="my.sex=0")
-                    img(src='../../assets/choose.png' v-if="my.sex === 0")
+                span.sex(@click="my.sex='0'")
+                    img(src='../../assets/choose.png' v-if="my.sex === '0'")
                     img(src='../../assets/nochoose.png' v-else)
                     span 男
 
@@ -37,11 +37,11 @@
         .each
             .fl 身高
             .fr
-                input(v-model="my.height" placeholder="请输入学员身高(cm)")
+                input(v-model="my.height" placeholder="请输入学员身高(cm)" type="number")
         .each
             .fl 体重
             .fr
-                input(v-model="my.weight" placeholder="请输入学员体重(kg)")
+                input(v-model="my.weight" placeholder="请输入学员体重(kg)" type="number")
         .each
             .fl 生日
             .fr
@@ -57,7 +57,7 @@
         .each
             .fl 家长电话
             .fr
-                input(v-model="my.parentPhone" placeholder="请输入联系电话")
+                input(v-model="my.parentPhone" placeholder="请输入联系电话" type="number")
 
     .lbtn(@click="submit") 保存
 
@@ -83,7 +83,9 @@ export default {
                 weight: '',
                 height: '',
                 birthday: '',
-                phone: ''
+                phone: '',
+                parentName: '',
+                parentPhone: ''
             },
             userId: this.$route.query.userId,
             trainId: this.$route.query.trainId,
@@ -91,10 +93,11 @@ export default {
     },
     computed: {
         touxiang(){
-            return this.my.avatar ? this.my.avatar : require('../../assets/touxiang.png')
+            return this.my.avatar ? this.config.imgPath + this.my.avatar : require('../../assets/touxiang.png')
         }
     },
     async mounted(){
+        this.my = this.$route.query
         this.list = await this.getAllTrainTimes(this.trainId)
 
         var that = this
@@ -118,15 +121,27 @@ export default {
             this.chooseTimes = false
         },
         async submit(){
-            var my = this.my
-            my.avatar = '1111'
-            my.id = this.userId
-            var res = await this.ajax('/user/edit', my)
+            var item = this.trimObj(this.my)
+            if(item.avatar == '') return this.messageTip('头像未上传')
+            if(item.name == '') return this.messageTip('姓名未填写')
+            if(item.sex === null) return this.messageTip('性别未选择')
+            if(item.height == '') return this.messageTip('身高未填写')
+            if(item.weight == '') return this.messageTip('体重未填写')
+            if(item.birthday == '') return this.messageTip('生日未选择')
+            if(item.parentName == '') return this.messageTip('家长姓名未填写')
+            if(item.parentPhone == '') return this.messageTip('家长手机未填写')
+            if(!(/^1[3|5|6|7|8|9]\d{9}/.test(item.parentPhone))) return this.messageTip('家长手机格式不对')
+            item.id = this.userId
+            var res = await this.ajax('/user/edit', item)
             if(res && res.code == this.successCode){
-                this.goUrl('/my', { userId: this.userId })
+                this.goUrl('/my', item)
             }
         },
-        upfile(){}
+        upfile(){
+            this.file('', data => {
+                this.my.avatar = data.data
+            }, this.$refs.upfile)
+        }
     }
 }
 </script>

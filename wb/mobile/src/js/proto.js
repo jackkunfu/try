@@ -74,6 +74,35 @@ export default function(Vue){
         })
     }
 
+    Vue.prototype.file = function(id, cb, input){
+        var headers = {}
+        if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken
+        var data = new FormData()
+        var input = input || document.getElementById(id)
+        data.append('file', input.files[0])
+        $.ajax({
+            type: 'POST',
+            url: '/api/mgr/upload',
+            data: data,
+            headers,
+            contentType: false,
+            processData: false,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: (data) => {
+                if(data && data.code == this.successCode) cb(data)
+                else this.messageTip(data.msg || '上传出错，请稍后重试')
+
+                input.value = ''
+            },
+            error: function(data) {
+                input.value = ''
+                this.messageTip("error，上传出错"+JSON.stringify(data));
+            }
+        });
+    }
+
 
     Vue.prototype.getAllArea = async function (){
         var req = await this.ajax('/course/list', {
