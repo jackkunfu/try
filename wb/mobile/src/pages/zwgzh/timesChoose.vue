@@ -24,7 +24,8 @@ export default {
         return {
             week: ['一', '二', '三', '四', '五', '六', '日'],
             trainId: this.$route.query.trainId || 7,
-            list: []
+            list: [],
+            userId: this.$route.query.userId
         }
     },
     async mounted(){
@@ -40,11 +41,11 @@ export default {
         ok(){
             let choose = this.list.filter(element => element.check)
             if(choose.length == 0) return this.messageTip('请选择上课时间~')
-            this.goUrl('/my')
+            this.goUrl('/myset', { userId: this.userId })
         },
         close(){
             this.initListStatus()
-            this.goUrl('/my')
+            this.goUrl('/myset', { userId: this.userId })
         }
     }
 }

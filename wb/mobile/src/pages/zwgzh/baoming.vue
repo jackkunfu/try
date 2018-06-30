@@ -28,7 +28,7 @@
         .each
             span 选择训练频次
             select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
-                option(v-for="(it, i) in weekTimes" :value="it.id" :label="it.frequency" :key="i")
+                option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
             img(src="../../assets/xia.png")
         
         .each
@@ -91,7 +91,7 @@
                 this.weekTimes = await this.getAllCardTimes(v)
             },
             async 'item.frequency'(v){
-                var i = this.weekTimes.map(v=>v.id).indexOf(v)
+                var i = this.weekTimes.map(v=>v.frequency).indexOf(v)
                 this.item.fee = this.weekTimes[i].price
             }
         },
@@ -104,7 +104,8 @@
                 this.item.userId = this.userId
                 var res = await this.ajax('/order/add', this.item)
                 if(res && res.code == this.successCode){
-                    this.goUrl('/pay', { userId: this.userId, trainId: this.item.trainId })
+                    this.item.orderId = res.data.id
+                    this.goUrl('/pay', this.item)
                 }
             },
             async loginFun(){

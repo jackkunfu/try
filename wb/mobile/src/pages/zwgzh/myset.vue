@@ -81,7 +81,8 @@ export default {
                 height: '',
                 birth: '',
                 phone: ''
-            }
+            },
+            userId: this.$route.query.userId
         }
     },
     computed: {

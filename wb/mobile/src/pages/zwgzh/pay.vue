@@ -6,13 +6,13 @@
         .item
             span 订单金额：{{order.fee}}
         .item
-            span 地区：{{order.city}}
+            span 地区：{{order.train.city}}
         .item
-            span 训练营：{{order.train}}
+            span 训练营：{{order.train.name}}
         .item
-            span 卡种：{{order.cardId}}
+            span 卡种：{{order.card.card}}
         .item
-            span 卡种：{{order.times}}
+            span 训练频次：{{order.frequency}}
 
     div
         .item(@click="payWay=1")
@@ -44,11 +44,18 @@
                     name: '郑武体育篮球训练课', fee: '3000元', city: '杭州', train: '小龙训练营', cardType: '半年卡', times: '每周两次'
                 },
                 payWay: 0,
-                userId: query.userId
+                userId: query.userId,
+                trainId: query.trainId,
+                orderId: query.orderId
             }
         },
-        mounted(){
-            
+        async mounted(){
+            var res = await this.ajax('/order/detail', { id: this.orderId }, 'post')
+            if(res && res.code == this.successCode){
+                this.order = res.data
+                this.order.fee = this.order.fee/100 + '元'
+                this.order.name = '郑武体育篮球训练课'
+            }
         },
         methods: {
             pay(){
@@ -62,7 +69,7 @@
 
                 // 不跳到个人中心，跳到选课页面
                 // setTimeout(()=>{ this.goUrl('/my') }, 1000)
-                setTimeout(()=>{ this.goUrl('/timesChoose', { cardId: this.order.cardId, userId: this.userId }) }, 1000)
+                setTimeout(()=>{ this.goUrl('/timesChoose', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
                 
             }
         }

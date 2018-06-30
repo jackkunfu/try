@@ -41,7 +41,6 @@ div
 
                 el-form-item(label="卡种名称")
                     el-input(v-model="editInfo.card" placeholder="卡种名称")
-                
 
                 el-form-item(label="频次和价格")
                     el-form-item(label="训练频次")
