@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         initListStatus(){
-            this.list.forEach(v=>{
+            this.times.forEach(v=>{
                 this.$set(v, 'check', false)
             })
         },

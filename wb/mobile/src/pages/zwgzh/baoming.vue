@@ -38,6 +38,7 @@
             span 上课时间
             //- select(@click="chooseTimes=true" v-model="item.frequency" :class="item.frequency==''?'':'ff'")
                 option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
+            div(style="text-align:center;padding-left:1rem;") {{chooseTimesStr}}
             img(src="../../assets/xia.png")
 
         //- .each
@@ -72,6 +73,7 @@
         data () {
             var query = this.$route.query;
             return {
+                week: ['一', '二', '三', '四', '五', '六', '日'],
                 chooseTimes: false,
                 item: {
                     city: '', trainId: '', cardId: '', frequency: '', sale: '', fee: ''
@@ -82,13 +84,24 @@
                 sells: [],
                 userId: query.userId,
                 weekTimes: [],
-                timeList: []
+                timeList: [],
+                chooTimeList: []
             }
         },
         filters: {
             fee(v){
                 if(!v) return 0
                 return v/100
+            }
+        },
+        computed: {
+            chooseTimesStr(){
+                if(this.chooTimeList.length < 1) return ''
+                var week = this.chooTimeList[0].week
+                var begin = this.chooTimeList[0].begin
+                var end = this.chooTimeList[0].end
+                var str = this.weekTimeStr(week, begin, end)
+                return this.chooTimeList.length > 1 ? str + '...' : str
             }
         },
         watch: {
@@ -124,8 +137,12 @@
             this.sells = await this.getAllSeller()
         },
         methods: {
+            weekTimeStr(week, begin, end){
+                return '周' + this.week[week] + ' ' + begin + '~' + end
+            },
             next(data){
                 this.chooseTimes = false
+                this.chooTimeList = data
             },
             async baoming(){
                 var item = Object.assign({}, this.item);
@@ -133,10 +150,10 @@
                 if(item.trainId == '') return this.messageTip('训练营未选~');
                 if(item.cardId == '') return this.messageTip('卡种未选~');
                 if(item.frequency == '') return this.messageTip('训练频次未选~');
-                // if(this.chooseTimes.length == 0) return this.messageTip('上课时间没选~');
+                if(this.chooTimeList.length == 0) return this.messageTip('上课时间没选~');
                 if(item.sale == '') return this.messageTip('课程顾问~');
                 item.userId = this.userId
-                // item.trainTimes = JSON.stringify(this.chooseTimes)
+                item.times = JSON.stringify(this.chooTimeList)
                 var res = await this.ajax('/order/add', item)
                 if(res && res.code == this.successCode){
                     this.item.orderId = res.data.id

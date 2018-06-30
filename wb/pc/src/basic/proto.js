@@ -12,6 +12,7 @@ export default function(Vue){
         var headers = {}
         if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken
         return new Promise(function(rs, rj){
+            var loading = this.$loading()
             $.ajax({
                 type,
                 url: '/api'+url,
@@ -22,8 +23,10 @@ export default function(Vue){
                     withCredentials: true
                 }
             }).done(function(data){
+                loading.close()
                 rs(data)
             }).fail(function(e){
+                loading.close()
                 rj(e);
             })
         })

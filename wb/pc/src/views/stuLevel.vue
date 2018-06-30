@@ -56,7 +56,7 @@ export default {
                 { str: '评级操作', fun: 'changeLevel', type: 'fun', text: '修改等级', class: 'change-level' }
             ],
             searchKeys: [],
-            tableData: [1],
+            tableData: [],
             editKeys: [],
             api: {
                 list: { url: '/user/list' }
@@ -70,8 +70,13 @@ export default {
         }
     },
     methods: {
+        changeTableData(data){
+            data.forEach(element => {
+                element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : ''
+            })
+            return data
+        },
         changeLevel(scope){
-            console.log(11)
             this.isChooseLevel = true
             var item = scope.row
             this.curId = item.id
