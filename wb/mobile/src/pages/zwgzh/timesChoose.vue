@@ -4,8 +4,8 @@
         div(v-if="list.length > 0")
             .item-ctn(v-for="(item, i) in list" @click="item.check=!item.check")
                 img.fl(src="../../assets/choose_icon_basketball@2x.png")
-                .title {{item.name}}
-                .sub-title {{item.time}}
+                .title {{'周'+week[item.week]}}
+                .sub-title {{item.begin + ' ~ ' + item.end}}
                 img.fr(src="../../assets/choose_btn_s@2x.png" v-if="item.check")
                 img.fr(src="../../assets/choose_btn_n@2x.png" v-else)
 
@@ -22,6 +22,7 @@ export default {
     props: ['str', 'titleName', 'times'],
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             trainId: this.$route.query.trainId || 7,
             list: []
         }

@@ -15,12 +15,12 @@ div
                     //- el-select(v-model="searchInfo.city" placeholder="训练营")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
 
-                el-form-item(label="上课时间")
+                //- el-form-item(label="上课时间")
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @delScope="delScope")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -64,9 +64,9 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'training.city' },
-                { str: '训练营', key: 'training.name' },
-                { str: '地址', key: 'training.address' },
+                { str: '城市', key: 'city' },
+                { str: '训练营', key: 'name' },
+                { str: '地址', key: 'address' },
                 { str: '上课时间', key: 'time' }
             ],
             searchKeys: ['city', 'name', 'week'],
@@ -78,7 +78,8 @@ export default {
                 del: { url: '/training/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '删除', fun: 'delScope'}
+                // { str: '删除', fun: 'delScope'},
+                { str: '编辑', fun: 'editScope'}
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
@@ -95,7 +96,7 @@ export default {
         showEditCtn(v){
             if(!v){
                 this.editInit()
-                this.addTimeList = ''
+                this.addTimeList = []
                 this.curDate = ''
                 this.curTimeStart = ''
                 this.curTimeEnd = ''
@@ -103,6 +104,10 @@ export default {
         }
     },
     methods: {
+        selfEdit(item){
+            console.log(item)
+            this.addTimeList = item.times || []
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
@@ -112,7 +117,14 @@ export default {
         },
         changeTableData(data){
             return data.map(v => {
-                v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                if(v.times){
+                    var html = ''
+                    v.times.forEach(element => {
+                        html += '周'+this.week[element.week] + ' ' + element.begin + ' ~ ' + element.end + '\n'
+                    });
+                    // v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
+                    v.time = html
+                }
                 return v
             })
         },
@@ -136,6 +148,7 @@ export default {
                 begin: this.curTimeStart,
                 end: this.curTimeEnd
             }
+            console.log(this.addTimeList)
             var strTimeList = this.addTimeList.map(v=>JSON.stringify(v))
             if(strTimeList.indexOf(JSON.stringify(obj)) > -1) return this.messageTip('已存在该时间~')
             this.addTimeList.push(obj)

@@ -24,7 +24,7 @@ div
                         el-option(v-for="(item, i) in times" :key="i" :label="item" :value="item")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @edit="edit" @delScope="delScope")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -54,7 +54,7 @@ div
                     el-button(type="primary" @click="addTime" size="small") 添加
 
                     div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
-                        span(style="margin-right:20px") {{item.time}}
+                        span(style="margin-right:20px") {{item.frequency}}
                         span {{item.price}}
                         i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
 
@@ -71,21 +71,23 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'card.city' },
+                { str: '城市', key: 'city' },
                 { str: '训练营', key: 'trainName' },
-                { str: '卡种', key: 'card.card' },
-                { str: '训练频次', key: 'frequency' },
-                { str: '价格', key: 'price' }
+                { str: '卡种', key: 'card' },
+                { str: '训练频次以及价格', key: 'frequencyPrice' }
+                // { str: '价格', key: 'price' }
             ],
             searchKeys: ['trainId', 'city', 'card', 'frequency'],
             editKeys: ['trainId', 'city', 'card'],
             api: {
                 list: { url: '/card/list' },
                 add: { url: '/card/add' },
+                edit: { url: '/card/edit' },
                 del: { url: '/card/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '删除', fun: 'delScope'}
+                { str: '删除', fun: 'delScope'},
+                { str: '编辑', fun: 'editScope'}
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
@@ -106,6 +108,14 @@ export default {
         }
     },
     methods: {
+        selfEdit(item){
+            this.addTimeList = item.cfs.map(v => {
+                return {
+                    frequency: v.frequency,
+                    price: (v.price - 0)/100
+                }
+            })
+        },
         addTime(){
             if(this.curFrequency == '') return this.messageTip('请选择频次')
             if(this.curPrice.trim() == '') return this.messageTip('请选择价格')
@@ -113,22 +123,29 @@ export default {
             if(isNaN(price)) return this.messageTip('价格格式有误')
             var xiaoshu = price.split('.')[1]
             if(xiaoshu && xiaoshu.length > 2) return this.messageTip('最多两位小数')
-            if(this.addTimeList.map(v=>v.time).indexOf(this.curFrequency) > -1) return this.messageTip('已存在该频次')
+            if(this.addTimeList.map(v=>v.frequency).indexOf(this.curFrequency) > -1) return this.messageTip('已存在该频次')
             this.addTimeList.push({
-                time: this.curFrequency,
+                frequency: this.curFrequency,
                 price: price,
             })
         },
         changeTableData(data){     //  处理搜索请求传参
             return data.map(v=>{
-                v.price = (v.price - 0) / 100 + '元'
+                // v.price = (v.price - 0) / 100 + '元'
+                if(v.cfs){
+                    var html = ''
+                    v.cfs.forEach(element => {
+                        html += element.frequency + ' ~ ' + (element.price - 0) / 100 + '元'
+                    });
+                    v.frequencyPrice = html
+                }
                 return v
             });
         },
         changeEditValue(info){   // 处理新增编辑请求传参
             info.frequencys = JSON.stringify( this.addTimeList.map(v => {
                 return {
-                    frequency: v.time,
+                    frequency: v.frequency,
                     price: (v.price - 0)*100
                 }
             }) )

@@ -12,9 +12,9 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { 
-        target: 'http://zw.91ilove.com',
+        // target: 'http://zw.91ilove.com',
         // target: 'http://hjtu.free.ngrok.cc',
-        // target: 'http://192.168.1.147:8000',
+        target: 'http://192.168.18.192:8000',
         // pathRewrite: { '^/api': '' },
         secure: false, // 接受 运行在 https 上的服务
         changeOrigin: true
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

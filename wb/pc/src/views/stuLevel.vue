@@ -22,7 +22,7 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @changeLevel="changeLevel")
 
         .edit-ctn.fix-cover(v-show="isChooseLevel")
-            .x(@click="curLevel='';closeEditBox")
+            .x(@click="curLevel='';isChooseLevel=''")
                 i.el-icon-close
             .box
                 .x(@click="isChooseLevel=false;curLevel=''")
@@ -34,7 +34,6 @@ div
 
                     el-form-item
                         el-button(type="primary" @click="submit") 保存
-                        el-button(type="primary" @click="cancel") 取消
     
 </template>
 
@@ -74,11 +73,11 @@ export default {
         changeLevel(scope){
             console.log(11)
             this.isChooseLevel = true
-            this.curId = scope.row.id
-            this.curLevel = item.level - 1
+            var item = scope.row
+            this.curId = item.id
+            this.curLevel = item.lv - 1
             // var id = scope.row.id
         },
-        cancel(){},
         async submit(){
             if(this.curLevel === '') return this.messageTip('请选择等级')
             var res = await this.ajax('/user/level', { userId: this.curId, level: this.curLevel-0+1  })

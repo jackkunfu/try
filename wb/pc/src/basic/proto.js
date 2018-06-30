@@ -176,7 +176,7 @@ export default function(Vue){
     Vue.prototype.tableEditScope = function(){
         console.log(arguments[0])
         var row = arguments[0].row || {};
-        if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
+        if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit(row);
         this.editKeys.forEach( v => {
             this.editInfo[v] = row[v] || '';
         })

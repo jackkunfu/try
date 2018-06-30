@@ -117,7 +117,7 @@ export default {
             if(data.account.length > 30) return this.messageTip('账户名须30字符以内~')
 
             if(data.password.indexOf(' ') > -1) return this.messageTip('密码不能包含空格~')
-            if(data.password.length < 8 || data.password.trim().length > 16) return this.messageTip('密码须8到16位~')
+            if(data.password.length < 6 || data.password.trim().length > 16) return this.messageTip('密码须6到16位~')
 
             if(data.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone)) ) return this.messageTip('手机号格式有误~');
             

@@ -109,7 +109,7 @@ export default function(Vue){
 
     // 查询卡种列表  具体每个训练营卡种的话 传入 训练营id
     Vue.prototype.getAllCard = async function(id){
-        var req = await this.ajax('/card/listAll', { id: id || '' }, 'get')
+        var req = await this.ajax('/card/listAll', { trainId: id || '' }, 'get')
         if(req && req.code == this.successCode){
             let data = req.data || []
             return data
