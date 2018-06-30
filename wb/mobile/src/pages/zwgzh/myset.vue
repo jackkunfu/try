@@ -1,9 +1,9 @@
 <template lang="pug">
 .h100
 
-    class-times(v-if="chooseTimes" @next="next" @close="chooseTimes=false")
+    // class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false" :times="list")
 
-    .block
+    //- .block
         .each
             .fl 上课时间
             .fr(@click="chooseTimes=true") 选择上课时间
@@ -11,7 +11,7 @@
                     img(src="../../assets/xia.png")
 
     .block
-        .each
+        .each(@click="$refs.upfile.click()")
             .fl 修改头像
             .fr
                 img.touxiang(:src="touxiang")
@@ -45,21 +45,23 @@
         .each
             .fl 生日
             .fr
-                span#birth {{my.birth || '请选择出生日期'}}
+                span#birth {{my.birthday || '请选择出生日期'}}
                 // input(v-model="my.name" placeholder="请输入学员姓名")
 
     .block
         .each
             .fl 家长姓名
             .fr
-                input(v-model="my.name" placeholder="请输入家长姓名")
+                input(v-model="my.parentName" placeholder="请输入家长姓名")
 
         .each
-            .fl 联系电话
+            .fl 家长电话
             .fr
-                input(v-model="my.phone" placeholder="请输入联系电话")
+                input(v-model="my.parentPhone" placeholder="请输入联系电话")
 
-    .lbtn 保存
+    .lbtn(@click="submit") 保存
+
+    input(type="file" style="display:none;" ref="upfile" @change="upfile")
 
 </template>
 
@@ -72,25 +74,29 @@ export default {
     },
     data () {
         return {
+            list: [],
             chooseTimes: false,
             my: {
-                img: '',
+                avatar: '',
                 name: '',
                 sex: null,
                 weight: '',
                 height: '',
-                birth: '',
+                birthday: '',
                 phone: ''
             },
-            userId: this.$route.query.userId
+            userId: this.$route.query.userId,
+            trainId: this.$route.query.trainId,
         }
     },
     computed: {
         touxiang(){
-            return this.my.img ? this.my.img : require('../../assets/touxiang.png')
+            return this.my.avatar ? this.my.avatar : require('../../assets/touxiang.png')
         }
     },
-    mounted(){
+    async mounted(){
+        this.list = await this.getAllTrainTimes(this.trainId)
+
         var that = this
         new datePicker().init({
             'trigger': '#birth', /* 按钮选择器，用于触发弹出插件*/
@@ -101,7 +107,7 @@ export default {
             /* 确认时触发事件*/
             'onSubmit': function () {
                 // ios 浏览器解析new Date解析 2010-01 会出现NaN，转换成 2010/01
-                that.my.birth = this.value.replace(/\-/g, "/")
+                that.my.birthday = this.value.replace(/\-/g, "/")
             },
             /* 取消时触发事件*/
             'onClose': function () {}
@@ -109,9 +115,18 @@ export default {
     },
     methods: {
         next(data){
-            
             this.chooseTimes = false
-        }
+        },
+        async submit(){
+            var my = this.my
+            my.avatar = '1111'
+            my.id = this.userId
+            var res = await this.ajax('/user/edit', my)
+            if(res && res.code == this.successCode){
+                this.goUrl('/my', { userId: this.userId })
+            }
+        },
+        upfile(){}
     }
 }
 </script>
@@ -156,6 +171,7 @@ export default {
                     max-height: 0.7rem
 
             .sex
+                display: inline-block
                 img
                     width: 0.8rem
                     margin: 0 0.2rem 0 0.6rem

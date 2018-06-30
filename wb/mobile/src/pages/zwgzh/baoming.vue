@@ -6,6 +6,8 @@
     // .top
         img(src="../../assets/activity_logo@2x.png")
 
+    class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false" :times="timeList")
+
     .enroll
         .each
             span 选择地区
@@ -30,6 +32,19 @@
             select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
                 option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
             img(src="../../assets/xia.png")
+
+        
+        .each(@click="chooseTimes=true")
+            span 上课时间
+            //- select(@click="chooseTimes=true" v-model="item.frequency" :class="item.frequency==''?'':'ff'")
+                option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
+            img(src="../../assets/xia.png")
+
+        //- .each
+            .fl 
+            .fr(@click="chooseTimes=true") 选择上课时间
+                .icon.fr
+                    img(src="../../assets/xia.png")
         
         .each
             span 接待课程顾问
@@ -48,11 +63,16 @@
 </template>
 
 <script>
+    import classTimes from '../part/classTimes'
     export default {
         name: 'Baoming',
+        components: {
+            classTimes
+        },
         data () {
             var query = this.$route.query;
             return {
+                chooseTimes: false,
                 item: {
                     city: '', trainId: '', cardId: '', frequency: '', sale: '', fee: ''
                 },
@@ -61,7 +81,8 @@
                 trainCards: [],
                 sells: [],
                 userId: query.userId,
-                weekTimes: []
+                weekTimes: [],
+                timeList: []
             }
         },
         filters: {
@@ -79,9 +100,12 @@
             },
             async 'item.trainId'(v){
                 this.trainCards = []
+                this.timeList = []
+                this.chooTimeList = []
                 this.item.cardId = ''
                 if(!v) return
                 this.trainCards = await this.getAllCard(v)
+                this.timeList = await this.getAllTrainTimes(v)
             },
             async 'item.cardId'(v){
                 this.weekTimes = []
@@ -100,9 +124,20 @@
             this.sells = await this.getAllSeller()
         },
         methods: {
+            next(data){
+                this.chooseTimes = false
+            },
             async baoming(){
-                this.item.userId = this.userId
-                var res = await this.ajax('/order/add', this.item)
+                var item = Object.assign({}, this.item);
+                if(item.city == '') return this.messageTip('地区未选~');
+                if(item.trainId == '') return this.messageTip('训练营未选~');
+                if(item.cardId == '') return this.messageTip('卡种未选~');
+                if(item.frequency == '') return this.messageTip('训练频次未选~');
+                // if(this.chooseTimes.length == 0) return this.messageTip('上课时间没选~');
+                if(item.sale == '') return this.messageTip('课程顾问~');
+                item.userId = this.userId
+                // item.trainTimes = JSON.stringify(this.chooseTimes)
+                var res = await this.ajax('/order/add', item)
                 if(res && res.code == this.successCode){
                     this.item.orderId = res.data.id
                     this.goUrl('/pay', this.item)
@@ -110,6 +145,7 @@
             },
             async loginFun(){
                 var item = this.item;
+                alert(item.city == '')
                 if(item.city == '') return this.messageTip('地区未选~');
                 if(item.city == '') return this.messageTip('训练营未选~');
                 if(item.city == '') return this.messageTip('卡种未选~');
@@ -221,6 +257,8 @@ select
     color: #fff
     font-size: 0.8rem
     border-radius: 0.4rem
+    position: relative
+    z-index: 1
 
 </style>
 

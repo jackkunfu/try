@@ -47,9 +47,10 @@ export default {
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
                 { str: '地区', key: 'city' },
-                { str: '训练营', key: 'sex' },
+                { str: '训练营', key: 'train.name' },
                 { str: '上课时间', key: 'time' },
-                { str: '班主任', key: '' }
+                // { str: '班主任', key: '' },
+                { str: '报名时间', key: 'createDate' }
             ],
             searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime'],
             api: {

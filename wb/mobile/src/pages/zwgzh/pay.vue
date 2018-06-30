@@ -24,7 +24,7 @@
 
         .item(@click="payWay=2")
             img(src="../../assets/zfb.png")
-            span 微信支付
+            span 支付宝支付
             .fr
                 img(src="../../assets/choose.png" v-if="payWay==2")
                 img(src="../../assets/nochoose.png" v-else)
@@ -41,7 +41,7 @@
             var query = this.$route.query;
             return {
                 order: {
-                    name: '郑武体育篮球训练课', fee: '3000元', city: '杭州', train: '小龙训练营', cardType: '半年卡', times: '每周两次'
+                    name: '郑武体育篮球训练课', fee: '3000元', city: '杭州', train: {}, cardType: '半年卡', times: '每周两次', card: {}
                 },
                 payWay: 0,
                 userId: query.userId,
@@ -58,18 +58,40 @@
             }
         },
         methods: {
-            pay(){
+            async pay(){
                 if(this.payWay == 0) return this.messageTip('请选择支付方式');
+                var options = {
+                    orderId: this.orderId,
+                    body: '郑武体育篮球训练课',
+                    subject: '郑武体育篮球训练课',
+                    // totalAmount: this.order.fee
+                    totalAmount: 1
+                }
                 if(this.payWay == 1){
+                    location.href = '/api/index/toOauth'   //  跳转显示微信验证
+                    var wxres = await this.ajax('/wxpay/webPay', options)
+                    if(wxres && wxres.code == this.successCode){
+                        alert(JSON.stringify(wxres))
+                        // $('body').append(wxres.data);
+                    }else this.messageTip(wxres.message)
 
                 }else if(this.payWay == 2){
+                    location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount=1'   //  跳转支付宝支付
 
+                    // var res = await this.ajax('/alipay/wapPay', options)
+                    // if(res && res.code == this.successCode){
+                    //     $('body').append(res.data);
+                    // }else this.messageTip(res.message)
                 }
-                this.messageTip('支付成功')
+
+                
+
+                return
 
                 // 不跳到个人中心，跳到选课页面
                 // setTimeout(()=>{ this.goUrl('/my') }, 1000)
-                setTimeout(()=>{ this.goUrl('/timesChoose', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
+                // setTimeout(()=>{ this.goUrl('/timesChoose', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
+                setTimeout(()=>{ this.goUrl('/myset', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
                 
             }
         }
