@@ -110,18 +110,17 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            // week: ['一', '二', '三', '四', '五', '六', '日'],
             areaList: [],
             cityTrains: [],
             cards: [],
             frequencys: [],
             sales: [],
             keys: [
-                { str: '头像', key: 'avatar' },
-                { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '家长姓名', key: 'parentName' },
-                { str: '联系电话', key: 'parentPhone' },
+                { str: '头像', key: 'user.avatar', type: 'img' },
+                { str: '姓名', key: 'user.name' },
+                { str: '性别', key: 'sexStr' },
+                { str: '家长姓名', key: 'user.parentName' },
+                { str: '联系电话', key: 'user.parentPhone' },
                 { str: '地区', key: 'city' },
                 { str: '训练营', key: 'train.name' },
                 { str: '卡种', key: 'card.card' },
@@ -129,7 +128,7 @@ export default {
                 { str: '费用', key: 'fee' },
                 // { str: '支付时间', key: 'height' },
                 { str: '创建时间', key: 'createDate' },
-                { str: '销售', key: 'sale' }
+                { str: '销售', key: 'sales.name' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
             editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'price', 'time' ],
@@ -201,6 +200,12 @@ export default {
             this.cityTrains = []
             this.cards = []
         },
+        changeTableData(data){
+            data.forEach(element => {
+                element.sexStr = item.user.sex ? '女' : '男'
+            });
+            return data
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
@@ -212,9 +217,9 @@ export default {
         testInput(){
             // var arr = ['account', 'name', 'birthday', 'sex', 'email', 'phone']
             var obj = this.trimObj(this.editInfo)
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.avatar == '') return this.messageTip('头像未上传')
+            if(obj.name == '') return this.messageTip('名称不能为空')
+            if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
             if(obj.account == '') return this.messageTip('账号不能为空')
             if(obj.account == '') return this.messageTip('账号不能为空')
             if(obj.account == '') return this.messageTip('账号不能为空')
