@@ -38,7 +38,7 @@
             span 上课时间
             //- select(@click="chooseTimes=true" v-model="item.frequency" :class="item.frequency==''?'':'ff'")
                 option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
-            div(style="text-align:center;padding-left:1rem;") {{chooseTimesStr}}
+            div(style="text-align:right;padding-right:2.1rem;line-height:1.3rem;color:#888;") {{chooseTimesStr}}
             img(src="../../assets/xia.png")
 
         //- .each

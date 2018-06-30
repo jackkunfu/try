@@ -11,7 +11,7 @@ export default function(Vue){
         var type = type || 'post';
         var headers = {}
         if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken
-        return new Promise(function(rs, rj){
+        return new Promise((rs, rj) => {
             var loading = this.$loading()
             $.ajax({
                 type,
@@ -156,8 +156,9 @@ export default function(Vue){
     }
     // 页码改变
     Vue.prototype.pageChange = function(v){
-        this.page.offset = v - 1;
-        this.tableList.call(this, v-1);
+        var offset = (v - 1)*10
+        this.page.offset = offset;
+        this.tableList.call(this, offset);
     }
     
     // 点击新增
