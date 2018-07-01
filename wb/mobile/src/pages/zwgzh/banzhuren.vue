@@ -25,7 +25,8 @@ export default {
     async mounted(){
         this.list = (await this.ajax('/teacher_plan/list', {
             offset: 0,
-            limit: 100
+            limit: 100,
+            userId: this.$route.query.userId
         }, 'get')).data.rows
 
         this.list.forEach(v => {

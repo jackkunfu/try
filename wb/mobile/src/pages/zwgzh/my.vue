@@ -28,8 +28,8 @@
 
     .main
         div.cc(v-if="curTab == 0")
-            img(:src="cardImg" @click="showTnTable=false")
-            div
+            img(:src="cardImg")
+            div(v-for="(item, i) in course")
                 .other 其他详细信息
                 div 上课时间：{{course.times}}
                     img(src="../../assets/user_icon_time@2x.png")
@@ -83,7 +83,7 @@ export default {
     name: 'my',
     data () {
         return {
-            userId: this.$route.query.userId,
+            userId: this.$route.query.userId || this.$route.query.id,
             my: {
                 avatar: '',
                 name: '王小二'
@@ -93,15 +93,16 @@ export default {
                 name: '王小二',
                 time: '2018-01-01 11:00:00 - 13:00:00'
             },
-            course: {
-                time: '2018-01-01 11:00:00 - 13:00:00',
-                times: '一周两次',
-                startDate: '2018-01-01 11:00:00 - 13:00:00'
-            },
+            course: [],
+            // course: {
+            //     time: '2018-01-01 11:00:00 - 13:00:00',
+            //     times: '一周两次',
+            //     startDate: '2018-01-01 11:00:00 - 13:00:00'
+            // },
             tnList: [
                 {}, {}
             ],
-            curTab: 0,
+            curTab: -1,
             x1: 0,
             x2: 0,
             x3: 0,
@@ -121,18 +122,21 @@ export default {
         }
     },
     watch: {
-        curTab(){
+        curTab(v){
             this.x1 = 0
             this.x2 = 0
             this.x3 = 0
             this.showTnTable = false
             this.cardLevel = null
+
+            this.getDetail(v)
         }
     },
     async mounted(){
         this.my = this.$route.query
-        var res = await this.ajax('/user/detail', { id: this.userId })
+        var res = await this.ajax('/user/detail', { userId: this.userId }, 'get')
         if(res && res.code == this.successCode){
+            this.my = res.data
             var data = res.data
             this.isPJ = data.isPJ
             if(this.isPJ){
@@ -143,8 +147,30 @@ export default {
                 this.pjStr = pj.opinion || ''
             }
         }
+
+        this.curTab = 0
     },
     methods: {
+        async getDetail(type){
+            var url = type == 0 ? '/user/classes' : (type == 1 ? '/power_test/list' : '/user/pj')
+            var res = await this.ajax(url, { userId: this.userId }, 'get')
+            if(res && res.code == this.successCode){
+                var data = res.data
+                if(type == 0){
+                    this.course = data
+                }else if(type == 1){
+                    this.tnList = data
+                }else if(type == 2){
+                    this.coach = data
+                    this.isPJ = data.isPJ
+                    var pj = data.pingjia
+                    this.x1 = pj.attitude || 0
+                    this.x2 = pj.discipline || 0
+                    this.x3 = pj.interaction || 0
+                    this.pjStr = pj.opinion || ''
+                }
+            }
+        },
         clickXing(key, idx){
             if(this.isPJ) return
             this[key] = idx - 0 + 1

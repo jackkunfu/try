@@ -55,14 +55,14 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'appCode' },
+                { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
                 { str: '性别', key: 'sex' },
                 { str: '生日', key: 'birth' },
                 { str: '身高', key: 'height' },
                 { str: '体重', key: 'weight' },
-                { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'phone' },
+                { str: '家长姓名', key: 'parentName' },
+                { str: '联系电话', key: 'parentPhone' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'remark' },
                 { str: '训练频次', key: 'remark' },
@@ -89,6 +89,12 @@ export default {
         }
     },
     methods: {
+        changeTableData(data){
+            data.forEach(element => {
+                element.birth = element.birthday.split(' ')[0]
+            });
+            return data
+        },
         handleDelRow(data){
             return { userId: data.id }
         },

@@ -20,7 +20,7 @@
                 img.icon(src="../../assets/Sign_icon_w_n@2x.png" v-if="item.type!=2" @click="dianming(2, item)")
                 img.icon(src="../../assets/Sign_icon_w_s@2x.png" v-else @click="dianming(2, item)")
 
-    .submit(v-if="isDone===true") 已签到
+    .submit(v-if="isDone===true" style="background:#ccc;") 已签到
     .submit(@click="submit" v-if="isDone===false") 提交签到
     
     fixCover(:str="showText" titleName="请假条")
@@ -48,25 +48,48 @@ export default {
         }
     },
     async mounted(){
-        var res = await this.ajax('/user/list', {
-            trainId: this.query.trainId,
-            week: this.query.week,
-            begin: this.query.begin,
-            end: this.query.end,
-            limit: 10000,
-            offset: 0
-        }, 'get')
-        if(res && res.code == this.successCode) this.stuList = res.data.rows || []
-        this.stuList.forEach(el => {
-            this.$set(el, 'type', 0)
+        var detail = await this.ajax('/sign/detail', {
+            planId: this.query.id
         })
+        if(detail && detail.code == this.successCode){
+            if(detail.data.length == 0){
+                this.isDone = false
+
+                var res = await this.ajax('/user/list', {
+                    trainId: this.query.trainId,
+                    week: this.query.week,
+                    begin: this.query.begin,
+                    end: this.query.end,
+                    limit: 10000,
+                    offset: 0
+                }, 'get')
+                if(res && res.code == this.successCode) this.stuList = res.data.rows || []
+                this.stuList.forEach(el => {
+                    this.$set(el, 'type', 0)
+                })
+            }else{
+                this.isDone = true
+                this.stuList = detail.data.map(v => {
+                    v.user.type = v.type
+                    v.user.remarks = v.remarks
+                    return v.user
+                })
+            }
+        }
     },
     methods: {
         async submit(){
             var res = await this.ajax('/sign/add', {
                 userId: this.query.userId,
-                type: '',
-                sign: JSON.stringify(this.stuList)
+                type: 0,
+                planId: this.query.id,
+                sign: JSON.stringify( this.stuList.map(v => {
+                    return {
+                        userId: v.id,
+                        type: v.type,
+                        remarks: v.remark || ''
+                    }
+                }) )
             })
             if(res && res.code == this.successCode){
                 this.goUrl('/dianmingOk')
@@ -78,9 +101,9 @@ export default {
             if(type === 1){
                 this.curReasonItem = item
                 this.showText = true
-                this.text = item.reason || ''
+                this.text = item.remark || ''
             }else{
-                delete item.reason
+                delete item.remark
             }
 
             // this.changeType(item, type);
@@ -100,7 +123,7 @@ export default {
         async submitText(){
             if(this.text.trim() == '') return this.messageTip('请假原因不能为空~')
 
-            this.curReasonItem.reason = this.text.trim()
+            this.curReasonItem.remark = this.text.trim()
 
             this.text = ''
             this.showText = false
@@ -119,6 +142,9 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.h100
+    overflow: hidden
+
 .item
     margin-bottom: 0
     padding: 0.5rem 0
@@ -168,7 +194,7 @@ export default {
         vertical-align: middle
         margin-right: 0.35rem
     .icon
-        height: 1rem
-        margin: 0 0.5rem
+        wdth: 1.4rem
+        margin: 0 0.6rem
         vertical-align: middle
 </style>

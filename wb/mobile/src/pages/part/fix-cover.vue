@@ -1,12 +1,13 @@
 <template lang="pug">
 
     .fix(v-if="str")
-        .box
-            div
-                // img.x(src="../../assets/Sign_icon_w_s@2x.png" @click="showFix=false;$emit('close')")
-                .title {{titleName}}
-                .main
-                    slot
+        .box-ctn
+            .box
+                div
+                    // img.x(src="../../assets/Sign_icon_w_s@2x.png" @click="showFix=false;$emit('close')")
+                    .title {{titleName}}
+                    .main
+                        slot
 
 </template>
 

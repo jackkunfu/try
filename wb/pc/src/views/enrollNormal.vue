@@ -56,9 +56,9 @@ div
                         el-radio(label="1") 男
                         el-radio(label="0") 女
                 el-form-item(label="登陆手机")
-                    el-input(v-model="editInfo.mobile" type="number")
+                    el-input(v-model="editInfo.phone" type="number")
                 el-form-item(label="生日")
-                    el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;")   
+                    el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;" value-format="yyyy-MM-dd")   
                     //- value-format="yyyy-MM-dd"
                 el-form-item(label="身高")
                     el-input(v-model="editInfo.height" type="number")
@@ -84,9 +84,9 @@ div
                         el-option(v-for="(item, i) in classTimes" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" placeholder="选择训练频次" :value="item.id" :key="i")
                 el-form-item(label="训练频次")
                     el-select(v-model="editInfo.frequency")
-                        el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.id" :key="i")
+                        el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.frequency" :key="i")
                 el-form-item(label="价格")
-                    el-input(v-model="editInfo.price")
+                    el-input(v-model="editInfo.fee" disabled="true")
 
                 el-form-item(label="支付日期")
                     el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
@@ -131,10 +131,10 @@ export default {
                 { str: '销售', key: 'sales.name' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'price', 'time' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone' ],
             api: {
                 list: { url: '/order/list' },
-                add: { url: '/order/add' },
+                add: { url: '/mgr/addStu' },
                 edit: { url: '/order/edit' },
                 del: { url: '/order/delete' }
             },
@@ -170,14 +170,14 @@ export default {
         async 'editInfo.cardId'(id){
             this.frequencys = []
             this.editInfo.frequency = ''
-            this.editInfo.price = ''
+            this.editInfo.fee = ''
             if(id == '') return
             this.frequencys = await this.getAllCardTimes(id)
         },
         async 'editInfo.frequency'(v){
             if(!v) return
             var i = this.frequencys.map(v=>v.id).indexOf(v)
-            this.editInfo.price = (this.frequencys[i].price - 0)/100
+            this.editInfo.fee = (this.frequencys[i].fee - 0)/100
         }
     },
     async mounted(){
@@ -202,7 +202,7 @@ export default {
         },
         changeTableData(data){
             data.forEach(element => {
-                element.sexStr = item.user.sex ? '女' : '男'
+                element.sexStr = element.user.sex ? '女' : '男'
             });
             return data
         },
@@ -210,8 +210,9 @@ export default {
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            info.trainId = 1
-            info.price = (info.price - 0)*100
+            info.fee = (info.fee - 0)*100
+            info.birthday = new Date(info.birthday)
+            info.payDate = new Date(info.payDate)
             return info;
         },
         testInput(){
@@ -220,11 +221,11 @@ export default {
             if(obj.avatar == '') return this.messageTip('头像未上传')
             if(obj.name == '') return this.messageTip('名称不能为空')
             if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
-            if(obj.account == '') return this.messageTip('账号不能为空')
+            // if(obj.account == '') return this.messageTip('账号不能为空')
+            // if(obj.account == '') return this.messageTip('账号不能为空')
+            // if(obj.account == '') return this.messageTip('账号不能为空')
+            // if(obj.account == '') return this.messageTip('账号不能为空')
+            // if(obj.account == '') return this.messageTip('账号不能为空')
 
             return true
         },
@@ -232,8 +233,8 @@ export default {
             var row = scope.row;
             var res = await this.ajax('/order/open', {
                 id: row.id,
-                openDate: row.openDate || '',
-                endDate: row.endDate
+                openDate: row.openDate || new Date(),
+                endDate: row.endDate || new Date(new Date() + 86400*10)
             })
             
             if(res && res.code == this.successCode){

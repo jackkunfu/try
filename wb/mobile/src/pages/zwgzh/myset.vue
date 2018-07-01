@@ -87,7 +87,7 @@ export default {
                 parentName: '',
                 parentPhone: ''
             },
-            userId: this.$route.query.userId,
+            userId: this.$route.query.userId || this.$route.query.id,
             trainId: this.$route.query.trainId,
         }
     },
@@ -132,7 +132,19 @@ export default {
             if(item.parentPhone == '') return this.messageTip('家长手机未填写')
             if(!(/^1[3|5|6|7|8|9]\d{9}/.test(item.parentPhone))) return this.messageTip('家长手机格式不对')
             item.id = this.userId
-            var res = await this.ajax('/user/edit', item)
+            // item.birthday = new Date(item.birthday)
+            var res = await this.ajax('/user/edit',{
+                id: item.id,
+                birthday: new Date(item.birthday),
+                name: item.name,
+                phone: item.phone,
+                avatar: item.avatar,
+                height: item.height,
+                sex: item.sex,
+                weight: item.weight,
+                parentName: item.parentName,
+                parentPhone: item.parentPhone
+            })
             if(res && res.code == this.successCode){
                 this.goUrl('/my', item)
             }
