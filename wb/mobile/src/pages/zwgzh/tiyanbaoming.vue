@@ -4,10 +4,11 @@
     class-times(v-if="chooseTimes" @next="next" @close="closeChooseTime" :times="clsTimes")
 
     .fix(v-if="ok")
-        .box 
-            span 恭喜您体验课报名成功
-            .ensure
-                span(@click="ok=false") 确定
+        .box-ctn
+            .box 
+                span 恭喜您体验课报名成功
+                .ensure
+                    span(@click="ok=false") 确定
 
     .bg
         img(src="../../assets/activity_bg@2x.png")
