@@ -38,6 +38,16 @@ div
             .img(v-for="(item, i) in imgList")
                 img(:sc="item.img")
                 i.el-icon-delete(@click="delImg(item.id)")
+
+    .fix-cover(v-show="isChooseDate")
+        .x(@click="closeEditBox")
+            i.el-icon-close
+        .box(style="min-height:0;")
+            el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
+                el-form-item(label="时间")
+                    el-date-picker(v-model="curAddTime" placeholder="请选择时间" type="date" value-format="yyyy-MM-dd")
+
+            el-button(@click="upImgSubmit" size="mini") 上传
     
 </template>
 
@@ -48,27 +58,19 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'appCode' },
-                { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '生日', key: 'birth' },
-                // { str: '身高', key: 'height' },
-                // { str: '体重', key: 'weight' },
-                { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'mobile' },
-                { str: '训练营', key: 'trainName' },
-                { str: '历史成绩', key: '', fun: 'see' }
-                // { str: '卡种', key: 'remark' },
-                // { str: '训练频次', key: 'remark' },
-                // { str: '开卡时间', key: 'remark' },
-                // { str: '到期时间', key: 'remark' },
-                // { str: '学员作业', key: 'remark' },
-                // { str: '体能测试', key: 'remark' }
+                { str: '头像', key: 'user.avatar', type: 'img' },
+                { str: '姓名', key: 'user.name' },
+                { str: '性别', key: 'sexStr' },
+                { str: '家长姓名', key: 'user.parentName' },
+                { str: '联系电话', key: 'user.parentPhone' },
+                { str: '地区', key: 'city' },
+                { str: '训练营', key: 'train.name' },
+                { str: '历史成绩', text: '查看', fun: 'see' }
             ],
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/power_test/list' },
+                list: { url: '/order/list' },
                 add: { url: '/power_test/add' },
                 edit: { url: '/power_test/edit' }
             },
@@ -79,7 +81,9 @@ export default {
                 time: ''
             },
             imgList: [],
-            curItem: {}
+            curItem: {},
+            isChooseDate: false,
+            curAddTime: null
         }
     },
     mounted(){
@@ -88,21 +92,30 @@ export default {
             that.file('', async data => {
                 console.log(data.data)
                 var res = await this.ajax('/power_test/add', {
-                    userId: this.curItem.id,
-                    content: data.data
+                    userId: this.curItem.userId,
+                    content: data.data,
+                    testDate: new Date(this.curAddTime)
                 })
                 if(res && res.code == this.successCode){
+
+                    this.curItem = null
+                    this.curAddTime = null
+                    this.isChooseDate = false
+
                     this.messageTip(res.message || '上传添加成功', 1)
                     this.tableList()
                 }else this.messageTip(res.message)
                 
-                this.curItem = null
             }, that.$refs.up)
         })
     },
     methods: {
-        upImg(scope){
+        upImgSubmit(){
+            if(!this.curAddTime) return this.messageTip('请选择时间')
             $(this.$refs.up).click()
+        },
+        upImg(scope){
+            this.isChooseDate = true
             this.curItem = scope.row
         },
         delImg(id){},

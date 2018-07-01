@@ -153,28 +153,28 @@
                 if(this.chooTimeList.length == 0) return this.messageTip('上课时间没选~');
                 if(item.sale == '') return this.messageTip('课程顾问~');
                 item.userId = this.userId
-                item.times = JSON.stringify(this.chooTimeList)
+                item.trainTimes = JSON.stringify(this.chooTimeList)
                 var res = await this.ajax('/order/add', item)
                 if(res && res.code == this.successCode){
-                    this.item.orderId = res.data.id
-                    this.goUrl('/pay', this.item)
+                    item.orderId = res.data.id
+                    this.goUrl('/pay', item)
                 }
             },
-            async loginFun(){
-                var item = this.item;
-                alert(item.city == '')
-                if(item.city == '') return this.messageTip('地区未选~');
-                if(item.city == '') return this.messageTip('训练营未选~');
-                if(item.city == '') return this.messageTip('卡种未选~');
-                if(item.city == '') return this.messageTip('训练频次未选~');
-                if(item.city == '') return this.messageTip('课程顾问~');
+            // async loginFun(){
+            //     var item = this.item;
+            //     alert(item.city == '')
+            //     if(item.city == '') return this.messageTip('地区未选~');
+            //     if(item.city == '') return this.messageTip('训练营未选~');
+            //     if(item.city == '') return this.messageTip('卡种未选~');
+            //     if(item.city == '') return this.messageTip('训练频次未选~');
+            //     if(item.city == '') return this.messageTip('课程顾问~');
 
-                var res = await this.ajax('/api/user/login', this.item);
-                if(res && res.status == 200){
-                    var data = res.data;
-                    // this.goUrl('/myset', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
-                }
-            }
+            //     var res = await this.ajax('/api/user/login', this.item);
+            //     if(res && res.status == 200){
+            //         var data = res.data;
+            //         // this.goUrl('/myset', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
+            //     }
+            // }
         }
     }
 </script>

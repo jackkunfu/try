@@ -29,26 +29,28 @@
     .main
         div.cc(v-if="curTab == 0")
             img(:src="cardImg")
+            div(v-if="course.length == 0") 暂无信息或者暂未开卡
             div(v-for="(item, i) in course")
+                div {{item.card.card}}
                 .other 其他详细信息
-                div 上课时间：{{course.times}}
+                div 上课时间：{{'周'+week[item.week]}}
                     img(src="../../assets/user_icon_time@2x.png")
-                div 训练频次：{{course.times}}
+                div 训练频次：{{item.frequency}}
                     img(src="../../assets/user_icon_pinlv@2x.png")
                 div
                     img(src="../../assets/user_icon_information@2x.png")
-                    span 开卡时间：{{course.times}}
-                    span.span 到期时间：{{course.times}}
+                    span 开卡时间：{{item.openDate}}
+                    span.span 到期时间：{{item.endDate}}
 
         div.tn(v-if="curTab == 1")
             img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png")
             div(v-else)
                 div(v-if="!showTnTable")
-                    .each(v-for="(item, i) in tnList" @click="showTnTable=true")
+                    .each(v-for="(item, i) in tnList" @click="showTnCurImg(item)")
                         img.img-bg(src="../../assets/user_list_bg@2x.png")
                         div
-                            .time {{item.time || 'xxxx-xx-xx'}}
-                            span {{item.time || 'xxxx-xx-xx'}}
+                            .time {{item.testDate}}
+                            // span {{item.time || 'xxxx-xx-xx'}}
                 div(v-else)
                     img.tnDetailImg(:src="tnDetailImg" @click="showTnTable=false")
 
@@ -83,6 +85,7 @@ export default {
     name: 'my',
     data () {
         return {
+            week: ['一', '二', '三', '四', '五', '六', '日'],
             userId: this.$route.query.userId || this.$route.query.id,
             my: {
                 avatar: '',
@@ -151,15 +154,25 @@ export default {
         this.curTab = 0
     },
     methods: {
+        showTnCurImg(item){
+            this.showTnTable = true
+            this.tnDetailImg = item.content
+        },
         async getDetail(type){
             var url = type == 0 ? '/user/classes' : (type == 1 ? '/power_test/list' : '/user/pj')
-            var res = await this.ajax(url, { userId: this.userId }, 'get')
+            var options = { userId: this.userId }
+            if(type == 1){
+                options.limit = 1000
+                options.offset = 0
+            }
+            
+            var res = await this.ajax(url, options, 'get')
             if(res && res.code == this.successCode){
                 var data = res.data
                 if(type == 0){
                     this.course = data
                 }else if(type == 1){
-                    this.tnList = data
+                    this.tnList = data.rows
                 }else if(type == 2){
                     this.coach = data
                     this.isPJ = data.isPJ

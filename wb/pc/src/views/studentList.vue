@@ -54,27 +54,42 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
+            // keys: [
+            //     { str: '头像', key: 'avatar', type: 'img' },
+            //     { str: '姓名', key: 'name' },
+            //     { str: '性别', key: 'sex' },
+            //     { str: '生日', key: 'birth' },
+            //     { str: '身高', key: 'height' },
+            //     { str: '体重', key: 'weight' },
+            //     { str: '家长姓名', key: 'parentName' },
+            //     { str: '联系电话', key: 'parentPhone' },
+            //     { str: '训练营', key: 'trainName' },
+            //     { str: '卡种', key: 'remark' },
+            //     { str: '训练频次', key: 'remark' },
+            //     { str: '开卡时间', key: 'remark' },
+            //     { str: '到期时间', key: 'remark' },
+            //     { str: '学员作业', key: 'remark' },
+            //     { str: '体能测试', key: 'remark' }
+            // ],
             keys: [
-                { str: '头像', key: 'avatar', type: 'img' },
-                { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '生日', key: 'birth' },
-                { str: '身高', key: 'height' },
-                { str: '体重', key: 'weight' },
-                { str: '家长姓名', key: 'parentName' },
-                { str: '联系电话', key: 'parentPhone' },
-                { str: '训练营', key: 'trainName' },
-                { str: '卡种', key: 'remark' },
-                { str: '训练频次', key: 'remark' },
-                { str: '开卡时间', key: 'remark' },
-                { str: '到期时间', key: 'remark' },
-                { str: '学员作业', key: 'remark' },
-                { str: '体能测试', key: 'remark' }
+                { str: '头像', key: 'user.avatar', type: 'img' },
+                { str: '姓名', key: 'user.name' },
+                { str: '性别', key: 'sexStr' },
+                { str: '家长姓名', key: 'user.parentName' },
+                { str: '联系电话', key: 'user.parentPhone' },
+                { str: '地区', key: 'city' },
+                { str: '训练营', key: 'train.name' },
+                { str: '卡种', key: 'card.card' },
+                { str: '训练频次', key: 'frequency' },
+                { str: '费用', key: 'fee' },
+                // { str: '支付时间', key: 'height' },
+                { str: '创建时间', key: 'createDate' },
+                { str: '销售', key: 'sales.name' }
             ],
             searchKeys: ['trainId'],
             editKeys: [],
             api: {
-                list: { url: '/user/list' },
+                list: { url: '/order/list' },
                 add: { url: '/user/add' },
                 edit: { url: '/user/edit' },
                 del: { url: '/user/delete' }
@@ -91,7 +106,7 @@ export default {
     methods: {
         changeTableData(data){
             data.forEach(element => {
-                element.birth = element.birthday.split(' ')[0]
+                element.birth = element.birthday ? element.birthday.split(' ')[0] : ''
             });
             return data
         },
@@ -99,6 +114,7 @@ export default {
             return { userId: data.id }
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.status = 3
             return info
         },
         changeEditValue(info){   // 处理新增编辑请求传参

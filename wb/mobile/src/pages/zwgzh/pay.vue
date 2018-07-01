@@ -68,12 +68,15 @@
                     totalAmount: 1
                 }
                 if(this.payWay == 1){
-                    location.href = '/api/index/toOauth'   //  跳转显示微信验证
+                    // location.href = '/api/index/toOauth'   //  跳转显示微信验证
                     var wxres = await this.ajax('/wxpay/webPay', options)
                     if(wxres && wxres.code == this.successCode){
                         alert(JSON.stringify(wxres))
                         // $('body').append(wxres.data);
-                    }else this.messageTip(wxres.message)
+                    }else{
+                        // this.messageTip(wxres.message)
+                        location.href = '/api/index/toOauth'   //  跳转显示微信验证
+                    }
 
                 }else if(this.payWay == 2){
                     location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount=1'   //  跳转支付宝支付

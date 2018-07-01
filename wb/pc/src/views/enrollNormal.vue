@@ -139,8 +139,8 @@ export default {
                 del: { url: '/order/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '开卡', fun: 'openCard'},
-                { str: '已开卡', isShow: { key: '', value: '' }},
+                { str: '开卡', fun: 'openCard', isShow: { key: 'status', value: '0' }},
+                { str: '已开卡', isShow: { key: 'status', value: '3' }},
                 // { str: '激活', fun: 'jihuo', isShow: { key: '', value: '' } },
                 // { str: '已激活', fun: 'jihuo'},
                 { str: '编辑', fun: 'editScope'},
@@ -203,6 +203,7 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.sexStr = element.user.sex ? '女' : '男'
+                element.fee = element.fee ?  (element.fee-0)/100 : 0
             });
             return data
         },

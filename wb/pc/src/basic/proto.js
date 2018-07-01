@@ -136,7 +136,7 @@ export default function(Vue){
             var result = res.data
             if(result.rows.length == 0){
                 
-                if(options.offset >= 0){
+                if(options.offset > 0){
                     var of = options.offset - 10
                     this.page.offset = of
                     this.tableList(of)
