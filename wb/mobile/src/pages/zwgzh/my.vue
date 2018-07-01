@@ -46,7 +46,7 @@
                     span.span 到期时间：{{item.endDate}}
 
         div.tn(v-if="curTab == 1")
-            img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png")
+            img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png" style="width:50%;margin-top:1rem;")
             div(v-else)
                 div(v-if="!showTnTable")
                     .each(v-for="(item, i) in tnList" @click="showTnCurImg(item)")
@@ -242,6 +242,7 @@ export default {
                         margin-top: 0.3rem
 
     .tn
+        text-align: center
         .tnDetailImg
             width: 100%
             min-height: 1rem
@@ -278,7 +279,7 @@ export default {
                 margin-bottom: 0.3rem
             span
                 display: inline-block
-                width: 3.5rem
+                width: 3.8rem
             img
                 width: 1rem
                 margin: 0 0.25rem

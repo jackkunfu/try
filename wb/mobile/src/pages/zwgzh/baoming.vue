@@ -3,7 +3,7 @@
     .bg
         img(src="../../assets/apply_bg@2x.png")
 
-    // .top
+    //- .top
         img(src="../../assets/activity_logo@2x.png")
 
     class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false" :times="timeList")
@@ -34,7 +34,7 @@
             img(src="../../assets/xia.png")
 
         
-        .each(@click="chooseTimes=true")
+        .each(@click="chooseTimes=true;")
             span 上课时间
             //- select(@click="chooseTimes=true" v-model="item.frequency" :class="item.frequency==''?'':'ff'")
                 option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
@@ -42,7 +42,7 @@
             img(src="../../assets/xia.png")
 
         //- .each
-            .fl 
+            .fl
             .fr(@click="chooseTimes=true") 选择上课时间
                 .icon.fr
                     img(src="../../assets/xia.png")

@@ -5,7 +5,7 @@
     .sort-item 班主任中心
 
     .list
-        .item(v-for="(item, i) in list" :key="i" @click="goUrl('/dianming', item)")
+        .item(v-for="(item, i) in list" :key="i" @click="goBanji(item)")
             img(src="../../assets/center_list_bg@2x.png")
             .title.els {{item.train.name}}
             .sub-title.els {{item.time}}
@@ -26,12 +26,18 @@ export default {
         this.list = (await this.ajax('/teacher_plan/list', {
             offset: 0,
             limit: 100,
-            userId: this.$route.query.userId
+            userId: this.uid
         }, 'get')).data.rows
 
         this.list.forEach(v => {
             v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
         })
+    },
+    methods: {
+        goBanji(item){
+            item.userId = this.uid
+            this.goUrl('/dianming', item)
+        }
     }
 }
 </script>

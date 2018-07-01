@@ -2,7 +2,7 @@
 .h100
     img(src="../../assets/Sign_icon_chenggong@2x.png")
 
-    .lbtn(@click="goUrl('/banzhuren')") 返回
+    .lbtn(@click="goBnzhure") 返回
 </template>
 
 <script>
@@ -10,6 +10,11 @@ export default {
     name: 'dianmingOk',
     data () {
         return {}
+    },
+    methods: {
+        goBnzhure(){
+            this.goUrl('/banzhuren', { userId: this.$route.query.userId })
+        }
     }
 }
 </script>

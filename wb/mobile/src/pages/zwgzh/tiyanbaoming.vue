@@ -134,7 +134,7 @@
 
 <style lang="sass" scoped>
 .h100
-    background: #fff
+    background-color: #fff
     // background-image: linear-gradient(2deg, #FFFFFF 48%, rgba(13,175,241,0.00) 100%);
 
 .bg

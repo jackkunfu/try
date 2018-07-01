@@ -229,7 +229,7 @@
 
 <style lang="sass" scoped>
 .h100
-    background: #fff
+    background-color: #fff
 
 .bg
     width: 100%

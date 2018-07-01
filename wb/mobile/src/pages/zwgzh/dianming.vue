@@ -92,7 +92,7 @@ export default {
                 }) )
             })
             if(res && res.code == this.successCode){
-                this.goUrl('/dianmingOk')
+                this.goUrl('/dianmingOk', { userId: this.query.userId })
             }else this.messageTip(res.message || '请求失败~')
         },
         dianming(type, item){
