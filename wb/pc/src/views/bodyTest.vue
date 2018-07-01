@@ -65,7 +65,7 @@ export default {
                 { str: '联系电话', key: 'user.parentPhone' },
                 { str: '地区', key: 'city' },
                 { str: '训练营', key: 'train.name' },
-                { str: '历史成绩', text: '查看', fun: 'see' }
+                { str: '历史成绩', text: '查看', type: 'fun', fun: 'see' }
             ],
             searchKeys: [],
             editKeys: [],

@@ -15,4 +15,10 @@ export default function(Vue){
         return isAll ? (part1 + ' ' + part2) : part1
     })
 
+    Vue.filter('split', function(v, fillKey, isAll){    // 截取省略
+        if(!v) return '';
+        
+        return v.split(' ')[0]
+    })
+
 }

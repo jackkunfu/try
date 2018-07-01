@@ -33,8 +33,11 @@
             div(v-for="(item, i) in course")
                 div {{item.card.card}}
                 .other 其他详细信息
-                div 上课时间：{{'周'+week[item.week]}}
+                div 上课时间：
                     img(src="../../assets/user_icon_time@2x.png")
+                div(style="margin-left: 5.3rem;margin-top:-1.3rem")
+                    div(v-for="(it, i) in item.times") {{'周'+week[it.week]+' '+it.begin+'~'+it.end}}
+                    
                 div 训练频次：{{item.frequency}}
                     img(src="../../assets/user_icon_pinlv@2x.png")
                 div
@@ -49,7 +52,7 @@
                     .each(v-for="(item, i) in tnList" @click="showTnCurImg(item)")
                         img.img-bg(src="../../assets/user_list_bg@2x.png")
                         div
-                            .time {{item.testDate}}
+                            .time {{item.testDate | split}}
                             // span {{item.time || 'xxxx-xx-xx'}}
                 div(v-else)
                     img.tnDetailImg(:src="tnDetailImg" @click="showTnTable=false")
@@ -156,7 +159,7 @@ export default {
     methods: {
         showTnCurImg(item){
             this.showTnTable = true
-            this.tnDetailImg = item.content
+            this.tnDetailImg = this.config.imgPath + item.content
         },
         async getDetail(type){
             var url = type == 0 ? '/user/classes' : (type == 1 ? '/power_test/list' : '/user/pj')
@@ -253,6 +256,7 @@ export default {
                 .time
                     font-size: 0.8rem
                     margin-bottom: 0.2rem
+                    margin-top: 0.7rem
                 span
                     color: #9b9b9b
     
