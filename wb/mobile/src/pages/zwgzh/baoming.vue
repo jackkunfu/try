@@ -73,6 +73,7 @@
         data () {
             var query = this.$route.query;
             return {
+                openId: query.openId || '',
                 week: ['一', '二', '三', '四', '五', '六', '日'],
                 chooseTimes: false,
                 item: {
@@ -154,27 +155,13 @@
                 if(item.sale == '') return this.messageTip('课程顾问~');
                 item.userId = this.userId
                 item.trainTimes = JSON.stringify(this.chooTimeList)
+                item.openId = this.openId
                 var res = await this.ajax('/order/add', item)
                 if(res && res.code == this.successCode){
                     item.orderId = res.data.id
                     this.goUrl('/pay', item)
                 }
-            },
-            // async loginFun(){
-            //     var item = this.item;
-            //     alert(item.city == '')
-            //     if(item.city == '') return this.messageTip('地区未选~');
-            //     if(item.city == '') return this.messageTip('训练营未选~');
-            //     if(item.city == '') return this.messageTip('卡种未选~');
-            //     if(item.city == '') return this.messageTip('训练频次未选~');
-            //     if(item.city == '') return this.messageTip('课程顾问~');
-
-            //     var res = await this.ajax('/api/user/login', this.item);
-            //     if(res && res.status == 200){
-            //         var data = res.data;
-            //         // this.goUrl('/myset', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
-            //     }
-            // }
+            }
         }
     }
 </script>

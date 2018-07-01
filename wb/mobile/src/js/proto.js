@@ -46,8 +46,11 @@ export default function(Vue){
     Vue.prototype.ajax = async function(){
         try{
             var res = await this._ajax(...arguments);
-            if(res && res.code === this.successCode) return res
-            return this.messageTip(res.message || '请求失败，请稍后重试~')
+            if(res && res.code === this.successCode){}
+            else this.messageTip(res.message || '请求失败，请稍后重试~')
+            
+            return res
+            
         }catch(e){
             console.log(arguments[0])
             console.log(e)

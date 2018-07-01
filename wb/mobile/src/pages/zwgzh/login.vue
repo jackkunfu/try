@@ -56,6 +56,7 @@
                 fogtUid = query.userId;
             }
             return {
+                openId: this.$route.query.openId || '',
                 isBz: this.$route.query.type == 0,
                 isBm: this.$route.query.type == 1,
                 isLogin: this.$route.query.type == 2,
@@ -132,7 +133,7 @@
                 if(res && res.code == this.successCode){
                     var data = res.data;
                     localStorage.zwgzhUid = data.id;
-                    this.goUrl('/baoming', { userId: data.id, data: this.login });
+                    this.goUrl('/baoming', { userId: data.id, data: this.login, openId: this.openId });
                 }
             },
             async getCode(key, e){
@@ -227,19 +228,23 @@
 </script>
 
 <style lang="sass" scoped>
+.h100
+    background: #fff
+
 .bg
     width: 100%
     height: 100%
     position: absolute
     left: 0
     top: 0
-    z-index: -1
+    z-index: 0
     img
         width: 100%
         height: auto
 
 .top
     text-align: center
+    position: relative
     img
         width: 70%
         margin: 2rem auto
@@ -301,6 +306,7 @@
     color: #fff
     font-size: 0.8rem
     border-radius: 2.1rem
+    position: relative
 
 // .enroll
 //     padding: 0.6rem 0.35rem;

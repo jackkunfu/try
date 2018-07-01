@@ -40,13 +40,15 @@
         data () {
             var query = this.$route.query;
             return {
+                openId: query.openId,
                 order: {
                     name: '郑武体育篮球训练课', fee: '3000元', city: '杭州', train: {}, cardType: '半年卡', times: '每周两次', card: {}
                 },
                 payWay: 0,
                 userId: query.userId,
                 trainId: query.trainId,
-                orderId: query.orderId
+                orderId: query.orderId,
+                wxdata: {}
             }
         },
         async mounted(){
@@ -68,16 +70,22 @@
                     totalAmount: 1
                 }
                 if(this.payWay == 1){
-                    // location.href = '/api/index/toOauth'   //  跳转显示微信验证
+                    options.openId = this.openId
                     var wxres = await this.ajax('/wxpay/webPay', options)
                     if(wxres && wxres.code == this.successCode){
-                        alert(JSON.stringify(wxres))
-                        // $('body').append(wxres.data);
-                    }else{
-                        // this.messageTip(wxres.message)
-                        location.href = '/api/index/toOauth'   //  跳转显示微信验证
+                        this.wxdata = JSON.parse(wxres.data)
+                        if (typeof WeixinJSBridge == "undefined"){
+                            alert(1)
+                            if( document.addEventListener ){
+                                document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
+                            }else if (document.attachEvent){
+                                document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady); 
+                                document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
+                            }
+                        }else{
+                            this.onBridgeReady();
+                        }
                     }
-
                 }else if(this.payWay == 2){
                     location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount=1'   //  跳转支付宝支付
 
@@ -96,6 +104,26 @@
                 // setTimeout(()=>{ this.goUrl('/timesChoose', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
                 setTimeout(()=>{ this.goUrl('/myset', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId }) }, 1000)
                 
+            },
+            onBridgeReady(){
+                alert(2)
+                var data = this.wxdata
+                WeixinJSBridge.invoke('getBrandWCPayRequest', data,
+                    res => {
+                        alert(JSON.stringify(res))
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {   // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                            this.goUrl('/myset', { cardId: this.order.cardId, userId: this.userId, trainId: this.trainId })
+                        }
+                    }
+                )
+                // {
+                //     "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入     
+                //     "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
+                //     "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串     
+                //     "package":"prepay_id=u802345jgfjsdfgsdg888",     
+                //     "signType":"MD5",         //微信签名方式：     
+                //     "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+                // }
             }
         }
     }
