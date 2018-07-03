@@ -57,6 +57,7 @@
 </template>
 
 <script>
+    'use strict';
     import classTimes from '../part/classTimes'
     export default {
         name: 'Baoming',
