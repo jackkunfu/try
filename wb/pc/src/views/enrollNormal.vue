@@ -79,21 +79,23 @@ div
                 el-form-item(label="卡种")
                     el-select(v-model="editInfo.cardId")
                         el-option(v-for="(item, i) in cards" :label="item.card" placeholder="选择卡种" :value="item.id" :key="i")
-                el-form-item(label="上课时间")
+                //- el-form-item(label="上课时间")
                     el-select(v-model="editInfo.time")
                         el-option(v-for="(item, i) in classTimes" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" placeholder="选择训练频次" :value="item.id" :key="i")
                 el-form-item(label="训练频次")
                     el-select(v-model="editInfo.frequency")
                         el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.frequency" :key="i")
                 el-form-item(label="价格")
-                    el-input(v-model="editInfo.fee" disabled="true")
+                    el-input(v-model="editInfo.fee" :disabled="true")
+                el-form-item(label="上课时间")
+                    div(v-for="(item, i) in classTimes" :key="i")
+                        el-switch(v-model="item.isChoose" style="margin-right:20px;position:relative;top:-2px;")
+                        span {{'周'+week[item.week]+' '+item.begin+'~'+item.end}}
+                        
 
                 el-form-item(label="支付日期")
                     el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
-                //- el-form-item(label="上课时间")
-                    div(v-for="(item, i) in classTimes" :key="i")
-                        span {{item.time}}
-                        el-switch(v-model="item.delivery")
+                
                 el-form-item(label="销售顾问")
                     el-select(v-model="editInfo.sale")
                         el-option(v-for="(item, i) in sales" :label="item.name" :value="item.id" :key="i")
@@ -176,8 +178,8 @@ export default {
         },
         async 'editInfo.frequency'(v){
             if(!v) return
-            var i = this.frequencys.map(v=>v.id).indexOf(v)
-            this.editInfo.fee = (this.frequencys[i].fee - 0)/100
+            var i = this.frequencys.map(v=>v.frequency).indexOf(v)
+            this.editInfo.fee = (this.frequencys[i].price - 0)/100
         }
     },
     async mounted(){
@@ -217,16 +219,32 @@ export default {
             return info;
         },
         testInput(){
-            // var arr = ['account', 'name', 'birthday', 'sex', 'email', 'phone']
             var obj = this.trimObj(this.editInfo)
             if(obj.avatar == '') return this.messageTip('头像未上传')
             if(obj.name == '') return this.messageTip('名称不能为空')
             if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
-            // if(obj.account == '') return this.messageTip('账号不能为空')
-            // if(obj.account == '') return this.messageTip('账号不能为空')
-            // if(obj.account == '') return this.messageTip('账号不能为空')
-            // if(obj.account == '') return this.messageTip('账号不能为空')
-            // if(obj.account == '') return this.messageTip('账号不能为空')
+            if(obj.phone == '') return this.messageTip('登陆手机未填')
+            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.phone)) ) return this.messageTip('登陆手机格式有误')
+            if(obj.birthday == '') return this.messageTip('生日未选')
+            if(obj.height == '') return this.messageTip('身高未填')
+            if(obj.weight == '') return this.messageTip('体重未填')
+            if(obj.parentName == '') return this.messageTip('家长姓名未填')
+            if(obj.parentPhone == '') return this.messageTip('家长联系方式未填')
+            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.phone)) ) return this.messageTip('家长联系方式手机格式有误')
+
+            if(obj.city == '') return this.messageTip('地区未选')
+            if(obj.trainId == '') return this.messageTip('训练营未选')
+            if(obj.cardId == '') return this.messageTip('卡种未选')
+            if(obj.frequency == '') return this.messageTip('训练频次未选')
+
+            var chooseTimesLength = this.classTimes.filter(v=>v.isChoose).length
+            if(chooseTimesLength == 0) return this.messageTip('上课时间未选')
+
+            var freq = this.allFrequency.indexOf(obj.frequency)
+            if(chooseTimesLength > (freq+1)) return this.messageTip('训练频次为'+this.allFrequency[freq]+'最多选'+(freq+1)+'个上课时间');
+
+            if(obj.payDate == '') return this.messageTip('支付日期未选')
+            if(obj.sale == '') return this.messageTip('销售顾问未选')
 
             return true
         },

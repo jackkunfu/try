@@ -184,5 +184,6 @@ export default function(Vue){
     }
 
     Vue.prototype.weekTimes = ['一周一次', '一周两次', '一周三次', '一周四次', '一周五次', '一周六次']
+    Vue.prototype.allFrequency = ['一周一次', '一周两次', '一周三次', '一周四次', '一周五次', '一周六次']
 
 }

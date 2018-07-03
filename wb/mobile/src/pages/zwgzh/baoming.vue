@@ -152,7 +152,11 @@
                 if(item.cardId == '') return this.messageTip('卡种未选~');
                 if(item.frequency == '') return this.messageTip('训练频次未选~');
                 if(this.chooTimeList.length == 0) return this.messageTip('上课时间没选~');
-                if(item.sale == '') return this.messageTip('课程顾问~');
+
+                var freq = this.allFrequency.indexOf(item.frequency)
+                if(this.chooTimeList.length > (freq+1)) return this.messageTip('训练频次为'+this.allFrequency[freq]+'最多选'+(freq+1)+'个上课时间');
+
+                if(item.sale == '') return this.messageTip('课程顾问未选~');
                 item.userId = this.userId
                 item.trainTimes = JSON.stringify(this.chooTimeList)
                 item.openId = this.openId
