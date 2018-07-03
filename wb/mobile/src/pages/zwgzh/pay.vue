@@ -86,7 +86,7 @@
                         }
                     }
                 }else if(this.payWay == 2){
-                    location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount='+this.order.fee   //  跳转支付宝支付
+                    this.goUrl('/payZfb', options)
 
                     // var res = await this.ajax('/alipay/wapPay', options)
                     // if(res && res.code == this.successCode){
