@@ -4,7 +4,7 @@
         .item
             span(style="font-weight:bold") 订单名称：{{order.name}}
         .item
-            span 订单金额：{{order.fee}}
+            span 订单金额：{{order.feeStr}}
         .item
             span 地区：{{order.train.city}}
         .item
@@ -42,7 +42,7 @@
             return {
                 openId: query.openId,
                 order: {
-                    name: '郑武体育篮球训练课', fee: '3000元', city: '杭州', train: {}, cardType: '半年卡', times: '每周两次', card: {}
+                    name: '郑武体育篮球训练课', fee: '', city: '杭州', train: {}, cardType: '半年卡', times: '每周两次', card: {}, feeStr: ''
                 },
                 payWay: 0,
                 userId: query.userId,
@@ -55,7 +55,7 @@
             var res = await this.ajax('/order/detail', { id: this.orderId }, 'post')
             if(res && res.code == this.successCode){
                 this.order = res.data
-                this.order.fee = this.order.fee/100 + '元'
+                this.order.feeStr = this.order.fee/100 + '元'
                 this.order.name = '郑武体育篮球训练课'
             }
         },
@@ -66,8 +66,7 @@
                     orderId: this.orderId,
                     body: '郑武体育篮球训练课',
                     subject: '郑武体育篮球训练课',
-                    // totalAmount: this.order.fee
-                    totalAmount: 1
+                    totalAmount: this.order.fee
                 }
                 if(this.payWay == 1){
                     options.openId = this.openId
@@ -87,7 +86,7 @@
                         }
                     }
                 }else if(this.payWay == 2){
-                    location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount=1'   //  跳转支付宝支付
+                    location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount='+this.order.fee   //  跳转支付宝支付
 
                     // var res = await this.ajax('/alipay/wapPay', options)
                     // if(res && res.code == this.successCode){

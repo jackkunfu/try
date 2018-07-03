@@ -26,11 +26,11 @@
         .each
             span 城市：
             select(v-model="item.city")
-                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i")
+                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
         .each
             span 训练营：
             select(v-model="item.trainId")
-                option(v-for="(it, i) in trains" :value="it.id" :label="it.name" :key="i")
+                option(v-for="(it, i) in trains" :value="it.id" :label="it.name" :key="i") {{it.name}}
         .each
             span 上课时间：
             .fr(@click="chooseTimes=true")
@@ -46,9 +46,9 @@
     export default {
         name: 'tiyanbaoming',
         components: {
-            classTimes
+            classTimes: classTimes
         },
-        data () {
+        data() {
             var query = this.$route.query
             return {
                 week: ['一', '二', '三', '四', '五', '六', '日'],
@@ -63,7 +63,7 @@
                 clsTimes: [],  // 选择训练营卡种的可选上课时间,
             }
         },
-        computed:{
+        computed: {
             curTiyanTimeStr(){
                 if(this.item.begin == '') return '请选择上课时间'
                 let item = this.item
@@ -113,21 +113,6 @@
                 this.item.begin = da.begin
                 this.item.end = da.end
                 this.chooseTimes = false
-            },
-            async loginFun(){
-                var item = this.item;
-                login.phone = login.phone.trim();
-                login.pwd = login.pwd.trim();
-                if(item.city == '') return this.messageTip('训练频次未选~');
-                if(item.city == '') return this.messageTip('课程顾问~');
-
-                var res = await this.ajax('/api/user/login', this.login);
-                if(res && res.status == 200){
-                    var data = res.data;
-                    localStorage.tb_tk = data.token;
-                    localStorage.tb_userInfo = JSON.stringify(data.tbUser);
-                    this.goUrl('/vipCenter', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
-                }
             }
         }
     }

@@ -64,9 +64,9 @@ export default {
     margin-top: 2em
 
 .h100
-    background-image: url('../../assets/choose_bg@2x.png')
+    background-image: url('../../assets/choose_bg1@2x.png')
     background-size: 100% 100%
-    position: absolute
+    position: fixed
     z-index: 20
     width: 100%
     height: 100%

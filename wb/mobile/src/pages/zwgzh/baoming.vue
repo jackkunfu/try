@@ -12,25 +12,25 @@
         .each
             span 选择地区
             select(v-model="item.city" :class="item.city==''?'':'ff'")
-                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i")
+                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练营
             select(v-model="item.trainId" :class="item.trainId==''?'':'ff'")
-                option(v-for="(it, i) in cityTrains" :value="it.id" :label="it.name" :key="i")
+                option(v-for="(it, i) in cityTrains" :value="it.id" :label="it.name" :key="i") {{it.name}}
             img(src="../../assets/xia.png")
 
         .each
             span 选择卡种
             select(v-model="item.cardId" :class="item.cardId==''?'':'ff'")
-                option(v-for="(it, i) in trainCards" :value="it.id" :label="it.card" :key="i")
+                option(v-for="(it, i) in trainCards" :value="it.id" :label="it.card" :key="i") {{it.card}}
             img(src="../../assets/xia.png")
 
         .each
             span 选择训练频次
             select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
-                option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
+                option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i") {{it.frequency}}
             img(src="../../assets/xia.png")
 
         
@@ -41,7 +41,7 @@
         .each
             span 接待课程顾问
             select(v-model="item.sale" :class="item.sale==''?'':'ff'")
-                option(v-for="(it, i) in sells" :value="it.id" :label="it.name" :key="i")
+                option(v-for="(it, i) in sells" :value="it.id" :label="it.name" :key="i") {{it.name}}
             img(src="../../assets/xia.png")
 
         .tip 注意：付款完成后请根据您的卡种选择上课时间并完善学员信息
