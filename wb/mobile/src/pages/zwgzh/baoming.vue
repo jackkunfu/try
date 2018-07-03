@@ -6,7 +6,7 @@
     //- .top
         img(src="../../assets/activity_logo@2x.png")
 
-    class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false" :times="timeList")
+    
 
     .enroll
         .each
@@ -36,16 +36,7 @@
         
         .each(@click="chooseTimes=true;")
             span 上课时间
-            //- select(@click="chooseTimes=true" v-model="item.frequency" :class="item.frequency==''?'':'ff'")
-                option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i")
             div(style="text-align:right;padding-right:2.1rem;line-height:1.3rem;color:#888;") {{chooseTimesStr}}
-            img(src="../../assets/xia.png")
-
-        //- .each
-            .fl
-            .fr(@click="chooseTimes=true") 选择上课时间
-                .icon.fr
-                    img(src="../../assets/xia.png")
         
         .each
             span 接待课程顾问
@@ -60,6 +51,8 @@
             | 元
         
         .btn(@click="baoming") 支付报名
+
+    class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false;" :times="timeList")
 
 </template>
 
@@ -129,7 +122,8 @@
                 this.weekTimes = await this.getAllCardTimes(v)
             },
             async 'item.frequency'(v){
-                var i = this.weekTimes.map(v=>v.frequency).indexOf(v)
+                if(!v) return
+                var i = this.weekTimes.map(el=>el.frequency).indexOf(v)
                 this.item.fee = this.weekTimes[i].price
             }
         },
