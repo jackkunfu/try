@@ -19,8 +19,8 @@ div
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="教练")
-                    el-select(v-model="searchInfo.city" placeholder="教练")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="searchInfo.coach" placeholder="教练")
+                        el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
         
         el-table(:data="tableData")
 
@@ -29,7 +29,7 @@ div
             template(v-for="(item, i) in ['一', '二', '三', '四', '五', '六', '日']")
                 el-table-column(:label="'周'+item")
                     template(slot-scope="scope")
-                        div(v-if="scope.row.date == i")
+                        div(v-if="scope.row.week == i")
                             span {{scope.row.time}}
                             el-button(type="primary" @click="handleCoach(i, scope.row, 0)" size="small" v-if="!scope.row.has") 添加教练
                             div(v-else)
@@ -80,7 +80,7 @@ export default {
             searchKeys: [],
             editKeys: [],
             api: {
-                list: { url: '/teacher_plan/list' },
+                list: { url: '/teacher_plan/coach/list' },
                 add: { url: '/teacher_plan/add' },
                 edit: { url: '/teacher_plan/edit' },
                 del: { url: '/teacher_plan/delete' }
@@ -90,20 +90,43 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ]
+            ],
+            allCoach: []
         }
     },
+    mounted(){
+        this.getAllCoach()
+    },
     methods: {
+        changeTableData(data){
+            alert(1)
+            return object.keys(data).map(v => {
+                return {
+                    name: v,
+                    list: data[v]
+                }
+            }) 
+        },
         async tableList(){
             var obj = this.trimObj(this.searchInfo)
             obj.offset = 0
             obj.limit = 10
-            var req = await this.ajax(this.api.list.url, obj)
+            var req = await this.ajax(this.api.list.url, obj, 'get')
             if(req && req.code == this.successCode){
-                var result = res.data
-                this.tableData = result.rows
-                this.page.total = result.total;
-                this.curChooseRow = null;
+                var result = req.data
+                this.tableData = result || []
+                // this.page.total = result.total;
+                // this.curChooseRow = null;
+            }
+        },
+        async getAllCoach(){
+            var res = await this.ajax('/mgr/list', {
+                roleid: 4,
+                offset: 0,
+                limit: 1000
+            }, 'get')
+            if(res && res.code == this.successCode){
+                this.allCoach = res.data.rows
             }
         },
         changeSearchValue(info){     //  处理搜索请求传参
