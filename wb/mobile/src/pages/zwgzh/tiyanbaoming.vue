@@ -22,19 +22,21 @@
             input(v-model="item.name" placeholder="请输入姓名")
         .each
             span 联系方式：
-            input(v-model="item.mobile" type="number" placeholder="请输入联系方式")
+            input(v-model="item.mobile" placeholder="请输入联系方式")
         .each
             span 城市：
             select(v-model="item.city")
+                option(value="" label="请选择城市") 请选择城市
                 option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
         .each
             span 训练营：
             select(v-model="item.trainId")
+                option(value="" label="请选择训练营") 请选择训练营
                 option(v-for="(it, i) in trains" :value="it.id" :label="it.name" :key="i") {{it.name}}
         .each
             span 上课时间：
             .fr(@click="chooseTimes=true")
-                span {{curTiyanTimeStr}}
+                span(style="color:#9b9b9b;font-size:0.7rem;") {{curTiyanTimeStr}}
                 img(src="../../assets/xia.png")
         
         .btn(@click="baoming") 提交报名
@@ -46,7 +48,7 @@
     export default {
         name: 'tiyanbaoming',
         components: {
-            classTimes: classTimes
+            classTimes
         },
         data() {
             var query = this.$route.query
@@ -74,6 +76,7 @@
             async 'item.city'(v){
                 this.trains = []
                 this.item.trainId = ''
+                if(!v) return
                 this.trains = await this.getAllTrain(v)
             },
             async 'item.trainId'(id){
@@ -95,7 +98,7 @@
                 this.item.mobile = this.item.mobile.trim()
                 
                 if(this.item.name == '' ) return this.messageTip('姓名不能为空~');
-                if(this.item.mobile == '') return this.messageTip('手联系方式不能为空~');
+                if(this.item.mobile == '') return this.messageTip('联系方式不能为空~');
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.item.mobile)) ) return this.messageTip('手机号格式有误~');
 
                 if(this.item.city == '') return this.messageTip('请选择城市~');

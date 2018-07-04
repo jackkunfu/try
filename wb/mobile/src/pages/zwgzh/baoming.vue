@@ -10,26 +10,31 @@
 
     .enroll
         .each
-            span 选择地区
-            select(v-model="item.city" :class="item.city==''?'':'ff'")
+            //- span 选择地区
+            //- select(v-model="item.city" :class="item.city==''?'':'ff'")
+            select(v-model="item.city" class="ff")
+                option(value="" label="请选择地区") 请选择地区
                 option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
             img(src="../../assets/xia.png")
 
         .each
-            span 选择训练营
+            //- span 选择训练营
             select(v-model="item.trainId" :class="item.trainId==''?'':'ff'")
+                option(value="" label="选择训练营") 选择训练营
                 option(v-for="(it, i) in cityTrains" :value="it.id" :label="it.name" :key="i") {{it.name}}
             img(src="../../assets/xia.png")
 
         .each
-            span 选择卡种
+            //- span 选择卡种
             select(v-model="item.cardId" :class="item.cardId==''?'':'ff'")
+                option(value="" label="选择卡种") 选择卡种
                 option(v-for="(it, i) in trainCards" :value="it.id" :label="it.card" :key="i") {{it.card}}
             img(src="../../assets/xia.png")
 
         .each
-            span 选择训练频次
+            //- span 选择训练频次
             select(v-model="item.frequency" :class="item.frequency==''?'':'ff'")
+                option(value="" label="选择训练频次") 选择训练频次
                 option(v-for="(it, i) in weekTimes" :value="it.frequency" :label="it.frequency" :key="i") {{it.frequency}}
             img(src="../../assets/xia.png")
 
@@ -39,8 +44,9 @@
             div(style="text-align:right;padding-right:2.1rem;line-height:1.3rem;color:#888;") {{chooseTimesStr}}
         
         .each
-            span 接待课程顾问
+            //- span 接待课程顾问
             select(v-model="item.sale" :class="item.sale==''?'':'ff'")
+                option(value="" label="选择课程顾问") 选择课程顾问
                 option(v-for="(it, i) in sells" :value="it.id" :label="it.name" :key="i") {{it.name}}
             img(src="../../assets/xia.png")
 

@@ -1,5 +1,6 @@
 <template lang="pug">
-.h100
+.h100(style="text-align: center;")
+    div(v-if="isWx") 请点击点击右上角在手机浏览器中打开完成支付~
     img(v-if="isWx" src="")
 
 </template>
