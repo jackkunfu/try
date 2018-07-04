@@ -163,7 +163,7 @@
         border: none
         outline: none
         color: #9b9b9b
-        line-height: 1rem
+        height: 1rem
 
     .fr
         width: 9rem
