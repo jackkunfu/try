@@ -29,13 +29,14 @@ div
             template(v-for="(item, i) in ['一', '二', '三', '四', '五', '六', '日']")
                 el-table-column(:label="'周'+item")
                     template(slot-scope="scope")
-                        div(v-if="scope.row.week == i")
-                            span {{scope.row.time}}
-                            el-button(type="primary" @click="handleCoach(i, scope.row, 0)" size="small" v-if="!scope.row.has") 添加教练
-                            div(v-else)
-                                .name {{scope.row.name}}
-                                el-button(type="primary" @click="handleCoach(i, scope.row, 1)" size="small") 替换
-                                el-button(type="warning" @click="delCoach(i, scope.row)" size="small") 删除
+                        template(v-for="(cls, j) in scope.row.list")
+                            div(v-if="i == cls.week")
+                                span {{cls.time}}
+                                el-button(type="primary" @click="handleCoach(i, scope.row, 0)" size="small" v-if="!scope.row.has") 添加教练
+                                div(v-else)
+                                    .name {{cls.name}}
+                                    el-button(type="primary" @click="handleCoach(i, scope.row, 1)" size="small") 替换
+                                    el-button(type="warning" @click="delCoach(i, scope.row)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -98,15 +99,6 @@ export default {
         this.getAllCoach()
     },
     methods: {
-        changeTableData(data){
-            alert(1)
-            return object.keys(data).map(v => {
-                return {
-                    name: v,
-                    list: data[v]
-                }
-            }) 
-        },
         async tableList(){
             var obj = this.trimObj(this.searchInfo)
             obj.offset = 0
@@ -114,9 +106,12 @@ export default {
             var req = await this.ajax(this.api.list.url, obj, 'get')
             if(req && req.code == this.successCode){
                 var result = req.data
-                this.tableData = result || []
-                // this.page.total = result.total;
-                // this.curChooseRow = null;
+                this.tableData = Object.keys(result).map(v => {
+                    return {
+                        name: v,
+                        list: result[v]
+                    }
+                })  || []
             }
         },
         async getAllCoach(){
