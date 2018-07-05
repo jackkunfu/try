@@ -4,7 +4,7 @@ div
         .page-title 排课管理
             span /教练排课
 
-        search(@search="search" @reset="reset")
+        //- search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
@@ -19,7 +19,7 @@ div
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
                 el-form-item(label="教练")
-                    el-select(v-model="searchInfo.coach" placeholder="教练")
+                    el-select(v-model="searchInfo.coachId" placeholder="教练")
                         el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
         
         el-table(:data="tableData")
@@ -31,12 +31,13 @@ div
                     template(slot-scope="scope")
                         template(v-for="(cls, j) in scope.row.list")
                             .cls(v-if="i == cls.week")
-                                span {{cls.begin + ' ~ ' +cls.end}}
-                                el-button(type="primary" @click="handleCoach(j, cls, 0)" size="small" v-if="!cls.coachs || cls.coachs.length == 0") 添加教练
+                                .time {{cls.begin + ' ~ ' +cls.end}}
+                                    //- el-button(type="primary" @click="handleCoach(j, cls, 0)" size="mini" v-if="!cls.coachs || cls.coachs.length == 0") 添加教练
+                                el-button(type="primary" @click="addOrEdit(0, cls)" size="mini") 添加教练
                                 div(v-for="(coach, k) in cls.coachs")
                                     span.name {{coach.name}}
-                                        .x X
-                                    el-button(type="primary" icon="el-icon-edit" @click="handleCoach(k, coach, 1)" size="mini")
+                                        .x(@click="del(cls, k)") X
+                                    el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
                                     //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
@@ -45,11 +46,11 @@ div
         .box
             el-form(:model="editInfo" label-width="160px" size="mini")
                 el-form-item(label="教练")
-                    el-select(v-model="editInfo.city" placeholder="教练")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
+                    el-select(v-model="editInfo.coachId" placeholder="教练")
+                        el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                    el-button(type="primary" @click="chooseOk" size="small") 保存
                     el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
@@ -69,8 +70,8 @@ export default {
                 //     name: 'coach wang'
                 // }
             ],
-            searchKeys: [],
-            editKeys: [],
+            searchKeys: ['coachId', 'trainId', 'city', 'week'],
+            editKeys: ['coachId'],
             api: {
                 list: { url: '/teacher_plan/coach/list' },
                 add: { url: '/teacher_plan/add' },
@@ -83,7 +84,19 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
             ],
-            allCoach: []
+            allCoach: [],
+            curEditPlan: null,
+            changeIdx: null
+        }
+    },
+    watch: {
+        showEditCtn(v){
+            if(!v){
+                this.curEditPlan = null
+                this.changeIdx = null
+                this.editInfo.coachId = ''
+            }
+
         }
     },
     mounted(){
@@ -107,6 +120,51 @@ export default {
                 this.tableData = newData
             }
         },
+        add(cls){
+            this.curEditPlan = cls
+            this.showEditCtn = true
+        },
+        addOrEdit(type, cls, i){  // type 0 添加   1 替换
+            this.changeIdx = i ? i : null
+            this.curEditPlan = cls
+            this.showEditCtn = true
+        },
+        async chooseOk(){
+            if(this.editInfo.cocahId == '') return this.messageTip('请选择教练')
+            var coachIdArr = this.curEditPlan.coachs ? this.curEditPlan.coachs.map(v=>v.id) : []
+            if(coachIdArr.indexOf(this.editInfo.coachId) > -1) return this.messageTip('该教练已添加')
+            if(this.changeIdx) coachIdArr.splice(this.changeIdx, 1)
+            coachIdArr.push(this.editInfo.coachId)
+            console.log(coachIdArr)
+            var req = await this.ajax('/teacher_plan/coach', {
+                planId: this.curEditPlan.id,
+                coachIds: coachIdArr.join(',')
+            })
+            if(req && req.code == this.successCode){
+                this.messageTip(req.message, 1)
+                
+                var newCoach = this.allCoach[this.allCoach.map(v=>v.id).indexOf(this.editInfo.coachId)]
+
+                if(this.changeIdx !== null) this.curEditPlan.coachs.splice(this.changeIdx, 1, newCoach)
+                else{
+                    if(!this.curEditPlan.coachs) this.curEditPlan.coachs = []
+                    this.curEditPlan.coachs.push(newCoach)
+                }
+
+                this.showEditCtn = false
+
+            }else this.messageTip(req.message || '操作失败')
+        },
+        async del(item, i){
+            item.coachs.splice(i, 1)
+            var req = await this.ajax('/teacher_plan/coach', {
+                planId: item.id,
+                coachIds: item.coachs.map(v=>v.id).join(',')
+            })
+            if(req && req.code == this.successCode){
+                this.messageTip(req.message, 1)
+            }else this.messageTip(req.message || '操作失败')
+        },
         async getAllCoach(){
             var res = await this.ajax('/mgr/list', {
                 roleid: 4,
@@ -116,25 +174,7 @@ export default {
             if(res && res.code == this.successCode){
                 this.allCoach = res.data.rows
             }
-        },
-        changeSearchValue(info){     //  处理搜索请求传参
-            info.city = info.city || 1
-            return info;
-        },
-        changeEditValue(info){   // 处理新增编辑请求传参
-            return info;
-        },
-        testInput(){
-            return true
-        },
-        openCard(scope){
-            var row = scope.row;
-            console.log(row)
-        },
-        handleCoach(i, item, type){   // type 1 是替换   0 是添加
-            this.showEditCtn = true
-        },
-        delCoach(i, item){}
+        }
     }
 
 }
@@ -143,17 +183,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
 .cls
-    padding: 10px
-    border-bottom: 1px solid #339999
+    margin: 10px 0
+    padding: 10px 0 10px
+    border: 1px solid #339999
     .name
         position: relative
         display: inline-block
+        padding-left: 13px
         .x
             position: absolute
-            left: -15px
+            left: 0
             top: 0
             color: red
             cursor: pointer
+    .time
+        &+.el-button
+            margin-bottom: 10px
 
     .el-button
         margin-left: 5px
