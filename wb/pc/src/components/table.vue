@@ -33,6 +33,8 @@
 
                 //- 无需处理内容展示
                 el-table-column(:prop="item.key" :label="item.str" v-else="")
+                    template(slot-scope="scope")
+                        div(v-html="scope.row[item.key]")
 
             //- 操作
             el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="180")

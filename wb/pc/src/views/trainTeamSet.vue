@@ -120,7 +120,7 @@ export default {
                 if(v.times){
                     var html = ''
                     v.times.forEach(element => {
-                        html += '周'+this.week[element.week] + ' ' + element.begin + ' ~ ' + element.end + '\n'
+                        html += '周'+this.week[element.week] + ' ' + element.begin + ' ~ ' + element.end + '<br/>'
                     });
                     // v.time = '周'+this.week[v.week] + ' ' + v.begin + ' ~ ' + v.end
                     v.time = html

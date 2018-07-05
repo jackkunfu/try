@@ -134,7 +134,7 @@ export default {
                 if(v.cfs){
                     var html = ''
                     v.cfs.forEach(element => {
-                        html += element.frequency + ' ~ ' + (element.price - 0) / 100 + '元'
+                        html += element.frequency + ' : ' + (element.price - 0) / 100 + '元<br/>'
                     });
                     v.frequencyPrice = html
                 }
