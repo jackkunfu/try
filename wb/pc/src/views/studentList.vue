@@ -95,7 +95,7 @@ export default {
                 del: { url: '/user/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '编辑', fun: 'editScope'},
+                // { str: '编辑', fun: 'editScope'},
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
@@ -107,6 +107,7 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.birth = element.birthday ? element.birthday.split(' ')[0] : ''
+                element.sexStr = element.sex ? '男' : '女'
             });
             return data
         },

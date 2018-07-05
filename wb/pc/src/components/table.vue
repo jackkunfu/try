@@ -2,7 +2,7 @@
     el-col
         //- 操作
         el-row.operates(v-if="operates && operates.length>0")
-            el-button(v-for="(op, i) in operates" size="small" :key="op.str" type="info" 
+            el-button(v-for="(op, i) in operates" size="small" :key="op.str" type="info"
                 @click="$emit(op.fun)") {{op.str}}
 
         //- 表格
@@ -17,24 +17,27 @@
                         img(:src="config.imgPath + scope.row[item.key]" alt="" style="max-width:40px;max-height:40px;")
 
                 //- 时间戳处理
-                el-table-column(:prop="item.key" :label="item.str"  v-else-if="item.type == 'time'")
+                el-table-column(:prop="item.key" :label="item.str" v-else-if="item.type == 'time'")
                     template(slot-scope="scope")
                         span {{scope.row[item.key] | time}}
 
                 //- 字符太长，部分省略处理
-                el-table-column(:prop="item.key" :label="item.str"  v-else-if="item.type == 'els'")
+                el-table-column(:prop="item.key" :label="item.str" v-else-if="item.type == 'els'")
                     template(slot-scope="scope")
                         span {{scope.row[item.key] | els}}
 
                 //- 功能
-                el-table-column(:prop="item.key || ''" :label="item.str"  v-else-if="item.type == 'fun'")
+                el-table-column(:prop="item.key || ''" :label="item.str" v-else-if="item.type == 'fun'")
                     template(slot-scope="scope")
                         span(@click="$emit(item.fun, scope)" style="cursor:pointer;" :class="item.class ? item.class : ''") {{scope.row[item.key] || item.text}}
 
-                //- 无需处理内容展示
-                el-table-column(:prop="item.key" :label="item.str" v-else="")
+                //- html
+                el-table-column(:prop="item.key" :label="item.str" v-else-if="item.type == 'html'")
                     template(slot-scope="scope")
                         div(v-html="scope.row[item.key]")
+
+                //- 无需处理内容展示
+                el-table-column(:prop="item.key" :label="item.str" v-else="")
 
             //- 操作
             el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="180")

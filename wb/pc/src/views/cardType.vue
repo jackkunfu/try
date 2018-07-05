@@ -73,7 +73,7 @@ export default {
                 { str: '城市', key: 'city' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'card' },
-                { str: '训练频次以及价格', key: 'frequencyPrice' }
+                { str: '训练频次以及价格', key: 'frequencyPrice', type: 'html' }
                 // { str: '价格', key: 'price' }
             ],
             searchKeys: ['trainId', 'city', 'card', 'frequency'],

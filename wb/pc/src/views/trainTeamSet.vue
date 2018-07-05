@@ -67,7 +67,7 @@ export default {
                 { str: '城市', key: 'city' },
                 { str: '训练营', key: 'name' },
                 { str: '地址', key: 'address' },
-                { str: '上课时间', key: 'time' }
+                { str: '上课时间', key: 'time', type: 'html' }
             ],
             searchKeys: ['city', 'name', 'week'],
             editKeys: ['address', 'city', 'name'],
