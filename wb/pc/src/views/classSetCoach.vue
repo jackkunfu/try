@@ -30,13 +30,14 @@ div
                 el-table-column(:label="'周'+item")
                     template(slot-scope="scope")
                         template(v-for="(cls, j) in scope.row.list")
-                            div(v-if="i == cls.week")
-                                span {{cls.time}}
-                                el-button(type="primary" @click="handleCoach(i, scope.row, 0)" size="small" v-if="!scope.row.has") 添加教练
-                                div(v-else)
-                                    .name {{cls.name}}
-                                    el-button(type="primary" @click="handleCoach(i, scope.row, 1)" size="small") 替换
-                                    el-button(type="warning" @click="delCoach(i, scope.row)" size="small") 删除
+                            .cls(v-if="i == cls.week")
+                                span {{cls.begin + ' ~ ' +cls.end}}
+                                el-button(type="primary" @click="handleCoach(j, cls, 0)" size="small" v-if="!cls.coachs || cls.coachs.length == 0") 添加教练
+                                div(v-for="(coach, k) in cls.coachs")
+                                    span.name {{coach.name}}
+                                        .x X
+                                    el-button(type="primary" icon="el-icon-edit" @click="handleCoach(k, coach, 1)" size="mini")
+                                    //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -59,25 +60,15 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            tableData: [{
-                name: '洛克校区',
-                has: true,
-                date: 0,
-                time: '9:00 - 11: 00',
-                name: 'coach wang'
-            }, {
-                name: '下沙校区',
-                has: false,
-                date: 3,
-                time: '14:00 - 15: 00',
-                name: 'coach wang'
-            }, {
-                name: '滨江校区',
-                has: true,
-                date: 5,
-                time: '19:00 - 21: 00',
-                name: 'coach wang'
-            }],
+            tableData: [
+                // {
+                //     name: '下沙校区',
+                //     has: false,
+                //     date: 3,
+                //     time: '14:00 - 15: 00',
+                //     name: 'coach wang'
+                // }
+            ],
             searchKeys: [],
             editKeys: [],
             api: {
@@ -106,12 +97,14 @@ export default {
             var req = await this.ajax(this.api.list.url, obj, 'get')
             if(req && req.code == this.successCode){
                 var result = req.data
-                this.tableData = Object.keys(result).map(v => {
+                var newData = Object.keys(result).map(v => {
                     return {
                         name: v,
                         list: result[v]
                     }
                 })  || []
+                console.log(newData)
+                this.tableData = newData
             }
         },
         async getAllCoach(){
@@ -149,5 +142,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
+.cls
+    padding: 10px
+    border-bottom: 1px solid #339999
+    .name
+        position: relative
+        display: inline-block
+        .x
+            position: absolute
+            left: -15px
+            top: 0
+            color: red
+            cursor: pointer
 
+    .el-button
+        margin-left: 5px
 </style>
