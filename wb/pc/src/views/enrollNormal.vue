@@ -141,8 +141,8 @@ export default {
                 del: { url: '/order/delete' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '开卡', fun: 'openCard', isShow: { key: 'status', value: '0' }},
-                { str: '已开卡', isShow: { key: 'status', value: '3' }},
+                { str: '开卡', fun: 'openCard', isShow: { key: 'status', value: 0 }},
+                { str: '已开卡', fun: '', isShow: { key: 'status', value: 3 }},
                 // { str: '激活', fun: 'jihuo', isShow: { key: '', value: '' } },
                 // { str: '已激活', fun: 'jihuo'},
                 { str: '编辑', fun: 'editScope'},
@@ -258,6 +258,7 @@ export default {
             
             if(res && res.code == this.successCode){
                 this.messageTip(res.message, 1)
+                this.tableList()
             }else this.messageTip(res.message)
 
         },

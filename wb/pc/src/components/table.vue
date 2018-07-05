@@ -38,7 +38,7 @@
             el-table-column(label="操作" v-if="scopeOperates && scopeOperates.length>0" ref="operate" width="180")
                 template(slot-scope="scope")
                     template(v-for="(op, i) in scopeOperates")
-                        el-button(v-if="!op.isShow || (op.isShow && op.isShow.key)" :type="op.type || 'success'" size="mini" :key="op.str"
+                        el-button(v-if="!op.isShow || (op.isShow && scope.row[op.isShow.key]==op.isShow.value)" :type="op.type || 'success'" size="mini" :key="op.str"
                             @click="$emit(op.fun, scope)" plain) {{op.str}}
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="total" :page-size="limit" 
