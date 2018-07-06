@@ -16,25 +16,29 @@ var routes = [];
 var students = [{   // 学员
   path: '/studentList',
   name: 'studentList',
-  component: studentList
+  component: r => require.ensure([], () => r(require('@/views/studentList')), 'cocahClass')
 },{
   path: '/checkIn',
   name: 'checkIn',
-  component: checkIn
+  component: r => require.ensure([], () => r(require('@/views/checkIn')), 'cocahClass')
 },{
   path: '/bodyTest',
   name: 'bodyTest',
-  component: bodyTest
+  component: r => require.ensure([], () => r(require('@/views/bodyTest')), 'cocahClass')
+},{
+  path: '/bodyTestSee',
+  name: 'bodyTestSee',
+  component: r => require.ensure([], () => r(require('@/views/bodyTestSee')), 'cocahClass')
 },{
   path: '/stuLevel',
   name: 'stuLevel',
-  component: stuLevel
+  component: r => require.ensure([], () => r(require('@/views/stuLevel')), 'cocahClass')
 }]
 
 var coach = [{     // 教练
   path: '/cocahJudge',
   name: 'cocahJudge',
-  component: cocahJudge
+  component: r => require.ensure([], () => r(require('@/views/cocahJudge')), 'cocahClass')
 },{     // 教练课堂
   path: '/cocahClass',
   name: 'cocahClass',

@@ -40,7 +40,7 @@ div
                 i.el-icon-delete(@click="delImg(item.id)")
 
     .fix-cover(v-show="isChooseDate")
-        .x(@click="closeEditBox")
+        .x(@click="isChooseDate=false;curAddTime=''")
             i.el-icon-close
         .box(style="min-height:0;")
             el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
@@ -120,8 +120,9 @@ export default {
         },
         delImg(id){},
         see(scope){     // 查看
-            this.showEditCtn = true
-            this.getImgList(scope.row.id)
+            // this.showEditCtn = true
+            // this.getImgList(scope.row.id)
+            this.goUrl('/bodyTestSee', { id: scope.row.id })
         },
         async getImgList(id){
             var req = await this.ajax('', { id, time: this.imgInfo.time }, 'get')

@@ -116,6 +116,7 @@ export default {
             cityTrains: [],
             cards: [],
             frequencys: [],
+            classTimes: [],
             sales: [],
             keys: [
                 { str: '头像', key: 'user.avatar', type: 'img' },
@@ -128,7 +129,7 @@ export default {
                 { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },
                 { str: '费用', key: 'fee' },
-                // { str: '支付时间', key: 'height' },
+                { str: '支付时间', key: 'payDate' },
                 { str: '创建时间', key: 'createDate' },
                 { str: '销售', key: 'sales.name' }
             ],
@@ -151,8 +152,7 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '导出excel', fun: 'export'}
-            ],
-            classTimes: []
+            ]
         }
     },
     watch: {

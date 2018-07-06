@@ -177,7 +177,7 @@ export default function(Vue){
     // 表格外部顶部点击修改
     Vue.prototype.tableEdit = function(){
         if(this.curChooseRow === null) return this.messageTip('请选择要编辑的项~');
-        if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit();
+        if(this.selfEdit && typeof this.selfEdit == 'function') this.selfEdit(this.curChooseRow);
         this.editKeys.forEach( v => {
             this.editInfo[v] = this.curChooseRow[v] || '';
         })
