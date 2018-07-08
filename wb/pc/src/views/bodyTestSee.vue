@@ -7,10 +7,21 @@ div
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="时间")
-                    el-date-picker(v-model="searchInfo.time" placeholder="请选择时间" type="month" value-format="yyyy-MM-dd")
+                    el-date-picker(v-model="searchInfo.time" placeholder="请选择时间" type="date" value-format="yyyy-MM-dd")
 
         //- s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @see="see" @upImg="upImg")
+
+        .list
+            .each(v-for="(item, i) in tableData")
+                div
+                    span 体能测试
+                    span {{item.testDate}}
+                    .fr
+                        i.el-icon-delete(@click="del(item.id)") 删除
+
+                div
+                    img(:src="config.imagePath+item.content")
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="page.total"
             @current-change="(v)=>{changePage(v)}" ref="page")
@@ -59,24 +70,35 @@ export default {
                 { str: '训练营', key: 'train.name' },
                 { str: '历史成绩', text: '查看', type: 'fun', fun: 'see' }
             ],
-            searchKeys: ['time'],
+            searchKeys: ['time']
         }
     },
     mounted(){
-        this.getImgList(this.uid)
+        this.getImgList()
     },
     methods: {
+        search(){
+            this.getImgList()
+        },
         async getImgList(id){
-            var req = await this.ajax('/power_test/list', {
-                userId: id,
-                time: this.searchInfo.time,
+            var data = {
+                userId: this.uid,
                 limit: this.page.limit,
                 offset: this.page.offset
-            }, 'get')
+            }
+            if(this.searchInfo.time) data.testDate = new Date(this.searchInfo.time)
+            var req = await this.ajax('/power_test/list', data, 'get')
             if(req && req.code == this.successCode){
                 this.tableData = req.data.rows
-                this.page.total = req.total
+                this.page.total = req.data.total - 0
             }
+        },
+        async del(id){
+            var req = await this.ajax('/power_test/delete', { id })
+            if(req && req.code == this.successCode){
+                this.messageTip(req.message, 1)
+                this.getImgList()
+            }else this.messageTip(req.message)
         }
     }
 

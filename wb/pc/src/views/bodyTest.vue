@@ -122,7 +122,7 @@ export default {
         see(scope){     // 查看
             // this.showEditCtn = true
             // this.getImgList(scope.row.id)
-            this.goUrl('/bodyTestSee', { id: scope.row.id })
+            this.goUrl('/bodyTestSee', { id: scope.row.userId })
         },
         async getImgList(id){
             var req = await this.ajax('', { id, time: this.imgInfo.time }, 'get')
