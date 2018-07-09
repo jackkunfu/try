@@ -107,17 +107,35 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-.img
-    width: 500px
-    margin: 0 auto
-    position: relative
-    margin-bottom: 10px
-    background: #eee
-    img
-        width: 100%
-    i
-        position: absolute
-        top: 0
-        right: 0
-        cursor: pointer
+.list
+    .each
+        width: 520px
+        margin: 20px auto
+        border: 1px solid #eee
+        padding: 10px 20px
+        &:after
+            clear: both
+        img
+            display: block
+            margin-top: 10px
+            width: 100%
+            min-height: 50px
+
+        span + span
+            margin-left: 20px
+
+
+// .img
+//     width: 500px
+//     margin: 0 auto
+//     position: relative
+//     margin-bottom: 10px
+//     background: #eee
+//     img
+//         width: 100%
+//     i
+//         position: absolute
+//         top: 0
+//         right: 0
+//         cursor: pointer
 </style>

@@ -130,6 +130,12 @@ export default {
                 this.imgList = req.data.rows
             }
         },
+        changeTableData(data){
+            data.forEach(element => {
+                element.sexStr = element.user.sex ? '女' : '男'
+            });
+            return data
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
@@ -138,8 +144,7 @@ export default {
         },
         testInput(){
             return true
-        },
-        
+        }
     }
 
 }

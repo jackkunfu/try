@@ -45,12 +45,12 @@ export default {
         return {
             levels: ['一', '二', '三', '四', '五'],
             keys: [
-                { str: '头像', key: 'appCode' },
+                { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
-                { str: '生日', key: 'birth' },
-                { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'mobile' },
+                { str: '性别', key: 'sexStr' },
+                { str: '生日', key: 'birthday' },
+                { str: '家长姓名', key: 'parentName' },
+                { str: '联系电话', key: 'parentPhone' },
                 { str: '训练营', key: 'trainName' },
                 { str: '当前等级', key: 'level' },
                 { str: '评级操作', fun: 'changeLevel', type: 'fun', text: '修改等级', class: 'change-level' }
@@ -73,6 +73,7 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : ''
+                element.sexStr = element.sex ? '女' : '男'
             })
             return data
         },
@@ -80,7 +81,7 @@ export default {
             this.isChooseLevel = true
             var item = scope.row
             this.curId = item.id
-            this.curLevel = item.lv - 1
+            this.curLevel = item.lv ? item.lv - 1 : ''
             // var id = scope.row.id
         },
         async submit(){

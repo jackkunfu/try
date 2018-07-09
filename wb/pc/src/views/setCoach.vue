@@ -43,7 +43,7 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'avatar' },
+                { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
                 { str: '手机号', key: 'phone' },
                 { str: '创建时间', key: 'createtime' }
