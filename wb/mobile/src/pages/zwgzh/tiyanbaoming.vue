@@ -1,7 +1,7 @@
 <template lang="pug">
 .h100
 
-    class-times(v-if="chooseTimes" @next="next" @close="closeChooseTime" :times="clsTimes")
+    class-times(v-show="chooseTimes" @next="next" @close="closeChooseTime" :times="clsTimes" :ids="chooseTimeId")
 
     .fix(v-if="ok")
         .box-ctn
@@ -62,7 +62,8 @@
                 citys: [],
                 trains: [],
                 times: [],
-                clsTimes: [],  // 选择训练营卡种的可选上课时间,
+                clsTimes: [],  // 选择训练营卡种的可选上课时间
+                chooseTimeId: ''
             }
         },
         computed: {
@@ -90,7 +91,6 @@
         },
         methods: {
             closeChooseTime(){
-                this.clsTimes = []
                 this.chooseTimes = false
             },
             async baoming(){
@@ -112,6 +112,7 @@
             next(data){
                 if(data.length > 1) return this.messageTip('体验只能选择一个上课时间~');
                 var da = data[0]
+                this.chooseTimeId = da.id
                 this.item.week = da.week
                 this.item.begin = da.begin
                 this.item.end = da.end

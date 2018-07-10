@@ -6,8 +6,6 @@
     //- .top
         img(src="../../assets/activity_logo@2x.png")
 
-    
-
     .enroll
         .each
             //- span 选择地区
@@ -58,7 +56,7 @@
         
         .btn(@click="baoming") 支付报名
 
-    class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false;" :times="timeList")
+    class-times(v-show="chooseTimes" @next="next" @close="chooseTimes=false;" :times="timeList" :ids="chooseTimeIdS")
 
 </template>
 
@@ -103,6 +101,10 @@
                 var end = this.chooTimeList[0].end
                 var str = this.weekTimeStr(week, begin, end)
                 return this.chooTimeList.length > 1 ? str + '...' : str
+            },
+            chooseTimeIdS(){
+                if(this.chooTimeList.length < 1) return ''
+                return this.chooTimeList.map(v=>v.id).join(',')
             }
         },
         watch: {

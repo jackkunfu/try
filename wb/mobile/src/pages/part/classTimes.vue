@@ -21,7 +21,7 @@
 <script>
 export default {
     name: 'classTimes',
-    props: ['str', 'titleName', 'times'],
+    props: ['str', 'titleName', 'times', 'ids'],
     data () {
         return {
             week: ['一', '二', '三', '四', '五', '六', '日'],
@@ -40,8 +40,9 @@ export default {
     },
     methods: {
         initListStatus(){
+            let res = this.ids ? this.ids.split(',') : []
             this.times.forEach(v=>{
-                this.$set(v, 'check', false)
+                this.$set(v, 'check', res.indexOf(v.id) > -1 ? true : false)
             })
         },
         ok(){
