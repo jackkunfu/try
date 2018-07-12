@@ -97,7 +97,10 @@ export default {
         }
     },
     async mounted(){
-        this.my = this.$route.query
+        Object.keys(this.$route.query).forEach(el => {
+            this.$set(this.my, el, this.$route.query[el])
+        })
+        // this.my = this.$route.query
         this.list = await this.getAllTrainTimes(this.trainId)
 
         var that = this

@@ -71,10 +71,16 @@ export default function(Vue){
         if(!url) return location.reload()
         $('#tip').remove();
         $('#messageTip').remove();
-        this.$router.push({
-          path: url,
-          query: data || {}
-        })
+        // this.$router.push({
+        //   path: url,
+        //   query: data || {}
+        // })
+        
+        var ss = Object.keys(data).map(el => el + '=' + encodeURIComponent(data[el])).join('&')
+        // alert(location.host + url + '?'+ss)
+        window.location.href = url + '?'+ss
+        // push 直接在ios不能改变地址栏地址   这里重新刷新下 改变下当前地址
+        // setTimeout(()=>{ location.reload() }, 300)
     }
 
     Vue.prototype.file = function(id, cb, input){

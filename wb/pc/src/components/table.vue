@@ -14,7 +14,8 @@
                 //- 图片处理
                 el-table-column(:prop="item.key" :label="item.str" v-if="item.type == 'img'")
                     template(slot-scope="scope")
-                        img(:src="config.imgPath + scope.row[item.key]" alt="" style="max-width:40px;max-height:40px;")
+                        img(v-if="scope.row[item.key]" :src="config.imgPath + scope.row[item.key]" alt="" style="max-width:40px;max-height:40px;")
+                        img(v-else src="../assets/touxiang.png" alt="" style="max-width:40px;max-height:40px;")
 
                 //- 时间戳处理
                 el-table-column(:prop="item.key" :label="item.str" v-else-if="item.type == 'time'")

@@ -3,12 +3,12 @@
     .top
         img(src="../../assets/user_bg@2x.png")
         .item
-            img.fl(:src="config.imgPath+my.avatar")
+            img.fl(:src="touxiang")
             .title
                 span {{my.name}}
 
             .sub-title(@click="goUrl('/myset', my)") 完善个人信息
-                span 》
+                span >
 
     .tab-ctn
         .tab(@click="curTab=0" :class="curTab==0?'cur':''")
@@ -125,6 +125,9 @@ export default {
         cardImg(){
             if(this.cardLevel === null) return ''
             return require('../../assets/card'+this.cardLevel+'.png')
+        },
+        touxiang(){
+            return this.my.avatar ? this.config.imgPath + this.my.avatar : require('../../assets/touxiang.png')
         }
     },
     watch: {
