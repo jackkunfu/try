@@ -58,28 +58,49 @@
                     img.tnDetailImg(:src="tnDetailImg" @click="showTnTable=false")
 
         div.pj(v-if="curTab == 2")
-            .item-ctn
-                img.fl(:src="coach.img")
-                .title 今日教练：{{coach.name}}
-                .sub-title {{coach.time}}
+            .item-ctn(v-for="(item, i) in jlList" @click="showPjDetail(item)")
+                img.fl(src="../../assets/pjedit.png")
+                .fr(v-if="true")
+                    span 去评价
+                    img.fr(src="../../assets/rs.png")
+                .fr(v-else)
+                    span 已评价
+                    img.fr(src="../../assets/ys.png")
 
-            .clear
+                .title {{item.createDate | split}}
+                .sub-title {{item.plan.coachs ? item.plan.coachs.map(v=>v.name).join(',') : ''}}
+                
+                .clear
 
-            .xing
-                .each
-                    span 教学态度：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x1', i)" :src="i<x1 ? activeStarImg : starImg")
-                .each
-                    span 课堂纪律：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x2', i)" :src="i<x2 ? activeStarImg : starImg")
-                .each
-                    span 互动性：
-                    img(v-for="(item, i) in [1,1,1,1,1]" @click="clickXing('x3', i)" :src="i<x3 ? activeStarImg : starImg")
+            .fix(v-if="isShowPjCtn")
+                .box
+                    div(v-if="curCoachs.length == 0") 暂无教练
+                    div(v-else)
+                        .half(v-for="(item, i) in curCoachs" @click="curJLIdx=i" :class="curJLIdx==i?'cur':''") {{item.name}}
+                        .clear
+                        div(v-for="(item, i) in curCoachs" v-if="curJLIdx=i")
+                            .item-ctn
+                                img.fl(:src="config.imgPath+item.avatar")
+                                .title 今日教练：{{item.name}}
+                                .sub-title {{item.createtime | split}}
+                                .clear
 
-            textarea(placeholder="对教练的意见或建议" v-model="pjStr")
+                            .xing
+                                .eachactiveStarImg
+                                    span 教学态度：
+                                    img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x1', i, item)" :src="i<item.x1 ?  activeStarImg : starImg")
+                                .each
+                                    span 课堂纪律：
+                                    img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x2', i, item)" :src="i<item.x2 ? activeStarImg : starImg")
+                                .each
+                                    span 互动性：
+                                    img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x3', i, item)" :src="i<item.x3 ? activeStarImg : starImg")
 
-            .lbtn(v-if="!isPJ" @click="pj") 提交评价
-            .lbtn.disable(v-else) 已评价
+                            textarea(placeholder="对教练的意见或建议" v-model="item.pjStr")
+
+                            .lbtn(v-if="!item.evaluate" @click="pj(item)") 提交评价
+                            .lbtn.disable(v-else) 已评价
+                            .lbtn(@click="closePj") 取消评价
 
 </template>
 
@@ -118,7 +139,12 @@ export default {
             tnDetailImg: '',
             cardLevel: null,
             isPJ: false,     // 是否已经评价
-            pjStr: ''
+            pjStr: '',
+            jlList: [],
+            isShowPjCtn: false,
+            curCoachs: [],
+            curJLIdx: -1,
+            curPjPlanId: null
         }
     },
     computed: {
@@ -160,14 +186,37 @@ export default {
         this.curTab = 0
     },
     methods: {
+        closePj(){
+            this.isShowPjCtn = false;
+            this.curCoachs = []
+        },
+        showPjDetail(item){
+            this.isShowPjCtn = true
+            this.curPjPlanId = item.planId
+            if(item.plan.coachs && item.plan.coachs.length > 0){
+                this.curCoachs = item.plan.coachs
+                // this.curCoachs.forEach(el => {
+                //     if(el.evaluate){
+                //         this.$set(el, 'x1', el.evaluate.attitude)
+                //         this.$set(el, 'x2', el.evaluate.discipline)
+                //         this.$set(el, 'x3', el.evaluate.interaction)
+                //     }else{
+                //         this.$set(el, 'x1', 0)
+                //         this.$set(el, 'x2', 0)
+                //         this.$set(el, 'x3', 0)
+                //     }
+                // })
+                // this.curJLIdx = 0
+            }
+        },
         showTnCurImg(item){
             this.showTnTable = true
             this.tnDetailImg = this.config.imgPath + item.content
         },
         async getDetail(type){
-            var url = type == 0 ? '/user/classes' : (type == 1 ? '/power_test/list' : '/user/pj')
+            var url = type == 0 ? '/user/classes' : (type == 1 ? '/power_test/list' : '/sign/list')
             var options = { userId: this.userId }
-            if(type == 1){
+            if(type != 0){
                 options.limit = 1000
                 options.offset = 0
             }
@@ -180,32 +229,38 @@ export default {
                 }else if(type == 1){
                     this.tnList = data.rows
                 }else if(type == 2){
-                    this.coach = data
-                    this.isPJ = data.isPJ
-                    var pj = data.pingjia
-                    this.x1 = pj.attitude || 0
-                    this.x2 = pj.discipline || 0
-                    this.x3 = pj.interaction || 0
-                    this.pjStr = pj.opinion || ''
+                    this.jlList = data.rows
+                    // this.coach = data
+                    // this.isPJ = data.isPJ
+                    // var pj = data.pingjia
+                    // this.x1 = pj.attitude || 0
+                    // this.x2 = pj.discipline || 0
+                    // this.x3 = pj.interaction || 0
+                    // this.pjStr = pj.opinion || ''
                 }
             }
         },
-        clickXing(key, idx){
-            if(this.isPJ) return
-            this[key] = idx - 0 + 1
+        clickXing(key, idx, item){
+            
+            // if(this.isPJ) return
+            // this[key] = idx - 0 + 1
+
+            item[key] = idx - 0 + 1
         },
-        async pj(){
-            if(this.x1 == 0) return this.messageTip('教学态度星级未评')
-            if(this.x2 == 0) return this.messageTip('课堂纪律星级未评')
-            if(this.x3 == 0) return this.messageTip('互动性星级未评')
-            if(this.pjStr.trim() == '') return this.messageTip('评价不能为空')
+        async pj(item){
+            console.log(item)
+            if(item.x1 == 0) return this.messageTip('教学态度星级未评')
+            if(item.x2 == 0) return this.messageTip('课堂纪律星级未评')
+            if(item.x3 == 0) return this.messageTip('互动性星级未评')
+            if(item.pjStr.trim() == '') return this.messageTip('评价不能为空')
             var res = await this.ajax('/evaluate/add', {
-                userId: this.userId || 1,
-                cuserId: this.cuserId || 1,
-                attitude: this.x1,
-                discipline: this.x2,
-                interaction: this.x3,
-                opinion: this.pjStr.trim()
+                userId: this.userId,
+                cuserId: item.id,
+                planId: this.curPjPlanId,
+                attitude: item.x1,
+                discipline: item.x2,
+                interaction: item.x3,
+                opinion: item.pjStr.trim()
             })
             this.messageTip(res.message)
             if(res && res.code == this.successCode){
@@ -218,6 +273,27 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.half
+    width: 50%
+    display: inline-block
+    text-align: center
+    line-height: 1.3rem
+    padding: 0.6rem 0
+    color: #646464
+    background: #fff
+    &.cur
+        color: 
+
+.fix
+    .box
+        padding: 0 0.5rem 0.5rem
+        .item-ctn
+            .title
+                background: #fff
+                color: #333
+                text-align: left
+                line-height: 1rem
+
 .main
     padding: 0.6rem
 

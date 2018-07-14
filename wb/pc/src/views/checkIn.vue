@@ -33,22 +33,22 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'appCode' },
-                { str: '姓名', key: 'name' },
-                { str: '性别', key: 'sex' },
+                { str: '头像', key: 'img', type: 'img' },
+                { str: '姓名', key: 'user.name' },
+                { str: '性别', key: 'sexStr' },
                 { str: '生日', key: 'birth' },
-                { str: '家长姓名', key: 'pname' },
-                { str: '联系电话', key: 'mobile' },
-                { str: '训练营', key: 'trainName' },
-                { str: '当天出席状况', key: 'remark' },
-                { str: '累计出席', key: 'remark' },
-                { str: '累计请假', key: 'remark' },
-                { str: '累计缺席', key: 'remark' }
+                { str: '家长姓名', key: 'user.parentName' },
+                { str: '联系电话', key: 'user.parentPhone' },
+                { str: '训练营', key: 'train.name' },
+                { str: '当天出席状况', key: 'curStatu' },
+                { str: '累计出席', key: 'attend' },
+                { str: '累计请假', key: 'leave' },
+                { str: '累计缺席', key: 'absent' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'date'],
             editKeys: [],
             api: {
-                list: { url: '/sign/list' },
+                list: { url: '/sign/listBg' },
                 del: { url: '/sign/delete' }
             },
             operates: [    // 顶部的操作
@@ -60,6 +60,15 @@ export default {
         }
     },
     methods: {
+        changeTableData(data){
+            data.forEach(element => {
+                element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
+                element.sexStr = element.sex ? '女' : '男'
+                element.img = element.user.avatar
+                element.curStatu = element.type === 0 ? '出席' : element.type === 1 ? '请假' : element.type === 2 ? '出席' : '未知'
+            });
+            return data
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
         },
