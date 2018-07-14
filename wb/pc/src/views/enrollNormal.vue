@@ -202,6 +202,28 @@ export default {
             this.cityTrains = []
             this.cards = []
         },
+        selfEdit(data){
+            console.log('data')
+            console.log(data)
+            var train = data.train
+            var card = data.card
+            var user = data.user
+            console.log('user')
+            console.log(user)
+            this.editInfo.avatar = user.avatar
+            this.editInfo.name = user.name
+            this.editInfo.sex = user.sex + ''
+            this.editInfo.birthday = user.birthday
+            this.editInfo.height = user.height
+            this.editInfo.weight = user.weight
+            this.editInfo.parentName = user.parentName
+            this.editInfo.parentPhone = user.parentPhone
+            this.editInfo.trainId = train.id
+            this.editInfo.cardId = card.id
+            
+            this.editInfo.payDate = data.payDate
+            this.editInfo.sale = data.sales.id
+        },
         changeTableData(data){
             data.forEach(element => {
                 element.sexStr = element.user.sex ? '女' : '男'

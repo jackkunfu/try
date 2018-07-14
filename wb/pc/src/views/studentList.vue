@@ -211,20 +211,26 @@ export default {
             return data
         },
         selfEdit(data){
+            console.log('data')
             console.log(data)
             var train = data.train
             var card = data.card
             var user = data.user
+            console.log('user')
             console.log(user)
-            alert(user.avatar)
             this.editInfo.avatar = user.avatar
             this.editInfo.name = user.name
-            this.editInfo.sex = user.sex
+            this.editInfo.sex = user.sex + ''
+            this.editInfo.birthday = user.birthday
+            this.editInfo.height = user.height
+            this.editInfo.weight = user.weight
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
-            this.editInfo.sex = user.sex
             this.editInfo.trainId = train.id
-            // this.editInfo.cardId = card.id
+            this.editInfo.cardId = card.id
+            
+            this.editInfo.payDate = data.payDate
+            this.editInfo.sale = data.sales.id
         },
         testInput(){
             var obj = this.trimObj(this.editInfo)
