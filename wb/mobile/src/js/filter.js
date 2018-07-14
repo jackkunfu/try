@@ -21,4 +21,9 @@ export default function(Vue){
         return v.split(' ')[0]
     })
 
+    Vue.filter('sex', function(v, fillKey, isAll){    // 截取省略
+        if(!v) return '男';
+        return '女'
+    })
+
 }

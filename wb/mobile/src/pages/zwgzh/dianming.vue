@@ -8,7 +8,7 @@
         .item(v-for="(item, i) in stuList" :key="i")
             .w50
                 // img.img(:src="item.img")
-                span {{item.name}}
+                span(@click="seeInfo(item)") {{item.name}}
             .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
                 img.icon(src="../../assets/choose_btn_s@2x.png" v-else @click="dianming(0, item)")
@@ -29,6 +29,17 @@
             .btn.no(@click="closeText") 取消
             .btn(@click="submitText") 提交
 
+    fixCover.info(:str="showInfo" :titleName="curInfo.name" v-if="curInfo")
+        span 性别：{{curInfo.sex | sex}}
+        span 生日：{{curInfo.birthday | split}}
+        span 身高：{{curInfo.height}}cm
+        span 体重：{{curInfo.weight}}kg
+        span 家长姓名：{{curInfo.parentName}}
+        span 家长电话：{{curInfo.parentPhone}}
+        span 学员等级：{{curInfo.lv}}
+        div
+            .btn(@click="closeInFo") 确定
+
 </template>
 
 <script>
@@ -41,9 +52,11 @@ export default {
         return {
             query,
             showText: false,
+            showInfo: false,
             text: '',
             stuList: [],
             curReasonItem: null,
+            curInfo: null,
             isDone: null     // 是否已经提交签到了
         }
     },
@@ -78,6 +91,11 @@ export default {
         }
     },
     methods: {
+        seeInfo(item){
+            console.log(item)
+            this.curInfo = item
+            this.showInfo = true
+        },
         async submit(){
             var res = await this.ajax('/sign/add', {
                 userId: this.query.userId,
@@ -120,6 +138,10 @@ export default {
             this.showText = false
             this.text = ''
         },
+        closeInFo(){
+            this.showInfo = false
+            this.text = ''
+        },
         async submitText(){
             if(this.text.trim() == '') return this.messageTip('请假原因不能为空~')
 
@@ -142,6 +164,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.info
+    span
+        display: block
+        text-algin: left
+        padding-left: 2rem
+
 .h100
     overflow: hidden
 
