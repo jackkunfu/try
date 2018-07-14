@@ -78,7 +78,7 @@
                     div(v-else)
                         .half(v-for="(item, i) in curCoachs" @click="curJLIdx=i" :class="curJLIdx==i?'cur':''") {{item.name}}
                         .clear
-                        div(v-for="(item, i) in curCoachs" v-if="curJLIdx=i")
+                        div(v-for="(item, i) in curCoachs" v-if="curJLIdx==i")
                             .item-ctn
                                 img.fl(:src="config.imgPath+item.avatar")
                                 .title 今日教练：{{item.name}}
@@ -88,7 +88,7 @@
                             .xing
                                 .eachactiveStarImg
                                     span 教学态度：
-                                    img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x1', i, item)" :src="i<item.x1 ?  activeStarImg : starImg")
+                                    img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x1', i, item)" :src="i<item.x1 ? activeStarImg : starImg")
                                 .each
                                     span 课堂纪律：
                                     img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x2', i, item)" :src="i<item.x2 ? activeStarImg : starImg")
@@ -98,9 +98,9 @@
 
                             textarea(placeholder="对教练的意见或建议" v-model="item.pjStr")
 
-                            .lbtn(v-if="!item.evaluate" @click="pj(item)") 提交评价
+                            .lbtn(v-if="item.evaluate" @click="pj(item)") 提交评价
                             .lbtn.disable(v-else) 已评价
-                            .lbtn(@click="closePj") 取消评价
+                            .lbtn(@click="closePj") 关闭
 
 </template>
 
@@ -206,7 +206,7 @@ export default {
                         this.$set(el, 'x3', 0)
                     }
                 })
-                // this.curJLIdx = 0
+                this.curJLIdx = 0
             }
         },
         showTnCurImg(item){
@@ -282,7 +282,7 @@ export default {
     color: #646464
     background: #fff
     &.cur
-        color: 
+        color: #48C4F5
 
 .fix
     .box
