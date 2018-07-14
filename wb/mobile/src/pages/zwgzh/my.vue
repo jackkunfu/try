@@ -76,7 +76,7 @@
                 .box
                     div(v-if="curCoachs.length == 0") 暂无教练
                     div(v-else)
-                        .half(v-for="(item, i) in curCoachs" @click="curJLIdx=i" :class="curJLIdx==i?'cur':''") {{item.name}}
+                        .half(v-for="(item, i) in curCoachs" @click="curJLIdx=i" :class="curJLIdx==i?'cur':''" :style="{width:1/curCoachs.length*100+'%'}") {{item.name}}
                         .clear
                         div(v-for="(item, i) in curCoachs" v-if="curJLIdx==i")
                             .item-ctn
@@ -100,7 +100,7 @@
 
                             .lbtn(v-if="item.evaluate" @click="pj(item)") 提交评价
                             .lbtn.disable(v-else) 已评价
-                            .lbtn(@click="closePj") 关闭
+                    .lbtn(@click="closePj") 关闭
 
 </template>
 
@@ -274,7 +274,7 @@ export default {
 
 <style scoped lang="sass">
 .half
-    width: 50%
+    // width: 50%
     display: inline-block
     text-align: center
     line-height: 1.3rem
