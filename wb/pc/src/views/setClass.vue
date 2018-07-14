@@ -49,7 +49,7 @@ export default {
     data () {
         return {
             keys: [
-                { str: '头像', key: 'appCode' },
+                { str: '头像', key: 'avatar', type: 'img' },
                 { str: '姓名', key: 'name' },
                 { str: '权限', key: 'roleName' },
                 { str: '账号', key: 'account' },

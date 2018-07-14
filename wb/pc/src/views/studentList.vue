@@ -119,7 +119,7 @@ export default {
             //     { str: '体能测试', key: 'remark' }
             // ],
             keys: [
-                { str: '头像', key: 'user.avatar', type: 'img' },
+                { str: '头像', key: 'img', type: 'img' },
                 { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
                 { str: '家长姓名', key: 'user.parentName' },
@@ -202,6 +202,7 @@ export default {
             data.forEach(element => {
                 element.birth = element.birthday ? element.birthday.split(' ')[0] : ''
                 element.sexStr = element.sex ? '女' : '男'
+                element.img = element.user.avatar
             });
             return data
         },
@@ -210,6 +211,8 @@ export default {
             var train = data.train
             var card = data.card
             var user = data.user
+            console.log(user)
+            alert(user.avatar)
             this.editInfo.avatar = user.avatar
             this.editInfo.name = user.name
             this.editInfo.sex = user.sex
@@ -217,7 +220,7 @@ export default {
             this.editInfo.parentPhone = user.parentPhone
             this.editInfo.sex = user.sex
             this.editInfo.trainId = train.id
-            this.editInfo.cardId = card.id
+            // this.editInfo.cardId = card.id
         },
         testInput(){
             var obj = this.trimObj(this.editInfo)
@@ -266,5 +269,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-
+.up-ctn
+    width: 100px
+    height: 100px
+    line-height: 100px
 </style>

@@ -61,7 +61,7 @@ export default {
         return {
             uid: this.$route.query.id,
             keys: [
-                { str: '头像', key: 'user.avatar', type: 'img' },
+                { str: '头像', key: 'img', type: 'img' },
                 { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
                 { str: '家长姓名', key: 'user.parentName' },
@@ -77,6 +77,12 @@ export default {
         this.getImgList()
     },
     methods: {
+        changeTableData(data){
+            data.forEach(element => {
+                element.img = element.user.avatar
+            });
+            return data
+        },
         search(){
             this.getImgList()
         },

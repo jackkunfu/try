@@ -45,21 +45,31 @@ export default {
         return {
             levels: ['一', '二', '三', '四', '五'],
             keys: [
-                { str: '头像', key: 'avatar', type: 'img' },
-                { str: '姓名', key: 'name' },
+                // { str: '头像', key: 'avatar', type: 'img' },
+                // { str: '姓名', key: 'name' },
+                // { str: '性别', key: 'sexStr' },
+                // { str: '生日', key: 'birthday' },
+                // { str: '家长姓名', key: 'parentName' },
+                // { str: '联系电话', key: 'parentPhone' },
+                // { str: '训练营', key: 'trainName' },
+                // { str: '当前等级', key: 'level' },
+
+                { str: '头像', key: 'img', type: 'img' },
+                { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
-                { str: '生日', key: 'birthday' },
-                { str: '家长姓名', key: 'parentName' },
-                { str: '联系电话', key: 'parentPhone' },
-                { str: '训练营', key: 'trainName' },
-                { str: '当前等级', key: 'level' },
+                { str: '家长姓名', key: 'user.parentName' },
+                { str: '联系电话', key: 'user.parentPhone' },
+                { str: '训练营', key: 'train.name' },
+                { str: '当前等级', key: 'levelStr' },
+
                 { str: '评级操作', fun: 'changeLevel', type: 'fun', text: '修改等级', class: 'change-level' }
             ],
             searchKeys: [],
             tableData: [],
             editKeys: [],
             api: {
-                list: { url: '/user/list' }
+                // list: { url: '/user/list' }
+                list: { url: '/order/list' }
             },
             scopeOperates: [    // 每一行种的操作
                 // { str: '编辑', fun: 'editScope'}
@@ -74,13 +84,15 @@ export default {
             data.forEach(element => {
                 element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : ''
                 element.sexStr = element.sex ? '女' : '男'
+                element.img = element.user.avatar
+                element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
             })
             return data
         },
         changeLevel(scope){
             this.isChooseLevel = true
             var item = scope.row
-            this.curId = item.id
+            this.curId = item.userId
             this.curLevel = item.lv ? item.lv - 1 : ''
             // var id = scope.row.id
         },
@@ -96,6 +108,7 @@ export default {
             }else this.messageTip(res.message)
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.status = 3
             return info;
         }
     }
