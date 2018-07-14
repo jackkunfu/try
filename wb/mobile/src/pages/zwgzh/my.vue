@@ -195,17 +195,17 @@ export default {
             this.curPjPlanId = item.planId
             if(item.plan.coachs && item.plan.coachs.length > 0){
                 this.curCoachs = item.plan.coachs
-                // this.curCoachs.forEach(el => {
-                //     if(el.evaluate){
-                //         this.$set(el, 'x1', el.evaluate.attitude)
-                //         this.$set(el, 'x2', el.evaluate.discipline)
-                //         this.$set(el, 'x3', el.evaluate.interaction)
-                //     }else{
-                //         this.$set(el, 'x1', 0)
-                //         this.$set(el, 'x2', 0)
-                //         this.$set(el, 'x3', 0)
-                //     }
-                // })
+                this.curCoachs.forEach(el => {
+                    if(el.evaluate){
+                        this.$set(el, 'x1', el.evaluate.attitude)
+                        this.$set(el, 'x2', el.evaluate.discipline)
+                        this.$set(el, 'x3', el.evaluate.interaction)
+                    }else{
+                        this.$set(el, 'x1', 0)
+                        this.$set(el, 'x2', 0)
+                        this.$set(el, 'x3', 0)
+                    }
+                })
                 // this.curJLIdx = 0
             }
         },
