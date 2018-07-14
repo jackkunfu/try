@@ -18,7 +18,7 @@
             el-form-item(label="用户名")
                 el-input(v-model="form.userName")
             el-form-item(label="密码")
-                el-input(v-model="form.password")
+                el-input(v-model="form.password" type="password")
             el-form-item
                 el-button(type="primary" @click="lgn") 登录
 
@@ -70,6 +70,7 @@ export default {
             })
             loading.close()
             if(res && res.code == this.successCode){
+                localStorage.zwManageUinfo = JSON.stringify(res.data)
                 localStorage.zwManageUid = res.data.id
                 location.reload()
                 // localStorage.zwManageMd5 = res.randomKey

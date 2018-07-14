@@ -2,7 +2,7 @@
 div
     .table-ctn
         .page-title 设置
-            span /管理员设置
+            span /销售顾问设置
 
         //- search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-position="right")
