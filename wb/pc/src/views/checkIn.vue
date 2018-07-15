@@ -6,6 +6,9 @@ div
 
         search(@search="search" @reset="reset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
+                el-form-item(label="关键字")
+                    el-input(placeholder="姓名/手机号" v-model="searchInfo.name")
+
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
@@ -46,7 +49,7 @@ export default {
                 { str: '累计请假', key: 'leave' },
                 { str: '累计缺席', key: 'absent' }
             ],
-            searchKeys: ['city', 'trainId', 'week', 'date'],
+            searchKeys: ['city', 'trainId', 'week', 'date', 'name'],
             editKeys: [],
             api: {
                 list: { url: '/sign/listBg' },
