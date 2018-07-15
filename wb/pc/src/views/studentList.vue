@@ -251,17 +251,17 @@ export default {
             this.editInfo.weight = user.weight
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
-
-            this.editInfo.trainId = train.id
-            this.editInfo.cardId = card.id
             
             setTimeout(()=>{
-                this.editInfo.trainId = train.id
-
+                this.editInfo.trainId = data.trainId
                 setTimeout(()=>{
-                    this.editInfo.cardId = card.id
-                }, 500)
-            }, 500)
+                    this.editInfo.cardId = data.cardId
+                    setTimeout(()=>{
+                        this.editInfo.frequency = data.frequency
+                        this.editInfo.fee = data.fee
+                    }, 500)
+                }, 300)
+            }, 300)
 
             this.editInfo.payDate = data.payDate
             this.editInfo.sale = data.sales.id
@@ -291,8 +291,8 @@ export default {
             var freq = this.allFrequency.indexOf(obj.frequency)
             if(chooseTimesLength > (freq+1)) return this.messageTip('训练频次为'+this.allFrequency[freq]+'最多选'+(freq+1)+'个上课时间');
 
-            if(obj.payDate == '') return this.messageTip('支付日期未选')
-            if(obj.sale == '') return this.messageTip('销售顾问未选')
+            // if(obj.payDate == '') return this.messageTip('支付日期未选')
+            // if(obj.sale == '') return this.messageTip('销售顾问未选')
 
             return true
         },
