@@ -4,8 +4,10 @@
         .name 郑武体育管理后台
         .fr
             img(:src="config.imgPath+uInfo.avatar")
-            span {{uInfo.account}}
-            el-button(size="mini" @click="logout") 退出
+            span 你好，{{uInfo.account}}
+            el-button(size="mini" @click="logout")
+                img(src="../assets/quit.png")
+                span 退出
 </template>
 
 <script>
@@ -42,11 +44,23 @@ img
 .fr
     margin-top: 15px
     margin-right: 10px
+    .el-button
+        background: #ccc
+        position: relative
+        padding-left: 30px
+        img
+            width: 20px
+            height: auto
+            position: absolute
+            top: 2px
+            left: 17px
     img
         width: 46px
         height: 46px
         position: relative
         top: -10px
+        border-radius: 50%
+        border: 2px solid #fff
     span
-        margin: 0 5px
+        margin: 0 10px
 </style>

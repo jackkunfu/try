@@ -47,6 +47,9 @@ export default {
                 { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
+                { str: '教学态度', key: 'attitude' },
+                { str: '课堂纪律', key: 'discipline' },
+                { str: '互动性', key: 'interaction' },
                 { str: '本月评价', key: 'avgEvaluate' }
             ],
             searchKeys: ['cocahId', 'city'],
