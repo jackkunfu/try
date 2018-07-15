@@ -103,6 +103,21 @@ div
                 el-form-item
                     el-button(type="primary" @click="addOrUpdate" size="small") 保存
                     el-button(type="primary" @click="editCancel" size="small") 取消
+
+    .fix-cover(v-show="isOpenCard")
+        .x(@click="closeOpenCard")
+            i.el-icon-close
+        .box
+            el-form(:model="open" label-width="80px" size="mini")
+                el-form-item(label="开始日期")
+                    el-date-picker(v-model="open.openDate" type="date" placeholder="选择开始日期" value-format="yyyy-MM-dd")
+
+                el-form-item(label="结束日期")
+                    el-date-picker(v-model="open.endDate" type="date" placeholder="选择结束日期" value-format="yyyy-MM-dd")
+
+                el-form-item
+                    el-button(type="primary" @click="cardOpen" size="small") 保存
+                    el-button(type="primary" @click="editCancel" size="small") 取消
       
 </template>
 
@@ -152,7 +167,13 @@ export default {
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
                 { str: '导出excel', fun: 'export'}
-            ]
+            ],
+            isOpenCard: false,
+            open: {
+                openDate: '',
+                endDate: ''
+            },
+            curOPenCardItem: null
         }
     },
     watch: {
@@ -198,6 +219,27 @@ export default {
         })
     },
     methods: {
+        async cardOpen(){
+            if(!this.open.openDate) return this.messageTip('请选择开始时间')
+            if(!this.open.endDate) return this.messageTip('请选择结束时间')
+            var res = await this.ajax('/order/open', {
+                id: this.curOPenCardItem.id,
+                openDate: new Date(this.open.openDate),
+                endDate: new Date(this.open.endDate)
+            })
+            
+            if(res && res.code == this.successCode){
+                this.messageTip(res.message, 1)
+                this.closeOpenCard()
+                this.curOPenCardItem = null
+                this.tableList()
+            }else this.messageTip(res.message)
+        },
+        closeOpenCard(){
+            this.isOpenCard = false
+            this.open.openDate = ''
+            this.open.endDate = ''
+        },
         selfAdd(){
             this.cityTrains = []
             this.cards = []
@@ -272,18 +314,10 @@ export default {
             return true
         },
         async openCard(scope){
-            var row = scope.row;
-            var res = await this.ajax('/order/open', {
-                id: row.id,
-                openDate: row.openDate || new Date(),
-                endDate: row.endDate || new Date(new Date() + 86400*10)
-            })
-            
-            if(res && res.code == this.successCode){
-                this.messageTip(res.message, 1)
-                this.tableList()
-            }else this.messageTip(res.message)
 
+            this.isOpenCard = true
+            this.curOPenCardItem = scope.row
+            
         },
         async jihuo(scope){
             var row = scope.row;

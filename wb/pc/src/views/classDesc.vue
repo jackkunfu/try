@@ -118,7 +118,8 @@ export default {
             if(this.editInfo.img == '') return this.messageTip('图片未上传')
             if(this.editInfo.city.trim() == '') return this.messageTip('城市不能为空')
             if(this.editInfo.url.trim() == '') return this.messageTip('图文链接不能为空')
-            var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+            // var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+            var reg=/(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g
             if(!reg.test(this.editInfo.url.trim()))  return this.messageTip('图文链接格式不正确')
             var url = this.isEdit ? '/course/edit' : '/course/add'
             var data = Object.assign({}, this.editInfo)
