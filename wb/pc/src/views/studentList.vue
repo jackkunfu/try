@@ -141,9 +141,9 @@ export default {
             editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
             api: {
                 list: { url: '/order/list' },
-                add: { url: '/user/add' },
+                add: { url: '/mgr/addStu' },
                 edit: { url: '/user/edit' },
-                del: { url: '/order/delete' }
+                del: { url: '/user/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '编辑', fun: 'editScope'},

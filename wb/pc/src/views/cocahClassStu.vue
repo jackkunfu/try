@@ -40,12 +40,10 @@ export default {
             searchKeys: ['name', 'city'],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/evaluate/list' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '查看详情', fun: 'seeDetail'}
+                // { str: '查看详情', fun: 'seeDetail'}
             ],
             operates: [    // 顶部的操作
                 // { str: '新增', fun: 'add'},
@@ -55,8 +53,8 @@ export default {
     },
     methods: {
         changeSearchValue(info){     //  处理搜索请求传参
-            info.cocahId = this.cocahId
-            info.sync = this.curBtnSearch
+            info.cuserId = this.$route.query.cuserId
+            // info.sync = this.curBtnSearch
             return info;
         }
     }

@@ -35,23 +35,25 @@ export default {
         return {
             cocahId: this.$route.query.id,
             keys: [
-                { str: '头像', key: 'avatar' },
-                { str: '姓名', key: 'name' },
-                { str: '联系电话', key: 'mobile' },
+                { str: '头像', key: 'img', type: 'img' },
+                { str: '姓名', key: 'user.name' },
+                { str: '联系电话', key: 'user.phone' },
                 { str: '训练营', key: 'trainName' },
-                { str: '上课日期', key: 'date' },
-                { str: '上课时间', key: 'week' },
-                { str: '整体评价', key: 'trainName' }
+                { str: '上课日期', key: 'plan.createDate' },
+                { str: '上课时间', key: 'time' },
+                { str: '教学态度', key: 'attitude' },
+                { str: '课堂纪律', key: 'discipline' },
+                { str: '互动性', key: 'interaction' },
+                { str: '整体评价', key: 'avgEvaluate' },
+                { str: '意见反馈', key: 'opinion' }
             ],
             searchKeys: ['trainId', 'city', 'week', 'date'],
             editKeys: [],
             api: {
-                list: { url: '/application/queryAppPage' },
-                add: { url: '/application/addApp' },
-                edit: { url: '/application/saveApp' },
+                list: { url: '/evaluate/list' }
             },
             scopeOperates: [    // 每一行种的操作
-                { str: '查看详情', fun: 'seeDetail'}
+                // { str: '查看详情', fun: 'seeDetail'}
             ],
             operates: [    // 顶部的操作
                 // { str: '新增', fun: 'add'},
@@ -60,8 +62,16 @@ export default {
         }
     },
     methods: {
+        changeTableData(data){
+            data.forEach(element => {
+                element.img = element.user.avatar
+                element.trainName = element.plan.train.name
+                element.time = '周'+this.week[element.plan.week] + ' ' + element.plan.begin+'~'+element.plan.end
+            });
+            return data
+        },
         changeSearchValue(info){     //  处理搜索请求传参
-            info.cocahId = this.cocahId
+            info.cuserId = this.$route.query.cuserId
             return info;
         },
         seeDetail(scope){
