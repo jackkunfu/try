@@ -98,7 +98,7 @@
 
                             textarea(placeholder="对教练的意见或建议" v-model="item.pjStr")
 
-                            .lbtn(v-if="item.evaluate" @click="pj(item)") 提交评价
+                            .lbtn(v-if="!item.evaluate" @click="pj(item)") 提交评价
                             .lbtn.disable(v-else) 已评价
                     .lbtn(@click="closePj") 关闭
 
@@ -169,19 +169,19 @@ export default {
     },
     async mounted(){
         this.my = this.$route.query
-        var res = await this.ajax('/user/detail', { userId: this.userId }, 'get')
-        if(res && res.code == this.successCode){
-            this.my = res.data
-            var data = res.data
-            this.isPJ = data.isPJ
-            if(this.isPJ){
-                var pj = data.pingjia
-                this.x1 = pj.attitude || 0
-                this.x2 = pj.discipline || 0
-                this.x3 = pj.interaction || 0
-                this.pjStr = pj.opinion || ''
-            }
-        }
+        // var res = await this.ajax('/user/detail', { userId: this.userId }, 'get')
+        // if(res && res.code == this.successCode){
+        //     this.my = res.data
+        //     var data = res.data
+        //     this.isPJ = data.isPJ
+        //     if(this.isPJ){
+        //         var pj = data.pingjia
+        //         this.x1 = pj.attitude || 0
+        //         this.x2 = pj.discipline || 0
+        //         this.x3 = pj.interaction || 0
+        //         this.pjStr = pj.opinion || ''
+        //     }
+        // }
 
         this.curTab = 0
     },
@@ -197,13 +197,15 @@ export default {
                 this.curCoachs = item.plan.coachs
                 this.curCoachs.forEach(el => {
                     if(el.evaluate){
-                        this.$set(el, 'x1', el.evaluate.attitude)
-                        this.$set(el, 'x2', el.evaluate.discipline)
-                        this.$set(el, 'x3', el.evaluate.interaction)
+                        this.$set(el, 'x1', el.evaluate.attitude || 0)
+                        this.$set(el, 'x2', el.evaluate.discipline || 0)
+                        this.$set(el, 'x3', el.evaluate.interaction || 0)
+                        this.$set(el, 'pjStr', el.evaluate.opinion || '')
                     }else{
                         this.$set(el, 'x1', 0)
                         this.$set(el, 'x2', 0)
                         this.$set(el, 'x3', 0)
+                        this.$set(el, 'pjStr', '')
                     }
                 })
                 this.curJLIdx = 0
@@ -253,7 +255,7 @@ export default {
             if(item.x2 == 0) return this.messageTip('课堂纪律星级未评')
             if(item.x3 == 0) return this.messageTip('互动性星级未评')
             if(item.pjStr.trim() == '') return this.messageTip('评价不能为空')
-            var res = await this.ajax('/evaluate/add', {
+            var options = {
                 userId: this.userId,
                 cuserId: item.id,
                 planId: this.curPjPlanId,
@@ -261,11 +263,13 @@ export default {
                 discipline: item.x2,
                 interaction: item.x3,
                 opinion: item.pjStr.trim()
-            })
+            }
+            var res = await this.ajax('/evaluate/add', options)
             this.messageTip(res.message)
             if(res && res.code == this.successCode){
-                this.isPJ = true
-                this.pjStr = ''
+                item.evaluate = options
+                // this.isPJ = true
+                // ite.pjStr = ''
             }
         }
     }
@@ -345,10 +349,12 @@ export default {
         padding: 1rem
 
         .item-ctn
+            margin-bottom: 0.5rem
             > img
-                width: 2.5rem
-                height: 2.5rem
+                width: 2rem
+                height: 2rem
                 margin-right: 0.5rem
+                border-radius: 0
             .title
                 margin-bottom: 0.2rem
 

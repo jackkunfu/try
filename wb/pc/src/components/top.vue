@@ -42,6 +42,11 @@ img
 .fr
     margin-top: 15px
     margin-right: 10px
+    img
+        width: 46px
+        height: 46px
+        position: relative
+        top: -10px
     span
         margin: 0 5px
 </style>
