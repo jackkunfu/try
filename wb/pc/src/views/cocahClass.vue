@@ -39,7 +39,7 @@ export default {
                 { str: '姓名', key: 'user.name' },
                 { str: '联系电话', key: 'user.phone' },
                 { str: '训练营', key: 'trainName' },
-                { str: '上课日期', key: 'plan.createDate' },
+                { str: '上课日期', key: 'week' },
                 { str: '上课时间', key: 'time' },
                 { str: '教学态度', key: 'attitude' },
                 { str: '课堂纪律', key: 'discipline' },
@@ -66,7 +66,9 @@ export default {
             data.forEach(element => {
                 element.img = element.user.avatar
                 element.trainName = element.plan.train.name
-                element.time = '周'+this.week[element.plan.week] + ' ' + element.plan.begin+'~'+element.plan.end
+                // element.time = '周'+this.week[element.plan.week] + ' ' + element.plan.begin+'~'+element.plan.end
+                element.week = '周'+this.week[element.plan.week]
+                element.time = element.plan.begin+'~'+element.plan.end
             });
             return data
         },

@@ -44,7 +44,7 @@ div
             i.el-icon-close
         .box(style="min-height:0;")
             el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
-                el-form-item(label="时间")
+                el-form-item(label="体测时间")
                     el-date-picker(v-model="curAddTime" placeholder="请选择时间" type="date" value-format="yyyy-MM-dd")
 
             el-button(@click="upImgSubmit" size="mini") 上传
@@ -61,6 +61,8 @@ export default {
                 { str: '头像', key: 'img', type: 'img' },
                 { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
+                { str: '生日', key: 'birth' },
+                { str: '手机', key: 'user.phone' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
                 { str: '地区', key: 'city' },
@@ -134,6 +136,7 @@ export default {
             data.forEach(element => {
                 element.sexStr = element.user.sex ? '女' : '男'
                 element.img = element.user.avatar
+                element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
             });
             return data
         },

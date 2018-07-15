@@ -86,10 +86,10 @@ div
                         span {{'周'+week[item.week]+' '+item.begin+'~'+item.end}}
                         
 
-                el-form-item(label="支付日期")
+                //- el-form-item(label="支付日期")
                     el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
                 
-                el-form-item(label="销售顾问")
+                //- el-form-item(label="销售顾问")
                     el-select(v-model="editInfo.sale")
                         el-option(v-for="(item, i) in sales" :label="item.name" :value="item.id" :key="i")
 
@@ -251,9 +251,18 @@ export default {
             this.editInfo.weight = user.weight
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
+
             this.editInfo.trainId = train.id
             this.editInfo.cardId = card.id
             
+            setTimeout(()=>{
+                this.editInfo.trainId = train.id
+
+                setTimeout(()=>{
+                    this.editInfo.cardId = card.id
+                }, 500)
+            }, 500)
+
             this.editInfo.payDate = data.payDate
             this.editInfo.sale = data.sales.id
         },
@@ -269,7 +278,7 @@ export default {
             if(obj.weight == '') return this.messageTip('体重未填')
             if(obj.parentName == '') return this.messageTip('家长姓名未填')
             if(obj.parentPhone == '') return this.messageTip('家长联系方式未填')
-            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.phone)) ) return this.messageTip('家长联系方式手机格式有误')
+            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.parentPhone)) ) return this.messageTip('家长联系方式手机格式有误')
 
             if(obj.city == '') return this.messageTip('地区未选')
             if(obj.trainId == '') return this.messageTip('训练营未选')

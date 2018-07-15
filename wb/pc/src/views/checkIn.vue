@@ -37,6 +37,7 @@ export default {
                 { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
                 { str: '生日', key: 'birth' },
+                { str: '手机', key: 'user.phone' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
                 { str: '训练营', key: 'train.name' },

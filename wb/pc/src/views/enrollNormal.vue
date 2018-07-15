@@ -295,7 +295,7 @@ export default {
             if(obj.weight == '') return this.messageTip('体重未填')
             if(obj.parentName == '') return this.messageTip('家长姓名未填')
             if(obj.parentPhone == '') return this.messageTip('家长联系方式未填')
-            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.phone)) ) return this.messageTip('家长联系方式手机格式有误')
+            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.parentPhone)) ) return this.messageTip('家长联系方式手机格式有误')
 
             if(obj.city == '') return this.messageTip('地区未选')
             if(obj.trainId == '') return this.messageTip('训练营未选')
