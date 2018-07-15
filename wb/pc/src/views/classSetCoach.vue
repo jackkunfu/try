@@ -22,7 +22,7 @@ div
                     el-select(v-model="searchInfo.coachId" placeholder="教练")
                         el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
         
-        el-table(:data="tableData")
+        el-table(:data="tableData" border)
 
             el-table-column(prop="name" label="校区")
                 
@@ -34,10 +34,13 @@ div
                                 .time {{cls.begin + ' ~ ' +cls.end}}
                                     //- el-button(type="primary" @click="handleCoach(j, cls, 0)" size="mini" v-if="!cls.coachs || cls.coachs.length == 0") 添加教练
                                 el-button(type="primary" @click="addOrEdit(0, cls)" size="mini") 添加教练
+                                // i.el-icon-plus
                                 div(v-for="(coach, k) in cls.coachs")
                                     span.name {{coach.name}}
-                                        .x(@click="del(cls, k)") X
-                                    el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
+                                        .x(@click="del(cls, k)")
+                                            i.el-icon-delete
+                                    i.el-icon-edit
+                                    //- el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
                                     //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
@@ -106,8 +109,10 @@ export default {
         async tableList(){
             var obj = this.trimObj(this.searchInfo)
             obj.offset = 0
-            obj.limit = 10
+            obj.limit = 1000
+            var loading = this.$loading()
             var req = await this.ajax(this.api.list.url, obj, 'get')
+            loading.close()
             if(req && req.code == this.successCode){
                 var result = req.data
                 var newData = Object.keys(result).map(v => {
@@ -125,7 +130,7 @@ export default {
             this.showEditCtn = true
         },
         addOrEdit(type, cls, i){  // type 0 添加   1 替换
-            this.changeIdx = i ? i : null
+            this.changeIdx = i !== undefined ? i : null
             this.curEditPlan = cls
             this.showEditCtn = true
         },
@@ -133,7 +138,7 @@ export default {
             if(this.editInfo.cocahId == '') return this.messageTip('请选择教练')
             var coachIdArr = this.curEditPlan.coachs ? this.curEditPlan.coachs.map(v=>v.id) : []
             if(coachIdArr.indexOf(this.editInfo.coachId) > -1) return this.messageTip('该教练已添加')
-            if(this.changeIdx) coachIdArr.splice(this.changeIdx, 1)
+            if(this.changeIdx !== null) coachIdArr.splice(this.changeIdx, 1)
             coachIdArr.push(this.editInfo.coachId)
             console.log(coachIdArr)
             var req = await this.ajax('/teacher_plan/coach', {
@@ -182,17 +187,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
+
 .cls
     margin: 10px 0
     padding: 10px 0 10px
-    border: 1px solid #339999
+    border-bottom: 1px solid #339999
     .name
         position: relative
         display: inline-block
         padding-left: 13px
+        margin: 0 5px
         .x
             position: absolute
-            left: 0
+            left: -5px
             top: 0
             color: red
             cursor: pointer
