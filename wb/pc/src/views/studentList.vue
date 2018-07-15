@@ -4,7 +4,7 @@ div
         .page-title 学员管理
             span /学员信息
 
-        search(@search="search" @reset="reset")
+        search(@search="search" @reset="beReset")
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="关键字")
                     el-input(placeholder="姓名/手机号" v-model="searchInfo.name")
@@ -23,6 +23,10 @@ div
 
                 el-form-item(label="出生日期")
                     el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
+
+        .btn-search
+            el-button(size="small" @click="searchDaoqi" :class="isDaoqi ? 'cur' : ''") 即将到期
+            span 总数：{{wilEndNum}}
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" @daochu="daochu")
@@ -114,7 +118,7 @@ export default {
                 { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },
                 { str: '开卡时间', key: 'openDate' },
-                { str: '到期时间', key: 'endDate' },
+                { str: '到期时间', key: 'endDateStr', type: 'html' },
                 // { str: '学员作业', key: 'remark' },
                 // { str: '体能测试', key: 'remark' }
             ],
@@ -134,12 +138,12 @@ export default {
             //     { str: '销售', key: 'sales.name' }
             // ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/user/add' },
                 edit: { url: '/user/edit' },
-                del: { url: '/user/delete' }
+                del: { url: '/order/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '编辑', fun: 'editScope'},
@@ -153,7 +157,9 @@ export default {
             cards: [],
             frequencys: [],
             classTimes: [],
-            sales: []
+            sales: [],
+            isDaoqi: false,       // 是否即将到期
+            wilEndNum: 0
         }
     },
     watch: {
@@ -199,14 +205,33 @@ export default {
         })
     },
     methods: {
+        searchDaoqi(){
+            this.isDaoqi = true;
+            this.tableList()
+        },
+        afterTableList(data){
+            this.wilEndNum = data.expireSum || 0
+        },
+        beReset(){
+            this.isDaoqi = false
+            this.reset()
+        },
         daochu(){
             location.href = '/api/user/excel'
         },
         changeTableData(data){
             data.forEach(element => {
-                element.birth = element.birthday ? element.birthday.split(' ')[0] : ''
+                element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
+                if(!element.endDate){
+                    element.endDateStr = ''
+                }else{   // 快30天到期的展示红色字体
+                    var eTime = new Date(element.endDate.split('')).getTime()
+                    var nTime = new Date().getTime()
+                    if( eTime - nTime < 30*24*60*60*1000 ) element.endDateStr = '<span style="color:red;">'+element.endDate+'</span>'
+                    else element.endDateStr = element.endDate
+                }
             });
             return data
         },
@@ -263,9 +288,10 @@ export default {
             return true
         },
         handleDelRow(data){
-            return { userId: data.id }
+            return { userId: data.userId }
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            if(this.isDaoqi) info.expire = 1     // 即将到期
             info.status = 3
             return info
         },

@@ -14,7 +14,7 @@ div
                         el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
                     el-col(:span="2" style="text-align: center") -
                     el-col(:span="11")
-                        el-date-picker(type="date" placeholder="选择开始日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
+                        el-date-picker(type="date" placeholder="选择结束日期" v-model="searchInfo.startTime" style="width: 100%;" value-format="yyyy-MM-dd")
 
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
@@ -149,7 +149,7 @@ export default {
                 { str: '销售', key: 'sales.name' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/mgr/addStu' },
@@ -318,6 +318,9 @@ export default {
             this.isOpenCard = true
             this.curOPenCardItem = scope.row
             
+        },
+        handleDelRow(data){
+            return { id: data.userId }
         },
         async jihuo(scope){
             var row = scope.row;

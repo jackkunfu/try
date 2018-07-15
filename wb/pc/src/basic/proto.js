@@ -148,6 +148,8 @@ export default function(Vue){
 
             this.page.total = result.total;
             this.curChooseRow = null;   // 当前选中列置空
+
+            if(this.afterTableList && typeof this.afterTableList == 'function') this.afterTableList(result)
         }
     }
     // 搜索

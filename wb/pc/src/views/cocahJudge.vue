@@ -47,7 +47,7 @@ export default {
                 { str: '头像', key: 'avatar' },
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
-                { str: '本月评价', key: 'trainName' }
+                { str: '本月评价', key: 'avgEvaluate' }
             ],
             searchKeys: ['cocahId', 'city'],
             editKeys: [],
@@ -57,7 +57,7 @@ export default {
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '查看详情', fun: 'seeDetail'},
-                { str: '删除', fun: 'delScope'}
+                // { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
                 // { str: '新增', fun: 'add'},
