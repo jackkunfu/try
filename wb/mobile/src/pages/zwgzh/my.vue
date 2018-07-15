@@ -60,12 +60,12 @@
         div.pj(v-if="curTab == 2")
             .item-ctn(v-for="(item, i) in jlList" @click="showPjDetail(item)")
                 img.fl(src="../../assets/pjedit.png")
-                .fr(v-if="true")
-                    span 去评价
-                    img.fr(src="../../assets/rs.png")
-                .fr(v-else)
+                .fr(v-if="item.hasPj")
                     span 已评价
                     img.fr(src="../../assets/ys.png")
+                .fr(v-else)
+                    span 去评价
+                    img.fr(src="../../assets/rs.png")
 
                 .title {{item.createDate | split}}
                 .sub-title {{item.plan.coachs ? item.plan.coachs.map(v=>v.name).join(',') : ''}}
@@ -232,6 +232,14 @@ export default {
                     this.tnList = data.rows
                 }else if(type == 2){
                     this.jlList = data.rows
+                    this.jlList.forEach(item=>{
+                        if(item.plan.coachs && item.plan.coachs.map(v=>v.evaluate).indexOf('') < 0){
+                            // console.log(item.plan.coachs.map(v=>v.evaluate))
+                            item.hasPj = true
+                        }else{
+                            item.hasPj = false
+                        }
+                    })
                     // this.coach = data
                     // this.isPJ = data.isPJ
                     // var pj = data.pingjia
