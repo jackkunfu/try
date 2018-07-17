@@ -64,7 +64,7 @@ div
                         i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
 
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
+                    el-button(type="primary" @click="addOrUpdate") 保存s
                     el-button(type="primary" @click="editCancel") 取消
     
 </template>
@@ -76,7 +76,7 @@ export default {
     data () {
         return {
             keys: [
-                { str: '图片', key: 'image', type: 'html' },
+                { str: '图片', key: 'imageHtml', type: 'html' },
                 { str: '城市', key: 'city' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'card' },
@@ -111,6 +111,9 @@ export default {
             this.editInfo.trainId = ''
             if(!v) return
             this.cityTrains = await this.getAllTrain(v)
+        },
+        showEditCtn(v){
+            if(!v) this.addTimeList = []
         }
     },
     mounted(){
@@ -148,7 +151,7 @@ export default {
         changeTableData(data){     //  处理搜索请求传参
             return data.map(v=>{
                 // v.price = (v.price - 0) / 100 + '元'
-                v.image = '<img src="'+this.config.imgPath+v.image+'">'
+                v.imageHtml = '<img src="'+this.config.imgPath+v.image+'">'
                 if(v.cfs){
                     var html = ''
                     v.cfs.forEach(element => {
