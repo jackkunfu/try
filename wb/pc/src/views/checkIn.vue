@@ -69,7 +69,7 @@ export default {
                 element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
-                element.curStatu = element.type === 0 ? '出席' : element.type === 1 ? '请假' : element.type === 2 ? '出席' : '未知'
+                element.curStatu = element.type === 0 ? '出席' : element.type === 1 ? '请假:'+element.remarks : element.type === 2 ? '出席' : '未知'
             });
             return data
         },
