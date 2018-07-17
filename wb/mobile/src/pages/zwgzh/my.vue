@@ -6,6 +6,7 @@
             img.fl(:src="touxiang")
             .title
                 span {{my.name}}
+                span 等级：{{lv}}
 
             .sub-title(@click="goUrl('/myset', my)") 完善个人信息
                 span >
@@ -117,8 +118,8 @@ export default {
             },
             coach: {
                 img: '',
-                name: '王小二',
-                time: '2018-01-01 11:00:00 - 13:00:00'
+                name: '',
+                time: ''
             },
             course: [],
             // course: {
@@ -154,6 +155,11 @@ export default {
         },
         touxiang(){
             return this.my.avatar ? this.config.imgPath + this.my.avatar : require('../../assets/touxiang.png')
+        },
+        lv(){
+            if(this.my.lv) return require('../../assets/lv'+this.my.lv+'.png')
+            if(this.my.lv - 0 === 0) return '入门级'
+            else return '未知'
         }
     },
     watch: {

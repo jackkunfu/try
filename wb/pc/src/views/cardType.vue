@@ -42,6 +42,12 @@ div
                 el-form-item(label="卡种名称")
                     el-input(v-model="editInfo.card" placeholder="卡种名称")
 
+                el-form-item(label="卡种图片")
+                    .up-ctn
+                        input#up1(type="file" ref="up1")
+                        span + 上传
+                        img(:src="config.imgPath+editInfo.image" v-if="editInfo.image")
+
                 el-form-item(label="频次和价格")
                     el-form-item(label="训练频次")
                         el-select(v-model="curFrequency" placeholder="训练频次")
@@ -70,6 +76,7 @@ export default {
     data () {
         return {
             keys: [
+                { str: '图片', key: 'image', type: 'html' },
                 { str: '城市', key: 'city' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'card' },
@@ -77,7 +84,7 @@ export default {
                 // { str: '价格', key: 'price' }
             ],
             searchKeys: ['trainId', 'city', 'card', 'frequency'],
-            editKeys: ['trainId', 'city', 'card'],
+            editKeys: ['trainId', 'city', 'card', 'image'],
             api: {
                 list: { url: '/card/list' },
                 add: { url: '/card/add' },
@@ -106,6 +113,16 @@ export default {
             this.cityTrains = await this.getAllTrain(v)
         }
     },
+    mounted(){
+        $(this.$refs.up1).change(()=>{
+            this.file('up1', async res =>{
+                if(res && res.code == this.successCode){
+                    let img = res.data
+                    this.editInfo.image = res.data
+                }
+            })
+        })
+    },
     methods: {
         selfEdit(item){
             this.addTimeList = item.cfs.map(v => {
@@ -131,6 +148,7 @@ export default {
         changeTableData(data){     //  处理搜索请求传参
             return data.map(v=>{
                 // v.price = (v.price - 0) / 100 + '元'
+                v.image = '<img src="'+this.config.imgPath+v.image+'">'
                 if(v.cfs){
                     var html = ''
                     v.cfs.forEach(element => {
@@ -155,6 +173,7 @@ export default {
             if(obj.city == '') return this.messageTip('请选择城市')
             if(obj.tranid == '') return this.messageTip('请选择训练营')
             if(obj.card == '') return this.messageTip('请输入卡种名称')
+            if(obj.image == '') return this.messageTip('请上传卡种图片')
 
             if(this.addTimeList.length == 0) return this.messageTip('请添加频次和价格')
             // if(obj.frequency == '') return this.messageTip('请输入卡种名称')
