@@ -8,6 +8,7 @@ div.class-desc
             .title
                 i.el-icon-document
                 | 轮播图管理
+                span(style="color:#888;") (375*140或等比例两倍三倍图)
                 .up-ctn.add
                     input#up1(type="file" ref="up1")
                     span 新增轮播图
@@ -27,6 +28,7 @@ div.class-desc
             .title
                 i.el-icon-document
                 | 课程介绍缩略图、地区及图文链接
+                span(style="color:#888;") (140*120或等比例两倍三倍图)
                 el-button.fr(type="success" @click="showEditCtn=true" size="mini") 新增地区
 
             .ctn

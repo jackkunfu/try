@@ -137,6 +137,10 @@ export default {
                 { str: '头像', key: 'img', type: 'img' },
                 { str: '姓名', key: 'user.name' },
                 { str: '性别', key: 'sexStr' },
+                { str: '生日', key: 'birth' },
+                { str: '身高', key: 'user.height' },
+                { str: '体重', key: 'user.weight' },
+                { str: '手机', key: 'user.phone' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
                 { str: '地区', key: 'city' },
@@ -146,7 +150,7 @@ export default {
                 { str: '费用', key: 'fee' },
                 { str: '支付状态', key: 'payStatusStr' },
                 { str: '支付时间', key: 'payDate' },
-                { str: '创建时间', key: 'createDate' },
+                { str: '报名时间', key: 'createDate' },
                 { str: '销售', key: 'sales.name' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
@@ -269,6 +273,7 @@ export default {
         },
         changeTableData(data){
             data.forEach(element => {
+                element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
                 element.sexStr = element.user.sex ? '女' : '男'
                 element.payStatusStr = element.status == 1 ? '支付成功' : '未支付'
                 element.fee = element.fee ?  (element.fee-0)/100 : 0

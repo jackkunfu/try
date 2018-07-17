@@ -61,16 +61,16 @@ export default {
         
         .each-swiper
             float: left
-            height: 6rem
+            height: 7rem
             overflow: hidden
             transition: all 0.5s
             &.show
-                display: none
-            &.hide
                 display: block
+            &.hide
+                display: none
             img
                 width: 100%
-                height: 6rem
+                height: 7rem
 
     .dots
         position: absolute

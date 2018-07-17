@@ -320,6 +320,7 @@ export default {
             div
                 line-height: 0.8rem
                 margin: 0.5rem 0
+                overflow: hidden
                 img
                     // vertical-align: middle
                     margin-right: 0.3rem
@@ -414,7 +415,7 @@ export default {
         img
             width: 4rem
             height: 4rem
-            borer-radius: 50%
+            border-radius: 50%
             margin-left: 1rem
         .title, .sub-title
             color: #fff

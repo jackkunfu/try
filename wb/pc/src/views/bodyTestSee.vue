@@ -21,7 +21,7 @@ div
                         i.el-icon-delete(@click="del(item.id)") 删除
 
                 div
-                    img(:src="config.imagePath+item.content")
+                    img(:src="config.imgPath+item.content")
 
         el-pagination(layout="total, prev, pager, next, jumper" :total="page.total"
             @current-change="(v)=>{changePage(v)}" ref="page")

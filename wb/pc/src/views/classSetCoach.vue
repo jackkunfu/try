@@ -38,8 +38,8 @@ div
                                 div(v-for="(coach, k) in cls.coachs")
                                     span.name {{coach.name}}
                                         .x(@click="del(cls, k)")
-                                            i.el-icon-delete
-                                    i.el-icon-edit
+                                            i.el-icon-close
+                                    i.el-icon-edit-outline(@click="addOrEdit(1, cls, k)")
                                     //- el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
                                     //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 

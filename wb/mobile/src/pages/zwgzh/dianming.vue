@@ -6,9 +6,10 @@
 
     .main
         .item(v-for="(item, i) in stuList" :key="i")
-            .w50
-                // img.img(:src="item.img")
-                span(@click="seeInfo(item)") {{item.name}}
+            .w50(style="text-align:left;padding-left:2rem;")
+                span(@click="seeInfo(item)")
+                    img.img(:src="config.imgPath+item.avatar")
+                    span {{item.name}}
             .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
                 img.icon(src="../../assets/choose_btn_s@2x.png" v-else @click="dianming(0, item)")
@@ -187,7 +188,7 @@ export default {
 
 .main
     height: 100%
-    overflow: auto
+    overflow: scroll
     padding: 2.9rem 0 2.9rem
 
 .submit
@@ -213,16 +214,17 @@ export default {
     &.border
         border-right: 1px solid #e3e3e3
 
-.w50
-    text-align: center
-    .img
-        width: 1.7rem
-        height: 1.7rem
-        border-radius: 50%
-        vertical-align: middle
-        margin-right: 0.35rem
-    .icon
-        wdth: 1.4rem
-        margin: 0 0.6rem
-        vertical-align: middle
+.item
+    .w50
+        text-align: center
+        .img
+            width: 1.7rem
+            height: 1.7rem
+            border-radius: 50%
+            vertical-align: middle
+            margin-right: 0.35rem
+        .icon
+            width: 1.7rem
+            margin: 0 0.6rem
+            vertical-align: middle
 </style>
