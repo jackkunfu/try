@@ -53,8 +53,8 @@ div
                     el-input(v-model="editInfo.name")
                 el-form-item(label="性别")
                     el-radio-group(v-model="editInfo.sex")
-                        el-radio(label="1") 男
-                        el-radio(label="0") 女
+                        el-radio(label="0") 男
+                        el-radio(label="1") 女
                 el-form-item(label="登陆手机")
                     el-input(v-model="editInfo.phone" type="number")
                 el-form-item(label="生日")
@@ -144,6 +144,7 @@ export default {
                 { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },
                 { str: '费用', key: 'fee' },
+                { str: '支付状态', key: 'payStatusStr' },
                 { str: '支付时间', key: 'payDate' },
                 { str: '创建时间', key: 'createDate' },
                 { str: '销售', key: 'sales.name' }
@@ -269,6 +270,7 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.sexStr = element.user.sex ? '女' : '男'
+                element.payStatusStr = element.status == 1 ? '支付成功' : '未支付'
                 element.fee = element.fee ?  (element.fee-0)/100 : 0
                 element.img = element.user.avatar
             });

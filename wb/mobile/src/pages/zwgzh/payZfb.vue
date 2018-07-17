@@ -13,7 +13,8 @@
             return {
                 totalAmount: query.totalAmount,
                 orderId: query.orderId,
-                isWx: false
+                isWx: false,
+                userId: query.userId
             }
         },
         mounted(){
@@ -21,7 +22,7 @@
             if(ua.match(/MicroMessenger/i)=="micromessenger") { 
                 this.isWx = true
             } else { 
-                location.href = '/api/alipay/wapPay?orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount='+this.totalAmount  //  跳转支付宝支付
+                location.href = '/api/alipay/wapPay?userId='+this.userId+'&orderId='+this.orderId+'&body=郑武体育篮球训练课'+'&subject=郑武体育篮球训练课&totalAmount='+this.totalAmount  //  跳转支付宝支付
             }
         }
     }

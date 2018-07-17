@@ -30,7 +30,8 @@ div
                 el-form(:model="editInfo" label-width="160px" size="mini")
                     el-form-item(label="等级")
                         el-select(v-model="curLevel" placeholder="等级")
-                            el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i")
+                            el-option(label="入门级" value="0")
+                            el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
 
                     el-form-item
                         el-button(type="primary" @click="submit") 保存
@@ -43,7 +44,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            levels: ['一', '二', '三', '四', '五'],
+            levels: ['一', '二', '三', '四', '五', '六'],
             keys: [
                 // { str: '头像', key: 'avatar', type: 'img' },
                 // { str: '姓名', key: 'name' },
@@ -82,7 +83,7 @@ export default {
     methods: {
         changeTableData(data){
             data.forEach(element => {
-                element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : ''
+                element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : element.lv === 0 ? '入门级' : ''
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
                 element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
@@ -93,12 +94,12 @@ export default {
             this.isChooseLevel = true
             var item = scope.row
             this.curId = item.userId
-            this.curLevel = item.lv ? item.lv - 1 : ''
+            this.curLevel = item.lv ? item.lv : item.lv === 0 ? 0 : ''
             // var id = scope.row.id
         },
         async submit(){
             if(this.curLevel === '') return this.messageTip('请选择等级')
-            var res = await this.ajax('/user/level', { userId: this.curId, level: this.curLevel-0+1  })
+            var res = await this.ajax('/user/level', { userId: this.curId, level: this.curLevel  })
             if(res && res.code == this.successCode){
                 this.messageTip(res.message, 1)
                 this.curLevel = ''

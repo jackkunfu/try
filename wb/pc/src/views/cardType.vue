@@ -30,7 +30,7 @@ div
         .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="90px")
+            el-form(:model="editInfo" label-width="90px" size="mini")
                 el-form-item(label="城市")
                     el-select(v-model="editInfo.city" placeholder="城市")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")

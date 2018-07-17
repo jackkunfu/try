@@ -85,6 +85,7 @@
                         }
                     }
                 }else if(this.payWay == 2){
+                    options.userId = this.userId
                     this.goUrl('/payZfb', options)
 
                     // var res = await this.ajax('/alipay/wapPay', options)

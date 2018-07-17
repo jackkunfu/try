@@ -46,8 +46,8 @@ div
                     el-input(v-model="editInfo.name")
                 el-form-item(label="性别")
                     el-radio-group(v-model="editInfo.sex")
-                        el-radio(label="1") 男
-                        el-radio(label="0") 女
+                        el-radio(label="0") 男
+                        el-radio(label="1") 女
                 el-form-item(label="登陆手机")
                     el-input(v-model="editInfo.phone" type="number")
                 el-form-item(label="生日")
@@ -112,6 +112,7 @@ export default {
                 { str: '生日', key: 'birth' },
                 { str: '身高', key: 'user.height' },
                 { str: '体重', key: 'user.weight' },
+                { str: '手机', key: 'user.phone' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
                 { str: '训练营', key: 'train.name' },
@@ -150,7 +151,7 @@ export default {
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '新增', fun: 'add'},
+                // { str: '新增', fun: 'add'},
                 { str: '导出', fun: 'daochu'}
             ],
             cityTrains: [],
