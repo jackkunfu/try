@@ -250,8 +250,6 @@ export default {
             this.cards = []
         },
         selfEdit(data){
-            console.log('data')
-            console.log(data)
             var train = data.train
             var card = data.card
             var user = data.user
@@ -265,9 +263,25 @@ export default {
             this.editInfo.weight = user.weight
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
-            this.editInfo.trainId = train.id
-            this.editInfo.cardId = card.id
             
+            setTimeout(()=>{
+                this.editInfo.trainId = data.trainId
+                setTimeout(()=>{
+                    this.editInfo.cardId = data.cardId
+                    setTimeout(()=>{
+                        this.editInfo.frequency = data.frequency
+                        this.editInfo.fee = data.fee
+
+                        let cts = data.times.map(v=>v.id)
+
+                        this.classTimes.forEach(el => {
+                            if(cts.indexOf(el.id) > -1) el.isChoose = true
+                        })
+                        
+                    }, 500)
+                }, 300)
+            }, 300)
+
             this.editInfo.payDate = data.payDate
             this.editInfo.sale = data.sales.id
         },

@@ -64,7 +64,7 @@ div
                         i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
 
                 el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存s
+                    el-button(type="primary" @click="addOrUpdate") 保存
                     el-button(type="primary" @click="editCancel") 取消
     
 </template>

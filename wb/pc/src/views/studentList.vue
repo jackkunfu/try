@@ -118,6 +118,7 @@ export default {
                 { str: '训练营', key: 'train.name' },
                 { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },
+                { str: '上课时间', key: 'time', type: 'html' },
                 { str: '开卡时间', key: 'openDate' },
                 { str: '到期时间', key: 'endDateStr', type: 'html' },
                 // { str: '学员作业', key: 'remark' },
@@ -223,8 +224,12 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
-                element.sexStr = element.sex ? '女' : '男'
+                element.sexStr = element.user.sex ? '女' : '男'
                 element.img = element.user.avatar
+                element.time = element.times.reduce((a, b)=>{
+                    a = a + '周'+this.week[b.week] + ' ' + b.begin + '~' + b.end + '<br>'
+                    return a
+                }, '')
                 if(!element.endDate){
                     element.endDateStr = ''
                 }else{   // 快30天到期的展示红色字体
@@ -234,6 +239,7 @@ export default {
                     else element.endDateStr = element.endDate
                 }
             });
+            console.log(data)
             return data
         },
         selfEdit(data){
@@ -260,6 +266,13 @@ export default {
                     setTimeout(()=>{
                         this.editInfo.frequency = data.frequency
                         this.editInfo.fee = data.fee
+
+                        let cts = data.times.map(v=>v.id)
+
+                        this.classTimes.forEach(el => {
+                            if(cts.indexOf(el.id) > -1) el.isChoose = true
+                        })
+                        
                     }, 500)
                 }, 300)
             }, 300)

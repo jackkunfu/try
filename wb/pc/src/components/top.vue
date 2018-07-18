@@ -45,7 +45,8 @@ img
     margin-top: 15px
     margin-right: 10px
     .el-button
-        background: #ccc
+        background: #eee
+        border-color: #eee
         position: relative
         padding-left: 30px
         img

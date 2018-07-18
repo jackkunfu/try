@@ -6,7 +6,8 @@
             img.fl(:src="touxiang")
             .title
                 span {{my.name}}
-                span 等级：{{lv}}
+                span.lv 等级：
+                    img(:src="lv")
 
             .sub-title(@click="goUrl('/myset', my)") 完善个人信息
                 span >
@@ -33,6 +34,7 @@
             div(v-if="course.length == 0") 暂无信息或者暂未开卡
             div(v-for="(item, i) in course")
                 div {{item.card.card}}
+                img(:src="config.imgPath+item.card.card.image" style="display:block;width:80%;margin:0.5rem 0;")
                 .other 其他详细信息
                 div 上课时间：
                     img(src="../../assets/user_icon_time@2x.png")
@@ -114,7 +116,7 @@ export default {
             userId: this.$route.query.userId || this.$route.query.id,
             my: {
                 avatar: '',
-                name: '王小二'
+                name: ''
             },
             coach: {
                 img: '',
@@ -175,6 +177,10 @@ export default {
     },
     async mounted(){
         this.my = this.$route.query
+
+        var res = await this.ajax('/user/detail', {userId:this.userId}, 'get')
+        // console.log(res)
+        this.my = res.data
         // var res = await this.ajax('/user/detail', { userId: this.userId }, 'get')
         // if(res && res.code == this.successCode){
         //     this.my = res.data
@@ -291,6 +297,16 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.top
+    .title
+        .lv
+            margin-left: 0.5rem
+            img
+                width: auto
+                height: 1rem
+                border-radius: 0
+                margin-left: 0.2rem
+
 .half
     // width: 50%
     display: inline-block
