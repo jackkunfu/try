@@ -233,7 +233,7 @@ export default {
                 if(!element.endDate){
                     element.endDateStr = ''
                 }else{   // 快30天到期的展示红色字体
-                    var eTime = new Date(element.endDate.split('')).getTime()
+                    var eTime = new Date(element.endDate.split(' ')).getTime()
                     var nTime = new Date().getTime()
                     if( eTime - nTime < 30*24*60*60*1000 ) element.endDateStr = '<span style="color:red;">'+element.endDate+'</span>'
                     else element.endDateStr = element.endDate
