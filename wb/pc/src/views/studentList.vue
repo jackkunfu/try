@@ -35,7 +35,7 @@ div
             span 总数：{{wilEndNum}}
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" @daochu="daochu")
+            @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" @daochu="daochu('/user/excel')")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -223,9 +223,6 @@ export default {
         beReset(){
             this.isDaoqi = false
             this.reset()
-        },
-        daochu(){
-            location.href = '/api/user/excel'
         },
         changeTableData(data){
             data.forEach(element => {

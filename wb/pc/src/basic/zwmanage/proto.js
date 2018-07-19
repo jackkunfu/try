@@ -10,6 +10,10 @@ export default function(Vue){
         return []
     }
 
+    Vue.prototype.daochu = function(url){
+        location.href = '/api'+url
+    }
+
     Vue.prototype.getAllCity = async function(){
         // return await this.storeAll({
         //     name: 'CITYS',
