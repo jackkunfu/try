@@ -18,6 +18,12 @@ div
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
+                el-form-item(label="开始时间")
+                    el-time-select(v-model="searchInfo.begin" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择开始时间")
+
+                el-form-item(label="结束时间")
+                    el-time-select(v-model="searchInfo.end" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择结束时间")
+
                 el-form-item(label="班主任")
                     el-select(v-model="searchInfo.userId" placeholder="班主任")
                         el-option(v-for="(item, i) in bzrs" :key="i" :label="item.name" :value="item.id")
@@ -63,7 +69,7 @@ export default {
                 { str: '上课时间', key: 'time' },
                 { str: '班主任', key: 'user.name' }
             ],
-            searchKeys: ['userId', 'time', 'trainId', 'city'],
+            searchKeys: ['userId', 'time', 'trainId', 'city', 'begin', 'end'],
             editKeys: ['userId', 'time', 'trainId', 'city'],
             api: {
                 list: { url: '/teacher_plan/list' },

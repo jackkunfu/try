@@ -28,6 +28,12 @@ div
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
+                el-form-item(label="开始时间")
+                    el-time-select(v-model="searchInfo.begin" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择开始时间")
+
+                el-form-item(label="结束时间")
+                    el-time-select(v-model="searchInfo.end" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择结束时间")
+
                 el-form-item(label="班主任")
                     el-select(v-model="searchInfo.city" placeholder="班主任")
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
@@ -52,7 +58,7 @@ export default {
                 // { str: '班主任', key: '' },
                 { str: '报名时间', key: 'createDate' }
             ],
-            searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime'],
+            searchKeys: ['name', 'startTime', 'endTime', 'city', 'endTime', 'endTime', 'endTime', 'endTime', 'begin', 'end'],
             api: {
                 list: { url: '/experience/list' },
                 add: { url: '/experience/add' },

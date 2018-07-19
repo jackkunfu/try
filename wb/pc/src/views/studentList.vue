@@ -21,6 +21,12 @@ div
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
+                el-form-item(label="开始时间")
+                    el-time-select(v-model="searchInfo.begin" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择开始时间")
+
+                el-form-item(label="结束时间")
+                    el-time-select(v-model="searchInfo.end" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择结束时间")
+
                 el-form-item(label="出生日期")
                     el-date-picker(type="date" placeholder="出生日期" v-model="searchInfo.birth" style="width: 100%;" value-format="yyyy-MM-dd")
 
@@ -139,7 +145,7 @@ export default {
             //     { str: '创建时间', key: 'createDate' },
             //     { str: '销售', key: 'sales.name' }
             // ],
-            searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale'],
+            searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end'],
             editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
             api: {
                 list: { url: '/order/list' },

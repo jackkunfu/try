@@ -21,6 +21,12 @@ div
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
+                el-form-item(label="开始时间")
+                    el-time-select(v-model="searchInfo.begin" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择开始时间")
+
+                el-form-item(label="结束时间")
+                    el-time-select(v-model="searchInfo.end" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择结束时间")
+
                 el-form-item(label="上课日期")
                     el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.date" style="width: 100%;" value-format="yyyy-MM-dd")
             
@@ -49,7 +55,7 @@ export default {
                 { str: '累计请假', key: 'leave' },
                 { str: '累计缺席', key: 'absent' }
             ],
-            searchKeys: ['city', 'trainId', 'week', 'date', 'name'],
+            searchKeys: ['city', 'trainId', 'week', 'date', 'name', 'begin', 'end'],
             editKeys: [],
             api: {
                 list: { url: '/sign/listBg' },

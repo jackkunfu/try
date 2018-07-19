@@ -20,6 +20,12 @@ div
                 el-form-item(label="上课时间")
                     el-select(v-model="searchInfo.week" placeholder="上课时间")
                         el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
+
+                el-form-item(label="开始时间")
+                    el-time-select(v-model="searchInfo.begin" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择开始时间")
+
+                el-form-item(label="结束时间")
+                    el-time-select(v-model="searchInfo.end" :picker-options="{ start: '00:00', step: '00:30', end: '23:00'}" placeholder="选择结束时间")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
             @changePage="changePage" @chooseRow="chooseRow" @changeLevel="changeLevel")
@@ -69,7 +75,7 @@ export default {
 
                 { str: '评级操作', fun: 'changeLevel', type: 'fun', text: '修改等级', class: 'change-level' }
             ],
-            searchKeys: ['name', 'city', 'trainId', 'week'],
+            searchKeys: ['name', 'city', 'trainId', 'week', 'begin', 'end'],
             tableData: [],
             editKeys: [],
             api: {
