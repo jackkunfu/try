@@ -42,7 +42,7 @@ div
                         el-option(v-for="(item, i) in sales" :key="i" :label="item.name" :value="item.id")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope" @jihuo="jihuo")
+            @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope" @jihuo="jihuo" @daochu="daochu('/order/excel')")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -74,6 +74,8 @@ div
                     el-input(v-model="editInfo.parentName")
                 el-form-item(label="联系电话")
                     el-input(v-model="editInfo.parentPhone")
+                el-form-item(label="备注")
+                    el-input(v-model="editInfo.remarks")
                 
                 .item 课程信息
                 el-form-item(label="地区")
@@ -157,14 +159,15 @@ export default {
                 { str: '支付状态', key: 'payStatusStr' },
                 { str: '支付时间', key: 'payDate' },
                 { str: '报名时间', key: 'createDate' },
-                { str: '销售', key: 'sales.name' }
+                { str: '销售', key: 'sales.name' },
+                { str: '备注', key: 'remarks' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate', 'remarks' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/mgr/addStu' },
-                edit: { url: '/order/edit' },
+                edit: { url: '/mgr/editStu' },
                 del: { url: '/order/delete' }
             },
             scopeOperates: [    // 每一行种的操作
@@ -177,7 +180,7 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'},
-                { str: '导出excel', fun: 'export'}
+                { str: '导出excel', fun: 'daochu'}
             ],
             isOpenCard: false,
             open: {
@@ -308,11 +311,12 @@ export default {
             info.fee = (info.fee - 0)*100
             info.birthday = new Date(info.birthday)
             info.payDate = new Date(info.payDate)
+            if(this.curOperateType == 2) info.userId = this.curChooseRow.userId
             return info;
         },
         testInput(){
             var obj = this.trimObj(this.editInfo)
-            if(obj.avatar == '') return this.messageTip('头像未上传')
+            // if(obj.avatar == '') return this.messageTip('头像未上传')
             if(obj.name == '') return this.messageTip('名称不能为空')
             if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
             if(obj.phone == '') return this.messageTip('登陆手机未填')

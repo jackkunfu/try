@@ -67,6 +67,8 @@ div
                     el-input(v-model="editInfo.parentName")
                 el-form-item(label="联系电话")
                     el-input(v-model="editInfo.parentPhone")
+                el-form-item(label="备注")
+                    el-input(v-model="editInfo.remarks")
                 
                 .item 课程信息
                 el-form-item(label="地区")
@@ -146,11 +148,11 @@ export default {
             //     { str: '销售', key: 'sales.name' }
             // ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate', 'remarks' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/mgr/addStu' },
-                edit: { url: '/user/edit' },
+                edit: { url: '/mgr/editStu' },
                 del: { url: '/user/delete' }
             },
             scopeOperates: [    // 每一行种的操作
@@ -159,7 +161,7 @@ export default {
             ],
             operates: [    // 顶部的操作
                 // { str: '新增', fun: 'add'},
-                { str: '导出', fun: 'daochu'}
+                { str: '导出excel', fun: 'daochu'}
             ],
             cityTrains: [],
             cards: [],
@@ -229,16 +231,19 @@ export default {
                 element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
                 element.sexStr = element.user.sex ? '女' : '男'
                 element.img = element.user.avatar
-                element.time = element.times.reduce((a, b)=>{
-                    a = a + '周'+this.week[b.week] + ' ' + b.begin + '~' + b.end + '<br>'
-                    return a
-                }, '')
+                if(element.times){
+                    element.time = element.times.reduce((a, b)=>{
+                        a = a + '周'+this.week[b.week] + ' ' + b.begin + '~' + b.end + '<br>'
+                        return a
+                    }, '')
+                }else element.time = ''
+                
                 if(!element.endDate){
                     element.endDateStr = ''
                 }else{   // 快30天到期的展示红色字体
                     var eTime = new Date(element.endDate.split(' ')).getTime()
                     var nTime = new Date().getTime()
-                    if( eTime - nTime < 30*24*60*60*1000 ) element.endDateStr = '<span style="color:red;">'+element.endDate+'</span>'
+                    if( eTime - nTime < 30*24*60*60*1000 ) element.endDateStr = '<span style="color:red;">'+element.endDate.split(' ')[0]+'</span>'
                     else element.endDateStr = element.endDate
                 }
             });
@@ -285,7 +290,7 @@ export default {
         },
         testInput(){
             var obj = this.trimObj(this.editInfo)
-            if(obj.avatar == '') return this.messageTip('头像未上传')
+            // if(obj.avatar == '') return this.messageTip('头像未上传')
             if(obj.name == '') return this.messageTip('名称不能为空')
             if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
             if(obj.phone == '') return this.messageTip('登陆手机未填')
@@ -322,7 +327,11 @@ export default {
             return info
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            return info
+            info.fee = (info.fee - 0)*100
+            info.birthday = new Date(info.birthday)
+            info.payDate = new Date(info.payDate)
+            if(this.curOperateType == 2) info.userId = this.curChooseRow.userId
+            return info;
         }
     }
 
