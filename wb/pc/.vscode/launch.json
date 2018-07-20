@@ -1,0 +1,19 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch localhost",
+            "type": "edge",
+            "request": "launch",
+            "url": "http://localhost:9000",
+            "webRoot": "${workspaceFolder}/src"
+        },
+        {
+            "name": "Launch index.html (disable sourcemaps)",
+            "type": "edge",
+            "request": "launch",
+            "sourceMaps": false,
+            "file": "${workspaceFolder}/index.html"
+        },
+    ]
+}
