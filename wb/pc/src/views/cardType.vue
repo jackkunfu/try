@@ -150,7 +150,7 @@ export default {
         changeTableData(data){     //  处理搜索请求传参
             return data.map(v=>{
                 // v.price = (v.price - 0) / 100 + '元'
-                v.imageHtml = '<img src="'+this.config.imgPath+v.image+'" style="max-width:200px;max-height:200px;">'
+                v.imageHtml = '<img src="'+this.config.imgPath+v.image+'" style="max-width:120px;max-height:100px;">'
                 if(v.cfs){
                     var html = ''
                     v.cfs.forEach(element => {

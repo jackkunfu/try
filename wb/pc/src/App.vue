@@ -47,7 +47,7 @@ export default {
     mounted(){
         if(!this.isNeedLogin){
             setTimeout(()=>{     //  延迟跳转到默认得studentList页面  不延迟得话  this.$route.path 最初一直是 '/'  再别得页面时也总会跳转到studentList页面
-                console.log(this.$route.path);
+                // console.log(this.$route.path);
                 if(this.$route.path === '/') this.goUrl('/studentList')
             }, 500)
         }

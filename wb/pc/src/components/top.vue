@@ -45,16 +45,18 @@ img
     margin-top: 15px
     margin-right: 10px
     .el-button
-        background: #eee
-        border-color: #eee
+        background: inherit
+        border-color: #1c2b36
+        color: #fff
         position: relative
         padding-left: 30px
         img
-            width: 20px
+            width: 15px
             height: auto
             position: absolute
-            top: 2px
-            left: 17px
+            top: 5px
+            left: 20px
+            border: none
     img
         width: 46px
         height: 46px
