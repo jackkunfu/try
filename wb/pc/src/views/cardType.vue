@@ -44,7 +44,7 @@ div
 
                 el-form-item(label="卡种图片")
                     .up-ctn
-                        input#up1(type="file" ref="up1")
+                        input#up1(type="file" ref="up1" accept="image/*")
                         span + 上传
                         img(:src="config.imgPath+editInfo.image" v-if="editInfo.image")
 
@@ -81,7 +81,6 @@ export default {
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'card' },
                 { str: '训练频次以及价格', key: 'frequencyPrice', type: 'html' }
-                // { str: '价格', key: 'price' }
             ],
             searchKeys: ['trainId', 'city', 'card', 'frequency'],
             editKeys: ['trainId', 'city', 'card', 'image'],
@@ -151,7 +150,7 @@ export default {
         changeTableData(data){     //  处理搜索请求传参
             return data.map(v=>{
                 // v.price = (v.price - 0) / 100 + '元'
-                v.imageHtml = '<img src="'+this.config.imgPath+v.image+'">'
+                v.imageHtml = '<img src="'+this.config.imgPath+v.image+'" style="max-width:200px;max-height:200px;">'
                 if(v.cfs){
                     var html = ''
                     v.cfs.forEach(element => {
