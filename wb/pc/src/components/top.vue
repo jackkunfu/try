@@ -64,6 +64,7 @@ img
         top: -10px
         border-radius: 50%
         border: 2px solid #fff
+        overflow: hidden
     span
         margin: 0 10px
 </style>
