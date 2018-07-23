@@ -46,7 +46,7 @@ img
     margin-right: 10px
     .el-button
         background: inherit
-        border-color: inherit
+        border-color: #1c2b36
         color: #fff
         position: relative
         padding-left: 30px
@@ -56,6 +56,7 @@ img
             position: absolute
             top: 5px
             left: 20px
+            border: none
     img
         width: 46px
         height: 46px

@@ -53,7 +53,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            levels: ['一', '二', '三', '四', '五', '六'],
+            levels: ['一', '二', '三', '四', '五'],
             keys: [
                 // { str: '头像', key: 'avatar', type: 'img' },
                 // { str: '姓名', key: 'name' },
