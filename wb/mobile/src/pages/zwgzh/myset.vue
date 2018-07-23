@@ -25,7 +25,7 @@
             .fl 性别
             .fr
                 span.sex(@click="my.sex='0'")
-                    img(src='../../assets/choose.png' v-if="my.sex === '0'")
+                    img(src='../../assets/choose.png' v-if="my.sex == '0'")
                     img(src='../../assets/nochoose.png' v-else)
                     span 男
 
@@ -105,6 +105,7 @@ export default {
         var res = await this.ajax('/user/detail', {userId:this.userId}, 'get')
         // console.log(res)
         this.my = res.data
+        // this.my.sex = res.data
         
         this.list = await this.getAllTrainTimes(this.trainId)
 

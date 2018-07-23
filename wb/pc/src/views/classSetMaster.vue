@@ -129,6 +129,7 @@ export default {
             info.week = this.trainTimes[idx].week
             info.begin = this.trainTimes[idx].begin
             info.end = this.trainTimes[idx].end
+            info.trainTimeId = this.trainTimes[idx].id
             return info;
         },
         testInput(){

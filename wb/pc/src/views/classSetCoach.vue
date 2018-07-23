@@ -35,13 +35,14 @@ div
                                     //- el-button(type="primary" @click="handleCoach(j, cls, 0)" size="mini" v-if="!cls.coachs || cls.coachs.length == 0") 添加教练
                                 el-button(type="primary" @click="addOrEdit(0, cls)" size="mini") 添加教练
                                 // i.el-icon-plus
-                                div(v-for="(coach, k) in cls.coachs")
-                                    span.name {{coach.name}}
-                                        .x(@click="del(cls, k)")
-                                            i.el-icon-close
-                                    i.el-icon-edit-outline(@click="addOrEdit(1, cls, k)")
-                                    //- el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
-                                    //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
+                                template(v-if="cls.plan && cls.plan.coachs")
+                                    div(v-for="(coach, k) in cls.plan.coachs")
+                                        span.name {{coach.name}}
+                                            .x(@click="del(cls, k)")
+                                                i.el-icon-close
+                                        i.el-icon-edit-outline(@click="addOrEdit(1, cls, k)")
+                                        //- el-button(type="primary" icon="el-icon-edit" @click="addOrEdit(1, cls, k)" size="mini")
+                                        //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
         .x(@click="closeEditBox")
@@ -77,9 +78,9 @@ export default {
             editKeys: ['coachId'],
             api: {
                 list: { url: '/teacher_plan/coach/list' },
-                add: { url: '/teacher_plan/add' },
-                edit: { url: '/teacher_plan/edit' },
-                del: { url: '/teacher_plan/delete' }
+                // add: { url: '/teacher_plan/add' },
+                // edit: { url: '/teacher_plan/edit' },
+                // del: { url: '/teacher_plan/delete' }
             },
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
@@ -136,13 +137,19 @@ export default {
         },
         async chooseOk(){
             if(this.editInfo.cocahId == '') return this.messageTip('请选择教练')
-            var coachIdArr = this.curEditPlan.coachs ? this.curEditPlan.coachs.map(v=>v.id) : []
+            let coachs = this.curEditPlan.plan ? this.curEditPlan.plan.coachs : ''
+            var coachIdArr = coachs ? coachs.map(v=>v.id) : []
             if(coachIdArr.indexOf(this.editInfo.coachId) > -1) return this.messageTip('该教练已添加')
             if(this.changeIdx !== null) coachIdArr.splice(this.changeIdx, 1)
             coachIdArr.push(this.editInfo.coachId)
-            console.log(coachIdArr)
+            // console.log(coachIdArr)
             var req = await this.ajax('/teacher_plan/coach', {
-                planId: this.curEditPlan.id,
+                trainTimeId: this.curEditPlan.id,
+                city: this.curEditPlan.training.city,
+                week: this.curEditPlan.week,
+                begin: this.curEditPlan.begin,
+                end: this.curEditPlan.end,
+                trainId: this.curEditPlan.trainId,
                 coachIds: coachIdArr.join(',')
             })
             if(req && req.code == this.successCode){
@@ -150,24 +157,34 @@ export default {
                 
                 var newCoach = this.allCoach[this.allCoach.map(v=>v.id).indexOf(this.editInfo.coachId)]
 
-                if(this.changeIdx !== null) this.curEditPlan.coachs.splice(this.changeIdx, 1, newCoach)
+                if(this.changeIdx !== null) coachs.splice(this.changeIdx, 1, newCoach)
                 else{
-                    if(!this.curEditPlan.coachs) this.curEditPlan.coachs = []
-                    this.curEditPlan.coachs.push(newCoach)
+                    if(!this.curEditPlan.plan.coachs) this.$set(this.curEditPlan.plan, 'coachs', [])
+                    this.curEditPlan.plan.coachs.push(newCoach)
                 }
 
                 this.showEditCtn = false
+                this.changeIdx = null
 
             }else this.messageTip(req.message || '操作失败')
         },
         async del(item, i){
-            item.coachs.splice(i, 1)
+            // console.log(item)
+            let allIds = item.plan.coachs.map(v=>v.id)
+            allIds.splice(i, 1)
             var req = await this.ajax('/teacher_plan/coach', {
-                planId: item.id,
-                coachIds: item.coachs.map(v=>v.id).join(',')
+                planId: item.plan.id,
+                trainTimeId: item.id,
+                city: item.training.city,
+                week: item.week,
+                begin: item.begin,
+                end: item.end,
+                trainId: item.trainId,
+                coachIds: allIds.join(',')
             })
             if(req && req.code == this.successCode){
                 this.messageTip(req.message, 1)
+                item.plan.coachs.splice(i, 1)
             }else this.messageTip(req.message || '操作失败')
         },
         async getAllCoach(){
