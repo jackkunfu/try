@@ -43,10 +43,11 @@
                     
                 div 训练频次：{{item.frequency}}
                     img(src="../../assets/user_icon_pinlv@2x.png")
-                div
+                div(v-if="item.status==3")
                     img(src="../../assets/user_icon_information@2x.png")
                     span 开卡时间：{{item.openDate}}
                     span.span 到期时间：{{item.endDate}}
+                div(v-else) 暂未开卡
 
         div.tn(v-if="curTab == 1")
             img(v-if="tnList.length == 0" src="../../assets/user_pic_wushuju@2x.png" style="width:50%;margin-top:1rem;")
@@ -341,7 +342,8 @@ export default {
                 font-weight: bold
             div
                 line-height: 0.8rem
-                margin: 0.5rem 0
+                margin-bottom: 0.5rem
+                // margin: 0.5rem 0
                 overflow: hidden
                 img
                     // vertical-align: middle

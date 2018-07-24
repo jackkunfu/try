@@ -277,9 +277,12 @@ export default {
                         this.editInfo.fee = data.fee
 
                         let cts = data.times.map(v=>v.id)
+                        console.log(cts)
 
                         this.classTimes.forEach(el => {
-                            if(cts.indexOf(el.id) > -1) el.isChoose = true
+                            console.log(el.id)
+                            if(cts.indexOf(el.id) > -1) this.$set(el, 'isChoose', true)
+                            else this.$set(el, 'isChoose', false)
                         })
                         
                     }, 500)
