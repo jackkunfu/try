@@ -86,13 +86,17 @@ export default {
         search(){
             this.getImgList()
         },
+        reset(){
+            this.searchInfo.time = ''
+            this.getImgList()
+        },
         async getImgList(id){
             var data = {
                 userId: this.uid,
                 limit: this.page.limit,
                 offset: this.page.offset
             }
-            if(this.searchInfo.time) data.testDate = new Date(this.searchInfo.time)
+            if(this.searchInfo.time) data.testDate = new Date(this.searchInfo.time.split(' ')[0] + ' 00:00:00')
             var req = await this.ajax('/power_test/list', data, 'get')
             if(req && req.code == this.successCode){
                 this.tableData = req.data.rows

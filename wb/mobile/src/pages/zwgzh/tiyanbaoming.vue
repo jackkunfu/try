@@ -6,7 +6,7 @@
     .fix(v-if="ok")
         .box-ctn
             .box 
-                span 恭喜您体验课报名成功
+                span 恭喜您体验课报名成功，我们工作人员将在1-3个工作日内和您联系
                 .ensure
                     span(@click="ok=false") 确定
 

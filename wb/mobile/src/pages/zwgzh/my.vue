@@ -5,11 +5,11 @@
         .item
             img.fl(:src="touxiang")
             .title
-                span {{my.name}}
+                span(style="font-size:1.2rem;") {{my.name}}
                 span.lv 等级：
                     img(:src="lv")
 
-            .sub-title(@click="goUrl('/myset', my)") 完善个人信息
+            .sub-title(@click="goUrl('/myset', my)" style="color: red;") 完善个人信息
                 span >
 
     .tab-ctn

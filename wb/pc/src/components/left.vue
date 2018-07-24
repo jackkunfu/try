@@ -32,7 +32,7 @@ export default {
                 iconName: 'el-icon-menu',
                 list: [
                     { name: '学员信息', url: '/studentList' },
-                    { name: '点到签名', url: '/checkIn' },
+                    { name: '点名签到', url: '/checkIn' },
                     { name: '体能测试', url: '/bodyTest' },
                     { name: '学员等级', url: '/stuLevel' }
                 ]

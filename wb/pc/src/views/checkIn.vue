@@ -30,8 +30,8 @@ div
                 el-form-item(label="上课日期")
                     el-date-picker(type="date" placeholder="上课日期" v-model="searchInfo.date" style="width: 100%;" value-format="yyyy-MM-dd")
             
-        s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates"
-            @changePage="changePage"  @delScope="delScope")
+        s-table(:keys="keys" :tableData="tableData" :page="page" :scopeOperates="scopeOperates" :operates="operates"
+            @changePage="changePage"  @delScope="delScope" @daochu="daochu('/sign/excel')")
 
 </template>
 
@@ -53,7 +53,8 @@ export default {
                 { str: '当天出席状况', key: 'curStatu' },
                 { str: '累计出席', key: 'attend' },
                 { str: '累计请假', key: 'leave' },
-                { str: '累计缺席', key: 'absent' }
+                { str: '累计缺席', key: 'absent' },
+                { str: '签到日期', key: 'create' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'date', 'name', 'begin', 'end'],
             editKeys: [],
@@ -62,7 +63,7 @@ export default {
                 del: { url: '/sign/delete' }
             },
             operates: [    // 顶部的操作
-                // { str: '新增', fun: 'add'},
+                { str: '导出', fun: 'daochu' },
             ],
             scopeOperates: [    // 每一行种的操作
                 { str: '删除', fun: 'delScope'}
@@ -75,6 +76,8 @@ export default {
                 element.birth = element.user.birthday ? element.user.birthday.split(' ')[0] : ''
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
+                element.create = element.createDate.split(' ')[0]
+                
                 element.curStatu = element.type === 0 ? '出席' : element.type === 1 ? '请假:'+element.remarks : element.type === 2 ? '出席' : '未知'
             });
             return data

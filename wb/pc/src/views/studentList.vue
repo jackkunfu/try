@@ -264,6 +264,7 @@ export default {
             this.editInfo.birthday = user.birthday
             this.editInfo.height = user.height
             this.editInfo.weight = user.weight
+            this.editInfo.phone = user.phone
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
             

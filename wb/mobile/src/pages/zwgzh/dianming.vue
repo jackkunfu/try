@@ -8,7 +8,7 @@
         .item(v-for="(item, i) in stuList" :key="i")
             .w50(style="text-align:left;padding-left:2rem;")
                 span(@click="seeInfo(item)")
-                    img.img(:src="config.imgPath+item.avatar")
+                    img.img(:src="item.avatar")
                     span {{item.name}}
             .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
@@ -77,7 +77,14 @@ export default {
                     limit: 10000,
                     offset: 0
                 }, 'get')
-                if(res && res.code == this.successCode) this.stuList = res.data.rows || []
+                if(res && res.code == this.successCode){
+                    if(res.data.rows){
+                        this.stuList = res.data.rows.map(el => {
+                            if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
+                            else el.avatar = this.config.imgPath + item.avatar
+                        })
+                    }
+                }
                 this.stuList.forEach(el => {
                     this.$set(el, 'type', 0)
                 })

@@ -46,14 +46,17 @@ div
                 i.el-icon-delete(@click="delImg(item.id)")
 
     .fix-cover(v-show="isChooseDate")
-        .x(@click="isChooseDate=false;curAddTime=''")
+        // .x(@click="isChooseDate=false;curAddTime=''")
             i.el-icon-close
         .box(style="min-height:0;")
-            el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
-                el-form-item(label="体测时间")
-                    el-date-picker(v-model="curAddTime" placeholder="请选择时间" type="date" value-format="yyyy-MM-dd")
+            .x(@click="isChooseDate=false;curAddTime=''")
+                i.el-icon-close
+            .scroll-box
+                el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
+                    el-form-item(label="体测时间")
+                        el-date-picker(v-model="curAddTime" placeholder="请选择时间" type="date" value-format="yyyy-MM-dd")
 
-            el-button(@click="upImgSubmit" size="mini") 上传
+                el-button(@click="upImgSubmit" size="mini") 上传
     
 </template>
 
