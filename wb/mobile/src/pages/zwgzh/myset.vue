@@ -88,7 +88,7 @@ export default {
                 parentPhone: ''
             },
             userId: this.$route.query.userId || this.$route.query.id,
-            trainId: this.$route.query.trainId,
+            // trainId: this.$route.query.trainId || null,
         }
     },
     computed: {
@@ -97,17 +97,13 @@ export default {
         }
     },
     async mounted(){
-        Object.keys(this.$route.query).forEach(el => {
-            this.$set(this.my, el, this.$route.query[el])
-        })
-        // this.my = this.$route.query
-
+        // Object.keys(this.$route.query).forEach(el => {
+        //     this.$set(this.my, el, this.$route.query[el])
+        // })
         var res = await this.ajax('/user/detail', {userId:this.userId}, 'get')
-        // console.log(res)
         this.my = res.data
-        // this.my.sex = res.data
-        
-        this.list = await this.getAllTrainTimes(this.trainId)
+
+        // this.list = await this.getAllTrainTimes(this.trainId)
 
         var that = this
         new datePicker().init({
@@ -126,9 +122,9 @@ export default {
         })
     },
     methods: {
-        next(data){
-            this.chooseTimes = false
-        },
+        // next(data){
+        //     this.chooseTimes = false
+        // },
         async submit(){
             var item = this.trimObj(this.my)
             if(item.avatar == '') return this.messageTip('头像未上传')

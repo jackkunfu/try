@@ -296,7 +296,7 @@ export default {
             }, 300)
 
             this.editInfo.payDate = data.payDate
-            this.editInfo.sale = data.sales.id
+            this.editInfo.sale = data.sale
         },
         changeTableData(data){
             data.forEach(element => {
