@@ -45,17 +45,20 @@ div
                                         //- el-button(type="warning" @click="delCoach(i, coach)" size="small") 删除
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="160px" size="mini")
-                el-form-item(label="教练")
-                    el-select(v-model="editInfo.coachId" placeholder="教练")
-                        el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="160px" size="mini")
+                    el-form-item(label="教练")
+                        el-select(v-model="editInfo.coachId" placeholder="教练")
+                            el-option(v-for="(item, i) in allCoach" :key="i" :label="item.name" :value="item.id")
 
-                el-form-item
-                    el-button(type="primary" @click="chooseOk" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                    el-form-item
+                        el-button(type="primary" @click="chooseOk" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

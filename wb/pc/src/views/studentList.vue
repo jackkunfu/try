@@ -38,72 +38,75 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" @daochu="daochu('/user/excel')")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="80px" size="mini")
-                .item 个人信息
-                el-form-item(label="头像")
-                    .up-ctn
-                        input#up1(type="file" ref="up1")
-                        span + 上传
-                        img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
-                el-form-item(label="姓名")
-                    el-input(v-model="editInfo.name")
-                el-form-item(label="性别")
-                    el-radio-group(v-model="editInfo.sex")
-                        el-radio(label="0") 男
-                        el-radio(label="1") 女
-                el-form-item(label="登陆手机")
-                    el-input(v-model="editInfo.phone" type="number")
-                el-form-item(label="生日")
-                    el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;" value-format="yyyy-MM-dd")   
-                    //- value-format="yyyy-MM-dd"
-                el-form-item(label="身高")
-                    el-input(v-model="editInfo.height" type="number")
-                el-form-item(label="体重")
-                    el-input(v-model="editInfo.weight" type="number")
-                el-form-item(label="家长姓名")
-                    el-input(v-model="editInfo.parentName")
-                el-form-item(label="联系电话")
-                    el-input(v-model="editInfo.parentPhone")
-                el-form-item(label="备注")
-                    el-input(v-model="editInfo.remarks")
-                
-                .item 课程信息
-                el-form-item(label="地区")
-                    el-select(v-model="editInfo.city")
-                        el-option(v-for="(item, i) in citys" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
-                el-form-item(label="训练营")
-                    el-select(v-model="editInfo.trainId")
-                        el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
-                el-form-item(label="卡种")
-                    el-select(v-model="editInfo.cardId")
-                        el-option(v-for="(item, i) in cards" :label="item.card" placeholder="选择卡种" :value="item.id" :key="i")
-                //- el-form-item(label="上课时间")
-                    el-select(v-model="editInfo.time")
-                        el-option(v-for="(item, i) in classTimes" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" placeholder="选择训练频次" :value="item.id" :key="i")
-                el-form-item(label="训练频次")
-                    el-select(v-model="editInfo.frequency")
-                        el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.frequency" :key="i")
-                el-form-item(label="价格")
-                    el-input(v-model="editInfo.fee" :disabled="true")
-                el-form-item(label="上课时间")
-                    div(v-for="(item, i) in classTimes" :key="i")
-                        el-switch(v-model="item.isChoose" style="margin-right:20px;position:relative;top:-2px;")
-                        span {{'周'+week[item.week]+' '+item.begin+'~'+item.end}}
-                        
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="80px" size="mini")
+                    .item 个人信息
+                    el-form-item(label="头像")
+                        .up-ctn
+                            input#up1(type="file" ref="up1")
+                            span + 上传
+                            img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
+                    el-form-item(label="姓名")
+                        el-input(v-model="editInfo.name")
+                    el-form-item(label="性别")
+                        el-radio-group(v-model="editInfo.sex")
+                            el-radio(label="0") 男
+                            el-radio(label="1") 女
+                    el-form-item(label="登陆手机")
+                        el-input(v-model="editInfo.phone" type="number")
+                    el-form-item(label="生日")
+                        el-date-picker(type="date" placeholder="选择生日" v-model="editInfo.birthday" style="width: 100%;" value-format="yyyy-MM-dd")   
+                        //- value-format="yyyy-MM-dd"
+                    el-form-item(label="身高")
+                        el-input(v-model="editInfo.height" type="number")
+                    el-form-item(label="体重")
+                        el-input(v-model="editInfo.weight" type="number")
+                    el-form-item(label="家长姓名")
+                        el-input(v-model="editInfo.parentName")
+                    el-form-item(label="联系电话")
+                        el-input(v-model="editInfo.parentPhone")
+                    el-form-item(label="备注")
+                        el-input(v-model="editInfo.remarks")
+                    
+                    .item 课程信息
+                    el-form-item(label="地区")
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item, i) in citys" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
+                    el-form-item(label="训练营")
+                        el-select(v-model="editInfo.trainId")
+                            el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
+                    el-form-item(label="卡种")
+                        el-select(v-model="editInfo.cardId")
+                            el-option(v-for="(item, i) in cards" :label="item.card" placeholder="选择卡种" :value="item.id" :key="i")
+                    //- el-form-item(label="上课时间")
+                        el-select(v-model="editInfo.time")
+                            el-option(v-for="(item, i) in classTimes" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" placeholder="选择训练频次" :value="item.id" :key="i")
+                    el-form-item(label="训练频次")
+                        el-select(v-model="editInfo.frequency")
+                            el-option(v-for="(item, i) in frequencys" :label="item.frequency" placeholder="选择训练频次" :value="item.frequency" :key="i")
+                    el-form-item(label="价格")
+                        el-input(v-model="editInfo.fee" :disabled="true")
+                    el-form-item(label="上课时间")
+                        div(v-for="(item, i) in classTimes" :key="i")
+                            el-switch(v-model="item.isChoose" style="margin-right:20px;position:relative;top:-2px;")
+                            span {{'周'+week[item.week]+' '+item.begin+'~'+item.end}}
+                            
 
-                //- el-form-item(label="支付日期")
-                    el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
-                
-                //- el-form-item(label="销售顾问")
-                    el-select(v-model="editInfo.sale")
-                        el-option(v-for="(item, i) in sales" :label="item.name" :value="item.id" :key="i")
+                    //- el-form-item(label="支付日期")
+                        el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
+                    
+                    //- el-form-item(label="销售顾问")
+                        el-select(v-model="editInfo.sale")
+                            el-option(v-for="(item, i) in sales" :label="item.name" :value="item.id" :key="i")
 
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

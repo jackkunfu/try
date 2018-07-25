@@ -13,26 +13,29 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope" ref="table")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="140px" size="mini")
-                .item 教练信息
-                el-form-item(label="头像")
-                    .up-ctn
-                        input#up1(type="file")
-                        span + 上传
-                        img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
-                el-form-item(label="姓名")
-                    el-input(v-model="editInfo.name" placeholder="请输入姓名~")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="140px" size="mini")
+                    .item 教练信息
+                    el-form-item(label="头像")
+                        .up-ctn
+                            input#up1(type="file")
+                            span + 上传
+                            img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
+                    el-form-item(label="姓名")
+                        el-input(v-model="editInfo.name" placeholder="请输入姓名~")
 
-                .item 联系方式
-                el-form-item(label="手机号")
-                    el-input(v-model="editInfo.phone" placeholder="请输入手机号~")
+                    .item 联系方式
+                    el-form-item(label="手机号")
+                        el-input(v-model="editInfo.phone" placeholder="请输入手机号~")
 
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

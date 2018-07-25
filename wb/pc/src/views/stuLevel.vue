@@ -31,19 +31,20 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @changeLevel="changeLevel")
 
         .edit-ctn.fix-cover(v-show="isChooseLevel")
-            .x(@click="curLevel='';isChooseLevel=''")
+            //- .x(@click="curLevel='';isChooseLevel=''")
                 i.el-icon-close
             .box
                 .x(@click="isChooseLevel=false;curLevel=''")
                     i.el-icon-close
-                el-form(:model="editInfo" label-width="160px" size="mini")
-                    el-form-item(label="等级")
-                        el-select(v-model="curLevel" placeholder="等级")
-                            el-option(label="入门级" value="0")
-                            el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
+                .scroll-box
+                    el-form(:model="editInfo" label-width="160px" size="mini")
+                        el-form-item(label="等级")
+                            el-select(v-model="curLevel" placeholder="等级")
+                                el-option(label="入门级" value="0")
+                                el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
 
-                    el-form-item
-                        el-button(type="primary" @click="submit") 保存
+                        el-form-item
+                            el-button(type="primary" @click="submit") 保存
     
 </template>
 

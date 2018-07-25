@@ -35,24 +35,27 @@ div
         .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="160px" size="mini")
-                el-form-item(label="地区")
-                    el-select(v-model="editInfo.city")
-                        el-option(v-for="(item, i) in areaList" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
-                el-form-item(label="训练营")
-                    el-select(v-model="editInfo.trainId")
-                        el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
-                el-form-item(label="上课时间")
-                    el-select(v-model="editInfo.time" placeholder="上课时间")
-                        el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.id")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="160px" size="mini")
+                    el-form-item(label="地区")
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item, i) in areaList" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
+                    el-form-item(label="训练营")
+                        el-select(v-model="editInfo.trainId")
+                            el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")
+                    el-form-item(label="上课时间")
+                        el-select(v-model="editInfo.time" placeholder="上课时间")
+                            el-option(v-for="(item, i) in trainTimes" :key="i" :label="'周'+week[item.week]+' '+item.begin+'~'+item.end" :value="item.id")
 
-                el-form-item(label="班主任")
-                    el-select(v-model="editInfo.userId" placeholder="班主任")
-                        el-option(v-for="(item, i) in bzrs" :key="i" :label="item.name" :value="item.id")
+                    el-form-item(label="班主任")
+                        el-select(v-model="editInfo.userId" placeholder="班主任")
+                            el-option(v-for="(item, i) in bzrs" :key="i" :label="item.name" :value="item.id")
 
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

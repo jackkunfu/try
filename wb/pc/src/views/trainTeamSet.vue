@@ -23,37 +23,40 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="100px" size="mini")
-                el-form-item(label="城市")
-                    el-select(v-model="editInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="100px" size="mini")
+                    el-form-item(label="城市")
+                        el-select(v-model="editInfo.city" placeholder="城市")
+                            el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
-                el-form-item(label="训练营名称")
-                    el-input(v-model="editInfo.name")
-                
-                el-form-item(label="地址")
-                    el-input(v-model="editInfo.address")
+                    el-form-item(label="训练营名称")
+                        el-input(v-model="editInfo.name")
+                    
+                    el-form-item(label="地址")
+                        el-input(v-model="editInfo.address")
 
-                el-form-item(label="上课时间")
-                    el-select(v-model="curDate" placeholder="日期")
-                        el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
+                    el-form-item(label="上课时间")
+                        el-select(v-model="curDate" placeholder="日期")
+                            el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
 
-                    el-time-select(v-model="curTimeStart" :picker-options="{ start: '05:30', step: '00:30', end: '23:00' }" placeholder="选择开始时间")
-                    el-time-select(v-model="curTimeEnd" :picker-options="{ start: '05:30', step: '00:30', end: '23:00', minTime: curTimeStart }" placeholder="选择结束时间")
+                        el-time-select(v-model="curTimeStart" :picker-options="{ start: '05:30', step: '00:30', end: '23:00' }" placeholder="选择开始时间")
+                        el-time-select(v-model="curTimeEnd" :picker-options="{ start: '05:30', step: '00:30', end: '23:00', minTime: curTimeStart }" placeholder="选择结束时间")
 
-                    el-button(type="primary" @click="addTime" size="small") 添加
+                        el-button(type="primary" @click="addTime" size="small") 添加
 
-                    div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
-                        span {{'周'+week[item.week]}}
-                        span(style="margin-left: 10px") {{item.begin + ' ~ ' + item.end}}
-                        i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
-  
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                        div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
+                            span {{'周'+week[item.week]}}
+                            span(style="margin-left: 10px") {{item.begin + ' ~ ' + item.end}}
+                            i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
+    
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

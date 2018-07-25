@@ -13,19 +13,22 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @delScope="delScope" ref="table")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="140px" size="mini")
-                
-                el-form-item(label="姓名")
-                    el-input(v-model="editInfo.name")
-                el-form-item(label="手机号")
-                    el-input(v-model="editInfo.phone")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="140px" size="mini")
+                    
+                    el-form-item(label="姓名")
+                        el-input(v-model="editInfo.name")
+                    el-form-item(label="手机号")
+                        el-input(v-model="editInfo.phone")
 
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate" size="small") 保存
+                        el-button(type="primary" @click="editCancel" size="small") 取消
     
 </template>
 

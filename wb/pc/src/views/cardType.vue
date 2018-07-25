@@ -27,45 +27,48 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @add="add" @editScope="editScope" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="90px" size="mini")
-                el-form-item(label="城市")
-                    el-select(v-model="editInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="90px" size="mini")
+                    el-form-item(label="城市")
+                        el-select(v-model="editInfo.city" placeholder="城市")
+                            el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
-                el-form-item(label="训练营")
-                    el-select(v-model="editInfo.trainId" placeholder="训练营")
-                        el-option(v-for="(item, i) in cityTrains" :key="i" :label="item.name" :value="item.id")
+                    el-form-item(label="训练营")
+                        el-select(v-model="editInfo.trainId" placeholder="训练营")
+                            el-option(v-for="(item, i) in cityTrains" :key="i" :label="item.name" :value="item.id")
 
-                el-form-item(label="卡种名称")
-                    el-input(v-model="editInfo.card" placeholder="卡种名称")
+                    el-form-item(label="卡种名称")
+                        el-input(v-model="editInfo.card" placeholder="卡种名称")
 
-                el-form-item(label="卡种图片")
-                    .up-ctn
-                        input#up1(type="file" ref="up1" accept="image/*")
-                        span + 上传
-                        img(:src="config.imgPath+editInfo.image" v-if="editInfo.image")
+                    el-form-item(label="卡种图片")
+                        .up-ctn
+                            input#up1(type="file" ref="up1" accept="image/*")
+                            span + 上传
+                            img(:src="config.imgPath+editInfo.image" v-if="editInfo.image")
 
-                el-form-item(label="频次和价格")
-                    el-form-item(label="训练频次")
-                        el-select(v-model="curFrequency" placeholder="训练频次")
-                            el-option(v-for="(item, i) in times" :key="i" :label="item" :value="item")
+                    el-form-item(label="频次和价格")
+                        el-form-item(label="训练频次")
+                            el-select(v-model="curFrequency" placeholder="训练频次")
+                                el-option(v-for="(item, i) in times" :key="i" :label="item" :value="item")
 
-                    el-form-item(label="价格")
-                        el-input(v-model="curPrice" type="number" placeholder="价格")
+                        el-form-item(label="价格")
+                            el-input(v-model="curPrice" type="number" placeholder="价格")
 
-                    el-button(type="primary" @click="addTime" size="small") 添加
+                        el-button(type="primary" @click="addTime" size="small") 添加
 
-                    div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
-                        span(style="margin-right:20px") {{item.frequency}}
-                        span {{item.price}}
-                        i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
+                        div(v-for="(item, i) in addTimeList" v-if="addTimeList.length>0" :key="i" style="text-align:center")
+                            span(style="margin-right:20px") {{item.frequency}}
+                            span {{item.price}}
+                            i.el-icon-delete(style="margin-left:30px;cursor:pointer;" @click="addTimeList.splice(i,1)")
 
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate") 保存
+                        el-button(type="primary" @click="editCancel") 取消
     
 </template>
 

@@ -30,11 +30,10 @@
 
     .main
         div.cc(v-if="curTab == 0")
-            img(:src="cardImg")
             div(v-if="course.length == 0") 暂无信息或者暂未开卡
             div(v-for="(item, i) in course")
-                div {{item.card.card}}
-                img(:src="config.imgPath+item.card.card.image" style="display:block;width:80%;margin:0.5rem 0;")
+                div(style="position:relative;top:4.5rem;left:3rem;color:#fff;") {{item.train.name}}
+                img(:src="config.imgPath+item.card.image" style="display:block;width:100%;margin:0.5rem 0;")
                 .other 其他详细信息
                 div 上课时间：
                     img(src="../../assets/user_icon_time@2x.png")
@@ -152,10 +151,6 @@ export default {
         }
     },
     computed: {
-        cardImg(){
-            if(this.cardLevel === null) return ''
-            return require('../../assets/card'+this.cardLevel+'.png')
-        },
         touxiang(){
             return this.my.avatar ? this.config.imgPath + this.my.avatar : require('../../assets/touxiang.png')
         },
@@ -336,13 +331,14 @@ export default {
         > img
             width: 100%
         > div
-            padding: 0.6rem
+            padding: 0 0.6rem
             .other
                 font-size: 0.8rem
                 font-weight: bold
+            >div
+                margin-bottom: 0.5rem
             div
                 line-height: 0.8rem
-                margin-bottom: 0.5rem
                 // margin: 0.5rem 0
                 overflow: hidden
                 img
@@ -378,14 +374,14 @@ export default {
                     color: #9b9b9b
     
     .pj
-        background: #f6f6f6
+        // background: #f6f6f6
         padding: 1rem
 
         .item-ctn
-            margin-bottom: 0.5rem
+            margin-bottom: 0.8rem
             > img
-                width: 2rem
-                height: 2rem
+                width: 2.8rem
+                height: 2.8rem
                 margin-right: 0.5rem
                 border-radius: 0
             .title

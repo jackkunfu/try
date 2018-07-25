@@ -48,24 +48,27 @@ div.class-desc
 
             
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            el-form(:model="editInfo" label-width="80px")
-                el-form-item(label="缩略图")
-                    .up-ctn.area
-                        input#up1(type="file" @change="upAreaImg($event)")
-                        span + 上传
-                        img(:src="config.imgPath+editInfo.img" v-if="editInfo.img")
+            .x(@click="closeEditBox")
+                i.el-icon-close
+            .scroll-box
+                el-form(:model="editInfo" label-width="80px")
+                    el-form-item(label="缩略图")
+                        .up-ctn.area
+                            input#up1(type="file" @change="upAreaImg($event)")
+                            span + 上传
+                            img(:src="config.imgPath+editInfo.img" v-if="editInfo.img")
 
-                el-form-item(label="地区名称")
-                    el-input(v-model="editInfo.city")
-                el-form-item(label="图文链接")
-                    el-input(v-model="editInfo.url" placeholder="http://或https://开头的正常存在网址")
-                
-                el-form-item
-                    el-button(type="primary" @click="addOrUpdate") 保存
-                    el-button(type="primary" @click="editCancel") 取消
+                    el-form-item(label="地区名称")
+                        el-input(v-model="editInfo.city")
+                    el-form-item(label="图文链接")
+                        el-input(v-model="editInfo.url" placeholder="http://或https://开头的正常存在网址")
+                    
+                    el-form-item
+                        el-button(type="primary" @click="addOrUpdate") 保存
+                        el-button(type="primary" @click="editCancel") 取消
     
 </template>
 
