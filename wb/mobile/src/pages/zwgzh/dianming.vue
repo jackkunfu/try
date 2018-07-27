@@ -33,11 +33,11 @@
     fixCover.info(:str="showInfo" :titleName="curInfo.name" v-if="curInfo")
         span 性别：{{curInfo.sex | sex}}
         span 生日：{{curInfo.birthday | split}}
-        span 身高：{{curInfo.height}}cm
-        span 体重：{{curInfo.weight}}kg
+        span 身高：{{curInfo.height}} cm
+        span 体重：{{curInfo.weight}} kg
         span 家长姓名：{{curInfo.parentName}}
         span 家长电话：{{curInfo.parentPhone}}
-        span 学员等级：{{curInfo.lv}}
+        span 学员等级：{{curInfo.lv ? '等级'+curInfo.lv : '入门级'}}
         div
             .btn(@click="closeInFo") 确定
 
@@ -81,7 +81,8 @@ export default {
                     if(res.data.rows){
                         this.stuList = res.data.rows.map(el => {
                             if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
-                            else el.avatar = this.config.imgPath + item.avatar
+                            else el.avatar = this.config.imgPath + el.avatar
+                            return el
                         })
                     }
                 }

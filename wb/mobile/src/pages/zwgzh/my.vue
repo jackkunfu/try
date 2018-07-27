@@ -156,8 +156,9 @@ export default {
         },
         lv(){
             if(this.my.lv) return require('../../assets/lv'+this.my.lv+'.png')
-            if(this.my.lv - 0 === 0) return '入门级'
-            else return '未知'
+            else return require('../../assets/lv0.png')
+            // if(this.my.lv - 0 === 0) return '入门级'
+            // else return '未知'
         }
     },
     watch: {
@@ -328,6 +329,7 @@ export default {
     padding: 0.6rem
 
     .cc
+        overflow: hidden
         > img
             width: 100%
         > div

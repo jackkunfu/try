@@ -194,8 +194,11 @@
 .box
     text-align: center
     font-size: 0.9rem
+    height: 9rem
     > span
-        line-height: 5rem
+        display: block
+        padding: 1rem 0
+        line-height: 2rem
     .ensure
         border-top: 1px solid #eee
         color: #4a4a4a
