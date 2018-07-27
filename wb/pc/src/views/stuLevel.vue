@@ -40,7 +40,7 @@ div
                     el-form(:model="editInfo" label-width="160px" size="mini")
                         el-form-item(label="等级")
                             el-select(v-model="curLevel" placeholder="等级")
-                                el-option(label="入门级" value="0")
+                                el-option(label="入门级" :value="0")
                                 el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
 
                         el-form-item
@@ -104,8 +104,9 @@ export default {
         changeLevel(scope){
             this.isChooseLevel = true
             var item = scope.row
+            // console.log(item)
             this.curId = item.userId
-            this.curLevel = item.lv ? item.lv : item.lv === 0 ? 0 : ''
+            this.curLevel = item.user.lv ? item.user.lv : 0
             // var id = scope.row.id
         },
         async submit(){
