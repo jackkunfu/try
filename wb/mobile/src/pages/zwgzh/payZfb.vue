@@ -1,7 +1,8 @@
 <template lang="pug">
-.h100(style="text-align: center;")
-    div(v-if="isWx") 请点击点击右上角在手机浏览器中打开完成支付~
-    img(v-if="isWx" src="")
+.h100(style="text-align: center;background:#eee;")
+    // div(v-if="isWx") 请点击点击右上角在手机浏览器中打开完成支付~
+    img.fr(v-if="isWx" src="../../assets/wxjt.png" style="width:8rem;")
+    img(v-if="isWx" src="../../assets/wxts.png" style="width:15rem;")
 
 </template>
 
