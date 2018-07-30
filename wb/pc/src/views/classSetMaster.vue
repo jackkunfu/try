@@ -32,11 +32,11 @@ div
             @changePage="changePage" @add="add" @delScope="delScope")
 
     .edit-ctn.fix-cover(v-show="showEditCtn")
-        .x(@click="closeEditBox")
+        // .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
+            .x
+                i.el-icon-close(@click="closeEditBox")
             .scroll-box
                 el-form(:model="editInfo" label-width="160px" size="mini")
                     el-form-item(label="地区")

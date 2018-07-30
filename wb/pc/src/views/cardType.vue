@@ -30,8 +30,8 @@ div
         //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
+            .x
+                i.el-icon-close(@click="closeEditBox")
             .scroll-box
                 el-form(:model="editInfo" label-width="90px" size="mini")
                     el-form-item(label="城市")

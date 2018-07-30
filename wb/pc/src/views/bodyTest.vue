@@ -49,8 +49,8 @@ div
         // .x(@click="isChooseDate=false;curAddTime=''")
             i.el-icon-close
         .box(style="min-height:0;")
-            .x(@click="isChooseDate=false;curAddTime=''")
-                i.el-icon-close
+            .x
+                i.el-icon-close(@click="isChooseDate=false;curAddTime=''")
             .scroll-box
                 el-form(:inline="true" :model="imgInfo" size="mini" label-width="70px")
                     el-form-item(label="体测时间")
@@ -150,6 +150,7 @@ export default {
             return data
         },
         changeSearchValue(info){     //  处理搜索请求传参
+            info.status = 3
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参

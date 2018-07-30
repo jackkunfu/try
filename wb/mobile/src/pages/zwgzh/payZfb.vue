@@ -1,5 +1,5 @@
 <template lang="pug">
-.h100(style="text-align: center;background:#eee;")
+.h100(style="text-align:center;background:rgba(0,0,0,0.4);")
     // div(v-if="isWx") 请点击点击右上角在手机浏览器中打开完成支付~
     img.fr(v-if="isWx" src="../../assets/wxjt.png" style="width:8rem;")
     img(v-if="isWx" src="../../assets/wxts.png" style="width:15rem;")
@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: 'pay',
+        name: 'payZfb',
         data () {
             var query = this.$route.query;
             return {

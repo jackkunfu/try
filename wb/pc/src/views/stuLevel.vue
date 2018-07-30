@@ -34,8 +34,8 @@ div
             //- .x(@click="curLevel='';isChooseLevel=''")
                 i.el-icon-close
             .box
-                .x(@click="isChooseLevel=false;curLevel=''")
-                    i.el-icon-close
+                .x
+                    i.el-icon-close(@click="isChooseLevel=false;curLevel=''")
                 .scroll-box
                     el-form(:model="editInfo" label-width="160px" size="mini")
                         el-form-item(label="等级")

@@ -16,8 +16,8 @@ div
         //- .x(@click="closeEditBox")
             i.el-icon-close
         .box
-            .x(@click="closeEditBox")
-                i.el-icon-close
+            .x
+                i.el-icon-close(@click="closeEditBox")
             .scroll-box
                 el-form(:model="editInfo" label-width="140px" size="mini")
                     

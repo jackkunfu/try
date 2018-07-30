@@ -62,13 +62,14 @@
 
         div.pj(v-if="curTab == 2")
             .item-ctn(v-for="(item, i) in jlList" @click="showPjDetail(item)")
-                img.fl(src="../../assets/pjedit.png")
+                .fl
+                    img(src="../../assets/pjedit.png")
                 .fr(v-if="item.hasPj")
                     span 已评价
-                    img.fr(src="../../assets/ys.png")
+                    img.fr(src="../../assets/ys.png" style="width:1rem;")
                 .fr(v-else)
                     span 去评价
-                    img.fr(src="../../assets/rs.png")
+                    img.fr(src="../../assets/rs.png" style="width:1rem;")
 
                 .title {{item.createDate | split}}
                 .sub-title {{item.plan.coachs ? item.plan.coachs.map(v=>v.name).join(',') : ''}}
@@ -294,6 +295,8 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.h100
+    background: #eee
 .top
     .title
         .lv
@@ -377,17 +380,36 @@ export default {
     
     .pj
         // background: #f6f6f6
-        padding: 1rem
+        // padding: 1rem
 
         .item-ctn
-            margin-bottom: 0.8rem
-            > img
-                width: 2.8rem
-                height: 2.8rem
-                margin-right: 0.5rem
-                border-radius: 0
+            margin-bottom: 0.5rem
+            padding: 0.5rem
+            background: #fff
+            border-radius: 0.4rem
+            .fl
+                background: lightblue
+                width: 3.5rem
+                height: 3.5rem
+                margin-right: 1rem
+                text-align: center
+                border-radius: 0.4rem
+                img
+                    width: 1.5rem
+                    height: 1.5rem
+                    margin-top: 1rem
+                    border-radius: 0
+
+            > .fr
+                margin-top: 1rem
+
+            .title, .sub-title
+                float: left
+                width: 8rem
+
             .title
-                margin-bottom: 0.2rem
+                margin-top: 0.5rem
+                // margin-bottom: 0.3rem
 
         .xing
             margin: 0.8rem 0
@@ -405,7 +427,8 @@ export default {
 
 .tab-ctn
     box-shadow: 0 2px 4px 0 rgba(219,219,219,0.50)
-    margin: 0.5rem 0
+    margin-bottom: 0.5rem
+    background: #fff
 
 .tab
     width: 33.333333%
@@ -413,6 +436,7 @@ export default {
     border-right: 1px solid #e9e9e9
     text-align: center
     margin-bottom: 0.3rem
+    
     &.no-br
         border-right: none
     &.cur
