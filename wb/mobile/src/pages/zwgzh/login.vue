@@ -116,11 +116,17 @@
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.denglu.phone)) ) return this.messageTip('手机号格式有误~');
                 if(this.denglu.phone == '' ) return this.messageTip('手机号不能为空~');
                 if(this.denglu.code == '') return this.messageTip('验证码有误~');
-                var res = await this.ajax('/user/login', this.denglu);
+                // var res = await this.ajax('/user/login', this.denglu);
+                var res = await this.ajax('/user/login', {
+                    phone: this.denglu.phone,
+                    code: this.denglu.code,
+                    openId: this.$route.query.openId,
+                    userId: this.$route.query.userId
+                });
                 if(res && res.code == this.successCode){
                     var data = res.data;
-                    localStorage.zwgzhUid = data.id;
-                    this.goUrl('/my', { userId: data.id });
+                    localStorage.zwgzhUid = this.$route.query.userId;
+                    this.goUrl('/my', { userId: this.$route.query.userId });
                 }
             },
             async baoming(){
@@ -271,6 +277,7 @@
         color: #9b9b9b
         line-height: 1rem
         width: 6rem
+        font-size: 0.7rem
 
     .code
         position: absolute

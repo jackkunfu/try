@@ -61,7 +61,12 @@ export default {
 <style scoped lang="sass">
 .h100
     background: #f3f4f3
+    .list
+        padding: 0 0.7rem
 
 .item
     height: 6rem
+
+.sort-item
+    margin: 0.75rem 0.7rem
 </style>

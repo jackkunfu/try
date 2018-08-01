@@ -147,7 +147,7 @@
         margin: 1.4rem auto
 
 .enroll
-    margin: 1rem auto 0
+    margin: 0 auto
     width: 16rem
     background: #fff
     padding: 0.8rem 0.8rem 1rem
@@ -168,6 +168,7 @@
         outline: none
         color: #9b9b9b
         height: 1rem
+        font-size: 0.7rem
 
     .fr
         width: 9rem

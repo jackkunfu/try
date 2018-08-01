@@ -5,11 +5,11 @@
         .item
             img.fl(:src="touxiang")
             .title
-                span(style="font-size:1.2rem;") {{my.name}}
-                span.lv 等级：
+                span(style="font-size:1.1rem;") {{my.name}}
+                span.lv
                     img(:src="lv")
 
-            .sub-title(@click="goUrl('/myset', my)" style="color: red;") 完善个人信息
+            .sub-title(@click="goUrl('/myset', my)" style="color:#fff;") 完善个人信息
                 span >
 
     .tab-ctn
@@ -130,9 +130,7 @@ export default {
             //     times: '一周两次',
             //     startDate: '2018-01-01 11:00:00 - 13:00:00'
             // },
-            tnList: [
-                {}, {}
-            ],
+            tnList: [],
             curTab: -1,
             x1: 0,
             x2: 0,
@@ -388,7 +386,7 @@ export default {
             background: #fff
             border-radius: 0.4rem
             .fl
-                background: lightblue
+                background: #edf3fd
                 width: 3.5rem
                 height: 3.5rem
                 margin-right: 1rem

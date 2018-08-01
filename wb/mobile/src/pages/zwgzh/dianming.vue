@@ -31,14 +31,15 @@
             .btn(@click="submitText") 提交
 
     fixCover.info(:str="showInfo" :titleName="curInfo.name" v-if="curInfo")
-        span 性别：{{curInfo.sex | sex}}
-        span 生日：{{curInfo.birthday | split}}
+        span(style="width:100%;font-size:0.8rem;color:#000;") 姓名：{{curInfo.name}}
+        // span 性别：{{curInfo.sex | sex}}
         span 身高：{{curInfo.height}} cm
         span 体重：{{curInfo.weight}} kg
-        span 家长姓名：{{curInfo.parentName}}
-        span 家长电话：{{curInfo.parentPhone}}
+        span(style="width:100%;") 生日：{{curInfo.birthday | split}}
+        span 家长：{{curInfo.parentName}}
+        span(style="width:100%;") 电话：{{curInfo.parentPhone}}
         span 学员等级：{{curInfo.lv ? '等级'+curInfo.lv : '入门级'}}
-        div
+        div(style="clear:both;")
             .btn(@click="closeInFo") 确定
 
 </template>
@@ -174,17 +175,21 @@ export default {
 
 <style scoped lang="sass">
 .info
+    overflow: hidden
     span
+        font-size: 0.7rem
+        margin: 0.2rem 0
         display: block
-        text-algin: left
-        padding-left: 2rem
+        float: left
+        width: 50%
+        text-align: left
 
 .h100
     overflow: hidden
 
 .item
     margin-bottom: 0
-    padding: 0.5rem 0
+    padding: 0.4rem 0
     &:nth-of-type(2n-1)
         background: #fafafa
 
@@ -226,13 +231,14 @@ export default {
     .w50
         text-align: center
         .img
-            width: 1.7rem
-            height: 1.7rem
+            width: 2.2rem
+            height: 2.2rem
             border-radius: 50%
             vertical-align: middle
             margin-right: 0.35rem
         .icon
-            width: 1.7rem
+            width: 1.5rem
+            height: auto
             margin: 0 0.6rem
             vertical-align: middle
 </style>
