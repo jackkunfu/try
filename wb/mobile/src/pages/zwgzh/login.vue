@@ -117,16 +117,16 @@
                 if(this.denglu.phone == '' ) return this.messageTip('手机号不能为空~');
                 if(this.denglu.code == '') return this.messageTip('验证码有误~');
                 // var res = await this.ajax('/user/login', this.denglu);
-                var res = await this.ajax('/user/login', {
+                let opts = {
                     phone: this.denglu.phone,
                     code: this.denglu.code,
-                    openId: this.$route.query.openId,
-                    userId: this.$route.query.userId
-                });
+                    openId: this.$route.query.openId
+                }
+                var res = await this.ajax('/user/login', opts);
                 if(res && res.code == this.successCode){
                     var data = res.data;
                     localStorage.zwgzhUid = this.$route.query.userId;
-                    this.goUrl('/my', { userId: this.$route.query.userId });
+                    this.goUrl('/my', { userId: data.id });
                 }
             },
             async baoming(){
@@ -135,7 +135,13 @@
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.login.phone)) ) return this.messageTip('手机号格式有误~');
                 if(this.login.phone == '' ) return this.messageTip('手机号不能为空~');
                 if(this.login.code == '') return this.messageTip('验证码有误~');
-                var res = await this.ajax('/user/login', this.login);
+                // var res = await this.ajax('/user/login', this.login);
+                let opts = {
+                    phone: this.login.phone,
+                    code: this.login.code,
+                    openId: this.$route.query.openId,
+                }
+                var res = await this.ajax('/user/login', opts);
                 if(res && res.code == this.successCode){
                     var data = res.data;
                     localStorage.zwgzhUid = data.id;
@@ -269,15 +275,17 @@
     &.with-code
         width: 10rem
     img
-        width: 0.9rem
+        width: 1rem
         margin-right: 0.9rem
         float: left
+        position: relative
+        top: -0.1rem
     input
         border: none
         color: #9b9b9b
         line-height: 1rem
         width: 6rem
-        font-size: 0.7rem
+        font-size: 0.8rem
 
     .code
         position: absolute

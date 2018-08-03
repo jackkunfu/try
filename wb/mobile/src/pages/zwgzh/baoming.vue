@@ -230,7 +230,7 @@ select
     position: relative
     background: #fff
     height: 2.1rem
-    font-size: 0.75rem
+    font-size: 0.8rem
     > span
         position: absolute
         left: 0.8rem
