@@ -36,7 +36,7 @@
         .each
             span 上课时间：
             .fr(@click="chooseTimes=true")
-                span(style="color:#9b9b9b;font-size:0.7rem;") {{curTiyanTimeStr}}
+                span(style="color:#9b9b9b;") {{curTiyanTimeStr}}
                 img(src="../../assets/xia.png")
         
         .btn(@click="baoming") 提交报名
@@ -163,17 +163,18 @@
 
     input, select
         float: right
-        width: 9rem
+        width: 8.5rem
         border: none
         outline: none
         color: #9b9b9b
         height: 1rem
-        font-size: 0.7rem
+        font-size: 0.8rem
 
     .fr
-        width: 9rem
+        width: 8.5rem
         color: #9b9b9b
         position: relative
+        font-size: 0.8rem
 
         img
             position: absolute

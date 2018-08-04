@@ -116,20 +116,23 @@ div
                         el-button(type="primary" @click="editCancel" size="small") 取消
 
     .fix-cover(v-show="isOpenCard")
-        .x(@click="closeOpenCard")
+        //- .x(@click="closeOpenCard")
             i.el-icon-close
         .box
-            el-form(:model="open" label-width="80px" size="mini")
-                el-form-item(label="开始日期")
-                    el-date-picker(v-model="open.openDate" type="date" placeholder="选择开始日期" value-format="yyyy-MM-dd")
+            .x
+                i.el-icon-close(@click="closeOpenCard")
+            .scroll-box
+                el-form(:model="open" label-width="80px" size="mini")
+                    el-form-item(label="开始日期")
+                        el-date-picker(v-model="open.openDate" type="date" placeholder="选择开始日期" value-format="yyyy-MM-dd")
 
-                el-form-item(label="结束日期")
-                    el-date-picker(v-model="open.endDate" type="date" placeholder="选择结束日期" value-format="yyyy-MM-dd")
+                    el-form-item(label="结束日期")
+                        el-date-picker(v-model="open.endDate" type="date" placeholder="选择结束日期" value-format="yyyy-MM-dd")
 
-                el-form-item
-                    el-button(type="primary" @click="cardOpen" size="small") 保存
-                    el-button(type="primary" @click="editCancel" size="small") 取消
-      
+                    el-form-item
+                        el-button(type="primary" @click="cardOpen" size="small") 保存
+                        el-button(type="primary" @click="isOpenCard=false;open.openDate='';open.endDate='';" size="small") 取消
+        
 </template>
 
 <script>

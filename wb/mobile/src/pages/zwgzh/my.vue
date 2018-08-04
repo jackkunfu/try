@@ -37,7 +37,7 @@
                 .other 其他详细信息
                 div 上课时间：
                     img(src="../../assets/user_icon_time@2x.png")
-                div(style="margin-left: 5.3rem;margin-top:-1.3rem")
+                div(style="margin-left: 5.3rem;margin-top:-1.3rem;min-height:1.3rem;")
                     div(v-for="(it, i) in item.times") {{'周'+week[it.week]+' '+it.begin+'~'+it.end}}
                     
                 div 训练频次：{{item.frequency}}
