@@ -37,7 +37,7 @@
                 .other 其他详细信息
                 div 上课时间：
                     img(src="../../assets/user_icon_time@2x.png")
-                div(style="margin-left: 5.3rem;margin-top:-1.3rem;min-height:1.3rem;")
+                div(style="margin-left: 5.3rem;margin-top:-1.3rem;min-height:0.8rem;")
                     div(v-for="(it, i) in item.times") {{'周'+week[it.week]+' '+it.begin+'~'+it.end}}
                     
                 div 训练频次：{{item.frequency}}
@@ -90,7 +90,7 @@
                                 .clear
 
                             .xing
-                                .eachactiveStarImg
+                                .each
                                     span 教学态度：
                                     img(v-for="(it, i) in [1,1,1,1,1]" @click="clickXing('x1', i, item)" :src="i<item.x1 ? activeStarImg : starImg")
                                 .each
@@ -415,7 +415,7 @@ export default {
                 margin-bottom: 0.3rem
             span
                 display: inline-block
-                width: 3.8rem
+                width: 4rem
             img
                 width: 1rem
                 margin: 0 0.25rem

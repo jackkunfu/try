@@ -21,10 +21,10 @@
         .login(v-if="isLogin")
             .each
                 img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="denglu.phone" placeholder="请输入账号")
+                input(v-model="denglu.phone" placeholder="请输入手机号" type="number")
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="denglu.code" placeholder="请输入验证码")
+                input(v-model="denglu.code" placeholder="请输入验证码" type="number")
                 .code(@click="(e)=>{getCode('denglu', e)}") 获取验证码
             .login-tip 若账号未激活，请联系机构
                 img(src="../../assets/login_icon_tishi@2x.png")
@@ -34,10 +34,10 @@
         .baoming(v-if="isBm")
             .each
                 img(src="../../assets/login_icon_zhanghao@2x.png")
-                input(v-model="login.phone" placeholder="请输入手机号")
+                input(v-model="login.phone" placeholder="请输入手机号" type="number")
             .each.with-code
                 img(src="../../assets/login_icon_mima@2x.png")
-                input(v-model="login.code" placeholder="请输入验证码")
+                input(v-model="login.code" placeholder="请输入验证码" type="number")
                 .code(@click="(e)=>{getCode('login', e)}") 获取验证码
             
             .btn(@click="baoming") 报名登陆
