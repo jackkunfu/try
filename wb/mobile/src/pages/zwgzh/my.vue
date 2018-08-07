@@ -237,7 +237,7 @@ export default {
                 if(type == 0){
                     this.course = data
                 }else if(type == 1){
-                    this.tnList = data.rows
+                    this.tnList = data.rows || []
                 }else if(type == 2){
                     this.jlList = data.rows
                     this.jlList.forEach(item=>{
