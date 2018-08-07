@@ -373,6 +373,9 @@ export default {
                     font-size: 0.8rem
                     margin-bottom: 0.2rem
                     margin-top: 0.7rem
+                    text-align: center
+                    padding-left: 1rem
+
                 span
                     color: #9b9b9b
     
