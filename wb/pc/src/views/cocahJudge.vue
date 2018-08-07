@@ -68,8 +68,8 @@ export default {
             ]
         }
     },
-    mounted(){
-        this.cocahs = ( this.ajax('/mgr/list', {
+    async mounted(){
+        this.cocahs = ( await this.ajax('/mgr/list', {
             limit: 10000,
             offset: 0,
             roleid: 4
