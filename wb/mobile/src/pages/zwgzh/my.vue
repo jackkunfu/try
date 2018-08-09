@@ -32,7 +32,7 @@
         div.cc(v-if="curTab == 0")
             div(v-if="course.length == 0") 暂无信息或者暂未开卡
             div(v-for="(item, i) in course")
-                div(style="position:relative;top:4.5rem;left:3rem;color:#fff;") {{item.train.name}}
+                //- div(style="position:relative;top:4.5rem;left:3rem;color:#fff;") {{item.train.name}}
                 img(:src="config.imgPath+item.card.image" style="display:block;width:100%;margin:0.5rem 0;")
                 .other 其他详细信息
                 div 上课时间：
@@ -58,12 +58,15 @@
                             .time {{item.testDate | split}}
                             // span {{item.time || 'xxxx-xx-xx'}}
                 div(v-else)
-                    img.tnDetailImg(:src="tnDetailImg" @click="showTnTable=false")
+                    img.tnDetailImg(:src="tnDetailImg")
+                    div(@click="showTnTable=false" style="margin:1rem auto;width:4rem;hegiht:1.5rem;line-hegiht:1.5rem;border:1px solid #48C4F5;color:#48C4F5;border-radius:0.3rem;") 返回
 
         div.pj(v-if="curTab == 2")
             .item-ctn(v-for="(item, i) in jlList" @click="showPjDetail(item)")
                 .fl
-                    img(src="../../assets/pjedit.png")
+                    //- img(src="../../assets/pjedit.png")
+                    img(:src="config.imgPath+item.plan.coachs[0].avatar" v-if="item.plan && item.plan.coachs")
+                    img(src="../../assets/touxiang.png" v-else)
                 .fr(v-if="item.hasPj")
                     span 已评价
                     img.fr(src="../../assets/ys.png" style="width:1rem;")
@@ -394,11 +397,13 @@ export default {
                 height: 3.5rem
                 margin-right: 1rem
                 text-align: center
-                border-radius: 0.4rem
+                // border-radius: 0.4rem
+                border-radius: 50%
+                overflow: hidden
                 img
-                    width: 1.5rem
-                    height: 1.5rem
-                    margin-top: 1rem
+                    width: 3.5rem
+                    height: 3.5rem
+                    // margin-top: 1rem
                     border-radius: 0
 
             > .fr

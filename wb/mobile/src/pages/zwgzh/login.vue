@@ -102,7 +102,8 @@
                 var res = await this.ajax('/mgr/login', {
                     userName: bzr.account,
                     password: bzr.password,
-                    isAdmin: 2
+                    isAdmin: 2,
+                    openId: this.$route.query.openId
                 });
                 if(res && res.code == this.successCode){
                     var data = res.data;

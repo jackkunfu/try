@@ -7,6 +7,22 @@
         .box-ctn
             .box 
                 span 恭喜您体验课报名成功，我们工作人员将在1-3个工作日内和您联系
+                .info
+                    div
+                        | 姓名:
+                        span {{item.name}}
+                    div
+                        | 联系方式:
+                        span {{item.mobile}}
+                    div
+                        | 城市: 
+                        span {{item.city}}
+                    div
+                        | 训练营: 
+                        span {{curTrain}}
+                    div
+                        | 上课时间: 
+                        span {{curTiyanTimeStr}}
                 .ensure
                     span(@click="ok=false") 确定
 
@@ -71,6 +87,11 @@
                 if(this.item.begin == '') return '请选择上课时间'
                 let item = this.item
                 return '周'+this.week[item.week]+' '+item.begin+'~'+item.end
+            },
+            curTrain(){
+                let trainId = this.item.trainId
+                if(trainId) return this.trains[this.trains.map(v=>v.id).indexOf(this.item.trainId)].name
+                else return ''
             }
         },
         watch: {
@@ -146,6 +167,14 @@
         width: 72%
         margin: 1.4rem auto
 
+.info
+    color: #999
+    text-align: left
+    padding-left: 1rem
+    margin-bottom: 0.5rem
+    font-size: 0.8rem
+    line-height: 1.2rem
+
 .enroll
     margin: 0 auto
     width: 16rem
@@ -193,14 +222,18 @@
     font-size: 0.8rem
     border-radius: 2.1rem
 
+.fix
+    .box
+        width: 15rem
+
 .box
     text-align: center
     font-size: 0.9rem
-    height: 9rem
+    height: 14rem
     > span
         display: block
-        padding: 1rem 0
-        line-height: 2rem
+        padding: 1rem 0.5rem 0.5rem
+        line-height: 1.5rem
     .ensure
         border-top: 1px solid #eee
         color: #4a4a4a

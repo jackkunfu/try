@@ -334,9 +334,12 @@ export default {
             return info
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            // console.log('info')
+            // console.log(info)
             info.fee = (info.fee - 0)*100
             info.birthday = new Date(info.birthday)
             info.payDate = new Date(info.payDate)
+            info.trainTimes = JSON.stringify(this.classTimes.filter(v=>v.isChoose))
             if(this.curOperateType == 2) info.userId = this.curChooseRow.userId
             return info;
         }

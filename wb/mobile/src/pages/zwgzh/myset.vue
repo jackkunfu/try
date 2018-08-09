@@ -101,7 +101,9 @@ export default {
         //     this.$set(this.my, el, this.$route.query[el])
         // })
         var res = await this.ajax('/user/detail', {userId:this.userId}, 'get')
-        this.my = res.data
+        let data = res.data
+        data.birthday = data.birthday.split(' ')[0]
+        this.my = data
 
         // this.list = await this.getAllTrainTimes(this.trainId)
 
