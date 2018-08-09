@@ -290,13 +290,16 @@ export default {
                 interaction: item.x3,
                 opinion: item.pjStr.trim()
             }
+            // 这里先更改下状态，防止重复提交，如果未成功再设置成null
+            item.evaluate = options
+
             var res = await this.ajax('/evaluate/add', options)
             this.messageTip(res.message)
             if(res && res.code == this.successCode){
-                item.evaluate = options
+                
                 // this.isPJ = true
                 // ite.pjStr = ''
-            }
+            }else item.evaluate = null
         }
     }
 }
