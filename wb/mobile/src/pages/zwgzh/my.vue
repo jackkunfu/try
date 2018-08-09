@@ -175,6 +175,13 @@ export default {
         }
     },
     async mounted(){
+        if(this.$route.query.success == 1){
+            this.messageTip('报名成功')
+            setTimeout(()=>{
+                this.goUrl('/my', {userId: this.userId})
+            }, 1000)
+            
+        }
         this.my = this.$route.query
 
         var res = await this.ajax('/user/detail', {userId:this.userId}, 'get')
