@@ -48,7 +48,8 @@
                 userId: query.userId,
                 trainId: query.trainId,
                 orderId: query.orderId,
-                wxdata: {}
+                wxdata: {},
+                isReq: 0
             }
         },
         async mounted(){
@@ -62,6 +63,8 @@
         methods: {
             async pay(){
                 if(this.payWay == 0) return this.messageTip('请选择支付方式');
+                if(this.isReq == 0) this.isReq++
+                else return
                 var options = {
                     orderId: this.orderId,
                     body: '郑武体育篮球训练课',
