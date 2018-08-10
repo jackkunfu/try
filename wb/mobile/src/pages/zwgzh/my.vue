@@ -44,8 +44,8 @@
                     img(src="../../assets/user_icon_pinlv@2x.png")
                 div(v-if="item.status==3")
                     img(src="../../assets/user_icon_information@2x.png")
-                    span 开卡时间：{{item.openDate}}
-                    span.span 到期时间：{{item.endDate}}
+                    span 开卡时间：{{item.openDate | split}}
+                    span.span 到期时间：{{item.endDate | split}}
                 div(v-else) 暂未开卡
 
         div.tn(v-if="curTab == 1")
@@ -114,6 +114,12 @@
 <script>
 export default {
     name: 'my',
+    filters: {
+        split(v){
+            if(!v) return ''
+            else return (v + '').split(' ')[0]
+        }
+    },
     data () {
         return {
             week: ['一', '二', '三', '四', '五', '六', '日'],
