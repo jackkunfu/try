@@ -11,7 +11,7 @@ div
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
 
                 el-form-item(label="教练")
-                    el-select(v-model="searchInfo.cocahId" placeholder="教练")
+                    el-select(v-model="searchInfo.cuserId" placeholder="教练")
                         el-option(v-for="(item, i) in cocahs" :key="i" :label="item.name" :value="item.id")  
 
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
@@ -52,10 +52,10 @@ export default {
                 { str: '互动性', key: 'interaction' },
                 { str: '本月评价', key: 'avgEvaluate' }
             ],
-            searchKeys: ['cocahId', 'city'],
+            searchKeys: ['cuserId', 'city'],
             editKeys: [],
             api: {
-                list: { url: '/evaluate/list' },
+                list: { url: '/evaluate/list1' },
                 del: { url: '/evaluate/delete' }
             },
             scopeOperates: [    // 每一行种的操作
