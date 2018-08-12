@@ -50,7 +50,7 @@ export default {
             searchKeys: ['trainId', 'city', 'week', 'date'],
             editKeys: [],
             api: {
-                list: { url: '/evaluate/list' }
+                list: { url: '/evaluate/list1' }
             },
             scopeOperates: [    // 每一行种的操作
                 // { str: '查看详情', fun: 'seeDetail'}
@@ -69,6 +69,8 @@ export default {
                 // element.time = '周'+this.week[element.plan.week] + ' ' + element.plan.begin+'~'+element.plan.end
                 element.week = '周'+this.week[element.plan.week]
                 element.time = element.plan.begin+'~'+element.plan.end
+
+                if((element.avgEvaluate+'').length > 3) element.avgEvaluate = (element.avgEvaluate - 0).toFixed(1)
             });
             return data
         },

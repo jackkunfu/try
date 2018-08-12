@@ -55,7 +55,7 @@ export default {
             searchKeys: ['cuserId', 'city'],
             editKeys: [],
             api: {
-                list: { url: '/evaluate/list1' },
+                list: { url: '/evaluate/list' },
                 del: { url: '/evaluate/delete' }
             },
             scopeOperates: [    // 每一行种的操作
@@ -79,6 +79,7 @@ export default {
         changeTableData(data){
             data.forEach(element => {
                 element.img = element.cuser.avatar
+                if((element.avgEvaluate+'').length > 3) element.avgEvaluate = (element.avgEvaluate - 0).toFixed(1)
             });
             return data
         },
