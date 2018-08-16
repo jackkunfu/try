@@ -297,16 +297,16 @@
         line-height: 1.4rem
         text-align: center
         font-size: 0.6rem
-        color: #48C4F5
+        color: #81B7E9
         float: right
-        border: 1px solid #48C4F5
+        border: 1px solid #81B7E9
         border-radius: 1.5rem
 
 
 .login-tip
     width: 15rem
     margin: 0 auto
-    color: #48C4F5
+    color: #81B7E9
     img
         width: 0.88rem
         float: left

@@ -91,7 +91,7 @@ export default {
     margin: 1.5rem auto
     line-height: 1.8rem
     background: #fff
-    color: #48C4F5
+    color: #81B7E9
     text-align: center
     border-radius: 0.2rem
 </style>

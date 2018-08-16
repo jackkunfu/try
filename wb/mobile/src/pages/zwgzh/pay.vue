@@ -156,7 +156,7 @@
         width: 16rem
         margin: 1rem auto
         line-height: 2.1rem
-        background: #48C4F5
+        background: #81B7E9
         font-size: 0.8rem
         text-align: center
         color: #fff

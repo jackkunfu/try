@@ -59,7 +59,7 @@
                             // span {{item.time || 'xxxx-xx-xx'}}
                 div(v-else)
                     img.tnDetailImg(:src="tnDetailImg")
-                    div(@click="showTnTable=false" style="margin:1rem auto;width:4rem;hegiht:1.5rem;line-hegiht:1.5rem;border:1px solid #48C4F5;color:#48C4F5;border-radius:0.3rem;") 返回
+                    div(@click="showTnTable=false" style="margin:1rem auto;width:4rem;hegiht:1.5rem;line-hegiht:1.5rem;border:1px solid #81B7E9;color:#81B7E9;border-radius:0.3rem;") 返回
 
         div.pj(v-if="curTab == 2")
             .item-ctn(v-for="(item, i) in jlList" @click="showPjDetail(item)")
@@ -333,7 +333,7 @@ export default {
     color: #646464
     background: #fff
     &.cur
-        color: #48C4F5
+        color: #81B7E9
 
 .fix
     .box
@@ -462,7 +462,7 @@ export default {
     &.no-br
         border-right: none
     &.cur
-        color: #48C4F5
+        color: #81B7E9
 
     img
         width: 1.4rem

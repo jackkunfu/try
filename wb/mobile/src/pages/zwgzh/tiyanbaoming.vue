@@ -6,7 +6,8 @@
     .fix(v-if="ok")
         .box-ctn
             .box 
-                span 恭喜您体验课报名成功，我们工作人员将在1-3个工作日内和您联系
+                span 恭喜您体验课报名成功
+                span(style="font-size:0.7rem;color:#999;padding:0 0 0.5rem;") 我们工作人员将在1-3个工作日内和您联系
                 .info
                     div
                         | 姓名:
@@ -22,7 +23,7 @@
                         span {{curTrain}}
                     div
                         | 上课时间: 
-                        span {{curTiyanTimeStr}}
+                        span {{curTiyanTimeTanchuangStr}}
                 .ensure
                     span(@click="ok=false") 确定
 
@@ -85,6 +86,11 @@
         computed: {
             curTiyanTimeStr(){
                 if(this.item.begin == '') return '请选择上课时间'
+                let item = this.item
+                return '周'+this.week[item.week]+' '+item.begin+'~'+item.end
+            },
+            curTiyanTimeTanchuangStr(){
+                if(this.item.begin == '') return ''
                 let item = this.item
                 return '周'+this.week[item.week]+' '+item.begin+'~'+item.end
             },
@@ -242,11 +248,10 @@
             line-height: 1.4rem
             margin: 0.5rem auto
             width: 4rem
-            background: #48C4F5
+            background: #81B7E9
             border-radius: 0.2rem
             color: #fff
             font-size: 0.7rem
 
-    
 </style>
 

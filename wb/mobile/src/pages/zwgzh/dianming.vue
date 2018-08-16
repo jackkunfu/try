@@ -214,7 +214,7 @@ export default {
     text-align: center
     font-size: 0.9rem
     color: #fff
-    background: #48C4F5
+    background: #81B7E9
     
 .half
     width: 50%

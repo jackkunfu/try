@@ -209,7 +209,7 @@
     font-size: 0.8rem
     margin-top: 1rem
     span
-        color: #48C4F5
+        color: #81B7E9
 
 select
     padding: 0 0.8rem
@@ -254,7 +254,7 @@ select
 .login-tip
     width: 15rem
     margin: 0 auto
-    color: #48C4F5
+    color: #81B7E9
     img
         width: 0.88rem
         float: left
@@ -263,7 +263,7 @@ select
 .btn
     width: 15rem
     margin: 1rem auto
-    background: #48C4F5
+    background: #81B7E9
     line-height: 2.1rem
     text-align: center
     color: #fff
