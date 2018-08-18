@@ -5,9 +5,13 @@
                 "type": "sftp",
                 "name": "My SFTP folder",
                 "description": "A SFTP folder",
-                "dir": "/data/wwwroot/momo.91ilove.com",
-                "host": "47.94.96.242", "port": 22,
-                "user": "root", "password": "zhenwu=123!!",
+                // "dir": "/data/wwwroot/momo.91ilove.com",
+                // "host": "47.94.96.242", "port": 22,
+                // "user": "root", "password": "zhenwu=123!!",
+
+                "dir": "/data/wwwroot/wx.zhengwusport.com",
+                "host": "118.31.19.178", "port": 22,
+                "user": "root", "password": "zhengwu@123",
 
                 "checkBeforeDeploy": true,
 
