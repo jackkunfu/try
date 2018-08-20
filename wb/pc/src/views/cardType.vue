@@ -8,7 +8,7 @@ div
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item(label="训练营")
                     el-select(v-model="searchInfo.trainId" placeholder="训练营")
@@ -36,7 +36,7 @@ div
                 el-form(:model="editInfo" label-width="90px" size="mini")
                     el-form-item(label="城市")
                         el-select(v-model="editInfo.city" placeholder="城市")
-                            el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+                            el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.id")
 
                     el-form-item(label="训练营")
                         el-select(v-model="editInfo.trainId" placeholder="训练营")

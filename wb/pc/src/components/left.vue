@@ -68,6 +68,7 @@ export default {
                 name: '权限管理',
                 iconName: 'el-icon-menu',
                 list: [
+                    { name: '城市设置', url: '/set/city' },
                     { name: '管理员设置', url: '/set/manage' },
                     { name: '教练设置', url: '/set/coach' },
                     { name: '班主任设置', url: '/set/class' },

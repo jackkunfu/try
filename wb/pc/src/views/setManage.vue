@@ -44,9 +44,17 @@ div
                         el-input(v-model="editInfo.phone")
 
                     .item 角色权限
+                    el-form-item(label="城市")
+                        //- template(v-for="(item, i) in ALLCITY")
+                            el-checkbox(v-model="item.checked")
+                            span(style="margin-right:5px;") {{item.name}}
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item,i) in ALLCITY" :key="i" :value="item.id" :label="item.name")
+
                     el-form-item(label="角色")
                         el-select(v-model="editInfo.roleid")
                             el-option(v-for="(item,i) in ['超级管理员', '管理员']" :key="i" :value="i+1" :label="item")
+
                     el-form-item(label="学员信息删除权限")
                         el-switch(v-model="editInfo.delStu")
 
@@ -70,6 +78,7 @@ export default {
                 { str: '手机号', key: 'phone' },
                 { str: '创建时间', key: 'createtime' }
             ],
+            ALLCITY: [],
             searchKeys: ['name', 'roleid'],
             editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password'],
             api: {
@@ -89,13 +98,16 @@ export default {
             curBtnSearch: -1
         }
     },
-    mounted(){
+    async mounted(){
         $('#up1').change(()=>{
             this.file('up1', res => {
                 if(res && res.code == 200) this.editInfo.avatar = res.data
                 else this.messageTip(res.message)
             })
         })
+
+        var res = await this.ajax('/city/list', {}, 'get')
+        this.ALLCITY = res.data
     },
     methods: {
         selfSearchReset(){
@@ -110,6 +122,7 @@ export default {
         },
         changeEditValue(info){   // 处理新增编辑请求传参
             info.roleid = 1;
+            info.cityIds = this.allCitys.filter(v => v.checked).map(v => v.id).join(';')
             return info;
         },
         testInput(){
@@ -123,6 +136,9 @@ export default {
             if(data.password.length < 6 || data.password.trim().length > 16) return this.messageTip('密码须6到16位~')
 
             if(data.phone != '' && !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(data.phone)) ) return this.messageTip('手机号格式有误~');
+
+            if(!this.editInfo.city) return this.messageTip('城市未选择')
+            // if(this.allCitys.filter(v => v.checked).length == 0) return this.messageTip('城市未选择')
             
             return true
         }

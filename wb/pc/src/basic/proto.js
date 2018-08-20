@@ -145,7 +145,7 @@ export default function(Vue){
             }
 
             var needChangeTableData = this.changeTableData && typeof this.changeTableData == 'function';
-            this.tableData = needChangeTableData ? this.changeTableData(result.rows) : result.rows
+            this.tableData = needChangeTableData ? this.changeTableData(result.rows, result) : result.rows
 
             this.page.total = result.total;
             this.curChooseRow = null;   // 当前选中列置空

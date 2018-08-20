@@ -8,7 +8,7 @@ div
             el-form(:inline="true" :model="searchInfo" size="mini" label-width="70px")
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item(label="训练营")
                     el-input(v-model="searchInfo.name" placeholder="名称")
@@ -32,7 +32,7 @@ div
                 el-form(:model="editInfo" label-width="100px" size="mini")
                     el-form-item(label="城市")
                         el-select(v-model="editInfo.city" placeholder="城市")
-                            el-option(v-for="(item, i) in citys" :key="i" :label="item.city" :value="item.city")
+                            el-option(v-for="(item, i) in ALLCITY" :key="i" :label="item.name" :value="item.id")
 
                     el-form-item(label="训练营名称")
                         el-input(v-model="editInfo.name")
@@ -94,6 +94,8 @@ export default {
         }
     },
     async mounted(){
+        var res = await this.ajax('/city/list', {}, 'get')
+        this.ALLCITY = res.data
     },
     watch: {
         showEditCtn(v){

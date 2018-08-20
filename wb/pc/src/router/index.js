@@ -95,6 +95,10 @@ var perm = [{    // 权限路由
   path: '/set/sell',
   name: 'setSell',
   component: r => require.ensure([], () => r(require('@/views/setSell')), 'setSell')
+},{
+  path: '/set/city',
+  name: 'setCity',
+  component: r => require.ensure([], () => r(require('@/views/setCity')), 'setCity')
 }]
 
 routes = routes.concat(students, coach, course, courseManage, enroll, perm)
