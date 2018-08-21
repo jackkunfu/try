@@ -86,5 +86,6 @@ export default {
             margin: 0.25rem
             display: inline-block
             &.cur
-                background: #48C4F5
+                // background: #48C4F5
+                background: #81B7E9
 </style>

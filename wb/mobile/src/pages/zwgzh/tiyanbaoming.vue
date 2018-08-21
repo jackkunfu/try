@@ -220,8 +220,9 @@
 .btn
     position: relative
     margin: 2rem auto
-    background-image: linear-gradient(-45deg, #76D5FA 0%, #0BACEE 100%)
-    box-shadow: 0 2px 6px 0 rgba(64,190,246,0.50)
+    // background-image: linear-gradient(-45deg, #76D5FA 0%, #0BACEE 100%)
+    background: #81B7E9
+    // box-shadow: 0 2px 6px 0 rgba(64,190,246,0.50)
     line-height: 2.1rem
     text-align: center
     color: #fff
