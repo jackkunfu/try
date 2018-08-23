@@ -9,9 +9,10 @@ div.class-desc
                 i.el-icon-document
                 | 轮播图管理
                 span(style="color:#888;") (375*140或等比例两倍三倍图)
-                .up-ctn.add
+                //- .up-ctn.add
                     input#up1(type="file" ref="up1")
                     span 新增轮播图
+                el-button.add(@click="showaAddPoster=true" size="mini" style="color:#fff;") 新增轮播图
 
             .ctn
                 div(v-for="(item, i) in lunbotuList" :key="i")
@@ -69,6 +70,25 @@ div.class-desc
                     el-form-item
                         el-button(type="primary" @click="addOrUpdate") 保存
                         el-button(type="primary" @click="editCancel") 取消
+
+    .edit-ctn.fix-cover(v-show="showaAddPoster")
+        .box
+            .x
+                i.el-icon-close(@click="posterObj.img='';posterObj.url='';showaAddPoster=false;")
+            .scroll-box
+                el-form(:model="posterObj" label-width="80px")
+                    el-form-item(label="缩略图")
+                        .up-ctn.area
+                            input#up1(type="file" @change="upImg($event, 'posterObj')")
+                            span + 上传
+                            img(:src="config.imgPath+posterObj.img" v-if="posterObj.img")
+
+                    el-form-item(label="轮播图链接")
+                        el-input(v-model="posterObj.url" placeholder="http://或https://开头的正常存在网址")
+                    
+                    el-form-item
+                        el-button(type="primary" @click="addLunbotu") 保存
+                        el-button(type="primary" @click="posterObj.img='';posterObj.url='';showaAddPoster=false;") 取消
     
 </template>
 
@@ -88,7 +108,13 @@ export default {
             isEdit: false,
             areaTotal: 0,
             lunboTotal: 0,
-            curEditId: null
+            curEditId: null,
+
+            showaAddPoster: false,
+            posterObj: {
+                img: '',
+                url: ''
+            }
         }
     },
     mounted(){
@@ -168,6 +194,11 @@ export default {
                 this.editInfo.img = res.data
             }, e.target)
         },
+        upImg(e, key){
+            this.file('', async res => {
+                this[key].img = res.data
+            }, e.target)
+        },
         changeLunBo(e, id){
             this.file('', async res => {
                 let img = res.data
@@ -177,7 +208,22 @@ export default {
                 }
             }, e.target)
         },
-        addLunbotu(){},
+        async addLunbotu(){
+            if(!this.posterObj.img) return this.messageTip('请上传图片')
+            if(!this.posterObj.url || this.posterObj.url.trim() == '') return this.messageTip('请上传图片')
+            var reg=/(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g
+            if(!reg.test(this.posterObj.url.trim()))  return this.messageTip('图片链接格式不正确')
+            var req = await this.ajax('/carousel/add', { 
+                img: this.posterObj.img,
+                url: this.posterObj.url
+             })
+            if(req && req.code == this.successCode){
+                this.showaAddPoster = false
+                this.posterObj.img = ''
+                this.posterObj.url = ''
+                this.getLunboList()
+            }
+        },
         async delLunbotu(id){
             var req = await this.ajax('/carousel/delete', { id })
             if(req && req.code == this.successCode){
@@ -226,7 +272,7 @@ export default {
     border-radius: 5px
     // margin: 10px auto
     margin-bottom: 30px
-    padding: 20px
+    // padding: 20px
     width: 700px
     .ctn
         > div
@@ -239,7 +285,7 @@ export default {
 
 .lunbotu
     img
-        width: 200px
+        max-width: 200px
 
 .area
     .fl

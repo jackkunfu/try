@@ -68,13 +68,13 @@ export default function(Vue){
             xhrFields: {
                 withCredentials: true
             },
-            success: (data) => {
+            success: data => {
                 if(data && data.code == this.successCode) cb(data)
                 else this.messageTip(data.msg || '上传出错，请稍后重试')
 
                 input.value = ''
             },
-            error: function(data) {
+            error: data => {
                 input.value = ''
                 this.messageTip("error，上传出错"+JSON.stringify(data));
             }
