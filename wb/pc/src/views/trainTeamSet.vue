@@ -90,7 +90,9 @@ export default {
             curDate: '',
             curTimeStart: '',
             curTimeEnd: '',
-            addTimeList: []
+            addTimeList: [],
+
+            ALLCITY: []
         }
     },
     async mounted(){

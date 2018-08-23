@@ -41,7 +41,7 @@ div
                 el-form(:model="editInfo" label-width="160px" size="mini")
                     el-form-item(label="地区")
                         el-select(v-model="editInfo.city")
-                            el-option(v-for="(item, i) in areaList" :label="item.city" placeholder="选择地区" :value="item.city" :key="i")
+                            el-option(v-for="(item, i) in areaList" :label="item.name" placeholder="选择地区" :value="item.id" :key="i")
                     el-form-item(label="训练营")
                         el-select(v-model="editInfo.trainId")
                             el-option(v-for="(item, i) in cityTrains" :label="item.name" placeholder="选择训练营" :value="item.id" :key="i")

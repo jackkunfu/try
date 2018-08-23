@@ -8,7 +8,7 @@
         .item(v-for="(item, i) in stuList" :key="i")
             .w50(style="text-align:left;padding-left:2rem;")
                 span(@click="seeInfo(item)")
-                    img.img(:src="item.avatar")
+                    img.img(:src="config.imgPath+item.avatar")
                     span {{item.name}}
             .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
