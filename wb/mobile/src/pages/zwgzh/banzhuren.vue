@@ -5,6 +5,7 @@
     .sort-item 班主任中心
 
     .list
+        .none(v-if="list.length==0") 暂无课程
         .item(v-for="(item, i) in list" :key="i" @click="goBanji(item)")
             img(src="../../assets/center_list_bg@2x.png")
             .title.els {{item.train.name}}
@@ -43,6 +44,10 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.none
+    padding-left: 0.5rem
+    color: #888
+    
 .item
     padding: 0.8rem
 
