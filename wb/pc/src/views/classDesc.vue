@@ -64,7 +64,7 @@ div.class-desc
 
                     el-form-item(label="地区名称")
                         el-input(v-model="editInfo.city")
-                    el-form-item(label="图文链接")
+                    el-form-item(label="链接")
                         el-input(v-model="editInfo.url" placeholder="http://或https://开头的正常存在网址")
                     
                     el-form-item
