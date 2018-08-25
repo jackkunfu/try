@@ -44,7 +44,7 @@
             span 城市：
             select(v-model="item.city")
                 option(value="" label="请选择城市") 请选择城市
-                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
+                option(v-for="(it, i) in citys" :value="it.id" :label="it.name" :key="i") {{it.name}}
         .each
             span 训练营：
             select(v-model="item.trainId")

@@ -52,7 +52,7 @@ export default {
             keys: [
                 { str: '姓名', key: 'name' },
                 { str: '联系电话', key: 'mobile' },
-                { str: '地区', key: 'city' },
+                { str: '地区', key: 'ci.name' },
                 { str: '训练营', key: 'train.name' },
                 { str: '上课时间', key: 'time' },
                 // { str: '班主任', key: '' },

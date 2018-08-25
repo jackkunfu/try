@@ -13,7 +13,7 @@
                 "host": "118.31.19.178", "port": 22,
                 "user": "root", "password": "zhengwu@123",
 
-                "checkBeforeDeploy": true,
+                "checkBeforeDeploy": false,
 
                 "mappings": [
                     {

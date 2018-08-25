@@ -66,7 +66,7 @@ export default {
                 { str: '性别', key: 'sexStr' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
-                { str: '地区', key: 'city' },
+                { str: '地区', key: 'ci.name' },
                 { str: '训练营', key: 'train.name' },
                 { str: '历史成绩', text: '查看', type: 'fun', fun: 'see' }
             ],

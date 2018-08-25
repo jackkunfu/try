@@ -157,7 +157,7 @@ export default {
                 { str: '手机', key: 'user.phone' },
                 { str: '家长姓名', key: 'user.parentName' },
                 { str: '联系电话', key: 'user.parentPhone' },
-                { str: '地区', key: 'city' },
+                { str: '地区', key: 'ci.name' },
                 { str: '训练营', key: 'train.name' },
                 { str: '卡种', key: 'card.card' },
                 { str: '训练频次', key: 'frequency' },

@@ -12,7 +12,7 @@
             //- select(v-model="item.city" :class="item.city==''?'':'ff'")
             select(v-model="item.city" class="ff")
                 option(value="" label="请选择地区") 请选择地区
-                option(v-for="(it, i) in citys" :value="it.city" :label="it.city" :key="i") {{it.city}}
+                option(v-for="(it, i) in citys" :value="it.id" :label="it.name" :key="i") {{it.name}}
             img(src="../../assets/xia.png")
 
         .each
