@@ -66,7 +66,7 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'train.city' },
+                { str: '城市', key: 'train.ci.name' },
                 { str: '训练营', key: 'train.name' },
                 { str: '地址', key: 'train.address' },
                 { str: '上课时间', key: 'time' },

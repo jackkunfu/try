@@ -80,7 +80,7 @@ export default {
             ],
             ALLCITY: [],
             searchKeys: ['name', 'roleid'],
-            editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password'],
+            editKeys: ['avatar', 'account', 'name', 'phone', 'delStu', 'password', 'city', 'roleid'],
             api: {
                 list: { url: '/mgr/list' },
                 add: { url: '/mgr/add' },
@@ -114,16 +114,22 @@ export default {
             this.curBtnSearch = -1
         },
         changeSearchValue(info){     //  处理搜索请求传参
-            info.roleid = 1
+            // info.roleid = 1
             return info;
         },
         handleDelRow(row){
             return { userId: row.id }
         },
         changeEditValue(info){   // 处理新增编辑请求传参
-            info.roleid = 1;
-            info.cityIds = this.allCitys.filter(v => v.checked).map(v => v.id).join(';')
+            // info.roleid = 1;
+            // info.cityIds = this.allCitys.filter(v => v.checked).map(v => v.id).join(';')
             return info;
+        },
+        changeTableData(data){
+            return data.map(el => {
+                el.roleName = el.roleName || '普通管理员'
+                return el
+            })
         },
         testInput(){
             var data = this.trimObj(this.editInfo)

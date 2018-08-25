@@ -36,7 +36,7 @@ export default {
             api: {
                 // list: { url: '/city/list' },
                 add: { url: '/city/add' },
-                add: { url: '/city/edit' },
+                // add: { url: '/city/edit' },
                 del: { url: '/city/delete' }
             },
             scopeOperates: [    // 每一行中的操作

@@ -67,7 +67,7 @@ export default {
     data () {
         return {
             keys: [
-                { str: '城市', key: 'city' },
+                { str: '城市', key: 'ci.name' },
                 { str: '训练营', key: 'name' },
                 { str: '地址', key: 'address' },
                 { str: '上课时间', key: 'time', type: 'html' }
@@ -113,6 +113,7 @@ export default {
     methods: {
         selfEdit(item){
             console.log(item)
+            this.editInfo.city = item.ci.id
             this.addTimeList = item.times || []
         },
         changeSearchValue(info){     //  处理搜索请求传参

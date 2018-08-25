@@ -8,7 +8,7 @@ export default function(Vue){
     // ajax
     Vue.prototype._ajax = function(url, data, type){
         var data = data || {};
-        if(localStorage.zwManageUid) data.userId = localStorage.zwManageUid
+        if(localStorage.zwManageUid) data.uid = localStorage.zwManageUid
         var type = type || 'post';
         var headers = {}
         if(localStorage.zwManageUserToken) headers.token = localStorage.zwManageUserToken

@@ -80,7 +80,7 @@ export default {
         return {
             keys: [
                 { str: '图片', key: 'imageHtml', type: 'html' },
-                { str: '城市', key: 'city' },
+                { str: '城市', key: 'ci.name' },
                 { str: '训练营', key: 'trainName' },
                 { str: '卡种', key: 'card' },
                 { str: '训练频次以及价格', key: 'frequencyPrice', type: 'html' }
@@ -129,7 +129,12 @@ export default {
         })
     },
     methods: {
+        selfAdd(){
+            this.curPrice = ''
+            this.curFrequency = ''
+        },
         selfEdit(item){
+            this.editInfo.trainId = item.trainId - 0
             this.addTimeList = item.cfs.map(v => {
                 return {
                     frequency: v.frequency,
