@@ -10,7 +10,7 @@
                 span(@click="seeInfo(item)")
                     img.img(:src="config.imgPath+item.avatar")
                     span {{item.name}}
-            .w50
+            .w50(v-if="isNeed")
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
                 img.icon(src="../../assets/choose_btn_s@2x.png" v-else @click="dianming(0, item)")
 
@@ -21,8 +21,9 @@
                 img.icon(src="../../assets/Sign_icon_w_n@2x.png" v-if="item.type!=2" @click="dianming(2, item)")
                 img.icon(src="../../assets/Sign_icon_w_s@2x.png" v-else @click="dianming(2, item)")
 
-    .submit(v-if="isDone===true" style="background:#ccc;") 已签到
-    .submit(@click="submit" v-if="isDone===false") 提交签到
+    div(v-if="isNeed")
+        .submit(v-if="isDone===true" style="background:#ccc;") 已签到
+        .submit(@click="submit" v-if="isDone===false") 提交签到
     
     fixCover(:str="showText" titleName="请假条")
         textarea(v-model="text")
@@ -59,9 +60,16 @@ export default {
             stuList: [],
             curReasonItem: null,
             curInfo: null,
-            isDone: null     // 是否已经提交签到了
+            isDone: null,     // 是否已经提交签到了
+            isNeed: new Date().getDay() == this.$route.query.week    // 当前是否可签到
         }
     },
+    // computed: {
+    //     isNeed(){
+    //         if
+    //         return 
+    //     }
+    // },
     async mounted(){
         var detail = await this.ajax('/sign/detail', {
             planId: this.query.id
