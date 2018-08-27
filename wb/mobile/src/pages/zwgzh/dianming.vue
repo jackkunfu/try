@@ -90,7 +90,6 @@ export default {
                     if(res.data.rows){
                         this.stuList = res.data.rows.map(el => {
                             if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
-                            else el.avatar = this.config.imgPath + el.avatar
                             return el
                         })
                     }

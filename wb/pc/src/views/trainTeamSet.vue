@@ -157,12 +157,17 @@ export default {
                 end: this.curTimeEnd
             }
             console.log(this.addTimeList)
-            var strTimeList = this.addTimeList.map(v=>JSON.stringify(v))
-            // if(strTimeList.indexOf(JSON.stringify(obj)) > -1) return this.messageTip('已存在该时间~')
-            let weeks = this.addTimeList.map(v=>v.week)
-            let begins = this.addTimeList.map(v=>v.begin)
-            let ends = this.addTimeList.map(v=>v.end)
-            if(weeks.indexOf(this.curDate) > -1 && begins.indexOf(this.curTimeStart) > -1 && ends.indexOf(this.curTimeEnd) > -1) return this.messageTip('已存在该时间~')
+            var strTimeList = this.addTimeList.map(el => {
+                return { weel: el.week, begin: el.begin, end: el.end }
+            })
+            if(strTimeList.indexOf(JSON.stringify(obj)) > -1) return this.messageTip('已存在该时间~')
+            // let weeks = this.addTimeList.map(v=>v.week)
+            // let begins = this.addTimeList.map(v=>v.begin)
+            // let ends = this.addTimeList.map(v=>v.end)
+            // let jsonStrs = this.addTimeList.map(el => {
+            //     return { weel: el.week, begin: el.begin, end: el.end }
+            // })
+            // if(weeks.indexOf(this.curDate) > -1 && begins.indexOf(this.curTimeStart) > -1 && ends.indexOf(this.curTimeEnd) > -1) return this.messageTip('已存在该时间~')
             this.addTimeList.push(obj)
         }
     }
