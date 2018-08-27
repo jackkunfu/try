@@ -93,6 +93,10 @@ export default {
         })
     },
     methods: {
+        selfEdit(item){
+            this.editInfo.roleid = item.roleid - 0
+            this.editInfo.city = item.ci.id
+        },
         changeTableData(data){
             var arr = ['管理员', '教练', '班主任', '销售顾问']
             return data.map(v=>{

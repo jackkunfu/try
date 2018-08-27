@@ -68,6 +68,10 @@ export default {
         this.ALLCITY = res.data
     },
     methods: {
+        selfEdit(item){
+            this.editInfo.roleid = item.roleid - 0
+            this.editInfo.city = item.ci.id
+        },
         changeEditValue(info){   // 处理新增编辑请求传参
             return info;
         },

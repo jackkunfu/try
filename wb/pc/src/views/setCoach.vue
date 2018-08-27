@@ -86,6 +86,10 @@ export default {
         })
     },
     methods: {
+        selfEdit(item){
+            this.editInfo.roleid = item.roleid - 0
+            this.editInfo.city = item.ci.id
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             info.roleid = 4
             return info;
