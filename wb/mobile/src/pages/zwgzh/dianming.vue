@@ -78,19 +78,24 @@ export default {
             if(detail.data.length == 0){
                 this.isDone = false
 
-                var res = await this.ajax('/user/list', {
+                // var res = await this.ajax('/user/list', {
+                var res = await this.ajax('/order/list', {
                     trainId: this.query.trainId,
                     week: this.query.week,
                     begin: this.query.begin,
                     end: this.query.end,
                     limit: 10000,
-                    offset: 0
+                    offset: 0,
+                    status: 3
                 }, 'get')
                 if(res && res.code == this.successCode){
                     if(res.data.rows){
                         this.stuList = res.data.rows.map(el => {
-                            if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
-                            return el
+                            // if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
+                            // return el
+
+                            if(!el.user.avatar) el.user.avatar = require('../../assets/touxiang.png')
+                            return el.user
                         })
                     }
                 }

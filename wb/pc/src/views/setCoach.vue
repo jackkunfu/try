@@ -26,8 +26,13 @@ div
                             input#up1(type="file")
                             span + 上传
                             img(:src="config.imgPath+editInfo.avatar" v-if="editInfo.avatar")
+
                     el-form-item(label="姓名")
                         el-input(v-model="editInfo.name" placeholder="请输入姓名~")
+
+                    el-form-item(label="城市")
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item,i) in ALLCITY" :key="i" :value="item.id" :label="item.name")
 
                     .item 联系方式
                     el-form-item(label="手机号")
@@ -52,7 +57,7 @@ export default {
                 { str: '创建时间', key: 'createtime' }
             ],
             searchKeys: ['name'],
-            editKeys: ['avatar', 'name', 'phone'],
+            editKeys: ['avatar', 'name', 'phone', 'city'],
             api: {
                 list: { url: '/mgr/list' },
                 add: { url: '/mgr/add' },
@@ -65,10 +70,14 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ]
+            ],
+            ALLCITY: []
         }
     },
-    mounted(){
+    async mounted(){
+        var res = await this.ajax('/city/list', {}, 'get')
+        this.ALLCITY = res.data
+
         $('#up1').change(()=>{
             this.file('up1', res => {
                 if(res && res.code == 200) this.editInfo.avatar = res.data

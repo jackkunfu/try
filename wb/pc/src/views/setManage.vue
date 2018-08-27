@@ -113,6 +113,9 @@ export default {
         selfSearchReset(){
             this.curBtnSearch = -1
         },
+        selfEdit(item){
+            this.editInfo.roleid = item.roleid - 0
+        },
         changeSearchValue(info){     //  处理搜索请求传参
             // info.roleid = 1
             return info;

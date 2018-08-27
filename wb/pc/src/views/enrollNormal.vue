@@ -315,6 +315,7 @@ export default {
             return info;
         },
         changeEditValue(info){   // 处理新增编辑请求传参
+            info.trainTimes = JSON.stringify(this.classTimes.filter(v=>v.isChoose))
             info.fee = (info.fee - 0)*100
             info.birthday = new Date(info.birthday)
             info.payDate = new Date(info.payDate)

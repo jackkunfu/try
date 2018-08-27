@@ -26,6 +26,10 @@ div
                     el-form-item(label="手机号")
                         el-input(v-model="editInfo.phone")
 
+                    el-form-item(label="城市")
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item,i) in ALLCITY" :key="i" :value="item.id" :label="item.name")
+
                     el-form-item
                         el-button(type="primary" @click="addOrUpdate" size="small") 保存
                         el-button(type="primary" @click="editCancel" size="small") 取消
@@ -44,7 +48,7 @@ export default {
                 // { str: '创建时间', key: 'createtime' }
             ],
             // searchKeys: ['name', 'roleid'],
-            editKeys: ['name', 'phone'],
+            editKeys: ['name', 'phone', 'city'],
             api: {
                 list: { url: '/sales/list' },
                 add: { url: '/sales/add' },
@@ -55,11 +59,13 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ]
+            ],
+            ALLCITY: []
         }
     },
-    mounted(){
-        
+    async mounted(){
+        var res = await this.ajax('/city/list', {}, 'get')
+        this.ALLCITY = res.data
     },
     methods: {
         changeEditValue(info){   // 处理新增编辑请求传参

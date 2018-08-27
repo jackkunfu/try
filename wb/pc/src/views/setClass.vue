@@ -29,6 +29,10 @@ div
                     el-form-item(label="姓名")
                         el-input(v-model="editInfo.name")
 
+                    el-form-item(label="城市")
+                        el-select(v-model="editInfo.city")
+                            el-option(v-for="(item,i) in ALLCITY" :key="i" :value="item.id" :label="item.name")
+
                     .item 账号密码
                     el-form-item(label="账号")
                         el-input(v-model="editInfo.account")
@@ -60,7 +64,7 @@ export default {
                 { str: '创建时间', key: 'createtime' }
             ],
             searchKeys: ['name'],
-            editKeys: ['avatar', 'name', 'account', 'password', 'phone'],
+            editKeys: ['avatar', 'name', 'account', 'password', 'phone', 'city'],
             api: {
                 list: { url: '/mgr/list' },
                 add: { url: '/mgr/add' },
@@ -73,10 +77,14 @@ export default {
             ],
             operates: [    // 顶部的操作
                 { str: '新增', fun: 'add'}
-            ]
+            ],
+            ALLCITY: []
         }
     },
-    mounted(){
+    async mounted(){
+        var res = await this.ajax('/city/list', {}, 'get')
+        this.ALLCITY = res.data
+
         $('#up1').change(()=>{
             this.file('up1', res => {
                 if(res && res.code == 200) this.editInfo.avatar = res.data
