@@ -56,7 +56,7 @@ export default {
 
 .banzhuren
     .list
-        padding: 0 0.4rem
+        padding: 0 0.4rem 0.5rem
         .item
             // background-image: url('../../assets/center_list_bg@2x.png')
             // background-size: 100% 100%

@@ -1,7 +1,12 @@
 <template lang="pug">
 .swiper-ctn
     .swiper(:style="{width: listWidth}")
-        .each-swiper(v-for="(item, i) in list" :key="i" :style="{width: oneWidth}" :class="curItem==i?'show':'hide'")
+        .each-swiper(
+            v-for="(item, i) in list" :key="i" 
+            :style="{width: oneWidth}" 
+            :class="curItem==i?'show':'hide'"
+            @click="locationTo(item.url)"
+        )
             img(:src="config.imgPath+item.img")
 
     .dots
@@ -34,6 +39,9 @@ export default {
         }
     },
     methods: {
+        locationTo(url){
+            location.href = url
+        },
         swiper(){
             this.timer = setInterval(()=>{
                 if(this.curItem < this.list.length - 1) this.curItem = this.curItem - 0 + 1
