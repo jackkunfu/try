@@ -42,7 +42,7 @@
             return {
                 openId: query.openId,
                 order: {
-                    name: '郑武体育篮球训练课', fee: '', city: '杭州', train: {}, cardType: '半年卡', times: '每周两次', card: {}, feeStr: ''
+                    name: '郑武体育篮球训练课', fee: '', city: '', train: {}, cardType: '', times: '', card: {}, feeStr: ''
                 },
                 payWay: 0,
                 userId: query.userId,

@@ -65,7 +65,7 @@ export default {
             curReasonItem: null,
             curInfo: null,
             isDone: null,     // 是否已经提交签到了
-            isNeed: new Date().getDay() == this.$route.query.week    // 当前是否可签到
+            isNeed: new Date().getDay() == (this.$route.query.week - 0 + 1)%7   // 当前是否可签到,   周日的结果是  new Date().getDay() 是 0 周一是 1...
         }
     },
     async mounted(){
