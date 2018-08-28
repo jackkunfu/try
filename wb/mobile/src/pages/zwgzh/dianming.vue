@@ -68,12 +68,6 @@ export default {
             isNeed: new Date().getDay() == this.$route.query.week    // 当前是否可签到
         }
     },
-    // computed: {
-    //     isNeed(){
-    //         if
-    //         return 
-    //     }
-    // },
     async mounted(){
         var detail = await this.ajax('/sign/detail', {
             planId: this.query.id

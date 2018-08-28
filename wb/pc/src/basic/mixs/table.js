@@ -26,7 +26,6 @@ export default {
         // 请求列表
         this.tableList.call(this);
 
-        // this.citys = await this.getAllCity()
         this.citys = await this.getAllExistCity()
         this.trains = await this.getAllTrain()
         this.times = await this.getAllTimes()
