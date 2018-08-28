@@ -6,7 +6,7 @@
         .item
             span 订单金额：{{order.feeStr}}
         .item
-            span 地区：{{order.train.city}}
+            span 地区：{{order.ci.name}}
         .item
             span 训练营：{{order.train.name}}
         .item

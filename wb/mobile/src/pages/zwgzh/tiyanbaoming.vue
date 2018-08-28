@@ -17,7 +17,7 @@
                         span {{item.mobile}}
                     div
                         | 城市: 
-                        span {{item.city}}
+                        span {{curChooseCityName}}
                     div
                         | 训练营: 
                         span {{curTrain}}
@@ -98,6 +98,11 @@
                 let trainId = this.item.trainId
                 if(trainId) return this.trains[this.trains.map(v=>v.id).indexOf(this.item.trainId)].name
                 else return ''
+            },
+            curChooseCityName(){
+                if(!this.item.city) return ''
+                let idx = this.citys.map(el=>el.id).indexOf(this.item.city)
+                return this.citys[idx].name
             }
         },
         watch: {
