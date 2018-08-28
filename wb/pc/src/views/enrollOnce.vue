@@ -71,12 +71,10 @@ export default {
             operates: [    // 顶部的操作
                 { str: '导出excel', fun: 'dao'}
             ],
-            citys: [],
             week: ['一', '二', '三', '四', '五', '六', '日']
         }
     },
     async mounted(){
-        this.citys = await this.getAllCity()
     },
     methods: {
         changeTableData(data){

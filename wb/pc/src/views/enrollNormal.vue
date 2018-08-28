@@ -18,7 +18,7 @@ div
 
                 el-form-item(label="城市")
                     el-select(v-model="searchInfo.city" placeholder="城市")
-                        el-option(v-for="(item, i) in areaList" :key="i" :label="item.name" :value="item.id")
+                        el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.id")
 
                 el-form-item(label="训练营")
                     el-select(v-model="searchInfo.trainId" placeholder="训练营")
@@ -141,7 +141,6 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            areaList: [],
             cityTrains: [],
             cards: [],
             frequencys: [],
@@ -224,8 +223,8 @@ export default {
         }
     },
     async mounted(){
-        this.citys = await this.getAllExistCity()
-        this.areaList = await this.getAllCity()
+        // this.citys = await this.getAllExistCity()
+        // this.areaList = await this.getAllCity()
 
         this.sales = await this.getAllSeller()
 

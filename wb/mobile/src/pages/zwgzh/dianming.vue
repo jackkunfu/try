@@ -10,7 +10,9 @@
                 span(@click="seeInfo(item)")
                     img.img(:src="config.imgPath+item.avatar")
                     span {{item.name}}
-            .w50(v-if="isNeed")
+
+            //- .w50(v-if="isNeed")
+            .w50
                 img.icon(src="../../assets/choose_btn_n@2x.png" v-if="item.type!=0" @click="dianming(0, item)")
                 img.icon(src="../../assets/choose_btn_s@2x.png" v-else @click="dianming(0, item)")
 
@@ -24,6 +26,8 @@
     div(v-if="isNeed")
         .submit(v-if="isDone===true" style="background:#ccc;") 已签到
         .submit(@click="submit" v-if="isDone===false") 提交签到
+    div(v-else)
+        .submit(style="background:#ccc;") 已签到
     
     fixCover(:str="showText" titleName="请假条")
         textarea(v-model="text")
