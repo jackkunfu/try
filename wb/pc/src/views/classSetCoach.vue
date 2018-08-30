@@ -162,6 +162,7 @@ export default {
 
                 if(this.changeIdx !== null) coachs.splice(this.changeIdx, 1, newCoach)
                 else{
+                    if(!this.curEditPlan.plan) this.$set(this.curEditPlan, 'plan', {})
                     if(!this.curEditPlan.plan.coachs) this.$set(this.curEditPlan.plan, 'coachs', [])
                     this.curEditPlan.plan.coachs.push(newCoach)
                 }
