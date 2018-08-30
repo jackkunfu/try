@@ -91,8 +91,10 @@ export default {
                         this.stuList = res.data.rows.map(el => {
                             // if(!el.avatar) el.avatar = require('../../assets/touxiang.png')
                             // return el
+                            // console.log(el)
 
                             if(!el.user.avatar) el.user.avatar = require('../../assets/touxiang.png')
+                            if(!el.user.id) el.user.id = el.userId
                             return el.user
                         })
                     }
@@ -102,9 +104,11 @@ export default {
                 })
             }else{
                 this.isDone = true
+                // console.log(detail.data)
                 this.stuList = detail.data.map(v => {
                     v.user.type = v.type
                     v.user.remarks = v.remarks
+                    v.user.id = v.userId
                     return v.user
                 })
             }
@@ -117,6 +121,7 @@ export default {
             this.showInfo = true
         },
         async submit(){
+            console.log(this.stuList)
             var res = await this.ajax('/sign/add', {
                 userId: this.query.userId,
                 type: 0,
