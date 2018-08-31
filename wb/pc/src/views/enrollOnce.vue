@@ -39,7 +39,7 @@ div
                         el-option(v-for="(item, i) in citys" :key="i" :label="item.name" :value="item.value")
         
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
-            @changePage="changePage" @dao="dao" @delScope="delScope")
+            @changePage="changePage" @daochu="daochu('/experience/excel')" @delScope="delScope")
     
 </template>
 
@@ -69,7 +69,7 @@ export default {
                 { str: '删除', fun: 'delScope'}
             ],
             operates: [    // 顶部的操作
-                { str: '导出excel', fun: 'dao'}
+                { str: '导出excel', fun: 'daochu'}
             ],
             week: ['一', '二', '三', '四', '五', '六', '日']
         }
@@ -85,14 +85,12 @@ export default {
         },
         changeSearchValue(info){     //  处理搜索请求传参
             return info;
-        },
-        dao(){}
+        }
     }
 
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
 
 </style>
