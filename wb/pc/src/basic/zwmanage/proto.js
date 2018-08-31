@@ -11,7 +11,7 @@ export default function(Vue){
     }
 
     Vue.prototype.daochu = function(url){
-        location.href = '/api'+url
+        location.href = '/api'+url+'?uid='+localStorage.zwManageUid
     }
 
     Vue.prototype.getAllCity = async function(){
