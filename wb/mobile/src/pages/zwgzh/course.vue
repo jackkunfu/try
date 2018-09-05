@@ -9,7 +9,8 @@
             .img-ctn.fl
                 img(:src="config.imgPath + item.img")
             .title.els {{item.city}}
-            //- .sub-title.els {{item.desc}}
+            .sub-title {{item.address}}
+            //- .sub-title.els 11111111111111111111111111111111111111111111111111111111111111111
             img.icon.fr(src="../../assets/course_icon@2x.png")
             
 </template>
@@ -65,7 +66,29 @@ export default {
         padding: 0 0.7rem
 
 .item
-    height: 6rem
+    height: 4.5rem
+    position: relative
+    .img-ctn
+        width: 8rem
+        img
+            width: 100%
+            height: 100%
+    .icon
+        position: absolute
+        right: 0.3rem
+        bottom: 0.3rem
+        margin-right: 0
+
+    .title, .sub-title
+        margin-left: 8.5rem
+        width: 7rem
+
+    .title
+        margin-top: 0.5rem
+
+    .sub-title
+        height: 2rem
+        overflow: hidden
 
 .sort-item
     margin: 0.75rem 0.7rem

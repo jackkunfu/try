@@ -40,6 +40,9 @@ div
                     el-form-item(label="地址")
                         el-input(v-model="editInfo.address")
 
+                    el-form-item(label="展示排序")
+                        el-input(v-model="editInfo.sort" placeholder="数字越小越靠前" type="number")
+
                     el-form-item(label="上课时间")
                         el-select(v-model="curDate" placeholder="日期")
                             el-option(v-for="(item, i) in week" :key="i" :label="'周'+item" :value="i")
@@ -73,7 +76,7 @@ export default {
                 { str: '上课时间', key: 'time', type: 'html' }
             ],
             searchKeys: ['city', 'name', 'week'],
-            editKeys: ['address', 'city', 'name'],
+            editKeys: ['address', 'city', 'name', 'sort'],
             api: {
                 list: { url: '/training/list' },
                 add: { url: '/training/add' },
@@ -141,6 +144,7 @@ export default {
             if(obj.city == '') return this.messageTip('请选择城市')
             if(obj.name == '') return this.messageTip('请输入训练营名称')
             if(obj.address == '') return this.messageTip('请输入训练营地址')
+            if(obj.sort && obj.sort - 0 < 0) return this.messageTip('排序数字不能小于0')
             if(this.addTimeList.length == 0) return this.messageTip('请添加时间')
             // if(obj.city == '') return this.messageTip('请选择城市')
             return true

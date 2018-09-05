@@ -4,7 +4,7 @@ div.class-desc
         .page-title 课程管理
             span /课程介绍
 
-        .box.lunbotu
+        .box.lunbotu(style="padding: 20px;")
             .title
                 i.el-icon-document
                 | 轮播图管理
@@ -25,7 +25,7 @@ div.class-desc
 
             el-pagination(layout="prev, pager, next" :total="lunboTotal")
 
-        .box.area
+        .box.area(style="padding: 20px;")
             .title
                 i.el-icon-document
                 | 课程介绍缩略图、地区及图文链接
@@ -66,6 +66,12 @@ div.class-desc
                         el-input(v-model="editInfo.city")
                     el-form-item(label="链接")
                         el-input(v-model="editInfo.url" placeholder="http://或https://开头的正常存在网址")
+
+                    el-form-item(label="地址")
+                        el-input(v-model="editInfo.address" placeholder="请输入地址")
+
+                    el-form-item(label="排序")
+                        el-input(v-model="editInfo.sort" placeholder="数字越小越靠前" type="number")
                     
                     el-form-item
                         el-button(type="primary" @click="addOrUpdate") 保存
@@ -100,7 +106,9 @@ export default {
             editInfo: {
                 img: '',
                 city: '',
-                url: ''
+                url: '',
+                sort: '',
+                address: ''
             },
             showEditCtn: false,
             lunbotuList: [],
@@ -144,6 +152,8 @@ export default {
             this.editInfo.img = item.img
             this.editInfo.url = item.url
             this.editInfo.city = item.city
+            this.editInfo.address = item.address || ''
+            this.editInfo.sort = item.sort || ''
         },
         async addOrUpdate(){
             if(this.editInfo.img == '') return this.messageTip('图片未上传')
@@ -152,6 +162,7 @@ export default {
             // var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
             var reg=/(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g
             if(!reg.test(this.editInfo.url.trim()))  return this.messageTip('图文链接格式不正确')
+            if(this.editInfo.sort && this.editInfo.sort - 0 < 0)  return this.messageTip('排序数字不能小于0')
             var url = this.isEdit ? '/course/edit' : '/course/add'
             var data = Object.assign({}, this.editInfo)
             if(this.isEdit) data.id = this.curEditId
@@ -272,7 +283,6 @@ export default {
     border-radius: 5px
     // margin: 10px auto
     margin-bottom: 30px
-    // padding: 20px
     width: 700px
     .ctn
         > div

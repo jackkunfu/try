@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://www.zhengwusport.com',
+        // target: 'http://www.zhengwusport.com',
+        target: 'http://test.zhengwusport.com',
         // target: 'http://zw.91ilove.com',
         // target: 'http://hjtu.free.ngrok.cc',
         // target: 'http://192.168.43.89:8000',

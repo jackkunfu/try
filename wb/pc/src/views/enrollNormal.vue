@@ -316,7 +316,10 @@ export default {
         changeEditValue(info){   // 处理新增编辑请求传参
             info.trainTimes = JSON.stringify(this.classTimes.filter(v=>v.isChoose))
             info.fee = (info.fee - 0)*100
-            info.birthday = new Date(info.birthday)
+
+            if(info.birthday) info.birthday = new Date(info.birthday)
+            else delete info.birthday
+            
             info.payDate = new Date(info.payDate)
             if(this.curOperateType == 2) info.userId = this.curChooseRow.userId
             return info;
@@ -328,12 +331,12 @@ export default {
             if(obj.sex === '' || obj.sex === null) return this.messageTip('性别未选')
             if(obj.phone == '') return this.messageTip('登陆手机未填')
             if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.phone)) ) return this.messageTip('登陆手机格式有误')
-            if(obj.birthday == '') return this.messageTip('生日未选')
-            if(obj.height == '') return this.messageTip('身高未填')
-            if(obj.weight == '') return this.messageTip('体重未填')
-            if(obj.parentName == '') return this.messageTip('家长姓名未填')
-            if(obj.parentPhone == '') return this.messageTip('家长联系方式未填')
-            if( !(/^1[3|4|5|7|8]\d{9}/.test(obj.parentPhone)) ) return this.messageTip('家长联系方式手机格式有误')
+            // if(obj.birthday == '') return this.messageTip('生日未选')
+            // if(obj.height == '') return this.messageTip('身高未填')
+            // if(obj.weight == '') return this.messageTip('体重未填')
+            // if(obj.parentName == '') return this.messageTip('家长姓名未填')
+            // if(obj.parentPhone == '') return this.messageTip('家长联系方式未填')
+            if( obj.parentPhone && !(/^1[3|4|5|7|8]\d{9}/.test(obj.parentPhone)) ) return this.messageTip('家长联系方式手机格式有误')
 
             if(obj.city == '') return this.messageTip('地区未选')
             if(obj.trainId == '') return this.messageTip('训练营未选')
