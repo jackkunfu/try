@@ -40,6 +40,12 @@ div
                 el-form-item(label="销售渠道")
                     el-select(v-model="searchInfo.sale" placeholder="销售渠道")
                         el-option(v-for="(item, i) in sales" :key="i" :label="item.name" :value="item.id")
+
+                el-form-item(label="开卡状态")
+                    el-select(v-model="searchInfo.status" placeholder="销售渠道")
+                        el-option(label="请选择" value="")
+                        el-option(label="已开卡" value="3")
+                        el-option(label="未开卡" value="100")
             
         s-table(:keys="keys" :tableData="tableData" :page="page" :operates="operates" :scopeOperates="scopeOperates"
             @changePage="changePage" @openCard="openCard" @add="add" @editScope="editScope" @delScope="delScope" @jihuo="jihuo" @daochu="daochu('/order/excel')")
@@ -167,7 +173,7 @@ export default {
                 { str: '销售', key: 'sales.name' },
                 { str: '备注', key: 'remarks' }
             ],
-            searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end'],
+            searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end', 'status'],
             editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate', 'remarks' ],
             api: {
                 list: { url: '/order/list' },
