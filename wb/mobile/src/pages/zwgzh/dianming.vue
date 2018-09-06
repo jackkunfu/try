@@ -8,7 +8,7 @@
         .item(v-for="(item, i) in stuList" :key="i")
             .w50(style="text-align:left;padding-left:2rem;")
                 span(@click="seeInfo(item)")
-                    img.img(:src="config.imgPath+item.avatar")
+                    img.img(:src="item.avatar")
                     span {{item.name}}
 
             //- .w50(v-if="isNeed")
@@ -94,6 +94,8 @@ export default {
                             // console.log(el)
 
                             if(!el.user.avatar) el.user.avatar = require('../../assets/touxiang.png')
+                            else el.user.avatar = config.imgPath + el.user.avatar
+
                             if(!el.user.id) el.user.id = el.userId
                             return el.user
                         })
