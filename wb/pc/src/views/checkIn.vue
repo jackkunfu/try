@@ -52,8 +52,8 @@ export default {
                 { str: '训练营', key: 'train.name' },
                 { str: '当天出席状况', key: 'curStatu' },
                 { str: '累计出席', key: 'attend' },
-                { str: '累计请假', key: 'leave' },
-                { str: '累计缺席', key: 'absent' },
+                { str: '累计请假', key: 'absent' },
+                { str: '累计缺席', key: 'leave' },
                 { str: '签到日期', key: 'create' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'date', 'name', 'begin', 'end'],

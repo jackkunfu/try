@@ -80,6 +80,7 @@ export default {
                 // var res = await this.ajax('/user/list', {
                 var res = await this.ajax('/order/list', {
                     trainId: this.query.trainId,
+                    trainTimeId: this.query.trainTimeId,
                     week: this.query.week,
                     begin: this.query.begin,
                     end: this.query.end,
@@ -112,6 +113,8 @@ export default {
                     v.user.type = v.type
                     v.user.remarks = v.remarks
                     v.user.id = v.userId
+                    if(!v.user.avatar) v.user.avatar = require('../../assets/touxiang.png')
+                    else v.user.avatar = config.imgPath + v.user.avatar
                     return v.user
                 })
             }

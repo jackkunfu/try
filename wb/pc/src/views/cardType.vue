@@ -134,7 +134,8 @@ export default {
             this.curFrequency = ''
         },
         selfEdit(item){
-            this.editInfo.trainId = item.trainId - 0
+            // alert(item.trainId)
+            this.editInfo.trainId = item.trainId
             this.addTimeList = item.cfs.map(v => {
                 return {
                     frequency: v.frequency,

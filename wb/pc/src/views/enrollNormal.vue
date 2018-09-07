@@ -112,6 +112,10 @@ div
 
                     el-form-item(label="支付日期")
                         el-date-picker(v-model="editInfo.payDate" type="date" placeholder="选择支付日期" value-format="yyyy-MM-dd")
+                    el-form-item(label="开卡日期")
+                        el-date-picker(v-model="editInfo.openDate" type="date" placeholder="选择开始日期" value-format="yyyy-MM-dd")
+                    el-form-item(label="结束日期")
+                        el-date-picker(v-model="editInfo.endDate" type="date" placeholder="选择结束日期" value-format="yyyy-MM-dd")
                     
                     el-form-item(label="销售顾问")
                         el-select(v-model="editInfo.sale")
@@ -174,7 +178,8 @@ export default {
                 { str: '备注', key: 'remarks' }
             ],
             searchKeys: ['city', 'trainId', 'week', 'birthday', 'sale', 'begin', 'end', 'status'],
-            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate', 'remarks' ],
+            editKeys: ['avatar', 'account', 'name', 'birthday', 'sex', 'email', 'phone', 'city', 'trainId', 'openDate', 'endDate',
+                'cardId', 'frequency', 'sale', 'fee', 'time', 'parentName', 'parentPhone', 'payDate', 'remarks' ],
             api: {
                 list: { url: '/order/list' },
                 add: { url: '/mgr/addStu' },
@@ -284,6 +289,8 @@ export default {
             this.editInfo.phone = user.phone
             this.editInfo.parentName = user.parentName
             this.editInfo.parentPhone = user.parentPhone
+            this.editInfo.openDate = data.openDate
+            this.editInfo.endDate = data.endDate
             
             setTimeout(()=>{
                 this.editInfo.trainId = data.trainId
@@ -327,6 +334,12 @@ export default {
             else delete info.birthday
             
             info.payDate = new Date(info.payDate)
+            if(info.openDate) info.openDate = new Date(info.openDate)
+            else delete info.openDate
+
+            if(info.endDate) info.endDate = new Date(info.endDate)
+            else delete info.endDate
+            
             if(this.curOperateType == 2) info.userId = this.curChooseRow.userId
             return info;
         },
@@ -356,6 +369,9 @@ export default {
             if(chooseTimesLength > (freq+1)) return this.messageTip('训练频次为'+this.allFrequency[freq]+'最多选'+(freq+1)+'个上课时间');
 
             if(obj.payDate == '') return this.messageTip('支付日期未选')
+            if(obj.openDate && obj.endDate){
+                if(new Date(obj.endDate).setHours(0,0,0,0) <= new Date(obj.openDate).setHours(0,0,0,0)) return this.messageTip('开始日期须小于结束日期')
+            }
             if(obj.sale == '') return this.messageTip('销售顾问未选')
 
             return true
