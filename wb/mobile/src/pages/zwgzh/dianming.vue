@@ -51,6 +51,7 @@
 
 <script>
 import fixCover from '../part/fix-cover'
+import config from '../../js/config'
 export default {
     name: 'course',
     components: { fixCover },
