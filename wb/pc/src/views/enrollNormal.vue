@@ -303,7 +303,7 @@ export default {
                         let cts = data.times.map(v=>v.id)
 
                         this.classTimes.forEach(el => {
-                            if(cts.indexOf(el.id) > -1) el.isChoose = true
+                            if(cts.indexOf(el.id) > -1) this.$set(el, 'isChoose', true)
                         })
                         
                     }, 500)

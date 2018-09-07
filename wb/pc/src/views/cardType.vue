@@ -134,14 +134,15 @@ export default {
             this.curFrequency = ''
         },
         selfEdit(item){
-            // alert(item.trainId)
-            this.editInfo.trainId = item.trainId
             this.addTimeList = item.cfs.map(v => {
                 return {
                     frequency: v.frequency,
                     price: (v.price - 0)/100
                 }
             })
+            setTimeout(() => {
+                this.editInfo.trainId = item.trainId
+            }, 500)
         },
         addTime(){
             if(this.curFrequency == '') return this.messageTip('请选择频次')
