@@ -367,7 +367,7 @@ export default {
             
         },
         handleDelRow(data){
-            return { id: data.userId }
+            return { id: data.id }
         },
         async jihuo(scope){
             var row = scope.row;
