@@ -62,6 +62,8 @@ export default {
 <style scoped lang="sass">
 .h100
     background: #f3f4f3
+    height: 100%
+    overflow: auto
     .list
         padding: 0 0.7rem
 

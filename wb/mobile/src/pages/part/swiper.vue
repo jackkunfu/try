@@ -2,12 +2,14 @@
 .swiper-ctn
     .swiper(:style="{width: listWidth}")
         .each-swiper(
-            v-for="(item, i) in list" :key="i" 
-            :style="{width: oneWidth}" 
+            v-for="(item, i) in list" :key="i"
+            :style="{width: oneWidth}"
             :class="curItem==i?'show':'hide'"
             @click="locationTo(item.url)"
         )
             img(:src="config.imgPath+item.img")
+
+        .clear
 
     .dots
         .dot(v-for="(item, i) in list" :class="{'cur': curItem == i}" :key="i" @click="curItem=i")
@@ -61,10 +63,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.clear
+    clear: both
+
 .swiper-ctn
     width: 100%
     position: relative
     overflow: hidden
+    height: 7rem
     .swiper
         
         .each-swiper
@@ -96,4 +102,5 @@ export default {
             &.cur
                 // background: #48C4F5
                 background: #81B7E9
+
 </style>
