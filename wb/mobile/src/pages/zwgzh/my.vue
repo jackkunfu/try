@@ -21,7 +21,7 @@
         .tab(@click="curTab=1" :class="curTab==1?'cur':''")
             img(src="../../assets/user_icon_test_s@2x.png" v-if="curTab == 1")
             img(src="../../assets/user_icon_test_n@2x.png" v-else)
-            span 体能测试
+            span 综合测试
         
         .tab.no-br(@click="curTab=2" :class="curTab==2?'cur':''")
             img(src="../../assets/user_icon_evaluation_s@2x.png" v-if="curTab == 2")
