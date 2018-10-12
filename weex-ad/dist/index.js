@@ -1,8 +1,38 @@
 // { "framework": "Vue"} 
 
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// objects to store loaded and loading chunks
+/******/ 	var installedChunks = {
+/******/ 		1: 0
+/******/ 	};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -28,6 +58,55 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData === 0) {
+/******/ 			return new Promise(function(resolve) { resolve(); });
+/******/ 		}
+/******/
+/******/ 		// a Promise means "currently loading".
+/******/ 		if(installedChunkData) {
+/******/ 			return installedChunkData[2];
+/******/ 		}
+/******/
+/******/ 		// setup Promise in chunk cache
+/******/ 		var promise = new Promise(function(resolve, reject) {
+/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 		});
+/******/ 		installedChunkData[2] = promise;
+/******/
+/******/ 		// start chunk loading
+/******/ 		var head = document.getElementsByTagName('head')[0];
+/******/ 		var script = document.createElement('script');
+/******/ 		script.type = "text/javascript";
+/******/ 		script.charset = 'utf-8';
+/******/ 		script.async = true;
+/******/ 		script.timeout = 120000;
+/******/
+/******/ 		if (__webpack_require__.nc) {
+/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 		}
+/******/ 		script.src = __webpack_require__.p + "" + chunkId + ".js";
+/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
+/******/ 		script.onerror = script.onload = onScriptComplete;
+/******/ 		function onScriptComplete() {
+/******/ 			// avoid mem leaks in IE.
+/******/ 			script.onerror = script.onload = null;
+/******/ 			clearTimeout(timeout);
+/******/ 			var chunk = installedChunks[chunkId];
+/******/ 			if(chunk !== 0) {
+/******/ 				if(chunk) {
+/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+/******/ 				}
+/******/ 				installedChunks[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		head.appendChild(script);
+/******/
+/******/ 		return promise;
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -61,6 +140,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
@@ -72,14 +154,26 @@
 "use strict";
 
 
+var _proto = __webpack_require__(1);
+
+var _proto2 = _interopRequireDefault(_proto);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*global Vue*/
 
 /* weex initialized here, please do not move this line */
-var router = __webpack_require__(1);
-var App = __webpack_require__(9);
+var router = __webpack_require__(2);
+var App = __webpack_require__(4);
+
+// const proto = require('@/js/proto.js');
+
+Vue.use(_proto2.default);
+
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({ el: '#root', router: router }, App));
-router.push('/');
+
+// router.push('/');
 
 /***/ }),
 /* 1 */
@@ -88,29 +182,48 @@ router.push('/');
 "use strict";
 
 
-var _vueRouter = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (Vue) {
+
+    Vue.prototype.go = function (path, data) {
+        this.$router.push({
+            path: path,
+            query: data
+        });
+    };
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vueRouter = __webpack_require__(3);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(_vueRouter2.default); /*global Vue*/
 
 
 module.exports = new _vueRouter2.default({
   routes: [{
-    path: '/',
-    name: 'HelloWorld',
+    path: '/list',
+    name: 'list',
     component: function component(r) {
-      return requirer(['@/components/HelloWorld'], r);
+      return __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(8)]; ((r).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
     }
   }]
 });
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2741,27 +2854,21 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(10)
+__vue_styles__.push(__webpack_require__(5)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(11)
+__vue_exports__ = __webpack_require__(6)
 
 /* template */
-var __vue_template__ = __webpack_require__(13)
+var __vue_template__ = __webpack_require__(7)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2773,10 +2880,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\gitprojects\\try\\weex-ad\\src\\pages\\index.vue"
+__vue_options__.__file = "D:\\try\\weex-ad\\src\\index.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-6be49aa4"
+__vue_options__._scopeId = "data-v-1a4d8e3c"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -2791,68 +2898,44 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 10 */
+/* 5 */
 /***/ (function(module, exports) {
 
-module.exports = {
-  "wrapper": {
-    "justifyContent": "center",
-    "alignItems": "center"
-  },
-  "logo": {
-    "width": "424",
-    "height": "200"
-  },
-  "greeting": {
-    "textAlign": "center",
-    "marginTop": "70",
-    "fontSize": "50",
-    "color": "#41B883"
-  },
-  "message": {
-    "marginTop": "30",
-    "marginRight": "30",
-    "marginBottom": "30",
-    "marginLeft": "30",
-    "fontSize": "32",
-    "color": "#727272"
-  }
-}
+module.exports = {}
 
 /***/ }),
-/* 11 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-//
-//
-//
-//
 //
 //
 //
 //
 
 exports.default = {
-  name: 'App',
-  data: function data() {
-    return {
-      logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png'
-    };
-  }
+    name: 'App',
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {
+        this.go('/list');
+    }
 };
 
 /***/ }),
-/* 12 */,
-/* 13 */
+/* 7 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: D:\\gitprojects\\try\\weex-ad\\src\\pages\\index.vue:2:1\n    1| \n  > 2|   .wrapper\n-------^\n    3|   image.logo(:src=\"logo\")\n    4|   text.greeting The environment is ready!\n    5|   <router-view/>\n\nunexpected token \"indent\"\n    at makeError (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-error\\index.js:32:13)\n    at Parser.error (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-parser\\index.js:53:15)\n    at Parser.parseExpr (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-parser\\index.js:264:14)\n    at Parser.parse (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-parser\\index.js:112:25)\n    at parse (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-parser\\index.js:12:20)\n    at Object.parse (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug\\lib\\index.js:125:22)\n    at Function.loadString [as string] (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug-load\\index.js:45:21)\n    at compileBody (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug\\lib\\index.js:86:18)\n    at Object.exports.compile (D:\\gitprojects\\try\\weex-ad\\node_modules\\pug\\lib\\index.js:242:16)\n    at D:\\gitprojects\\try\\weex-ad\\node_modules\\consolidate\\lib\\consolidate.js:836:58\n    at D:\\gitprojects\\try\\weex-ad\\node_modules\\consolidate\\lib\\consolidate.js:144:5\n    at Promise._execute (D:\\gitprojects\\try\\weex-ad\\node_modules\\bluebird\\js\\release\\debuggability.js:313:9)\n    at Promise._resolveFromExecutor (D:\\gitprojects\\try\\weex-ad\\node_modules\\bluebird\\js\\release\\promise.js:483:18)\n    at new Promise (D:\\gitprojects\\try\\weex-ad\\node_modules\\bluebird\\js\\release\\promise.js:79:10)\n    at promisify (D:\\gitprojects\\try\\weex-ad\\node_modules\\consolidate\\lib\\consolidate.js:137:10)\n    at Function.exports.pug.render (D:\\gitprojects\\try\\weex-ad\\node_modules\\consolidate\\lib\\consolidate.js:821:10)");
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('router-view')
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ })
 /******/ ]);

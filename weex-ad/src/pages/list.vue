@@ -1,19 +1,19 @@
 <template lang="pug">
-    .wrapper
-    image.logo(:src="logo")
-    text.greeting The environment is ready!
-    <router-view/>
-  </div>
+div
+    search-choose-city
+
 </template>
 
 <script>
+import SearchChooseCity from '../components/area.vue'
 export default {
-  name: 'App',
-  data () {
-    return {
-      logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png'
+    name: 'App',
+    components: { SearchChooseCity },
+    data () {
+        return {
+            logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png'
+        }
     }
-  }
 }
 </script>
 

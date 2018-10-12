@@ -1,15 +1,14 @@
 /*global Vue*/
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
 module.exports = new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: r => requirer(['@/components/HelloWorld'], r)
+      path: '/list',
+      name: 'list',
+      component: r => require(['@/pages/list'], r)
     }
   ]
 })

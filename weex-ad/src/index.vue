@@ -1,0 +1,19 @@
+<template lang="pug">
+    router-view
+</template>
+
+<script>
+export default {
+    name: 'App',
+    data () {
+        return {
+        }
+    },
+    mounted(){
+        this.go('/list')
+    }
+}
+</script>
+
+<style scoped>
+</style>
