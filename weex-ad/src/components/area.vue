@@ -5,7 +5,7 @@ div
             :disabled="true"
             placeholder="搜索目的地"
             mod="hasDep"
-            dep-name="杭州"
+            :dep-name="chooseCity"
             @wxcSearchbarDepChooseClicked="wxcSearchbarDepChooseClicked"
             @wxcSearchbarInputDisabledClicked="wxcSearchbarInputDisabledClicked"
         )
@@ -27,6 +27,7 @@ export default {
     components: { WxcSearchbar, WxcIndexlist },
     data() {
         return {
+            chooseCity: '',
             isShowCitys: false,
             normalList: dataList.normalList,
             hotListConfig: {
@@ -43,7 +44,6 @@ export default {
     },
     methods: {
         wxcSearchbarDepChooseClicked(){
-            alert(1)
             this.isShowCitys = true
         },
         wxcSearchbarInputDisabledClicked(){
@@ -51,6 +51,7 @@ export default {
         },
         wxcIndexlistItemClicked(data){
             console.log(data)
+            this.chooseCity = data.item.name
         }
     }
 }

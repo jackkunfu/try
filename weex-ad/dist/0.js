@@ -556,6 +556,7 @@ exports.default = {
     components: { WxcSearchbar: _wxcSearchbar2.default, WxcIndexlist: _wxcIndexlist2.default },
     data: function data() {
         return {
+            chooseCity: '',
             isShowCitys: false,
             normalList: _city.dataList.normalList,
             hotListConfig: {
@@ -573,7 +574,6 @@ exports.default = {
 
     methods: {
         wxcSearchbarDepChooseClicked: function wxcSearchbarDepChooseClicked() {
-            alert(1);
             this.isShowCitys = true;
         },
         wxcSearchbarInputDisabledClicked: function wxcSearchbarInputDisabledClicked() {
@@ -581,6 +581,7 @@ exports.default = {
         },
         wxcIndexlistItemClicked: function wxcIndexlistItemClicked(data) {
             console.log(data);
+            this.chooseCity = data.item.name;
         }
     }
 };
@@ -2454,7 +2455,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": true,
       "placeholder": "搜索目的地",
       "mod": "hasDep",
-      "depName": "杭州"
+      "depName": _vm.chooseCity
     },
     on: {
       "wxcSearchbarDepChooseClicked": _vm.wxcSearchbarDepChooseClicked,
