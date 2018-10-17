@@ -6,7 +6,7 @@
             img.fl(:src="touxiang")
             .title
                 span(style="font-size:1.1rem;") {{my.name}}
-                span.lv
+                span.lv(v-if="my.lv")
                     img(:src="lv")
 
             .sub-title(@click="goUrl('/myset', my)" style="color:#fff;") 完善个人信息
@@ -164,7 +164,7 @@ export default {
         },
         lv(){
             if(this.my.lv) return require('../../assets/lv'+this.my.lv+'.png')
-            else return require('../../assets/lv0.png')
+            // else return require('../../assets/lv0.png')
             // if(this.my.lv - 0 === 0) return '入门级'
             // else return '未知'
         }
