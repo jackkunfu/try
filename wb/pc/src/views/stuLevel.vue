@@ -40,7 +40,8 @@ div
                     el-form(:model="editInfo" label-width="160px" size="mini")
                         el-form-item(label="等级")
                             el-select(v-model="curLevel" placeholder="等级")
-                                el-option(label="入门级" :value="0")
+                                //- el-option(label="入门级" :value="0")
+                                el-option(label="请选择" :value="0")
                                 el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
 
                         el-form-item
@@ -54,7 +55,7 @@ export default {
     mixins: [ tableManage ],
     data () {
         return {
-            levels: ['一', '二', '三', '四', '五'],
+            levels: ['一', '二', '三', '四', '五', '六', '七', '八', '九'],
             keys: [
                 // { str: '头像', key: 'avatar', type: 'img' },
                 // { str: '姓名', key: 'name' },
@@ -94,10 +95,12 @@ export default {
     methods: {
         changeTableData(data){
             data.forEach(element => {
-                element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : element.lv === 0 ? '入门级' : ''
+                // element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : element.lv === 0 ? '入门级' : ''
+                element.level = element.lv ? 'Level ' + this.levels[element.lv-1] : ''
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
-                element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
+                // element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
+                element.levelStr = element.user.lv ? '等级' + element.user.lv : ''
             })
             return data
         },
