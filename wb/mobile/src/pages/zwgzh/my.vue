@@ -1,7 +1,9 @@
 <template lang="pug">
 .h100
     .top
-        img(src="../../assets/user_bg@2x.png")
+        //- img(src="../../assets/user_bg@2x.png")
+        img(src="../../assets/bj-copy@2x.png")
+        
         .item
             img.fl(:src="touxiang")
             .title
@@ -316,6 +318,7 @@ export default {
     background: #eee
 .top
     .title
+        margin-top: 0.5rem
         .lv
             margin-left: 0.5rem
             img
@@ -490,7 +493,15 @@ export default {
             margin-left: 6rem
         .sub-title
             line-height: 1rem
+            display: inline-block
+            padding: 0.2rem 0.5rem
+            background: #81B7E9
+            text-align: center
+            border-radius: 0.2rem
+            margin-left: 1rem
+            margin-top: 0.2rem
             span
                 font-size: 0.8rem
                 margin-left: 0.1rem
+
 </style>

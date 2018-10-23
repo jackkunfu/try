@@ -124,6 +124,7 @@ export default function(Vue){
     }
     // 列表请求
     Vue.prototype.tableList = async function(){
+        if(!this.api || !this.api.list) return
         var copySearchInfo = Object.assign({}, this.trimObj(this.searchInfo));
 
         var needChangeSearchInfo = this.changeSearchValue && typeof this.changeSearchValue == 'function';

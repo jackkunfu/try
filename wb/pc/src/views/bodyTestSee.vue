@@ -13,6 +13,8 @@ div
             @changePage="changePage" @chooseRow="chooseRow" @see="see" @upImg="upImg")
 
         .list
+            div(v-if="!tableData || tableData.length == 0" style="text-align:center;line-height:100px;color:#999;") 暂无数据
+
             .each(v-for="(item, i) in tableData")
                 div
                     span 体能测试

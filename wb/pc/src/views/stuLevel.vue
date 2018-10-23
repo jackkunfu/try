@@ -56,7 +56,7 @@ export default {
     data () {
         return {
             // levels: ['一', '二', '三', '四', '五', '六', '七', '八', '九'],
-            levels: [I, II, III, IV, V, VI, VII, VIII, IX],
+            levels: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'],
             keys: [
                 // { str: '头像', key: 'avatar', type: 'img' },
                 // { str: '姓名', key: 'name' },
