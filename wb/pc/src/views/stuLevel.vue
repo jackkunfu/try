@@ -101,7 +101,7 @@ export default {
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
                 // element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
-                element.levelStr = element.user.lv ? '等级' + element.user.lv : ''
+                element.levelStr = element.user.lv ? '等级' + this.levels[element.user.lv-1] : ''
             })
             return data
         },
