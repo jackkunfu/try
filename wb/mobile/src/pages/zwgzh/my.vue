@@ -10,6 +10,8 @@
                 span(style="font-size:1.1rem;") {{my.name}}
                 span.lv(v-if="my.lv")
                     img(:src="lv")
+                span.lv(v-else)
+                    img(src="../../assets/lv0.png")
 
             .sub-title(@click="goUrl('/myset', my)" style="color:#fff;") 完善个人信息
                 span >
