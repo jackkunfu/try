@@ -42,6 +42,7 @@ div
                             el-select(v-model="curLevel" placeholder="等级")
                                 //- el-option(label="入门级" :value="0")
                                 el-option(label="请选择" :value="0")
+                                el-option(label="需努力" :value="-1")
                                 el-option(v-for="(item, i) in levels" :key="i" :label="'Level '+item" :value="i-0+1")
 
                         el-form-item
@@ -101,7 +102,8 @@ export default {
                 element.sexStr = element.sex ? '女' : '男'
                 element.img = element.user.avatar
                 // element.levelStr = element.user.lv ? '等级' + element.user.lv : '入门级'
-                element.levelStr = element.user.lv ? '等级' + this.levels[element.user.lv-1] : ''
+                if(element.user.lv && element.user.lv == -1) element.levelStr = '需努力'
+                else element.levelStr = element.user.lv ? '等级' + this.levels[element.user.lv-1] : ''
             })
             return data
         },
