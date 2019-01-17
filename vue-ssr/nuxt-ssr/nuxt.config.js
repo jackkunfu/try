@@ -30,6 +30,10 @@ module.exports = {
     'element-ui/lib/theme-chalk/index.css'
   ],
 
+  html: [
+    { src: '*.pug', lang: 'pug' }
+  ],
+
   /*
   ** Plugins to load before mounting the App
   */

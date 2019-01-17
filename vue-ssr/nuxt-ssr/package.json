@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-ssr",
+  "name": "nuxt-ssr1",
   "version": "1.0.0",
   "description": "My astounding Nuxt.js project",
   "author": "sgq",
@@ -17,9 +17,11 @@
     "element-ui": "^2.4.6"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "2.6.2",
-    "prettier": "1.14.3"
+    "node-sass": "^4.10.0",
+    "nodemon": "^1.11.0",
+    "prettier": "1.14.3",
+    "pug": "^2.0.3"
   }
 }
