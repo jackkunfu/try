@@ -9,23 +9,19 @@ export default function (Vue) {
       let options = { ...arguments }
       let res = _fetch(options)
       if(res.ok){
-        let result
-        if (cType === 'html') {
-          result = res.text()
+        let result = config && config.cType === 'html' ? res.text() : res.json()
+        if (result.code === this.successCode) {
+          return result
         } else {
-          result = res.json()
-          result.then(ret => {
-              if(ret.code != this.successCode) {
-                  checkCode(ret.code, this)
-                  ret.msg && !noTip && this.messageTip(ret.msg)
-              }
-          });
+          if (res) checkCode(result.code)
+          if (options.otherConfig && options.otherConfig.errorTip) {
+            res.json().msg && this.messageTip(res.json().msg || '操作失败')
+          }
+          return null
         }
-        return result
-    }else {
-      // this.messageTip(res.statusText)
-    }
-      return res
+      } else {
+        return bull
+      } 
     } catch (e) {
       console.log(e)
     }
