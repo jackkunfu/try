@@ -41,19 +41,17 @@ module.exports = {
         changeOrigin: true
       },
       // '/fs': {
-      //     target: 'http://10.10.0.244:10091',
+      //     
       //     pathRewrite: { '^/fs': ''},
       //     changeOrigin: true
       // },
       '/fs': {
+        // target: 'http://10.10.0.244:10091',
         target: 'http://122.112.251.59:8082',
         changeOrigin: true
       },
-      // '/cas': {
-      //     target: 'https://test.yun-ti.com:8282',
-      //     changeOrigin: true
-      // },
       '/cas': {
+        // target: 'https://test.yun-ti.com:8282',
         target: 'http://10.10.0.244:8181/',
         changeOrigin: true
       }

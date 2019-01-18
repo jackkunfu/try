@@ -1,12 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <router-view class="login" name="login" v-if="isLogin"/>
+    <div class="app-html" v-else>
+      <router-view name="appLeft"/>
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component({
+  components: {},
+})
+export default class Home extends Vue {
+  name: ''
+  get isLogin(): boolean {
+    let data = this.$route.path === '/login'
+    return data
+  }
+  
+  private created() {
+    console.log(this)
+    // if (!this.$route.query.nickname) return;
+    // this.nickname = this.$route.query.nickname
+  }
+  mounted() {
+    console.log(2)
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
