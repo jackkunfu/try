@@ -9,8 +9,9 @@ interface FetchParams {
 
 async function ajax(...argus: any) {
   // url: string, parama: object , type?: string, otherConfig?: any
+  let {url, parama, type, otherConfig} = argus
   let opts = {
-    method: argus[2] || 'post',
+    method: type || 'post',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -18,19 +19,19 @@ async function ajax(...argus: any) {
     },
     body: ''
   }
-  if (argus.otherConfig) {
-    opts = Object.assign(opts, {...argus.otherConfig})
+  if (otherConfig) {
+    opts = Object.assign(opts, {otherConfig})
   }
   if (process.env.NODE_ENV === 'development') {
     opts.headers.token = '123456789'
   }
-  if (argus[1]) {
-    opts.body = JSON.stringify(argus[1])
+  if (parama) {
+    opts.body = JSON.stringify(parama)
   }
-  return fetch(argus[0], opts)
+  return fetch(url, opts)
 }
 
-export default function(Vue: Constructor) {
+export default function(Vue: any) {
   Vue.prototype.fetch = async function(url: string, parama: object|string, type: string, config?: any) {
     try {
       let res = await ajax(url, parama, type, config);
