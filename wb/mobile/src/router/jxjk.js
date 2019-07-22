@@ -1,24 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import APP from '@/App.vue'
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
-            path: '/login',
-            name: 'login',
-            component: r => require.ensure([], () => r(require('@/pages/jxjk/login')), 'login')
-        },
-        {
-            path: '/sign',
-            name: 'sign',
-            component: r => require.ensure([], () => r(require('@/pages/jxjk/sign')), 'sign')
-        },
-        {
-            path: '/baoming',
-            name: 'baoming',
-            component: r => require.ensure([], () => r(require('@/pages/jxjk/baoming')), 'baoming')
+            path: '/',
+            name: 'app',
+            component: APP,
+            redirect: '/course',
+            children: [
+                {
+                    path: '/login',
+                    name: 'login',
+                    component: r => require.ensure([], () => r(require('@/pages/jxjk/login')), 'login')
+                },
+                {
+                    path: '/sign',
+                    name: 'sign',
+                    component: r => require.ensure([], () => r(require('@/pages/jxjk/sign')), 'sign')
+                },
+                {
+                    path: '/baoming',
+                    name: 'baoming',
+                    component: r => require.ensure([], () => r(require('@/pages/jxjk/baoming')), 'baoming')
+                }
+            ]
         }
     ]
 })

@@ -1,74 +1,84 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import APP from '@/App.vue'
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
-            path: '/course',
-            name: 'course',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/course')), 'course')
+            path: '/',
+            name: 'app',
+            component: APP,
+            redirect: '/course',
+            children: [
+                {
+                    path: '/course',
+                    name: 'course',
+                    component: () => import('@/pages/zwgzh/course')
+                },
+                {
+                    path: '/detail',
+                    name: 'detail',
+                    component: () => import('@/pages/zwgzh/detail')
+                },
+                {
+                    path: '/banzhuren',
+                    name: 'banzhuren',
+                    component: () => import('@/pages/zwgzh/banzhuren')
+                },
+                {
+                    path: '/dianming',
+                    name: 'dianming',
+                    component: () => import('@/pages/zwgzh/dianming')
+                },
+                {
+                    path: '/dianmingOk',
+                    name: 'dianmingOk',
+                    component: () => import('@/pages/zwgzh/dianmingOk')
+                },
+                {
+                    path: '/login',
+                    name: 'login',
+                    component: () => import('@/pages/zwgzh/login')
+                },
+                {
+                    path: '/baoming',
+                    name: 'baoming',
+                    component: () => import('@/pages/zwgzh/baoming')
+                },
+                {
+                    path: '/pay/pay',
+                    name: 'pay',
+                    component: () => import('@/pages/zwgzh/pay')
+                },
+                {
+                    path: '/payZfb',
+                    name: 'payZfb',
+                    component: () => import('@/pages/zwgzh/payZfb')
+                },
+                {
+                    path: '/tiyanbaoming',
+                    name: 'tiyanbaoming',
+                    component: () => import('@/pages/zwgzh/tiyanbaoming')
+                },
+                {
+                    path: '/my',
+                    name: 'my',
+                    component: () => import('@/pages/zwgzh/my')
+                },
+                {
+                    path: '/myset',
+                    name: 'myset',
+                    component: () => import('@/pages/zwgzh/myset')
+                },{
+                    path: '/timesChoose',
+                    name: 'timesChoose',
+                    component: () => import('@/pages/zwgzh/timesChoose')
+                }
+            ]
         },
-        {
-            path: '/detail',
-            name: 'detail',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/detail')), 'detail')
-        },
-        {
-            path: '/banzhuren',
-            name: 'banzhuren',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/banzhuren')), 'banzhuren')
-        },
-        {
-            path: '/dianming',
-            name: 'dianming',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/dianming')), 'dianming')
-        },
-        {
-            path: '/dianmingOk',
-            name: 'dianmingOk',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/dianmingOk')), 'dianmingOk')
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/login')), 'login')
-        },
-        {
-            path: '/baoming',
-            name: 'baoming',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/baoming')), 'baoming')
-        },
-        {
-            path: '/pay/pay',
-            name: 'pay',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/pay')), 'pay')
-        },
-        {
-            path: '/payZfb',
-            name: 'payZfb',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/payZfb')), 'payZfb')
-        },
-        {
-            path: '/tiyanbaoming',
-            name: 'tiyanbaoming',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/tiyanbaoming')), 'tiyanbaoming')
-        },
-        {
-            path: '/my',
-            name: 'my',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/my')), 'my')
-        },
-        {
-            path: '/myset',
-            name: 'myset',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/myset')), 'myset')
-        },{
-            path: '/timesChoose',
-            name: 'timesChoose',
-            component: r => require.ensure([], () => r(require('@/pages/zwgzh/timesChoose')), 'timesChoose')
-        }
+        
     ]
 })
 
