@@ -10,29 +10,17 @@ const router = new Router({
             path: '/',
             name: 'app',
             component: APP,
-            redirect: '/course',
+            redirect: '/login',
             children: [
-                {
-                    path: '/login',
-                    name: 'login',
-                    component: r => require.ensure([], () => r(require('@/pages/jxjk/login')), 'login')
-                },
-                {
-                    path: '/sign',
-                    name: 'sign',
-                    component: r => require.ensure([], () => r(require('@/pages/jxjk/sign')), 'sign')
-                },
-                {
-                    path: '/baoming',
-                    name: 'baoming',
-                    component: r => require.ensure([], () => r(require('@/pages/jxjk/baoming')), 'baoming')
-                }
+                { path: '/login', name: 'login', component: () => import('@/pages/jxjk/login') },
+                { path: '/sign', name: 'sign', component: () => import('@/pages/jxjk/sign') },
+                { path: '/baoming', name: 'baoming', component: () => import('@/pages/jxjk/baoming') }
             ]
         }
     ]
 })
 
-const white = ['/'];
+// const white = ['/'];
 router.beforeEach((to, from, next) => {
     // 路由跳转前的钩子
     // if (white.indexOf(to.path) < 0) {
