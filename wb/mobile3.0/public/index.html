@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>郑武体育公众号</title>
+    <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> -->
+    <link href="fa.min.css" rel="stylesheet">
+    <script src="jq.min.js"></script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but mobile3.0 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <script>
+      var w = document.documentElement.clientWidth / 18.75
+      document.documentElement.style.fontSize = w + 'px'    // 保证 w 大于12 不然谷歌浏览器强制最小是12px，   w 为 10 的话无效会强制转换成12  看不出真实效果  最好 20
+    </script>
+  </body>
+</html>
