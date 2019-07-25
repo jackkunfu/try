@@ -4,13 +4,12 @@ import APP from '@/App.vue'
 Vue.use(Router)
 
 const router = new Router({
-    // mode: 'history',
+    mode: 'history',
     routes: [
         {
             path: '/',
             name: 'app',
-            component: APP,
-            redirect: '/course',
+            component: APP, // 默认是空白页的，具体下面的子页面才有结构展示
             children: [
                 {
                     path: '/course',
@@ -48,7 +47,7 @@ const router = new Router({
                     component: () => import('@/pages/zwgzh/baoming')
                 },
                 {
-                    path: '/pay/pay',
+                    path: '/pay',
                     name: 'pay',
                     component: () => import('@/pages/zwgzh/pay')
                 },

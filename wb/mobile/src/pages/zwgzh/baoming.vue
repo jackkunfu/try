@@ -166,7 +166,7 @@
                 var res = await this.ajax('/order/add', item)
                 if(res && res.code == this.successCode){
                     item.orderId = res.data.id
-                    this.goUrl('/pay/pay', item)
+                    this.goUrl('/pay', item)
                 }
             }
         }
